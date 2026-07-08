@@ -10,6 +10,10 @@ class Username:
     def __post_init__(self) -> None:
         if not isinstance(self.value, str) or not self.value.strip():
             raise ValueError("Username cannot be empty.")
+        if len(self.value.strip()) < 3:
+            raise ValueError("Username must contain at least 3 characters.")
+        if len(self.value.strip()) > 20:
+            raise ValueError("Username cannot exceed 20 characters.")
         object.__setattr__(self, "value", self.value.strip())
 
 

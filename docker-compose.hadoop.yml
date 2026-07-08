@@ -1,0 +1,92 @@
+services:
+  master:
+    image: shopping-web-hadoop:centos
+    build:
+      context: .
+      dockerfile: docker/hadoop/Dockerfile
+      args:
+        CENTOS_VAULT_MIRROR: https://mirror.iscas.ac.cn/centos-vault/7.9.2009
+        HADOOP_DIST_MIRROR: https://repo.huaweicloud.com/apache/hadoop/common
+        PIP_INDEX_URL: https://pypi.tuna.tsinghua.edu.cn/simple
+        PYTHON_PACKAGES: ""
+    container_name: master
+    hostname: master
+    environment:
+      HADOOP_ROLE: master
+    ports:
+      - "9000:9000"
+      - "9870:9870"
+      - "8088:8088"
+      - "19888:19888"
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
+      - hadoop_history:/hadoop/yarn/timeline
+      - ./src:/app/src:ro
+    networks:
+      hadoop:
+        aliases:
+          - master
+
+  slaver1:
+    image: shopping-web-hadoop:centos
+    build:
+      context: .
+      dockerfile: docker/hadoop/Dockerfile
+      args:
+        CENTOS_VAULT_MIRROR: https://mirror.iscas.ac.cn/centos-vault/7.9.2009
+        HADOOP_DIST_MIRROR: https://repo.huaweicloud.com/apache/hadoop/common
+        PIP_INDEX_URL: https://pypi.tuna.tsinghua.edu.cn/simple
+        PYTHON_PACKAGES: ""
+    container_name: slaver1
+    hostname: slaver1
+    environment:
+      HADOOP_ROLE: worker
+    depends_on:
+      - master
+    ports:
+      - "9864:9864"
+      - "8042:8042"
+    volumes:
+      - hadoop_datanode1:/hadoop/dfs/data
+      - ./src:/app/src:ro
+    networks:
+      hadoop:
+        aliases:
+          - slaver1
+
+  slaver2:
+    image: shopping-web-hadoop:centos
+    build:
+      context: .
+      dockerfile: docker/hadoop/Dockerfile
+      args:
+        CENTOS_VAULT_MIRROR: https://mirror.iscas.ac.cn/centos-vault/7.9.2009
+        HADOOP_DIST_MIRROR: https://repo.huaweicloud.com/apache/hadoop/common
+        PIP_INDEX_URL: https://pypi.tuna.tsinghua.edu.cn/simple
+        PYTHON_PACKAGES: ""
+    container_name: slaver2
+    hostname: slaver2
+    environment:
+      HADOOP_ROLE: worker
+    depends_on:
+      - master
+    ports:
+      - "9865:9864"
+      - "8043:8042"
+    volumes:
+      - hadoop_datanode2:/hadoop/dfs/data
+      - ./src:/app/src:ro
+    networks:
+      hadoop:
+        aliases:
+          - slaver2
+
+networks:
+  hadoop:
+    driver: bridge
+
+volumes:
+  hadoop_namenode:
+  hadoop_datanode1:
+  hadoop_datanode2:
+  hadoop_history:

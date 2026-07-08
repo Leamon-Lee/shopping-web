@@ -42,6 +42,8 @@ class Account:
         self.__members = members or []
         self.__admins = admins or []
 
+    def __repr__(self):
+        return f"Account(user_name={self.__user_name}, status={self.__status}, name={self.__name})"
     # 返回账户保存的收货地址，后续可用于下单和配送流程。
     def get_shipping_address(self) -> Address:
         return self.__shipping_address
