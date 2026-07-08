@@ -55,7 +55,7 @@ export default async function ProductPage(props: Props) {
 
   return (
     <div
-      className="content-container flex flex-col small:flex-row small:items-start py-6 relative"
+      className="content-container flex flex-col small:flex-row small:items-start small:gap-x-8 large:gap-x-12 py-6 relative"
       data-testid="product-container"
     >
       <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-6">
