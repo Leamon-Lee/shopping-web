@@ -82,7 +82,7 @@ class OrderCreate(BaseModel):
 
 class OrderOut(BaseModel):
     order_number: str
-    status: OrderStatus = OrderStatus.PENDING
+    status: OrderStatus = OrderStatus.CREATED
     order_date: str | None = None
     items: list[CartItemOut]
     payment: PaymentOut | None = None

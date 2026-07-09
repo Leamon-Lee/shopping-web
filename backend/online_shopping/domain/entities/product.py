@@ -1,4 +1,4 @@
-from online_shopping.domain.entities.product_category import ProductCategory
+from online_shopping.domain.entities.category import Category
 from online_shopping.domain.entities.product_image import ProductImage
 from online_shopping.domain.entities.product_variant import ProductVariant
 from online_shopping.domain.value_objects.product_values import (
@@ -20,8 +20,7 @@ class Product:
         name: ProductName,
         description: ProductDescription,
         price: Price,
-        available_item_count: ProductCount,
-        category: ProductCategory,
+        category: Category,
         product_id: ProductId | None = None,
         slug: ProductSlug | None = None,
         variants: list[ProductVariant] | None = None,
@@ -32,7 +31,6 @@ class Product:
         self.__name = name
         self.__description = description
         self.__price = price
-        self.__available_item_count = available_item_count
         self.__category = category
         self.__slug = slug or ProductSlug.from_name(name)
         self.__images = images or []
@@ -43,7 +41,7 @@ class Product:
                 name=ProductVariantName("Default Variant"),
                 sku=Sku(f"SKU-{self.__slug.value.upper()}"),
                 price=price,
-                inventory_count=available_item_count,
+                inventory_count=ProductCount(0),
             )
         ]
 
@@ -64,11 +62,7 @@ class Product:
         return self.__price
 
     @property
-    def available_item_count(self) -> ProductCount:
-        return self.__available_item_count
-
-    @property
-    def category(self) -> ProductCategory:
+    def category(self) -> Category:
         return self.__category
 
     @property
@@ -88,7 +82,12 @@ class Product:
         return dict(self.__metadata)
 
     def get_available_count(self) -> ProductCount:
-        return self.__available_item_count
+        total = sum(
+            variant.inventory_count.value
+            for variant in self.__variants
+            if variant.manages_inventory
+        )
+        return ProductCount(total)
 
     def get_default_variant(self) -> ProductVariant:
         return self.__variants[0]

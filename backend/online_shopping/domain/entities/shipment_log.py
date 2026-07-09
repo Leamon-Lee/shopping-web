@@ -15,8 +15,11 @@ class ShipmentLog:
         self,
         status: ShipmentStatus,
         creation_date: CreationDate,
-        notifications: list[Notification] | None = None,
     ):
         self.__status = status
         self.__creation_date = creation_date
-        self.__notifications = notifications or []
+
+    def trigger_notifications(self, notifications: list[Notification]) -> tuple[Notification, ...]:
+        for notification in notifications:
+            notification.send_notification()
+        return tuple(notifications)

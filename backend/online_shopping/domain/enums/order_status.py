@@ -2,16 +2,16 @@ from enum import Enum
 
 
 class OrderStatus(str, Enum):
-    UNSHIPPED = "unshipped"
-    PENDING = "pending"
+    CREATED = "created"
+    CONFIRMED = "confirmed"
+    PROCESSING = "processing"
     SHIPPED = "shipped"
-    COMPLETE = "complete"
+    COMPLETED = "completed"
     CANCELED = "canceled"
-    REFUND_APPLIED = "refund_applied"
 
-    Unshipped = UNSHIPPED
-    Pending = PENDING
+    Created = CREATED
+    Confirmed = CONFIRMED
+    Processing = PROCESSING
     Shipped = SHIPPED
-    Complete = COMPLETE
+    Completed = COMPLETED
     Canceled = CANCELED
-    RefundApplied = REFUND_APPLIED

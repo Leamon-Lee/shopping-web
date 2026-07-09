@@ -1,0 +1,257 @@
+@startuml classes_online_shopping_entities
+set namespaceSeparator none
+top to bottom direction
+class "Account" as online_shopping.domain.entities.account.Account {
+  user_name : Username
+  password : Password
+  status : AccountStatus
+  name : Name
+  shipping_address : Address
+  email : Email
+  phone : Phone
+  credit_card : CreditCard | None
+  electronic_bank_transfer : ElectronicBankTransfer | None
+  __repr__() -> str
+  block() -> None
+  get_shipping_address() -> Address
+}
+class "Admin" as online_shopping.domain.entities.admin.Admin {
+  account : Account
+  products : list[Product]
+  product_categories : list[ProductCategory]
+  add_new_product_category(category: ProductCategory) -> ProductCategory
+  add_product(product: Product) -> Product
+  block_user(account: Account) -> bool
+  modify_product_category(category: ProductCategory) -> ProductCategory
+  review_product(product: Product) -> bool
+  review_shop(shop: Shop) -> bool
+}
+class "CartItem" as online_shopping.domain.entities.cart_item.CartItem {
+  item_id : CartItemId | None
+  price : Price
+  product : Product
+  product_variant : ProductVariant
+  quantity : Quantity
+  subtotal : float
+  update_quantity(quantity: Quantity) -> bool
+}
+class "Catalog" as online_shopping.domain.entities.catalog.Catalog {
+  last_updated : CreationDate
+  product_names : ProductNameMap
+  product_categories : ProductCategoryMap
+  name : Name
+  products : list[Product]
+  search_products_by_category(category: CategoryName) -> list[Product]
+  search_products_by_name(name: ProductName) -> list[Product]
+}
+class "CreditCard" as online_shopping.domain.entities.credit_card.CreditCard {
+  name_on_card : Name
+  card_number : CardNumber
+  code : Code
+  billing_address : BillingAddress
+}
+class "Customer" as online_shopping.domain.entities.customer.Customer {
+  account : Account
+  shopping_cart : ShoppingCart
+  orders : tuple[Order, ...]
+  add_product_review(product: Product) -> ProductReview
+  get_shopping_cart() -> ShoppingCart
+  place_order() -> Order
+}
+class "ElectronicBankTransfer" as online_shopping.domain.entities.electronic_bank_transfer.ElectronicBankTransfer {
+  account_number : AccountNumber
+  bank_name : BankName
+  routing_number : RoutingNumber
+}
+class "Guest" as online_shopping.domain.entities.guest.Guest {
+  register_account(account: Account) -> Account
+}
+class "Manager" as online_shopping.domain.entities.manager.Manager {
+  account : Account
+  managed_shops : tuple[Shop, ...]
+  add_product_to_shop(shop: Shop, product: Product) -> Product
+  add_shop(shop: Shop) -> Shop
+  list_shop_products(shop: Shop) -> tuple[Product, ...]
+  remove_product_from_shop(shop: Shop, product: Product) -> bool
+  update_product_in_shop(shop: Shop, product: Product) -> Product
+}
+class "Notification" as online_shopping.domain.entities.notification.Notification {
+  notification_id : NotificationId
+  channel : NotificationChannel
+  receiver : Contact
+  created_on : CreationDate
+  content : NotificationContent
+  send_notification() -> bool
+}
+class "Order" as online_shopping.domain.entities.order.Order {
+  currency_code : CurrencyCode
+  display_order_id : DisplayOrderId | None
+  email : CustomerEmail | None
+  items : tuple[OrderItem, ...]
+  order_logs : tuple[OrderLog, ...]
+  shipments : tuple[Shipment, ...]
+  order_date : OrderDate | None
+  order_id : OrderId | None
+  order_number : OrderNumber
+  payment : Payment | None
+  refund_status : RefundStatus
+  region_id : RegionId | None
+  status : OrderStatus
+  subtotal : float
+  send_for_shipment() -> bool
+}
+class "OrderItem" as online_shopping.domain.entities.order_item.OrderItem {
+  order_item_id : OrderItemId | None
+  product_id : ProductId
+  product_name : ProductName
+  product_variant_id : ProductVariantId
+  quantity : Quantity
+  subtotal : float
+  unit_price : Price
+}
+class "OrderLog" as online_shopping.domain.entities.order_log.OrderLog {
+  creation_date : CreationDate
+  status : OrderStatus
+  notifications : list[Notification]
+}
+class "Payment" as online_shopping.domain.entities.payment.Payment {
+  amount : Amount | None
+  currency : PaymentCurrencyCode | None
+  method : PaymentMethod | None
+  payment_id : PaymentId | None
+  status : PaymentStatus
+  transaction : PaymentTransaction | None
+  process_payment() -> PaymentStatus
+}
+class "PaymentMethod" as online_shopping.domain.entities.payment_method.PaymentMethod {
+  method_type : PaymentMethodType
+  credit_card : CreditCard | None
+  electronic_bank_transfer : ElectronicBankTransfer | None
+}
+class "PaymentTransaction" as online_shopping.domain.entities.payment_transaction.PaymentTransaction {
+  transaction_id : TransactionId | None
+  provider : PaymentProvider | None
+  status : PaymentStatus
+  created_on : CreationDate | None
+}
+class "Product" as online_shopping.domain.entities.product.Product {
+  category : ProductCategory
+  description : ProductDescription
+  images : tuple[ProductImage, ...]
+  metadata : dict[str, object]
+  name : ProductName
+  price : Price
+  product_id : ProductId | None
+  slug : ProductSlug
+  variants : tuple[ProductVariant, ...]
+  find_variant(variant_id: ProductVariantId) -> ProductVariant | None
+  get_available_count() -> ProductCount
+  get_default_variant() -> ProductVariant
+  is_available(requested_quantity: int) -> bool
+}
+class "ProductCategory" as online_shopping.domain.entities.product_category.ProductCategory {
+  category_id : CategoryId | None
+  description : CategoryDescription
+  name : CategoryName
+  slug : CategorySlug
+}
+class "ProductImage" as online_shopping.domain.entities.product_image.ProductImage {
+  image_id : ProductImageId
+  rank : int
+  url : ProductImageUrl
+}
+class "ProductReview" as online_shopping.domain.entities.product_review.ProductReview {
+  rating : Rating
+  review : ReviewContent
+  product : Product
+  get_rating() -> Rating
+}
+class "ProductVariant" as online_shopping.domain.entities.product_variant.ProductVariant {
+  allows_backorder : bool
+  currency_code : CurrencyCode
+  inventory_count : ProductCount
+  manages_inventory : bool
+  name : ProductVariantName
+  price : Price
+  sku : Sku
+  variant_id : ProductVariantId
+  is_available(requested_quantity: int) -> bool
+}
+class "Shipment" as online_shopping.domain.entities.shipment.Shipment {
+  shipment_date : ShipmentDate
+  estimated_arrival : EstimatedArrival
+  shipment_method : ShipmentMethod
+  shipment_logs : list[ShipmentLog]
+  add_shipment_log() -> bool
+}
+class "ShipmentLog" as online_shopping.domain.entities.shipment_log.ShipmentLog {
+  status : ShipmentStatus
+  creation_date : CreationDate
+  notifications : list[Notification]
+}
+class "Shop" as online_shopping.domain.entities.shop.Shop {
+  shop_id : ShopId | None
+  name : ShopName
+  manager : Manager
+  catalog : Catalog | None
+  products : tuple[Product, ...]
+  product_categories : tuple[ProductCategory, ...]
+  assign_manager(manager: Manager) -> Manager
+  add_product(product: Product) -> Product
+  add_product_category(category: ProductCategory) -> ProductCategory
+  remove_product(product: Product) -> bool
+  update_product(product: Product) -> Product
+}
+class "ShoppingCart" as online_shopping.domain.entities.shopping_cart.ShoppingCart {
+  cart_id : CartId | None
+  currency_code : CurrencyCode
+  email : CustomerEmail | None
+  items : tuple[CartItem, ...]
+  locale : LocaleCode | None
+  region_id : RegionId | None
+  subtotal : float
+  total_quantity : int
+  add_item(item: CartItem) -> bool
+  get_items() -> list[CartItem]
+  remove_item(item_id: CartItemId) -> bool
+}
+online_shopping.domain.entities.admin.Admin *-- online_shopping.domain.entities.account.Account
+online_shopping.domain.entities.admin.Admin --> online_shopping.domain.entities.shop.Shop
+online_shopping.domain.entities.admin.Admin --> online_shopping.domain.entities.product.Product
+online_shopping.domain.entities.customer.Customer *-- online_shopping.domain.entities.account.Account
+online_shopping.domain.entities.catalog.Catalog ..> online_shopping.domain.entities.product.Product
+online_shopping.domain.entities.account.Account o-- online_shopping.domain.entities.credit_card.CreditCard
+online_shopping.domain.entities.account.Account o-- online_shopping.domain.entities.electronic_bank_transfer.ElectronicBankTransfer
+online_shopping.domain.entities.admin.Admin o-- online_shopping.domain.entities.product.Product
+online_shopping.domain.entities.admin.Admin o-- online_shopping.domain.entities.product_category.ProductCategory
+online_shopping.domain.entities.customer.Customer *-- online_shopping.domain.entities.shopping_cart.ShoppingCart
+online_shopping.domain.entities.customer.Customer o-- online_shopping.domain.entities.order.Order
+online_shopping.domain.entities.customer.Customer --> online_shopping.domain.entities.product.Product
+online_shopping.domain.entities.customer.Customer ..> online_shopping.domain.entities.product_review.ProductReview
+online_shopping.domain.entities.guest.Guest ..> online_shopping.domain.entities.account.Account
+online_shopping.domain.entities.shopping_cart.ShoppingCart *-- online_shopping.domain.entities.cart_item.CartItem
+online_shopping.domain.entities.cart_item.CartItem --> online_shopping.domain.entities.product.Product
+online_shopping.domain.entities.cart_item.CartItem --> online_shopping.domain.entities.product_variant.ProductVariant
+online_shopping.domain.entities.order.Order *-- online_shopping.domain.entities.order_item.OrderItem
+online_shopping.domain.entities.order.Order *-- online_shopping.domain.entities.order_log.OrderLog
+online_shopping.domain.entities.order.Order *-- online_shopping.domain.entities.shipment.Shipment
+online_shopping.domain.entities.order.Order o-- online_shopping.domain.entities.payment.Payment
+online_shopping.domain.entities.order_log.OrderLog o-- online_shopping.domain.entities.notification.Notification
+online_shopping.domain.entities.payment.Payment o-- online_shopping.domain.entities.payment_method.PaymentMethod
+online_shopping.domain.entities.payment.Payment *-- online_shopping.domain.entities.payment_transaction.PaymentTransaction
+online_shopping.domain.entities.payment_method.PaymentMethod o-- online_shopping.domain.entities.credit_card.CreditCard
+online_shopping.domain.entities.payment_method.PaymentMethod o-- online_shopping.domain.entities.electronic_bank_transfer.ElectronicBankTransfer
+online_shopping.domain.entities.product.Product o-- online_shopping.domain.entities.product_category.ProductCategory
+online_shopping.domain.entities.product.Product *-- online_shopping.domain.entities.product_image.ProductImage
+online_shopping.domain.entities.product.Product *-- online_shopping.domain.entities.product_variant.ProductVariant
+online_shopping.domain.entities.product_review.ProductReview --> online_shopping.domain.entities.product.Product
+online_shopping.domain.entities.shipment.Shipment *-- online_shopping.domain.entities.shipment_log.ShipmentLog
+online_shopping.domain.entities.shipment_log.ShipmentLog o-- online_shopping.domain.entities.notification.Notification
+online_shopping.domain.entities.manager.Manager *-- online_shopping.domain.entities.account.Account
+online_shopping.domain.entities.manager.Manager o-- online_shopping.domain.entities.shop.Shop
+online_shopping.domain.entities.manager.Manager --> online_shopping.domain.entities.product.Product
+online_shopping.domain.entities.shop.Shop o-- online_shopping.domain.entities.manager.Manager
+online_shopping.domain.entities.shop.Shop o-- online_shopping.domain.entities.catalog.Catalog
+online_shopping.domain.entities.shop.Shop o-- online_shopping.domain.entities.product.Product
+online_shopping.domain.entities.shop.Shop o-- online_shopping.domain.entities.product_category.ProductCategory
+@enduml

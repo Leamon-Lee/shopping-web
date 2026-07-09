@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from online_shopping.domain.enums.order_status import OrderStatus
+from online_shopping.domain.enums.refund_status import RefundStatus
 from online_shopping.domain.value_objects.order_values import (
     DisplayOrderId,
     OrderDate,
@@ -13,7 +14,7 @@ from online_shopping.domain.value_objects.product_values import CurrencyCode
 from online_shopping.domain.value_objects.store_values import CustomerEmail, RegionId
 
 if TYPE_CHECKING:
-    from online_shopping.domain.entities.item import Item
+    from online_shopping.domain.entities.order_item import OrderItem
     from online_shopping.domain.entities.order_log import OrderLog
     from online_shopping.domain.entities.payment import Payment
     from online_shopping.domain.entities.shipment import Shipment
@@ -23,9 +24,10 @@ class Order:
     def __init__(
         self,
         order_number: OrderNumber | OrderId,
-        status: OrderStatus = OrderStatus.PENDING,
+        status: OrderStatus = OrderStatus.CREATED,
+        refund_status: RefundStatus = RefundStatus.NONE,
         order_date: OrderDate | None = None,
-        items: list[Item] | None = None,
+        items: list[OrderItem] | None = None,
         order_logs: list[OrderLog] | None = None,
         shipments: list[Shipment] | None = None,
         payment: Payment | None = None,
@@ -42,6 +44,7 @@ class Order:
         self.__display_order_id = display_order_id
         self.__order_number = order_number
         self.__status = status
+        self.__refund_status = refund_status
         self.__order_date = order_date
         self.__items = items or []
         self.__order_logs = order_logs or []
@@ -68,11 +71,15 @@ class Order:
         return self.__status
 
     @property
+    def refund_status(self) -> RefundStatus:
+        return self.__refund_status
+
+    @property
     def order_date(self) -> OrderDate | None:
         return self.__order_date
 
     @property
-    def items(self) -> tuple[Item, ...]:
+    def items(self) -> tuple[OrderItem, ...]:
         return tuple(self.__items)
 
     @property
@@ -96,7 +103,7 @@ class Order:
         return round(sum(item.subtotal for item in self.__items), 2)
 
     def send_for_shipment(self) -> bool:
-        if self.__status != OrderStatus.PENDING:
+        if self.__status != OrderStatus.PROCESSING:
             return False
-        self.__status = OrderStatus.UNSHIPPED
+        self.__status = OrderStatus.SHIPPED
         return True

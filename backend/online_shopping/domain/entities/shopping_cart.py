@@ -1,4 +1,4 @@
-from online_shopping.domain.entities.item import Item
+from online_shopping.domain.entities.cart_item import CartItem
 from online_shopping.domain.value_objects.product_values import CurrencyCode
 from online_shopping.domain.value_objects.store_values import (
     CartId,
@@ -12,7 +12,7 @@ from online_shopping.domain.value_objects.store_values import (
 class ShoppingCart:
     def __init__(
         self,
-        items: list[Item] | None = None,
+        items: list[CartItem] | None = None,
         cart_id: CartId | None = None,
         region_id: RegionId | None = None,
         currency_code: CurrencyCode = CurrencyCode("cny"),
@@ -47,7 +47,7 @@ class ShoppingCart:
         return self.__locale
 
     @property
-    def items(self) -> tuple[Item, ...]:
+    def items(self) -> tuple[CartItem, ...]:
         return tuple(self.__items)
 
     @property
@@ -58,14 +58,15 @@ class ShoppingCart:
     def subtotal(self) -> float:
         return round(sum(item.subtotal for item in self.__items), 2)
 
-    def add_item(self, item: Item) -> bool:
-        if not item.product.is_available(item.quantity.value):
+    def add_item(self, item: CartItem) -> bool:
+        if not item.product_variant.is_available(item.quantity.value):
             return False
         existing_item = next(
             (
                 cart_item
                 for cart_item in self.__items
-                if cart_item.product_variant_id.value == item.product_variant_id.value
+                if cart_item.product_variant.variant_id.value
+                == item.product_variant.variant_id.value
             ),
             None,
         )
@@ -85,5 +86,5 @@ class ShoppingCart:
         ]
         return len(self.__items) != before_count
 
-    def get_items(self) -> list[Item]:
+    def get_items(self) -> list[CartItem]:
         return list(self.__items)

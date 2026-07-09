@@ -1,8 +1,8 @@
 from .account_values import Password, Username
 from .address import Address, ShippingAddress
 from .customer_values import CustomerId, Email, Name, Phone
-from .notification_values import NotificationContent, NotificationId
-from .order_values import CreationDate, OrderDate, OrderId, OrderNumber
+from .notification_values import Contact, NotificationContent, NotificationId
+from .order_values import CreationDate, OrderDate, OrderId, OrderItemId, OrderNumber
 from .payment_values import (
     AccountNumber,
     Amount,
@@ -10,12 +10,17 @@ from .payment_values import (
     BillingAddress,
     CardNumber,
     Code,
+    PaymentId,
+    PaymentProvider,
     RoutingNumber,
     SecurityCode,
+    TransactionId,
 )
 from .product_values import (
     CategoryDescription,
+    CategoryId,
     CategoryName,
+    CategorySlug,
     Price,
     ProductCategoryMap,
     ProductCount,
@@ -28,6 +33,7 @@ from .product_values import (
     ReviewContent,
 )
 from .shipment_values import EstimatedArrival, ShipmentDate, ShipmentMethod
+from .store_values import ShopId, ShopName
 
 __all__ = [
     "Address",
@@ -37,8 +43,11 @@ __all__ = [
     "BillingAddress",
     "CardNumber",
     "CategoryDescription",
+    "CategoryId",
     "CategoryName",
+    "CategorySlug",
     "Code",
+    "Contact",
     "CreationDate",
     "CustomerId",
     "Email",
@@ -48,8 +57,11 @@ __all__ = [
     "NotificationId",
     "OrderDate",
     "OrderId",
+    "OrderItemId",
     "OrderNumber",
     "Password",
+    "PaymentId",
+    "PaymentProvider",
     "Phone",
     "Price",
     "ProductCategoryMap",
@@ -66,5 +78,8 @@ __all__ = [
     "ShipmentDate",
     "ShipmentMethod",
     "ShippingAddress",
+    "ShopId",
+    "ShopName",
+    "TransactionId",
     "Username",
 ]

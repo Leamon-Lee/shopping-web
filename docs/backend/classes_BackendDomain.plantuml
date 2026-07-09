@@ -1,0 +1,171 @@
+@startuml classes_BackendDomain
+set namespaceSeparator none
+class "online_shopping.domain.entities.account.Account" as online_shopping.domain.entities.account.Account {
+}
+class "online_shopping.domain.entities.admin.Admin" as online_shopping.domain.entities.admin.Admin {
+}
+class "online_shopping.domain.entities.cart_item.CartItem" as online_shopping.domain.entities.cart_item.CartItem {
+}
+class "online_shopping.domain.entities.catalog.Catalog" as online_shopping.domain.entities.catalog.Catalog {
+}
+class "online_shopping.domain.entities.credit_card.CreditCard" as online_shopping.domain.entities.credit_card.CreditCard {
+}
+class "online_shopping.domain.entities.customer.Customer" as online_shopping.domain.entities.customer.Customer {
+}
+class "online_shopping.domain.entities.electronic_bank_transfer.ElectronicBankTransfer" as online_shopping.domain.entities.electronic_bank_transfer.ElectronicBankTransfer {
+}
+class "online_shopping.domain.entities.guest.Guest" as online_shopping.domain.entities.guest.Guest {
+}
+class "online_shopping.domain.entities.notification.Notification" as online_shopping.domain.entities.notification.Notification {
+}
+class "online_shopping.domain.entities.order.Order" as online_shopping.domain.entities.order.Order {
+}
+class "online_shopping.domain.entities.order_item.OrderItem" as online_shopping.domain.entities.order_item.OrderItem {
+}
+class "online_shopping.domain.entities.order_log.OrderLog" as online_shopping.domain.entities.order_log.OrderLog {
+}
+class "online_shopping.domain.entities.payment.Payment" as online_shopping.domain.entities.payment.Payment {
+}
+class "online_shopping.domain.entities.payment_method.PaymentMethod" as online_shopping.domain.entities.payment_method.PaymentMethod {
+}
+class "online_shopping.domain.entities.payment_transaction.PaymentTransaction" as online_shopping.domain.entities.payment_transaction.PaymentTransaction {
+}
+class "online_shopping.domain.entities.product.Product" as online_shopping.domain.entities.product.Product {
+}
+class "online_shopping.domain.entities.product_category.ProductCategory" as online_shopping.domain.entities.product_category.ProductCategory {
+}
+class "online_shopping.domain.entities.product_image.ProductImage" as online_shopping.domain.entities.product_image.ProductImage {
+}
+class "online_shopping.domain.entities.product_review.ProductReview" as online_shopping.domain.entities.product_review.ProductReview {
+}
+class "online_shopping.domain.entities.product_variant.ProductVariant" as online_shopping.domain.entities.product_variant.ProductVariant {
+}
+class "online_shopping.domain.entities.shipment.Shipment" as online_shopping.domain.entities.shipment.Shipment {
+}
+class "online_shopping.domain.entities.shipment_log.ShipmentLog" as online_shopping.domain.entities.shipment_log.ShipmentLog {
+}
+class "online_shopping.domain.entities.shopping_cart.ShoppingCart" as online_shopping.domain.entities.shopping_cart.ShoppingCart {
+}
+class "online_shopping.domain.value_objects.account_values.Password" as online_shopping.domain.value_objects.account_values.Password {
+}
+class "online_shopping.domain.value_objects.account_values.Username" as online_shopping.domain.value_objects.account_values.Username {
+}
+class "online_shopping.domain.value_objects.address.Address" as online_shopping.domain.value_objects.address.Address {
+}
+class "online_shopping.domain.value_objects.customer_values.CustomerId" as online_shopping.domain.value_objects.customer_values.CustomerId {
+}
+class "online_shopping.domain.value_objects.customer_values.Email" as online_shopping.domain.value_objects.customer_values.Email {
+}
+class "online_shopping.domain.value_objects.customer_values.Name" as online_shopping.domain.value_objects.customer_values.Name {
+}
+class "online_shopping.domain.value_objects.customer_values.Phone" as online_shopping.domain.value_objects.customer_values.Phone {
+}
+class "online_shopping.domain.value_objects.notification_values.Contact" as online_shopping.domain.value_objects.notification_values.Contact {
+}
+class "online_shopping.domain.value_objects.notification_values.Message" as online_shopping.domain.value_objects.notification_values.Message {
+}
+class "online_shopping.domain.value_objects.notification_values.NotificationContent" as online_shopping.domain.value_objects.notification_values.NotificationContent {
+}
+class "online_shopping.domain.value_objects.notification_values.NotificationId" as online_shopping.domain.value_objects.notification_values.NotificationId {
+}
+class "online_shopping.domain.value_objects.order_values.CreationDate" as online_shopping.domain.value_objects.order_values.CreationDate {
+}
+class "online_shopping.domain.value_objects.order_values.DisplayOrderId" as online_shopping.domain.value_objects.order_values.DisplayOrderId {
+}
+class "online_shopping.domain.value_objects.order_values.OrderDate" as online_shopping.domain.value_objects.order_values.OrderDate {
+}
+class "online_shopping.domain.value_objects.order_values.OrderId" as online_shopping.domain.value_objects.order_values.OrderId {
+}
+class "online_shopping.domain.value_objects.order_values.OrderItemId" as online_shopping.domain.value_objects.order_values.OrderItemId {
+}
+class "online_shopping.domain.value_objects.order_values.OrderNumber" as online_shopping.domain.value_objects.order_values.OrderNumber {
+}
+class "online_shopping.domain.value_objects.payment_values.AccountNumber" as online_shopping.domain.value_objects.payment_values.AccountNumber {
+}
+class "online_shopping.domain.value_objects.payment_values.Amount" as online_shopping.domain.value_objects.payment_values.Amount {
+}
+class "online_shopping.domain.value_objects.payment_values.BankName" as online_shopping.domain.value_objects.payment_values.BankName {
+}
+class "online_shopping.domain.value_objects.payment_values.CardNumber" as online_shopping.domain.value_objects.payment_values.CardNumber {
+}
+class "online_shopping.domain.value_objects.payment_values.PaymentId" as online_shopping.domain.value_objects.payment_values.PaymentId {
+}
+class "online_shopping.domain.value_objects.payment_values.PaymentProvider" as online_shopping.domain.value_objects.payment_values.PaymentProvider {
+}
+class "online_shopping.domain.value_objects.payment_values.RoutingNumber" as online_shopping.domain.value_objects.payment_values.RoutingNumber {
+}
+class "online_shopping.domain.value_objects.payment_values.SecurityCode" as online_shopping.domain.value_objects.payment_values.SecurityCode {
+}
+class "online_shopping.domain.value_objects.payment_values.TransactionId" as online_shopping.domain.value_objects.payment_values.TransactionId {
+}
+class "online_shopping.domain.value_objects.product_values.CategoryDescription" as online_shopping.domain.value_objects.product_values.CategoryDescription {
+}
+class "online_shopping.domain.value_objects.product_values.CategoryId" as online_shopping.domain.value_objects.product_values.CategoryId {
+}
+class "online_shopping.domain.value_objects.product_values.CategoryName" as online_shopping.domain.value_objects.product_values.CategoryName {
+}
+class "online_shopping.domain.value_objects.product_values.CategorySlug" as online_shopping.domain.value_objects.product_values.CategorySlug {
+}
+class "online_shopping.domain.value_objects.product_values.CurrencyCode" as online_shopping.domain.value_objects.product_values.CurrencyCode {
+}
+class "online_shopping.domain.value_objects.product_values.Price" as online_shopping.domain.value_objects.product_values.Price {
+}
+class "online_shopping.domain.value_objects.product_values.ProductCategoryMap" as online_shopping.domain.value_objects.product_values.ProductCategoryMap {
+}
+class "online_shopping.domain.value_objects.product_values.ProductCount" as online_shopping.domain.value_objects.product_values.ProductCount {
+}
+class "online_shopping.domain.value_objects.product_values.ProductDescription" as online_shopping.domain.value_objects.product_values.ProductDescription {
+}
+class "online_shopping.domain.value_objects.product_values.ProductId" as online_shopping.domain.value_objects.product_values.ProductId {
+}
+class "online_shopping.domain.value_objects.product_values.ProductImageId" as online_shopping.domain.value_objects.product_values.ProductImageId {
+}
+class "online_shopping.domain.value_objects.product_values.ProductImageUrl" as online_shopping.domain.value_objects.product_values.ProductImageUrl {
+}
+class "online_shopping.domain.value_objects.product_values.ProductName" as online_shopping.domain.value_objects.product_values.ProductName {
+}
+class "online_shopping.domain.value_objects.product_values.ProductNameMap" as online_shopping.domain.value_objects.product_values.ProductNameMap {
+}
+class "online_shopping.domain.value_objects.product_values.ProductSlug" as online_shopping.domain.value_objects.product_values.ProductSlug {
+}
+class "online_shopping.domain.value_objects.product_values.ProductVariantId" as online_shopping.domain.value_objects.product_values.ProductVariantId {
+}
+class "online_shopping.domain.value_objects.product_values.ProductVariantName" as online_shopping.domain.value_objects.product_values.ProductVariantName {
+}
+class "online_shopping.domain.value_objects.product_values.Quantity" as online_shopping.domain.value_objects.product_values.Quantity {
+}
+class "online_shopping.domain.value_objects.product_values.Rating" as online_shopping.domain.value_objects.product_values.Rating {
+}
+class "online_shopping.domain.value_objects.product_values.ReviewContent" as online_shopping.domain.value_objects.product_values.ReviewContent {
+}
+class "online_shopping.domain.value_objects.product_values.Sku" as online_shopping.domain.value_objects.product_values.Sku {
+}
+class "online_shopping.domain.value_objects.shipment_values.EstimatedArrival" as online_shopping.domain.value_objects.shipment_values.EstimatedArrival {
+}
+class "online_shopping.domain.value_objects.shipment_values.ShipmentDate" as online_shopping.domain.value_objects.shipment_values.ShipmentDate {
+}
+class "online_shopping.domain.value_objects.shipment_values.ShipmentMethod" as online_shopping.domain.value_objects.shipment_values.ShipmentMethod {
+}
+class "online_shopping.domain.value_objects.shipment_values.TrackingNumber" as online_shopping.domain.value_objects.shipment_values.TrackingNumber {
+}
+class "online_shopping.domain.value_objects.store_values.CartId" as online_shopping.domain.value_objects.store_values.CartId {
+}
+class "online_shopping.domain.value_objects.store_values.CartItemId" as online_shopping.domain.value_objects.store_values.CartItemId {
+}
+class "online_shopping.domain.value_objects.store_values.CustomerEmail" as online_shopping.domain.value_objects.store_values.CustomerEmail {
+}
+class "online_shopping.domain.value_objects.store_values.LocaleCode" as online_shopping.domain.value_objects.store_values.LocaleCode {
+}
+class "online_shopping.domain.value_objects.store_values.RegionId" as online_shopping.domain.value_objects.store_values.RegionId {
+}
+class "online_shopping.services.catalog_service.CatalogService" as online_shopping.services.catalog_service.CatalogService {
+}
+class "online_shopping.services.order_service.OrderService" as online_shopping.services.order_service.OrderService {
+}
+class "online_shopping.services.payment_service.PaymentService" as online_shopping.services.payment_service.PaymentService {
+}
+class "online_shopping.services.shipment_service.ShipmentService" as online_shopping.services.shipment_service.ShipmentService {
+}
+online_shopping.domain.entities.admin.Admin --|> online_shopping.domain.entities.account.Account
+online_shopping.domain.entities.customer.Customer --|> online_shopping.domain.entities.account.Account
+@enduml

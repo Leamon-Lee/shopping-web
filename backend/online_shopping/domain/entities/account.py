@@ -8,14 +8,13 @@ from online_shopping.domain.value_objects.address import Address
 from online_shopping.domain.value_objects.customer_values import Email, Name, Phone
 
 if TYPE_CHECKING:
-    from online_shopping.domain.entities.admin import Admin
     from online_shopping.domain.entities.credit_card import CreditCard
-    from online_shopping.domain.entities.electronic_bank_transfer import ElectronicBankTransfer
-    from online_shopping.domain.entities.member import Member
+    from online_shopping.domain.entities.electronic_bank_transfer import (
+        ElectronicBankTransfer,
+    )
 
 
 class Account:
-    # 创建账户实体，并建立账户与支付方式、会员、管理员之间的关系。
     def __init__(
         self,
         user_name: Username,
@@ -27,9 +26,7 @@ class Account:
         phone: Phone,
         credit_card: CreditCard | None = None,
         electronic_bank_transfer: ElectronicBankTransfer | None = None,
-        members: list[Member] | None = None,
-        admins: list[Admin] | None = None,
-    ):
+    ) -> None:
         self.__user_name = user_name
         self.__password = password
         self.__status = status
@@ -39,19 +36,16 @@ class Account:
         self.__phone = phone
         self.__credit_card = credit_card
         self.__electronic_bank_transfer = electronic_bank_transfer
-        self.__members = members or []
-        self.__admins = admins or []
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Account(user_name={self.__user_name}, status={self.__status}, name={self.__name})"
-    # 返回账户保存的收货地址，后续可用于下单和配送流程。
+
+    @property
+    def status(self) -> AccountStatus:
+        return self.__status
+
+    def block(self) -> None:
+        self.__status = AccountStatus.BLOCKED
+
     def get_shipping_address(self) -> Address:
         return self.__shipping_address
-
-    # 为账户添加商品评价，后续应校验账户权限、商品是否可评价以及评价内容。
-    def add_product_review(self) -> bool:
-        pass
-
-    # 通过账户添加新商品，后续应校验账户角色、商品信息和分类关系。
-    def add_product(self) -> bool:
-        pass
