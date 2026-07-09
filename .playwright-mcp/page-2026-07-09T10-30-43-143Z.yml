@@ -1,0 +1,177 @@
+- main [ref=f2e2]:
+  - navigation [ref=f2e5]:
+    - button "Menu" [ref=f2e12] [cursor=pointer]
+    - link "Medusa Store" [ref=f2e14] [cursor=pointer]:
+      - /url: /cn
+    - link "Cart (0)" [ref=f2e16] [cursor=pointer]:
+      - /url: /cn/cart
+  - generic [ref=f2e17]:
+    - generic [ref=f2e19]:
+      - paragraph [ref=f2e20]: Sort by
+      - radiogroup [ref=f2e21]:
+        - generic [ref=f2e22]:
+          - img [ref=f2e23]
+          - radio [checked]
+          - generic [ref=f2e25]: Latest Arrivals
+        - generic [ref=f2e26]:
+          - radio
+          - generic [ref=f2e27]: "Price: Low -> High"
+        - generic [ref=f2e28]:
+          - radio
+          - generic [ref=f2e29]: "Price: High -> Low"
+    - generic [ref=f2e30]:
+      - heading "All products" [level=1] [ref=f2e32]
+      - list [ref=f2e33]:
+        - listitem [ref=f2e34]:
+          - link "Thumbnail ACG LDV CN¥130.00 Men's Shoes" [ref=f2e35] [cursor=pointer]:
+            - /url: /cn/products/acg-ldv
+            - generic [ref=f2e36]:
+              - img "Thumbnail" [ref=f2e38]
+              - generic [ref=f2e39]:
+                - generic [ref=f2e40]: ACG LDV
+                - generic [ref=f2e41]: CN¥130.00
+              - paragraph [ref=f2e42]: Men's Shoes
+        - listitem [ref=f2e43]:
+          - link "Thumbnail ACG Zegama Hike CN¥190.00 Men's Shoes" [ref=f2e44] [cursor=pointer]:
+            - /url: /cn/products/acg-zegama-hike
+            - generic [ref=f2e45]:
+              - img "Thumbnail" [ref=f2e47]
+              - generic [ref=f2e48]:
+                - generic [ref=f2e49]: ACG Zegama Hike
+                - generic [ref=f2e50]: CN¥190.00
+              - paragraph [ref=f2e51]: Men's Shoes
+        - listitem [ref=f2e52]:
+          - link "Thumbnail ACG Zegama Trail CN¥180.00 Men's Shoes" [ref=f2e53] [cursor=pointer]:
+            - /url: /cn/products/acg-zegama-trail
+            - generic [ref=f2e54]:
+              - img "Thumbnail" [ref=f2e56]
+              - generic [ref=f2e57]:
+                - generic [ref=f2e58]: ACG Zegama Trail
+                - generic [ref=f2e59]: CN¥180.00
+              - paragraph [ref=f2e60]: Men's Shoes
+        - listitem [ref=f2e61]:
+          - link "Thumbnail Air Jordan 1 Mid CN¥97.97 Men's Shoes" [ref=f2e62] [cursor=pointer]:
+            - /url: /cn/products/air-jordan-1-mid
+            - generic [ref=f2e63]:
+              - img "Thumbnail" [ref=f2e65]
+              - generic [ref=f2e66]:
+                - generic [ref=f2e67]: Air Jordan 1 Mid
+                - generic [ref=f2e68]: CN¥97.97
+              - paragraph [ref=f2e69]: Men's Shoes
+        - listitem [ref=f2e70]:
+          - link "Thumbnail Air Jordan 3 Retro \"True Blue\" CN¥230.00 Men's Shoes" [ref=f2e71] [cursor=pointer]:
+            - /url: /cn/products/air-jordan-3-retro-true-blue
+            - generic [ref=f2e72]:
+              - img "Thumbnail" [ref=f2e74]
+              - generic [ref=f2e75]:
+                - generic [ref=f2e76]: Air Jordan 3 Retro "True Blue"
+                - generic [ref=f2e77]: CN¥230.00
+              - paragraph [ref=f2e78]: Men's Shoes
+        - listitem [ref=f2e79]:
+          - link "Thumbnail Air Jordan 4 \"Toro\" CN¥220.00 Men's Shoes" [ref=f2e80] [cursor=pointer]:
+            - /url: /cn/products/air-jordan-4-toro
+            - generic [ref=f2e81]:
+              - img "Thumbnail" [ref=f2e83]
+              - generic [ref=f2e84]:
+                - generic [ref=f2e85]: Air Jordan 4 "Toro"
+                - generic [ref=f2e86]: CN¥220.00
+              - paragraph [ref=f2e87]: Men's Shoes
+        - listitem [ref=f2e88]:
+          - link "Thumbnail Air Jordan 4 RM CN¥87.97 Men's Shoes" [ref=f2e89] [cursor=pointer]:
+            - /url: /cn/products/air-jordan-4-rm
+            - generic [ref=f2e90]:
+              - img "Thumbnail" [ref=f2e92]
+              - generic [ref=f2e93]:
+                - generic [ref=f2e94]: Air Jordan 4 RM
+                - generic [ref=f2e95]: CN¥87.97
+              - paragraph [ref=f2e96]: Men's Shoes
+        - listitem [ref=f2e97]:
+          - link "Thumbnail Air Jordan 7 Retro \"Miró\" CN¥255.00 Men's Shoes" [ref=f2e98] [cursor=pointer]:
+            - /url: /cn/products/air-jordan-7-retro-mir
+            - generic [ref=f2e99]:
+              - img "Thumbnail" [ref=f2e101]
+              - generic [ref=f2e102]:
+                - generic [ref=f2e103]: Air Jordan 7 Retro "Miró"
+                - generic [ref=f2e104]: CN¥255.00
+              - paragraph [ref=f2e105]: Men's Shoes
+        - listitem [ref=f2e106]:
+          - link "Thumbnail Air Max 1 \"Royals\" CN¥150.00 Men's Shoes" [ref=f2e107] [cursor=pointer]:
+            - /url: /cn/products/air-max-1-royals
+            - generic [ref=f2e108]:
+              - img "Thumbnail" [ref=f2e110]
+              - generic [ref=f2e111]:
+                - generic [ref=f2e112]: Air Max 1 "Royals"
+                - generic [ref=f2e113]: CN¥150.00
+              - paragraph [ref=f2e114]: Men's Shoes
+        - listitem [ref=f2e115]:
+          - link "Thumbnail AIRism Bra Camisole CN¥19.90 Women's Tops" [ref=f2e116] [cursor=pointer]:
+            - /url: /cn/products/airism-bra-camisole
+            - generic [ref=f2e117]:
+              - img "Thumbnail" [ref=f2e119]
+              - generic [ref=f2e120]:
+                - generic [ref=f2e121]: AIRism Bra Camisole
+                - generic [ref=f2e122]: CN¥19.90
+              - paragraph [ref=f2e123]: Women's Tops
+        - listitem [ref=f2e124]:
+          - link "Thumbnail AIRism Cotton Oversized T-Shirt CN¥19.90 Men's T-Shirts" [ref=f2e125] [cursor=pointer]:
+            - /url: /cn/products/airism-cotton-oversized-t-shirt
+            - generic [ref=f2e126]:
+              - img "Thumbnail" [ref=f2e128]
+              - generic [ref=f2e129]:
+                - generic [ref=f2e130]: AIRism Cotton Oversized T-Shirt
+                - generic [ref=f2e131]: CN¥19.90
+              - paragraph [ref=f2e132]: Men's T-Shirts
+        - listitem [ref=f2e133]:
+          - link "Thumbnail AIRism Sleeveless Dress CN¥29.90 Women's Dresses" [ref=f2e134] [cursor=pointer]:
+            - /url: /cn/products/airism-sleeveless-dress
+            - generic [ref=f2e135]:
+              - img "Thumbnail" [ref=f2e137]
+              - generic [ref=f2e138]:
+                - generic [ref=f2e139]: AIRism Sleeveless Dress
+                - generic [ref=f2e140]: CN¥29.90
+              - paragraph [ref=f2e141]: Women's Dresses
+      - generic [ref=f2e143]:
+        - button "1" [disabled] [ref=f2e144]
+        - button "2" [ref=f2e145] [cursor=pointer]
+        - button "3" [ref=f2e146] [cursor=pointer]
+        - button "4" [ref=f2e147] [cursor=pointer]
+        - button "5" [ref=f2e148] [cursor=pointer]
+        - generic [ref=f2e149]: ...
+        - button "18" [ref=f2e150] [cursor=pointer]
+  - generic [ref=f2e152]:
+    - generic [ref=f2e153]:
+      - link "Medusa Store" [ref=f2e155] [cursor=pointer]:
+        - /url: /cn
+      - generic [ref=f2e156]:
+        - generic [ref=f2e157]:
+          - generic [ref=f2e158]: Store
+          - list [ref=f2e159]:
+            - listitem [ref=f2e160]:
+              - link "Products" [ref=f2e161] [cursor=pointer]:
+                - /url: /cn/store
+            - listitem [ref=f2e162]:
+              - link "Cart" [ref=f2e163] [cursor=pointer]:
+                - /url: /cn/cart
+        - generic [ref=f2e164]:
+          - generic [ref=f2e165]: Medusa
+          - list [ref=f2e166]:
+            - listitem [ref=f2e167]:
+              - link "GitHub" [ref=f2e168] [cursor=pointer]:
+                - /url: https://github.com/medusajs
+            - listitem [ref=f2e169]:
+              - link "Documentation" [ref=f2e170] [cursor=pointer]:
+                - /url: https://docs.medusajs.com
+            - listitem [ref=f2e171]:
+              - link "Source code" [ref=f2e172] [cursor=pointer]:
+                - /url: https://github.com/medusajs/nextjs-starter-medusa
+    - generic [ref=f2e173]:
+      - paragraph [ref=f2e174]: © 2026 Medusa Store. All rights reserved.
+      - paragraph [ref=f2e175]:
+        - text: Powered by
+        - link [ref=f2e176] [cursor=pointer]:
+          - /url: https://www.medusajs.com
+          - img [ref=f2e177]
+        - text: "&"
+        - link [ref=f2e179] [cursor=pointer]:
+          - /url: https://nextjs.org
+          - img [ref=f2e180]

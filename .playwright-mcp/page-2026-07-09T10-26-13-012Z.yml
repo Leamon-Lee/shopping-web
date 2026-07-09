@@ -1,0 +1,51 @@
+- generic [ref=e1]:
+  - 'heading "Application error: a client-side exception has occurred while loading localhost (see the browser console for more information)." [level=2] [ref=e4]'
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - navigation [ref=e10]:
+          - button "previous" [disabled] [ref=e11]:
+            - img "previous" [ref=e12]
+          - generic [ref=e14]:
+            - generic [ref=e15]: 1/
+            - text: "1"
+          - button "next" [disabled] [ref=e16]:
+            - img "next" [ref=e17]
+        - img
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - img [ref=e21]
+          - generic "No Next.js version data was found." [ref=e23]: Next.js 0.0.0 (unknown)
+          - generic [ref=e24]: Turbopack
+        - img
+    - generic [ref=e25]:
+      - dialog "Runtime Error":
+        - generic [ref=e26]:
+          - generic [ref=e28]:
+            - generic [ref=e29]:
+              - generic [ref=e31]: Runtime Error
+              - generic [ref=e32]:
+                - button "Copy Stack Trace" [ref=e33] [cursor=pointer]:
+                  - img [ref=e34]
+                - link "Go to related documentation" [ref=e36] [cursor=pointer]:
+                  - /url: https://nextjs.org/docs/messages/next-image-unconfigured-host
+                  - img [ref=e37]
+                - link "Learn more about enabling Node.js inspector for server code with Chrome DevTools" [ref=e39] [cursor=pointer]:
+                  - /url: https://nextjs.org/docs/app/building-your-application/configuring/debugging#server-side-code
+                  - img [ref=e40]
+            - paragraph [ref=e49]:
+              - text: "Error: Invalid src prop (https://static.nike.com/a/images/t_web_pw_592_v2/f_auto/u_9ddf04c7-2a9a-4d76-add1-d15af8f0263d,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/649698f9-4892-4069-9339-e62a2e74e10f/NIKE+AIR+MAX+95+BIG+BUBBLE.png) on `next/image`, hostname \"static.nike.com\" is not configured under images in your `next.config.js` See more info:"
+              - link "https://nextjs.org/docs/messages/next-image-unconfigured-host" [ref=e50] [cursor=pointer]:
+                - /url: https://nextjs.org/docs/messages/next-image-unconfigured-host
+          - generic [ref=e52]:
+            - generic [ref=e53]: "1"
+            - generic [ref=e54]: "2"
+      - contentinfo [ref=e55]:
+        - region "Error feedback" [ref=e56]:
+          - paragraph [ref=e57]:
+            - link "Was this helpful?" [ref=e58] [cursor=pointer]:
+              - /url: https://nextjs.org/telemetry#error-feedback
+          - button "Mark as helpful" [ref=e59] [cursor=pointer]:
+            - img [ref=e60]
+          - button "Mark as not helpful" [ref=e63] [cursor=pointer]:
+            - img [ref=e64]

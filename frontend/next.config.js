@@ -55,6 +55,18 @@ const nextConfig = {
         hostname: "localhost",
         port: "9000",
       },
+      {
+        protocol: "https",
+        hostname: "static.nike.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images.skechers.com",
+      },
+      {
+        protocol: "http",
+        hostname: "underarmour.scene7.com",
+      },
       ...(S3_HOSTNAME && S3_PATHNAME
         ? [
             {

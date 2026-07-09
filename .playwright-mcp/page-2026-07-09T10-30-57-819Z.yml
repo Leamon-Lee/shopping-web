@@ -1,0 +1,54 @@
+- main [ref=f3e2]:
+  - navigation [ref=f3e5]:
+    - button "Menu" [ref=f3e12] [cursor=pointer]
+    - link "Medusa Store" [ref=f3e14] [cursor=pointer]:
+      - /url: /cn
+    - link "Cart (0)" [ref=f3e16] [cursor=pointer]:
+      - /url: /cn/cart
+  - generic [ref=f3e17]:
+    - generic [ref=f3e19]:
+      - paragraph [ref=f3e20]: Men's Shoes
+      - heading "Air Jordan 1 Mid" [level=1] [ref=f3e21]
+      - paragraph [ref=f3e22]: Air Jordan 1 Mid by Nike.
+    - img "Thumbnail" [ref=f3e26]
+    - generic [ref=f3e27]:
+      - generic [ref=f3e28]: CN¥97.97
+      - paragraph [ref=f3e29]: 87 available
+      - button "Add to cart" [ref=f3e31] [cursor=pointer]
+  - generic [ref=f3e33]:
+    - generic [ref=f3e34]:
+      - link "Medusa Store" [ref=f3e36] [cursor=pointer]:
+        - /url: /cn
+      - generic [ref=f3e37]:
+        - generic [ref=f3e38]:
+          - generic [ref=f3e39]: Store
+          - list [ref=f3e40]:
+            - listitem [ref=f3e41]:
+              - link "Products" [ref=f3e42] [cursor=pointer]:
+                - /url: /cn/store
+            - listitem [ref=f3e43]:
+              - link "Cart" [ref=f3e44] [cursor=pointer]:
+                - /url: /cn/cart
+        - generic [ref=f3e45]:
+          - generic [ref=f3e46]: Medusa
+          - list [ref=f3e47]:
+            - listitem [ref=f3e48]:
+              - link "GitHub" [ref=f3e49] [cursor=pointer]:
+                - /url: https://github.com/medusajs
+            - listitem [ref=f3e50]:
+              - link "Documentation" [ref=f3e51] [cursor=pointer]:
+                - /url: https://docs.medusajs.com
+            - listitem [ref=f3e52]:
+              - link "Source code" [ref=f3e53] [cursor=pointer]:
+                - /url: https://github.com/medusajs/nextjs-starter-medusa
+    - generic [ref=f3e54]:
+      - paragraph [ref=f3e55]: © 2026 Medusa Store. All rights reserved.
+      - paragraph [ref=f3e56]:
+        - text: Powered by
+        - link [ref=f3e57] [cursor=pointer]:
+          - /url: https://www.medusajs.com
+          - img [ref=f3e58]
+        - text: "&"
+        - link [ref=f3e60] [cursor=pointer]:
+          - /url: https://nextjs.org
+          - img [ref=f3e61]

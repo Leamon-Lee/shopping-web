@@ -1,0 +1,5 @@
+[     392ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8000/_next/static/chunks/node_modules_next_dist_client_8f19e6fb._.js:15027
+[    1092ms] [LOG] [Fast Refresh] done in 809ms @ http://localhost:8000/_next/static/chunks/node_modules_next_dist_client_8f19e6fb._.js:14891
+[    1646ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:8000/_next/static/chunks/node_modules_next_dist_compiled_2ce9398a._.js:16383
+[    5738ms] [WARNING] Image with src "https://static.nike.com/a/images/t_web_pw_592_v2/f_auto/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/aee030f7-ad33-4ee8-b5d2-fd263eda308b/AIR+JORDAN+1+MID.png" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ http://localhost:8000/_next/static/chunks/node_modules_next_dist_0eb1e458._.js:1073

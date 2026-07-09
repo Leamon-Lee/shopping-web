@@ -1,0 +1,456 @@
+id,product_id,variant_id_str,name,sku,price,currency_code,inventory_count,manages_inventory,allows_backorder
+c8ff5fc5-a896-df69-24b2-0aa5b70d0365,5981781b-d2be-8324-23ee-c05c32989c48,var-c8ff5fc5,Nike Air Max 95 Big Bubble - US 7,nike-nike-air-max-95-big-bubble-us-7,190.0,usd,42,True,False
+0fcffbea-6c4d-5828-685c-ab643a0eceb5,5981781b-d2be-8324-23ee-c05c32989c48,var-0fcffbea,Nike Air Max 95 Big Bubble - US 7.5,nike-nike-air-max-95-big-bubble-us-7.5,190.0,usd,12,True,False
+0f4f82ed-d6f9-14b4-4209-b022bccf316a,5981781b-d2be-8324-23ee-c05c32989c48,var-0f4f82ed,Nike Air Max 95 Big Bubble - US 8,nike-nike-air-max-95-big-bubble-us-8,190.0,usd,9,True,False
+d90f3642-47da-dc5c-76cd-1d723e4c9cf3,5981781b-d2be-8324-23ee-c05c32989c48,var-d90f3642,Nike Air Max 95 Big Bubble - US 8.5,nike-nike-air-max-95-big-bubble-us-8.5,190.0,usd,55,True,False
+f2875afe-1e98-17ac-6370-8cc1f685f98a,5981781b-d2be-8324-23ee-c05c32989c48,var-f2875afe,Nike Air Max 95 Big Bubble - US 9,nike-nike-air-max-95-big-bubble-us-9,190.0,usd,80,True,False
+f857764c-f6df-cf65-597a-ca2691bf3a59,5981781b-d2be-8324-23ee-c05c32989c48,var-f857764c,Nike Air Max 95 Big Bubble - US 9.5,nike-nike-air-max-95-big-bubble-us-9.5,190.0,usd,71,True,False
+f6c45a3c-a610-a64f-7434-0a07bf1f4e35,5981781b-d2be-8324-23ee-c05c32989c48,var-f6c45a3c,Nike Air Max 95 Big Bubble - US 10,nike-nike-air-max-95-big-bubble-us-10,200.0,usd,72,True,False
+e46de7e6-2556-3ec4-1c59-e4552ddc2f2d,5981781b-d2be-8324-23ee-c05c32989c48,var-e46de7e6,Nike Air Max 95 Big Bubble - US 10.5,nike-nike-air-max-95-big-bubble-us-10.5,195.0,usd,109,True,False
+19d2d764-4208-4532-83a4-7b35bfa1a520,5981781b-d2be-8324-23ee-c05c32989c48,var-19d2d764,Nike Air Max 95 Big Bubble - US 11,nike-nike-air-max-95-big-bubble-us-11,190.0,usd,15,True,False
+428a7750-f75a-87b5-488f-b6c8f11f8e00,5981781b-d2be-8324-23ee-c05c32989c48,var-428a7750,Nike Air Max 95 Big Bubble - US 12,nike-nike-air-max-95-big-bubble-us-12,190.0,usd,10,True,False
+10988a41-2f5d-aa70-39cd-c02118dea52c,5981781b-d2be-8324-23ee-c05c32989c48,var-10988a41,Nike Air Max 95 Big Bubble - US 13,nike-nike-air-max-95-big-bubble-us-13,190.0,usd,26,True,False
+d91e2e2b-f0ab-cbb7-b896-d4d15d4efbb3,d13c7d0d-8d5b-b493-0438-8a4aec1c7413,var-d91e2e2b,Nike Shox R4 SE Fade - US 7,nike-nike-shox-r4-se-fade-us-7,165.0,usd,52,True,False
+544f57fc-a5e2-ebf5-a1a7-2290fc2527a8,d13c7d0d-8d5b-b493-0438-8a4aec1c7413,var-544f57fc,Nike Shox R4 SE Fade - US 7.5,nike-nike-shox-r4-se-fade-us-7.5,155.0,usd,22,True,False
+c0512de3-79f5-58a5-3818-c14b035e07c5,d13c7d0d-8d5b-b493-0438-8a4aec1c7413,var-c0512de3,Nike Shox R4 SE Fade - US 8,nike-nike-shox-r4-se-fade-us-8,155.0,usd,108,True,False
+a91e0912-ddb6-a512-51b8-0c97297acd05,d13c7d0d-8d5b-b493-0438-8a4aec1c7413,var-a91e0912,Nike Shox R4 SE Fade - US 8.5,nike-nike-shox-r4-se-fade-us-8.5,155.0,usd,47,True,False
+06f0f341-c4a3-c196-06f6-261f2cb81ed0,d13c7d0d-8d5b-b493-0438-8a4aec1c7413,var-06f0f341,Nike Shox R4 SE Fade - US 9,nike-nike-shox-r4-se-fade-us-9,155.0,usd,34,True,False
+0b9c5e90-31ef-d0f9-2ca1-9804281da157,d13c7d0d-8d5b-b493-0438-8a4aec1c7413,var-0b9c5e90,Nike Shox R4 SE Fade - US 9.5,nike-nike-shox-r4-se-fade-us-9.5,165.0,usd,134,True,False
+5d6bfa7c-44a4-bcc1-ffd0-e4a3db76c29f,d13c7d0d-8d5b-b493-0438-8a4aec1c7413,var-5d6bfa7c,Nike Shox R4 SE Fade - US 10,nike-nike-shox-r4-se-fade-us-10,155.0,usd,75,True,False
+27a6ff02-71a8-9586-531a-dc87b8418cc7,d13c7d0d-8d5b-b493-0438-8a4aec1c7413,var-27a6ff02,Nike Shox R4 SE Fade - US 10.5,nike-nike-shox-r4-se-fade-us-10.5,155.0,usd,132,True,False
+94189943-7188-9b47-e398-98f7a65e21f0,d13c7d0d-8d5b-b493-0438-8a4aec1c7413,var-94189943,Nike Shox R4 SE Fade - US 11,nike-nike-shox-r4-se-fade-us-11,155.0,usd,123,True,False
+1147f457-fa2d-2adb-f449-02ed5a56e629,26b4871e-7faf-3606-706a-871162f076f3,var-1147f457,ACG LDV - US 7,nike-acg-ldv-us-7,130.0,usd,113,True,False
+d96744dc-e35b-ff24-ce9c-536b97b8dd05,26b4871e-7faf-3606-706a-871162f076f3,var-d96744dc,ACG LDV - US 7.5,nike-acg-ldv-us-7.5,130.0,usd,35,True,False
+24571862-ec05-8351-3df7-8698d002206a,26b4871e-7faf-3606-706a-871162f076f3,var-24571862,ACG LDV - US 8,nike-acg-ldv-us-8,140.0,usd,147,True,False
+6a10f020-4423-b915-75c2-eef95817d9ce,26b4871e-7faf-3606-706a-871162f076f3,var-6a10f020,ACG LDV - US 8.5,nike-acg-ldv-us-8.5,130.0,usd,60,True,False
+940230ae-3079-776e-5d26-83a8839826c2,26b4871e-7faf-3606-706a-871162f076f3,var-940230ae,ACG LDV - US 9,nike-acg-ldv-us-9,130.0,usd,109,True,False
+742f4330-a442-e973-8722-ec22bc25e586,26b4871e-7faf-3606-706a-871162f076f3,var-742f4330,ACG LDV - US 9.5,nike-acg-ldv-us-9.5,130.0,usd,25,True,False
+fc951ee6-0c65-1eea-9011-6a1ce89e7158,26b4871e-7faf-3606-706a-871162f076f3,var-fc951ee6,ACG LDV - US 10,nike-acg-ldv-us-10,130.0,usd,101,True,False
+85c51f4a-cfd5-39e1-73e4-0226b769d1c5,26b4871e-7faf-3606-706a-871162f076f3,var-85c51f4a,ACG LDV - US 10.5,nike-acg-ldv-us-10.5,135.0,usd,110,True,False
+2460cd11-8d2b-4f9a-c0a0-2638d5e1a5d0,26b4871e-7faf-3606-706a-871162f076f3,var-2460cd11,ACG LDV - US 11,nike-acg-ldv-us-11,130.0,usd,31,True,False
+0d7b0330-0b36-ae4b-aedd-903c3decc9e6,26b4871e-7faf-3606-706a-871162f076f3,var-0d7b0330,ACG LDV - US 12,nike-acg-ldv-us-12,130.0,usd,87,True,False
+955fbfa0-582c-a641-9951-16c3a3534fd0,26b4871e-7faf-3606-706a-871162f076f3,var-955fbfa0,ACG LDV - US 13,nike-acg-ldv-us-13,135.0,usd,138,True,False
+83a315b5-e7f4-eb34-48a0-b2a3ac1b615b,ea4c4be0-6ea2-54e3-f58c-bbcb36b8ded0,var-83a315b5,ACG Zegama Trail - US 7,nike-acg-zegama-trail-us-7,185.0,usd,102,True,False
+7de11c28-96c9-c3c1-4358-d71ba9482758,ea4c4be0-6ea2-54e3-f58c-bbcb36b8ded0,var-7de11c28,ACG Zegama Trail - US 7.5,nike-acg-zegama-trail-us-7.5,180.0,usd,81,True,False
+b4ca918c-16ea-98a9-1dec-081a4ff225d6,ea4c4be0-6ea2-54e3-f58c-bbcb36b8ded0,var-b4ca918c,ACG Zegama Trail - US 8,nike-acg-zegama-trail-us-8,185.0,usd,8,True,False
+03eeda98-ca96-80d0-06a1-b896d7b08ab5,ea4c4be0-6ea2-54e3-f58c-bbcb36b8ded0,var-03eeda98,ACG Zegama Trail - US 8.5,nike-acg-zegama-trail-us-8.5,180.0,usd,41,True,False
+219483b2-21e0-aa9f-8cdd-d3e18540e0dc,ea4c4be0-6ea2-54e3-f58c-bbcb36b8ded0,var-219483b2,ACG Zegama Trail - US 9,nike-acg-zegama-trail-us-9,180.0,usd,110,True,False
+fc29228c-ad89-5fe7-70f5-88bca015a3d2,ea4c4be0-6ea2-54e3-f58c-bbcb36b8ded0,var-fc29228c,ACG Zegama Trail - US 9.5,nike-acg-zegama-trail-us-9.5,190.0,usd,85,True,False
+078c7064-bf6b-de7d-9c9a-f09126b8739d,ea4c4be0-6ea2-54e3-f58c-bbcb36b8ded0,var-078c7064,ACG Zegama Trail - US 10,nike-acg-zegama-trail-us-10,190.0,usd,116,True,False
+b50667b5-a82b-0cce-9e43-e3cb9ae0b8ab,a542aa5a-b31f-2920-98bb-a525add9ebcd,var-b50667b5,"Air Jordan 7 Retro ""Miró"" - US 7",nike-air-jordan-7-retro-mir--us-7,255.0,usd,41,True,False
+d52a9b87-a9df-8445-41d4-98192a626317,a542aa5a-b31f-2920-98bb-a525add9ebcd,var-d52a9b87,"Air Jordan 7 Retro ""Miró"" - US 7.5",nike-air-jordan-7-retro-mir--us-7.5,255.0,usd,25,True,False
+aa93b178-da1d-5517-a90d-c81db35bdb6e,a542aa5a-b31f-2920-98bb-a525add9ebcd,var-aa93b178,"Air Jordan 7 Retro ""Miró"" - US 8",nike-air-jordan-7-retro-mir--us-8,255.0,usd,131,True,False
+f89b1f6d-0ae1-4f45-0901-5ca694ab6452,a542aa5a-b31f-2920-98bb-a525add9ebcd,var-f89b1f6d,"Air Jordan 7 Retro ""Miró"" - US 8.5",nike-air-jordan-7-retro-mir--us-8.5,255.0,usd,20,True,False
+35926508-9126-219e-4427-938ebce58417,a542aa5a-b31f-2920-98bb-a525add9ebcd,var-35926508,"Air Jordan 7 Retro ""Miró"" - US 9",nike-air-jordan-7-retro-mir--us-9,265.0,usd,7,True,False
+20722730-2458-dd0d-ae88-dc5f0ee77757,a542aa5a-b31f-2920-98bb-a525add9ebcd,var-20722730,"Air Jordan 7 Retro ""Miró"" - US 9.5",nike-air-jordan-7-retro-mir--us-9.5,265.0,usd,22,True,False
+8b89a56e-db72-b2c8-4300-e091a669f746,a542aa5a-b31f-2920-98bb-a525add9ebcd,var-8b89a56e,"Air Jordan 7 Retro ""Miró"" - US 10",nike-air-jordan-7-retro-mir--us-10,265.0,usd,36,True,False
+13d69723-0b7f-6158-71a7-0a435030efa7,a542aa5a-b31f-2920-98bb-a525add9ebcd,var-13d69723,"Air Jordan 7 Retro ""Miró"" - US 10.5",nike-air-jordan-7-retro-mir--us-10.5,255.0,usd,107,True,False
+1c50cce7-63b2-52b5-a784-d28143266cec,c55a7e77-f180-06b5-01df-b22e8e252feb,var-1c50cce7,"Air Jordan 3 Retro ""True Blue"" - US 7",nike-air-jordan-3-retro-true-blue--us-7,235.0,usd,120,True,False
+ea1c09be-0a8b-0a5c-2965-823771e61eda,c55a7e77-f180-06b5-01df-b22e8e252feb,var-ea1c09be,"Air Jordan 3 Retro ""True Blue"" - US 7.5",nike-air-jordan-3-retro-true-blue--us-7.5,235.0,usd,30,True,False
+a6763789-557d-5c83-1ad8-8669b852c428,c55a7e77-f180-06b5-01df-b22e8e252feb,var-a6763789,"Air Jordan 3 Retro ""True Blue"" - US 8",nike-air-jordan-3-retro-true-blue--us-8,230.0,usd,132,True,False
+d7414afe-8b99-9a35-b032-789224bda931,c55a7e77-f180-06b5-01df-b22e8e252feb,var-d7414afe,"Air Jordan 3 Retro ""True Blue"" - US 8.5",nike-air-jordan-3-retro-true-blue--us-8.5,240.0,usd,103,True,False
+314a659d-6da9-ed9f-14d8-f4307718dd89,c55a7e77-f180-06b5-01df-b22e8e252feb,var-314a659d,"Air Jordan 3 Retro ""True Blue"" - US 9",nike-air-jordan-3-retro-true-blue--us-9,235.0,usd,88,True,False
+634f76c6-0b97-7f68-0d61-4392e1a03401,c55a7e77-f180-06b5-01df-b22e8e252feb,var-634f76c6,"Air Jordan 3 Retro ""True Blue"" - US 9.5",nike-air-jordan-3-retro-true-blue--us-9.5,235.0,usd,130,True,False
+6618f0fb-5477-845c-16da-db8ab7360195,c55a7e77-f180-06b5-01df-b22e8e252feb,var-6618f0fb,"Air Jordan 3 Retro ""True Blue"" - US 10",nike-air-jordan-3-retro-true-blue--us-10,230.0,usd,69,True,False
+b247ecb6-9d52-330d-8580-730b92dbb3cf,c55a7e77-f180-06b5-01df-b22e8e252feb,var-b247ecb6,"Air Jordan 3 Retro ""True Blue"" - US 10.5",nike-air-jordan-3-retro-true-blue--us-10.5,230.0,usd,141,True,False
+5cfd3df8-4cc0-ad28-f79f-7f5e67d27ab0,c55a7e77-f180-06b5-01df-b22e8e252feb,var-5cfd3df8,"Air Jordan 3 Retro ""True Blue"" - US 11",nike-air-jordan-3-retro-true-blue--us-11,230.0,usd,25,True,False
+26fd73c2-78ec-3164-0002-fc6391a6bdde,c55a7e77-f180-06b5-01df-b22e8e252feb,var-26fd73c2,"Air Jordan 3 Retro ""True Blue"" - US 12",nike-air-jordan-3-retro-true-blue--us-12,230.0,usd,6,True,False
+c11da45e-27e7-9dcf-3aa4-4ea77ffe7eae,c55a7e77-f180-06b5-01df-b22e8e252feb,var-c11da45e,"Air Jordan 3 Retro ""True Blue"" - US 13",nike-air-jordan-3-retro-true-blue--us-13,240.0,usd,111,True,False
+15c8e460-3cf2-5483-9570-defed75df2ce,2dd931b5-288b-15fd-d6f8-d31214841834,var-15c8e460,Nike Air Max 90 Premium - US 7,nike-nike-air-max-90-premium-us-7,155.0,usd,43,True,False
+569ca030-a834-9913-d7b8-c35455c7080a,2dd931b5-288b-15fd-d6f8-d31214841834,var-569ca030,Nike Air Max 90 Premium - US 7.5,nike-nike-air-max-90-premium-us-7.5,145.0,usd,123,True,False
+ee15c9a4-17af-69e2-cd6e-0166fb0e278d,2dd931b5-288b-15fd-d6f8-d31214841834,var-ee15c9a4,Nike Air Max 90 Premium - US 8,nike-nike-air-max-90-premium-us-8,155.0,usd,59,True,False
+4a83bcb4-15d4-d47d-5c06-83b4737ed2f1,2dd931b5-288b-15fd-d6f8-d31214841834,var-4a83bcb4,Nike Air Max 90 Premium - US 8.5,nike-nike-air-max-90-premium-us-8.5,145.0,usd,132,True,False
+83832748-fbc6-9a5f-9ac9-a449a62d068b,2dd931b5-288b-15fd-d6f8-d31214841834,var-83832748,Nike Air Max 90 Premium - US 9,nike-nike-air-max-90-premium-us-9,145.0,usd,116,True,False
+100a98ff-3a0d-dd21-898c-44072142817c,2dd931b5-288b-15fd-d6f8-d31214841834,var-100a98ff,Nike Air Max 90 Premium - US 9.5,nike-nike-air-max-90-premium-us-9.5,145.0,usd,25,True,False
+3135653c-d3b6-7260-55a5-8b65c9eef394,2dd931b5-288b-15fd-d6f8-d31214841834,var-3135653c,Nike Air Max 90 Premium - US 10,nike-nike-air-max-90-premium-us-10,145.0,usd,71,True,False
+3395bcf1-94ce-19f8-3c8c-80e36931a7e4,2dd931b5-288b-15fd-d6f8-d31214841834,var-3395bcf1,Nike Air Max 90 Premium - US 10.5,nike-nike-air-max-90-premium-us-10.5,155.0,usd,5,True,False
+ca25ad2e-bbe6-64d1-8401-ec2b2ff42807,2dd931b5-288b-15fd-d6f8-d31214841834,var-ca25ad2e,Nike Air Max 90 Premium - US 11,nike-nike-air-max-90-premium-us-11,155.0,usd,85,True,False
+36b6d21f-336f-3e08-d74d-e7d9ec4f153f,2dd931b5-288b-15fd-d6f8-d31214841834,var-36b6d21f,Nike Air Max 90 Premium - US 12,nike-nike-air-max-90-premium-us-12,145.0,usd,104,True,False
+66b8c7e3-f893-5b59-cde8-bd94606588b7,17d207c4-e77f-18d0-0054-cdd7e0d73439,var-66b8c7e3,Nike Air Force 1 '07 - US 7,nike-nike-air-force-1-07-us-7,125.0,usd,61,True,False
+d9ac29bc-559d-1632-80a9-88f1910c2fd9,17d207c4-e77f-18d0-0054-cdd7e0d73439,var-d9ac29bc,Nike Air Force 1 '07 - US 7.5,nike-nike-air-force-1-07-us-7.5,135.0,usd,91,True,False
+55e5f1b6-41cc-d00c-c630-38ca84b37a65,17d207c4-e77f-18d0-0054-cdd7e0d73439,var-55e5f1b6,Nike Air Force 1 '07 - US 8,nike-nike-air-force-1-07-us-8,125.0,usd,137,True,False
+7469e8ed-acf6-9714-4dc0-9a89295baceb,17d207c4-e77f-18d0-0054-cdd7e0d73439,var-7469e8ed,Nike Air Force 1 '07 - US 8.5,nike-nike-air-force-1-07-us-8.5,125.0,usd,149,True,False
+8b5fedd3-fc1b-fb6d-0778-99ab76e4bda1,17d207c4-e77f-18d0-0054-cdd7e0d73439,var-8b5fedd3,Nike Air Force 1 '07 - US 9,nike-nike-air-force-1-07-us-9,125.0,usd,132,True,False
+ddcb748c-1694-0a36-593a-ae5933c26feb,17d207c4-e77f-18d0-0054-cdd7e0d73439,var-ddcb748c,Nike Air Force 1 '07 - US 9.5,nike-nike-air-force-1-07-us-9.5,125.0,usd,21,True,False
+efbd9716-a382-ac2b-6d37-0f72626019c3,17d207c4-e77f-18d0-0054-cdd7e0d73439,var-efbd9716,Nike Air Force 1 '07 - US 10,nike-nike-air-force-1-07-us-10,135.0,usd,91,True,False
+6210e382-3ace-ecc2-a8c5-7f8f5cc516d1,17d207c4-e77f-18d0-0054-cdd7e0d73439,var-6210e382,Nike Air Force 1 '07 - US 10.5,nike-nike-air-force-1-07-us-10.5,125.0,usd,48,True,False
+ab83d914-27a3-fdf1-a1d8-003b20d68ec5,895c99c0-4d8c-a856-6e57-29035df59bc3,var-ab83d914,Air Jordan 4 RM - US 7,nike-air-jordan-4-rm-us-7,87.97,usd,101,True,False
+325e8fd2-183f-f5ee-637b-40f9c0f90d57,895c99c0-4d8c-a856-6e57-29035df59bc3,var-325e8fd2,Air Jordan 4 RM - US 7.5,nike-air-jordan-4-rm-us-7.5,87.97,usd,92,True,False
+11fc8a04-6b41-bfd2-be03-47e6b4180a71,895c99c0-4d8c-a856-6e57-29035df59bc3,var-11fc8a04,Air Jordan 4 RM - US 8,nike-air-jordan-4-rm-us-8,87.97,usd,34,True,False
+69dc6d58-c283-08f3-ecbd-d52c899acbc3,895c99c0-4d8c-a856-6e57-29035df59bc3,var-69dc6d58,Air Jordan 4 RM - US 8.5,nike-air-jordan-4-rm-us-8.5,87.97,usd,113,True,False
+bbc13cc8-3169-55fb-44f9-bceb23af83bd,895c99c0-4d8c-a856-6e57-29035df59bc3,var-bbc13cc8,Air Jordan 4 RM - US 9,nike-air-jordan-4-rm-us-9,92.97,usd,63,True,False
+699096a4-4c43-abf4-8090-ff5aa918a312,895c99c0-4d8c-a856-6e57-29035df59bc3,var-699096a4,Air Jordan 4 RM - US 9.5,nike-air-jordan-4-rm-us-9.5,92.97,usd,92,True,False
+89f96c7f-e313-9ca5-e1ed-87cf41a4f230,895c99c0-4d8c-a856-6e57-29035df59bc3,var-89f96c7f,Air Jordan 4 RM - US 10,nike-air-jordan-4-rm-us-10,87.97,usd,99,True,False
+f0256951-9250-3253-544c-0ca2b526b8db,895c99c0-4d8c-a856-6e57-29035df59bc3,var-f0256951,Air Jordan 4 RM - US 10.5,nike-air-jordan-4-rm-us-10.5,87.97,usd,7,True,False
+2c4863be-ea7c-c524-4367-2b40f05484ca,895c99c0-4d8c-a856-6e57-29035df59bc3,var-2c4863be,Air Jordan 4 RM - US 11,nike-air-jordan-4-rm-us-11,87.97,usd,131,True,False
+d1c6f0f3-7a87-8614-a876-38ed6a9dd669,895c99c0-4d8c-a856-6e57-29035df59bc3,var-d1c6f0f3,Air Jordan 4 RM - US 12,nike-air-jordan-4-rm-us-12,87.97,usd,138,True,False
+88909737-d1d1-7c5a-2081-a58735b92403,895c99c0-4d8c-a856-6e57-29035df59bc3,var-88909737,Air Jordan 4 RM - US 13,nike-air-jordan-4-rm-us-13,87.97,usd,20,True,False
+d102a0db-5cc3-1566-7775-6aa362685401,25b85168-e589-9755-2bce-3284b7eac465,var-d102a0db,Air Jordan 1 Mid - US 7,nike-air-jordan-1-mid-us-7,107.97,usd,24,True,False
+7bba0e92-ab61-faf7-01ce-a399149b3c1f,25b85168-e589-9755-2bce-3284b7eac465,var-7bba0e92,Air Jordan 1 Mid - US 7.5,nike-air-jordan-1-mid-us-7.5,107.97,usd,101,True,False
+b35301cb-8c67-9af3-fc75-ee81e6154896,25b85168-e589-9755-2bce-3284b7eac465,var-b35301cb,Air Jordan 1 Mid - US 8,nike-air-jordan-1-mid-us-8,107.97,usd,10,True,False
+55b65dd0-cca0-0896-b935-030b5345125e,25b85168-e589-9755-2bce-3284b7eac465,var-55b65dd0,Air Jordan 1 Mid - US 8.5,nike-air-jordan-1-mid-us-8.5,97.97,usd,72,True,False
+0c07ef80-a782-1375-417f-ef79cacde7c1,25b85168-e589-9755-2bce-3284b7eac465,var-0c07ef80,Air Jordan 1 Mid - US 9,nike-air-jordan-1-mid-us-9,97.97,usd,22,True,False
+880943f3-bb83-c557-a20e-ce5e9810a36c,25b85168-e589-9755-2bce-3284b7eac465,var-880943f3,Air Jordan 1 Mid - US 9.5,nike-air-jordan-1-mid-us-9.5,97.97,usd,120,True,False
+85f59bb5-8315-6b82-a2bf-a334d9564c30,25b85168-e589-9755-2bce-3284b7eac465,var-85f59bb5,Air Jordan 1 Mid - US 10,nike-air-jordan-1-mid-us-10,97.97,usd,81,True,False
+030c6222-2f64-dfe4-6290-21907686d7dd,25b85168-e589-9755-2bce-3284b7eac465,var-030c6222,Air Jordan 1 Mid - US 10.5,nike-air-jordan-1-mid-us-10.5,97.97,usd,30,True,False
+91ec9268-04e8-5dd3-98f9-3143ac316264,25b85168-e589-9755-2bce-3284b7eac465,var-91ec9268,Air Jordan 1 Mid - US 11,nike-air-jordan-1-mid-us-11,102.97,usd,94,True,False
+2c7b72f3-a9b7-4b9a-c59a-84b4c9b5c257,25b85168-e589-9755-2bce-3284b7eac465,var-2c7b72f3,Air Jordan 1 Mid - US 12,nike-air-jordan-1-mid-us-12,107.97,usd,89,True,False
+7d67c25e-809a-c3ac-b204-666cbcc03846,25b85168-e589-9755-2bce-3284b7eac465,var-7d67c25e,Air Jordan 1 Mid - US 13,nike-air-jordan-1-mid-us-13,102.97,usd,132,True,False
+50717aae-92d4-b2c7-5c74-259eb0c94d9f,261ef0af-e6b0-6f91-d1f7-e68f87f90867,var-50717aae,Nike Vomero Premium - US 7,nike-nike-vomero-premium-us-7,230.0,usd,58,True,False
+a17be6e6-4b84-5332-95a8-e5a1fb3ae84a,261ef0af-e6b0-6f91-d1f7-e68f87f90867,var-a17be6e6,Nike Vomero Premium - US 7.5,nike-nike-vomero-premium-us-7.5,230.0,usd,32,True,False
+7f3a1547-25ef-ca28-b0b8-0fc903cbb189,261ef0af-e6b0-6f91-d1f7-e68f87f90867,var-7f3a1547,Nike Vomero Premium - US 8,nike-nike-vomero-premium-us-8,235.0,usd,83,True,False
+8eb620c2-6426-8bef-2f76-f3f961b5ee89,261ef0af-e6b0-6f91-d1f7-e68f87f90867,var-8eb620c2,Nike Vomero Premium - US 8.5,nike-nike-vomero-premium-us-8.5,235.0,usd,105,True,False
+770593bb-c998-26e6-d337-41215ffe33ad,261ef0af-e6b0-6f91-d1f7-e68f87f90867,var-770593bb,Nike Vomero Premium - US 9,nike-nike-vomero-premium-us-9,230.0,usd,115,True,False
+0506721d-eb1d-3129-d59d-8e412a054409,261ef0af-e6b0-6f91-d1f7-e68f87f90867,var-0506721d,Nike Vomero Premium - US 9.5,nike-nike-vomero-premium-us-9.5,230.0,usd,117,True,False
+cdc7d1d5-2e7f-f07f-6ac6-1a3478ef408b,261ef0af-e6b0-6f91-d1f7-e68f87f90867,var-cdc7d1d5,Nike Vomero Premium - US 10,nike-nike-vomero-premium-us-10,230.0,usd,111,True,False
+072e5c34-24c1-7e16-c5fe-ce6da923ac0d,261ef0af-e6b0-6f91-d1f7-e68f87f90867,var-072e5c34,Nike Vomero Premium - US 10.5,nike-nike-vomero-premium-us-10.5,230.0,usd,100,True,False
+3e56a276-eca2-4d67-63f1-117998cfefcf,261ef0af-e6b0-6f91-d1f7-e68f87f90867,var-3e56a276,Nike Vomero Premium - US 11,nike-nike-vomero-premium-us-11,230.0,usd,42,True,False
+05096311-ea21-ea52-4ec5-e6faec471d1e,261ef0af-e6b0-6f91-d1f7-e68f87f90867,var-05096311,Nike Vomero Premium - US 12,nike-nike-vomero-premium-us-12,235.0,usd,15,True,False
+445ee2b1-859c-751b-ece2-7fabc73fa1e5,793a6816-8c60-a447-015d-bfb2ab0fcbda,var-445ee2b1,Nike Vomero 18 - US 7,nike-nike-vomero-18-us-7,160.0,usd,56,True,False
+c3ac6bd2-6311-8f3c-54ab-9736e1fe64d7,793a6816-8c60-a447-015d-bfb2ab0fcbda,var-c3ac6bd2,Nike Vomero 18 - US 7.5,nike-nike-vomero-18-us-7.5,155.0,usd,54,True,False
+9f69c7f9-5e28-503d-6ab1-b2a1a9c77842,793a6816-8c60-a447-015d-bfb2ab0fcbda,var-9f69c7f9,Nike Vomero 18 - US 8,nike-nike-vomero-18-us-8,165.0,usd,147,True,False
+d6302e84-f85f-02ce-44bc-845c26aecdf6,793a6816-8c60-a447-015d-bfb2ab0fcbda,var-d6302e84,Nike Vomero 18 - US 8.5,nike-nike-vomero-18-us-8.5,160.0,usd,136,True,False
+165050b2-8858-c3fe-1e74-012ae5af6dd5,793a6816-8c60-a447-015d-bfb2ab0fcbda,var-165050b2,Nike Vomero 18 - US 9,nike-nike-vomero-18-us-9,165.0,usd,61,True,False
+6c6331f9-d0b2-545d-9ed2-6030687e19e2,793a6816-8c60-a447-015d-bfb2ab0fcbda,var-6c6331f9,Nike Vomero 18 - US 9.5,nike-nike-vomero-18-us-9.5,160.0,usd,121,True,False
+7639ca1d-6b5a-a195-c961-0e0fa7923078,793a6816-8c60-a447-015d-bfb2ab0fcbda,var-7639ca1d,Nike Vomero 18 - US 10,nike-nike-vomero-18-us-10,165.0,usd,103,True,False
+875977f4-48cf-168c-a8a5-0b7782c1fbff,793a6816-8c60-a447-015d-bfb2ab0fcbda,var-875977f4,Nike Vomero 18 - US 10.5,nike-nike-vomero-18-us-10.5,155.0,usd,95,True,False
+81efbadc-dea0-cd30-9dc9-d36840c193cc,793a6816-8c60-a447-015d-bfb2ab0fcbda,var-81efbadc,Nike Vomero 18 - US 11,nike-nike-vomero-18-us-11,165.0,usd,69,True,False
+043ee55e-5254-4c22-ad9c-0402ac069e97,793a6816-8c60-a447-015d-bfb2ab0fcbda,var-043ee55e,Nike Vomero 18 - US 12,nike-nike-vomero-18-us-12,155.0,usd,34,True,False
+4d2bc6b7-2c6f-3155-7f30-394917650b4d,932619cb-7e2d-76e8-71ad-12d45850d7ca,var-4d2bc6b7,Nike Ava X - US 7,nike-nike-ava-x-us-7,130.0,usd,118,True,False
+ede7d606-cd2a-93fb-fe5a-3cd7a9c6dbdf,932619cb-7e2d-76e8-71ad-12d45850d7ca,var-ede7d606,Nike Ava X - US 7.5,nike-nike-ava-x-us-7.5,125.0,usd,73,True,False
+52974a56-36c2-ffd2-33ba-e96fc3a7976d,932619cb-7e2d-76e8-71ad-12d45850d7ca,var-52974a56,Nike Ava X - US 8,nike-nike-ava-x-us-8,135.0,usd,25,True,False
+eda8b213-8774-b235-b053-ff6d8e7c5a1c,932619cb-7e2d-76e8-71ad-12d45850d7ca,var-eda8b213,Nike Ava X - US 8.5,nike-nike-ava-x-us-8.5,135.0,usd,114,True,False
+f3985b89-f30d-f9e2-10a3-b06b740e5c1e,932619cb-7e2d-76e8-71ad-12d45850d7ca,var-f3985b89,Nike Ava X - US 9,nike-nike-ava-x-us-9,130.0,usd,47,True,False
+ead63607-bf49-b238-8368-dd062f8380b7,932619cb-7e2d-76e8-71ad-12d45850d7ca,var-ead63607,Nike Ava X - US 9.5,nike-nike-ava-x-us-9.5,135.0,usd,47,True,False
+8b1a71ec-4d33-82a3-a4c1-85db5dc4a813,932619cb-7e2d-76e8-71ad-12d45850d7ca,var-8b1a71ec,Nike Ava X - US 10,nike-nike-ava-x-us-10,125.0,usd,78,True,False
+9ed3b0f6-c128-58ce-112c-cb1aaef7ab3e,932619cb-7e2d-76e8-71ad-12d45850d7ca,var-9ed3b0f6,Nike Ava X - US 10.5,nike-nike-ava-x-us-10.5,130.0,usd,113,True,False
+528cc029-5762-afc7-8ec9-870bdb5f9687,932619cb-7e2d-76e8-71ad-12d45850d7ca,var-528cc029,Nike Ava X - US 11,nike-nike-ava-x-us-11,125.0,usd,124,True,False
+cd959439-ea22-4686-25ed-013365691f39,932619cb-7e2d-76e8-71ad-12d45850d7ca,var-cd959439,Nike Ava X - US 12,nike-nike-ava-x-us-12,135.0,usd,141,True,False
+fbc2e8c7-5d3c-21ef-c942-261f31af17fa,79ead93f-9706-8f41-6378-be99e0df76ff,var-fbc2e8c7,Nike Air VaporMax Plus - US 7,nike-nike-air-vapormax-plus-us-7,220.0,usd,110,True,False
+7f137460-796f-bd45-1e51-f1ff8311d7f4,79ead93f-9706-8f41-6378-be99e0df76ff,var-7f137460,Nike Air VaporMax Plus - US 7.5,nike-nike-air-vapormax-plus-us-7.5,230.0,usd,75,True,False
+b1dc13c5-6ecd-8806-cba0-8c055c9f2c1a,79ead93f-9706-8f41-6378-be99e0df76ff,var-b1dc13c5,Nike Air VaporMax Plus - US 8,nike-nike-air-vapormax-plus-us-8,220.0,usd,96,True,False
+cf63c913-e201-df51-c817-16451742d2bf,79ead93f-9706-8f41-6378-be99e0df76ff,var-cf63c913,Nike Air VaporMax Plus - US 8.5,nike-nike-air-vapormax-plus-us-8.5,220.0,usd,101,True,False
+b0e674ee-dda2-6aef-2c05-ebf1cf2384d6,79ead93f-9706-8f41-6378-be99e0df76ff,var-b0e674ee,Nike Air VaporMax Plus - US 9,nike-nike-air-vapormax-plus-us-9,220.0,usd,109,True,False
+a1e3461b-bb36-b717-2cf5-c389cadf2130,79ead93f-9706-8f41-6378-be99e0df76ff,var-a1e3461b,Nike Air VaporMax Plus - US 9.5,nike-nike-air-vapormax-plus-us-9.5,220.0,usd,64,True,False
+e6b06fdf-613b-bc9d-e7c4-7c5cb9ded232,79ead93f-9706-8f41-6378-be99e0df76ff,var-e6b06fdf,Nike Air VaporMax Plus - US 10,nike-nike-air-vapormax-plus-us-10,220.0,usd,74,True,False
+7d79809b-8dd0-76d9-5f38-4562912b58aa,79ead93f-9706-8f41-6378-be99e0df76ff,var-7d79809b,Nike Air VaporMax Plus - US 10.5,nike-nike-air-vapormax-plus-us-10.5,230.0,usd,46,True,False
+3e716c1d-00df-b76b-a68d-891453be18d5,c467cfa3-8323-07f8-bd81-db2c81cf7516,var-3e716c1d,Nike Phantom 6 Low Elite - US 7,nike-nike-phantom-6-low-elite-us-7,265.0,usd,60,True,False
+a41f8e90-4d75-5716-235e-8df96c18c677,c467cfa3-8323-07f8-bd81-db2c81cf7516,var-a41f8e90,Nike Phantom 6 Low Elite - US 7.5,nike-nike-phantom-6-low-elite-us-7.5,265.0,usd,45,True,False
+0a29b733-f2a5-e2a8-775c-b2028ececfb4,c467cfa3-8323-07f8-bd81-db2c81cf7516,var-0a29b733,Nike Phantom 6 Low Elite - US 8,nike-nike-phantom-6-low-elite-us-8,260.0,usd,126,True,False
+ad198e4b-8286-0295-a55c-0000269a1c6a,c467cfa3-8323-07f8-bd81-db2c81cf7516,var-ad198e4b,Nike Phantom 6 Low Elite - US 8.5,nike-nike-phantom-6-low-elite-us-8.5,265.0,usd,129,True,False
+cf00ac6e-75e7-1a48-81e8-0a1dc3472745,c467cfa3-8323-07f8-bd81-db2c81cf7516,var-cf00ac6e,Nike Phantom 6 Low Elite - US 9,nike-nike-phantom-6-low-elite-us-9,270.0,usd,8,True,False
+e84711bd-726e-f21a-5517-00ea045fa912,c467cfa3-8323-07f8-bd81-db2c81cf7516,var-e84711bd,Nike Phantom 6 Low Elite - US 9.5,nike-nike-phantom-6-low-elite-us-9.5,260.0,usd,120,True,False
+fc58d042-7881-004e-a05d-c7b3b4053c88,c467cfa3-8323-07f8-bd81-db2c81cf7516,var-fc58d042,Nike Phantom 6 Low Elite - US 10,nike-nike-phantom-6-low-elite-us-10,265.0,usd,22,True,False
+c972b9ae-a313-00f3-752b-d3623610168b,c467cfa3-8323-07f8-bd81-db2c81cf7516,var-c972b9ae,Nike Phantom 6 Low Elite - US 10.5,nike-nike-phantom-6-low-elite-us-10.5,270.0,usd,74,True,False
+54f1dcab-4a71-b639-5e61-1d8090af2948,c467cfa3-8323-07f8-bd81-db2c81cf7516,var-54f1dcab,Nike Phantom 6 Low Elite - US 11,nike-nike-phantom-6-low-elite-us-11,270.0,usd,86,True,False
+edbbafd8-ddaa-0a85-36d7-7836d5dc3d24,1097d8a7-4eae-5f0d-534c-a6de7c0d1609,var-edbbafd8,Nike Phantom 6 High Academy - US 7,nike-nike-phantom-6-high-academy-us-7,100.0,usd,83,True,False
+a18e2db3-4134-310e-913d-ebf605fe60af,1097d8a7-4eae-5f0d-534c-a6de7c0d1609,var-a18e2db3,Nike Phantom 6 High Academy - US 7.5,nike-nike-phantom-6-high-academy-us-7.5,110.0,usd,26,True,False
+41d7ffc3-16ad-7c7c-e184-5fed11d87faa,1097d8a7-4eae-5f0d-534c-a6de7c0d1609,var-41d7ffc3,Nike Phantom 6 High Academy - US 8,nike-nike-phantom-6-high-academy-us-8,100.0,usd,75,True,False
+bd36ad36-e408-8c16-d9ff-932ad20cd1a0,1097d8a7-4eae-5f0d-534c-a6de7c0d1609,var-bd36ad36,Nike Phantom 6 High Academy - US 8.5,nike-nike-phantom-6-high-academy-us-8.5,105.0,usd,125,True,False
+de8979fb-dba8-2a3e-d0c3-690940f72524,1097d8a7-4eae-5f0d-534c-a6de7c0d1609,var-de8979fb,Nike Phantom 6 High Academy - US 9,nike-nike-phantom-6-high-academy-us-9,100.0,usd,101,True,False
+6515e545-282f-acc6-80bc-4411443993c1,1097d8a7-4eae-5f0d-534c-a6de7c0d1609,var-6515e545,Nike Phantom 6 High Academy - US 9.5,nike-nike-phantom-6-high-academy-us-9.5,100.0,usd,14,True,False
+8c332663-3baf-4e98-6244-2c8008be24a2,1097d8a7-4eae-5f0d-534c-a6de7c0d1609,var-8c332663,Nike Phantom 6 High Academy - US 10,nike-nike-phantom-6-high-academy-us-10,100.0,usd,94,True,False
+835a7bc8-e5c3-e528-9ebc-3977bcfedf74,0e0dd506-420c-3ee3-cfd5-894f8c276224,var-835a7bc8,Nike Air Max 2017 - US 7,nike-nike-air-max-2017-us-7,136.97,usd,126,True,False
+e3c18b76-1c3f-872c-1874-25a10dff7a04,0e0dd506-420c-3ee3-cfd5-894f8c276224,var-e3c18b76,Nike Air Max 2017 - US 7.5,nike-nike-air-max-2017-us-7.5,131.97,usd,58,True,False
+a51795af-d248-c8bc-ee0e-d67b2f319ce5,0e0dd506-420c-3ee3-cfd5-894f8c276224,var-a51795af,Nike Air Max 2017 - US 8,nike-nike-air-max-2017-us-8,141.97,usd,149,True,False
+32bdf9a6-907a-cc7e-f3b9-9728e963d75f,0e0dd506-420c-3ee3-cfd5-894f8c276224,var-32bdf9a6,Nike Air Max 2017 - US 8.5,nike-nike-air-max-2017-us-8.5,131.97,usd,90,True,False
+13b143b1-d274-e7a3-e561-f509547fc92a,0e0dd506-420c-3ee3-cfd5-894f8c276224,var-13b143b1,Nike Air Max 2017 - US 9,nike-nike-air-max-2017-us-9,131.97,usd,42,True,False
+8b12c5ae-6b11-0573-6295-8e3a72713ceb,0e0dd506-420c-3ee3-cfd5-894f8c276224,var-8b12c5ae,Nike Air Max 2017 - US 9.5,nike-nike-air-max-2017-us-9.5,136.97,usd,59,True,False
+ca88eb5c-51dd-25e5-2dc9-807bee49c39c,0e0dd506-420c-3ee3-cfd5-894f8c276224,var-ca88eb5c,Nike Air Max 2017 - US 10,nike-nike-air-max-2017-us-10,131.97,usd,82,True,False
+7900157a-1f48-03b6-b7df-8603adf8e0be,0e0dd506-420c-3ee3-cfd5-894f8c276224,var-7900157a,Nike Air Max 2017 - US 10.5,nike-nike-air-max-2017-us-10.5,141.97,usd,135,True,False
+430deea2-ae7b-846c-38dc-8ad1c9dcec01,0e0dd506-420c-3ee3-cfd5-894f8c276224,var-430deea2,Nike Air Max 2017 - US 11,nike-nike-air-max-2017-us-11,136.97,usd,81,True,False
+bc64678a-f9f5-e83f-c132-e6d6df47dd34,0e0dd506-420c-3ee3-cfd5-894f8c276224,var-bc64678a,Nike Air Max 2017 - US 12,nike-nike-air-max-2017-us-12,136.97,usd,118,True,False
+55cc5c29-3b95-5729-a96c-2d8a80946721,0e0dd506-420c-3ee3-cfd5-894f8c276224,var-55cc5c29,Nike Air Max 2017 - US 13,nike-nike-air-max-2017-us-13,131.97,usd,32,True,False
+162fbd70-594f-e61e-ce4d-2dafd635b36b,7fa3ca54-f75b-cdf8-65c4-f0261445ae0c,var-162fbd70,Nike Air Max Dn8 - US 7,nike-nike-air-max-dn8-us-7,160.97,usd,43,True,False
+23ccc089-f2f4-c224-ea53-70e21474479f,7fa3ca54-f75b-cdf8-65c4-f0261445ae0c,var-23ccc089,Nike Air Max Dn8 - US 7.5,nike-nike-air-max-dn8-us-7.5,160.97,usd,101,True,False
+e0ce33a9-cdfc-d392-e42b-e0f9670bcff6,7fa3ca54-f75b-cdf8-65c4-f0261445ae0c,var-e0ce33a9,Nike Air Max Dn8 - US 8,nike-nike-air-max-dn8-us-8,160.97,usd,72,True,False
+6c73b907-2d31-1607-09a0-977c97004697,7fa3ca54-f75b-cdf8-65c4-f0261445ae0c,var-6c73b907,Nike Air Max Dn8 - US 8.5,nike-nike-air-max-dn8-us-8.5,160.97,usd,11,True,False
+82432660-2d2d-22f1-c473-24ff4a818e1e,7fa3ca54-f75b-cdf8-65c4-f0261445ae0c,var-82432660,Nike Air Max Dn8 - US 9,nike-nike-air-max-dn8-us-9,170.97,usd,130,True,False
+0261f5dc-aba0-47ee-f26d-8af5c8113c35,7fa3ca54-f75b-cdf8-65c4-f0261445ae0c,var-0261f5dc,Nike Air Max Dn8 - US 9.5,nike-nike-air-max-dn8-us-9.5,165.97,usd,77,True,False
+f9aed66c-44fb-d490-2023-fdcc6b146775,7fa3ca54-f75b-cdf8-65c4-f0261445ae0c,var-f9aed66c,Nike Air Max Dn8 - US 10,nike-nike-air-max-dn8-us-10,165.97,usd,58,True,False
+d61697c0-3ba2-bcce-2a38-b8c0d34cab58,a616dd2c-17d4-355c-0133-f4b69b065dda,var-d61697c0,Nike Ava Rover Premium - US 7,nike-nike-ava-rover-premium-us-7,160.0,usd,112,True,False
+c665985e-be1c-90fa-14ec-f4d9ee9a4eaa,a616dd2c-17d4-355c-0133-f4b69b065dda,var-c665985e,Nike Ava Rover Premium - US 7.5,nike-nike-ava-rover-premium-us-7.5,155.0,usd,35,True,False
+5cc37d61-fd16-2946-e256-f6730a7f53b0,a616dd2c-17d4-355c-0133-f4b69b065dda,var-5cc37d61,Nike Ava Rover Premium - US 8,nike-nike-ava-rover-premium-us-8,165.0,usd,103,True,False
+812e9296-fdb1-58cc-c9c5-8dbbaed1dfc3,a616dd2c-17d4-355c-0133-f4b69b065dda,var-812e9296,Nike Ava Rover Premium - US 8.5,nike-nike-ava-rover-premium-us-8.5,160.0,usd,11,True,False
+db884b4a-a0a9-4c8b-5123-71bbad96c504,a616dd2c-17d4-355c-0133-f4b69b065dda,var-db884b4a,Nike Ava Rover Premium - US 9,nike-nike-ava-rover-premium-us-9,165.0,usd,71,True,False
+9fb1474c-aa15-9d82-b739-cd12c710a546,a616dd2c-17d4-355c-0133-f4b69b065dda,var-9fb1474c,Nike Ava Rover Premium - US 9.5,nike-nike-ava-rover-premium-us-9.5,165.0,usd,24,True,False
+5e9a5a85-762a-38ce-3f7f-ffdf8d9720a5,a616dd2c-17d4-355c-0133-f4b69b065dda,var-5e9a5a85,Nike Ava Rover Premium - US 10,nike-nike-ava-rover-premium-us-10,155.0,usd,107,True,False
+a3d315a4-a9fe-89b4-0ed4-fd8702aafca0,a616dd2c-17d4-355c-0133-f4b69b065dda,var-a3d315a4,Nike Ava Rover Premium - US 10.5,nike-nike-ava-rover-premium-us-10.5,165.0,usd,49,True,False
+e55b80e8-ee13-b3da-ed30-90f29fc31582,a616dd2c-17d4-355c-0133-f4b69b065dda,var-e55b80e8,Nike Ava Rover Premium - US 11,nike-nike-ava-rover-premium-us-11,160.0,usd,134,True,False
+15110133-6541-1006-a5cd-bf1c6f434b51,a616dd2c-17d4-355c-0133-f4b69b065dda,var-15110133,Nike Ava Rover Premium - US 12,nike-nike-ava-rover-premium-us-12,155.0,usd,105,True,False
+b42f194d-20e1-f1d8-0ea5-6fa8f0ff5b7d,a616dd2c-17d4-355c-0133-f4b69b065dda,var-b42f194d,Nike Ava Rover Premium - US 13,nike-nike-ava-rover-premium-us-13,155.0,usd,88,True,False
+329898a8-2882-2a07-c65f-b552bef7561d,d20c502e-def4-3e48-4a61-9f439156ce50,var-329898a8,Nike Air Force 1 '07 LX Vibram - US 7,nike-nike-air-force-1-07-lx-vibram-us-7,140.0,usd,21,True,False
+01c6e6be-31a2-2197-2fe8-09f3d66eedd6,d20c502e-def4-3e48-4a61-9f439156ce50,var-01c6e6be,Nike Air Force 1 '07 LX Vibram - US 7.5,nike-nike-air-force-1-07-lx-vibram-us-7.5,140.0,usd,9,True,False
+53eaa0cb-6901-0115-233c-ad58fab11483,d20c502e-def4-3e48-4a61-9f439156ce50,var-53eaa0cb,Nike Air Force 1 '07 LX Vibram - US 8,nike-nike-air-force-1-07-lx-vibram-us-8,150.0,usd,117,True,False
+e5fe746e-be68-0496-28fd-1cc848d78b31,d20c502e-def4-3e48-4a61-9f439156ce50,var-e5fe746e,Nike Air Force 1 '07 LX Vibram - US 8.5,nike-nike-air-force-1-07-lx-vibram-us-8.5,140.0,usd,102,True,False
+aa56a9f8-c075-412b-3c36-d9258fcc5ee5,d20c502e-def4-3e48-4a61-9f439156ce50,var-aa56a9f8,Nike Air Force 1 '07 LX Vibram - US 9,nike-nike-air-force-1-07-lx-vibram-us-9,140.0,usd,125,True,False
+015c865d-2fa8-6954-5c36-a39caf8a5fb7,d20c502e-def4-3e48-4a61-9f439156ce50,var-015c865d,Nike Air Force 1 '07 LX Vibram - US 9.5,nike-nike-air-force-1-07-lx-vibram-us-9.5,145.0,usd,83,True,False
+5afb427b-d95f-9270-7a72-afe6237e89e6,d20c502e-def4-3e48-4a61-9f439156ce50,var-5afb427b,Nike Air Force 1 '07 LX Vibram - US 10,nike-nike-air-force-1-07-lx-vibram-us-10,145.0,usd,13,True,False
+f2ff6e96-5c46-247d-dbc0-e37a7ba9ce02,10d2208b-bdeb-08f4-4e81-71a64561c6f6,var-f2ff6e96,ACG Zegama Hike - US 7,nike-acg-zegama-hike-us-7,190.0,usd,28,True,False
+988aa2a2-3b73-1840-dbcb-2a365610bee7,10d2208b-bdeb-08f4-4e81-71a64561c6f6,var-988aa2a2,ACG Zegama Hike - US 7.5,nike-acg-zegama-hike-us-7.5,190.0,usd,45,True,False
+e741c458-bfa0-e16c-aa31-a0ff36435731,10d2208b-bdeb-08f4-4e81-71a64561c6f6,var-e741c458,ACG Zegama Hike - US 8,nike-acg-zegama-hike-us-8,200.0,usd,63,True,False
+4dd726a5-8276-f1be-bd76-c36b89bda3e1,10d2208b-bdeb-08f4-4e81-71a64561c6f6,var-4dd726a5,ACG Zegama Hike - US 8.5,nike-acg-zegama-hike-us-8.5,195.0,usd,120,True,False
+66e706d1-455b-1bbb-aa1b-b654fd73e129,10d2208b-bdeb-08f4-4e81-71a64561c6f6,var-66e706d1,ACG Zegama Hike - US 9,nike-acg-zegama-hike-us-9,190.0,usd,72,True,False
+f3901410-3d67-bf6a-f003-111ddbe2d434,10d2208b-bdeb-08f4-4e81-71a64561c6f6,var-f3901410,ACG Zegama Hike - US 9.5,nike-acg-zegama-hike-us-9.5,190.0,usd,55,True,False
+0bd6864d-61fb-0984-b509-ec42a8303b89,10d2208b-bdeb-08f4-4e81-71a64561c6f6,var-0bd6864d,ACG Zegama Hike - US 10,nike-acg-zegama-hike-us-10,200.0,usd,84,True,False
+51160cc3-a1e1-36fc-880b-2c4c6a014bc8,5f55bc28-ca6c-e781-f7b7-a0a8e1978474,var-51160cc3,Nike ACG Ultrafly Trail - US 7,nike-nike-acg-ultrafly-trail-us-7,260.0,usd,86,True,False
+33e99fac-bc22-3179-0463-467f2c6bcf46,5f55bc28-ca6c-e781-f7b7-a0a8e1978474,var-33e99fac,Nike ACG Ultrafly Trail - US 7.5,nike-nike-acg-ultrafly-trail-us-7.5,270.0,usd,111,True,False
+89b27295-e35a-84eb-23e2-e1ff961e949d,5f55bc28-ca6c-e781-f7b7-a0a8e1978474,var-89b27295,Nike ACG Ultrafly Trail - US 8,nike-nike-acg-ultrafly-trail-us-8,260.0,usd,89,True,False
+916f2030-b2bb-041e-fa40-3d4d65a64d62,5f55bc28-ca6c-e781-f7b7-a0a8e1978474,var-916f2030,Nike ACG Ultrafly Trail - US 8.5,nike-nike-acg-ultrafly-trail-us-8.5,260.0,usd,74,True,False
+8dd0ab9e-05c5-87de-e1d2-a492a867f57e,5f55bc28-ca6c-e781-f7b7-a0a8e1978474,var-8dd0ab9e,Nike ACG Ultrafly Trail - US 9,nike-nike-acg-ultrafly-trail-us-9,260.0,usd,135,True,False
+dfbe2b91-173f-ec06-99f3-b837aa0eb497,5f55bc28-ca6c-e781-f7b7-a0a8e1978474,var-dfbe2b91,Nike ACG Ultrafly Trail - US 9.5,nike-nike-acg-ultrafly-trail-us-9.5,260.0,usd,20,True,False
+9abdb76c-cb3b-ee22-1437-a7b80c9437c8,5f55bc28-ca6c-e781-f7b7-a0a8e1978474,var-9abdb76c,Nike ACG Ultrafly Trail - US 10,nike-nike-acg-ultrafly-trail-us-10,260.0,usd,126,True,False
+318db257-4568-0194-6928-42d06524171b,5f55bc28-ca6c-e781-f7b7-a0a8e1978474,var-318db257,Nike ACG Ultrafly Trail - US 10.5,nike-nike-acg-ultrafly-trail-us-10.5,260.0,usd,140,True,False
+b9d59432-84c4-3880-c779-ecb0424e884f,5f55bc28-ca6c-e781-f7b7-a0a8e1978474,var-b9d59432,Nike ACG Ultrafly Trail - US 11,nike-nike-acg-ultrafly-trail-us-11,265.0,usd,118,True,False
+d041f122-f71b-b921-1055-587d5b1b087a,5f55bc28-ca6c-e781-f7b7-a0a8e1978474,var-d041f122,Nike ACG Ultrafly Trail - US 12,nike-nike-acg-ultrafly-trail-us-12,270.0,usd,133,True,False
+39ab036b-e2ef-270c-c094-efd3e1208fe4,afcc2081-6b91-08be-0a22-aef72215ed2d,var-39ab036b,Nike Air Force 1 '07 Edge - US 7,nike-nike-air-force-1-07-edge-us-7,125.0,usd,141,True,False
+ed1c14ab-fb0e-46a3-0781-b60c2c6d8456,afcc2081-6b91-08be-0a22-aef72215ed2d,var-ed1c14ab,Nike Air Force 1 '07 Edge - US 7.5,nike-nike-air-force-1-07-edge-us-7.5,125.0,usd,34,True,False
+13efba21-8983-b1d6-8a83-7db8a8d085fb,afcc2081-6b91-08be-0a22-aef72215ed2d,var-13efba21,Nike Air Force 1 '07 Edge - US 8,nike-nike-air-force-1-07-edge-us-8,130.0,usd,133,True,False
+2f27ab8d-0a0a-85fb-a8ca-39f4a3211a08,afcc2081-6b91-08be-0a22-aef72215ed2d,var-2f27ab8d,Nike Air Force 1 '07 Edge - US 8.5,nike-nike-air-force-1-07-edge-us-8.5,125.0,usd,123,True,False
+08419833-2d26-fa01-95f4-9f764df56f26,afcc2081-6b91-08be-0a22-aef72215ed2d,var-08419833,Nike Air Force 1 '07 Edge - US 9,nike-nike-air-force-1-07-edge-us-9,125.0,usd,116,True,False
+ea3d3449-3cea-7400-45bf-7b4106e1c579,afcc2081-6b91-08be-0a22-aef72215ed2d,var-ea3d3449,Nike Air Force 1 '07 Edge - US 9.5,nike-nike-air-force-1-07-edge-us-9.5,125.0,usd,5,True,False
+ae7f8752-cd1b-da5b-93a6-8989e5fc5f89,afcc2081-6b91-08be-0a22-aef72215ed2d,var-ae7f8752,Nike Air Force 1 '07 Edge - US 10,nike-nike-air-force-1-07-edge-us-10,130.0,usd,111,True,False
+4b1fdb04-727b-1563-a290-120da889a254,afcc2081-6b91-08be-0a22-aef72215ed2d,var-4b1fdb04,Nike Air Force 1 '07 Edge - US 10.5,nike-nike-air-force-1-07-edge-us-10.5,125.0,usd,90,True,False
+c52816b7-6de5-bfa0-7d93-c39915d935c2,afcc2081-6b91-08be-0a22-aef72215ed2d,var-c52816b7,Nike Air Force 1 '07 Edge - US 11,nike-nike-air-force-1-07-edge-us-11,125.0,usd,114,True,False
+5b94d80a-bba4-04b1-ec03-e20514ed979f,afcc2081-6b91-08be-0a22-aef72215ed2d,var-5b94d80a,Nike Air Force 1 '07 Edge - US 12,nike-nike-air-force-1-07-edge-us-12,125.0,usd,125,True,False
+aa0d39a8-cb0d-5ec5-5c6e-fd835932c696,afcc2081-6b91-08be-0a22-aef72215ed2d,var-aa0d39a8,Nike Air Force 1 '07 Edge - US 13,nike-nike-air-force-1-07-edge-us-13,135.0,usd,83,True,False
+c4e0b7ea-6688-eab6-0761-d2993fa9a556,ce12b0bb-a669-b449-3784-297481bdd255,var-c4e0b7ea,Nike Air Force 1 Mid '07 - US 7,nike-nike-air-force-1-mid-07-us-7,130.0,usd,147,True,False
+a5a8e45f-c47a-f1fb-ca23-2ffa4fa0b3e2,ce12b0bb-a669-b449-3784-297481bdd255,var-a5a8e45f,Nike Air Force 1 Mid '07 - US 7.5,nike-nike-air-force-1-mid-07-us-7.5,125.0,usd,23,True,False
+6cb3a09e-8c5b-a683-d672-303b717af7cc,ce12b0bb-a669-b449-3784-297481bdd255,var-6cb3a09e,Nike Air Force 1 Mid '07 - US 8,nike-nike-air-force-1-mid-07-us-8,125.0,usd,9,True,False
+9ee765ef-0e0f-8649-18c8-5b516d1b8079,ce12b0bb-a669-b449-3784-297481bdd255,var-9ee765ef,Nike Air Force 1 Mid '07 - US 8.5,nike-nike-air-force-1-mid-07-us-8.5,125.0,usd,125,True,False
+1ca57491-168e-6ce0-7c18-9c7602ddd7cf,ce12b0bb-a669-b449-3784-297481bdd255,var-1ca57491,Nike Air Force 1 Mid '07 - US 9,nike-nike-air-force-1-mid-07-us-9,125.0,usd,119,True,False
+a09beea5-b735-2203-6717-0e9db11ee387,ce12b0bb-a669-b449-3784-297481bdd255,var-a09beea5,Nike Air Force 1 Mid '07 - US 9.5,nike-nike-air-force-1-mid-07-us-9.5,125.0,usd,46,True,False
+9525aae3-30c2-4aa1-8403-712c5fd06160,ce12b0bb-a669-b449-3784-297481bdd255,var-9525aae3,Nike Air Force 1 Mid '07 - US 10,nike-nike-air-force-1-mid-07-us-10,135.0,usd,84,True,False
+afe056e9-9b59-eb89-0383-4b62cc7224ac,ce12b0bb-a669-b449-3784-297481bdd255,var-afe056e9,Nike Air Force 1 Mid '07 - US 10.5,nike-nike-air-force-1-mid-07-us-10.5,125.0,usd,147,True,False
+d5b617c5-a8d3-9582-5442-8d143f203f8e,ce12b0bb-a669-b449-3784-297481bdd255,var-d5b617c5,Nike Air Force 1 Mid '07 - US 11,nike-nike-air-force-1-mid-07-us-11,125.0,usd,9,True,False
+0a7e3387-5d8f-77a9-7627-2eeda0bcf1a7,ce12b0bb-a669-b449-3784-297481bdd255,var-0a7e3387,Nike Air Force 1 Mid '07 - US 12,nike-nike-air-force-1-mid-07-us-12,130.0,usd,50,True,False
+f279f733-6400-1898-cb8f-1e131dac2b5e,ba4116d4-e465-2431-5da2-3de1b4f62b18,var-f279f733,Nike P-6000 SE - US 7,nike-nike-p-6000-se-us-7,125.0,usd,121,True,False
+2623f3e3-fce9-76d3-99f8-eff5d25caf15,ba4116d4-e465-2431-5da2-3de1b4f62b18,var-2623f3e3,Nike P-6000 SE - US 7.5,nike-nike-p-6000-se-us-7.5,125.0,usd,46,True,False
+956b228b-d499-2018-6231-e5a5249cfef2,ba4116d4-e465-2431-5da2-3de1b4f62b18,var-956b228b,Nike P-6000 SE - US 8,nike-nike-p-6000-se-us-8,130.0,usd,100,True,False
+b091a72d-80ec-fe21-5baa-c2dbe4f53c43,ba4116d4-e465-2431-5da2-3de1b4f62b18,var-b091a72d,Nike P-6000 SE - US 8.5,nike-nike-p-6000-se-us-8.5,125.0,usd,96,True,False
+5378364e-5f38-564a-eefb-377bea18e833,ba4116d4-e465-2431-5da2-3de1b4f62b18,var-5378364e,Nike P-6000 SE - US 9,nike-nike-p-6000-se-us-9,125.0,usd,18,True,False
+f933bc33-4b2b-1474-cd50-dc90ef3af83d,ba4116d4-e465-2431-5da2-3de1b4f62b18,var-f933bc33,Nike P-6000 SE - US 9.5,nike-nike-p-6000-se-us-9.5,125.0,usd,38,True,False
+0c83143e-187c-dd92-79d8-ed37ff58585a,ba4116d4-e465-2431-5da2-3de1b4f62b18,var-0c83143e,Nike P-6000 SE - US 10,nike-nike-p-6000-se-us-10,130.0,usd,131,True,False
+6a65f562-d950-1ea5-744f-dc937c2a5eff,ba4116d4-e465-2431-5da2-3de1b4f62b18,var-6a65f562,Nike P-6000 SE - US 10.5,nike-nike-p-6000-se-us-10.5,130.0,usd,92,True,False
+955f6383-ce57-a76f-b638-7c063af5b3af,ba4116d4-e465-2431-5da2-3de1b4f62b18,var-955f6383,Nike P-6000 SE - US 11,nike-nike-p-6000-se-us-11,130.0,usd,6,True,False
+ac94438f-29fc-0c95-8200-487576d52e89,ba4116d4-e465-2431-5da2-3de1b4f62b18,var-ac94438f,Nike P-6000 SE - US 12,nike-nike-p-6000-se-us-12,125.0,usd,35,True,False
+439e6bcc-07ae-e6d7-be8b-9841a12dc490,e09d2829-fa4e-95cb-1fd4-330d2510b0ae,var-439e6bcc,Nike Pegasus Premium - US 7,nike-nike-pegasus-premium-us-7,186.97,usd,30,True,False
+b2baf405-d7a0-b874-6a9d-a6f6a0ff75d7,e09d2829-fa4e-95cb-1fd4-330d2510b0ae,var-b2baf405,Nike Pegasus Premium - US 7.5,nike-nike-pegasus-premium-us-7.5,176.97,usd,5,True,False
+041c303e-fe05-bc56-91fc-a533e9c70834,e09d2829-fa4e-95cb-1fd4-330d2510b0ae,var-041c303e,Nike Pegasus Premium - US 8,nike-nike-pegasus-premium-us-8,176.97,usd,51,True,False
+179d4efd-dd6a-8339-41b8-97ba27d68aff,e09d2829-fa4e-95cb-1fd4-330d2510b0ae,var-179d4efd,Nike Pegasus Premium - US 8.5,nike-nike-pegasus-premium-us-8.5,176.97,usd,82,True,False
+57a06973-1838-5407-fcc3-d9fc3ba2fc55,e09d2829-fa4e-95cb-1fd4-330d2510b0ae,var-57a06973,Nike Pegasus Premium - US 9,nike-nike-pegasus-premium-us-9,176.97,usd,52,True,False
+cd2b4522-4ee2-477f-6868-d7341a8d2fb1,e09d2829-fa4e-95cb-1fd4-330d2510b0ae,var-cd2b4522,Nike Pegasus Premium - US 9.5,nike-nike-pegasus-premium-us-9.5,176.97,usd,42,True,False
+3fb91ce2-71ac-82ef-8c8c-027be26407c6,e09d2829-fa4e-95cb-1fd4-330d2510b0ae,var-3fb91ce2,Nike Pegasus Premium - US 10,nike-nike-pegasus-premium-us-10,186.97,usd,105,True,False
+8b9c13dc-2b98-aa88-b342-c8c0e5d7f1a0,e09d2829-fa4e-95cb-1fd4-330d2510b0ae,var-8b9c13dc,Nike Pegasus Premium - US 10.5,nike-nike-pegasus-premium-us-10.5,186.97,usd,94,True,False
+602cea28-9d9f-7463-8db9-274b5177a23e,e09d2829-fa4e-95cb-1fd4-330d2510b0ae,var-602cea28,Nike Pegasus Premium - US 11,nike-nike-pegasus-premium-us-11,176.97,usd,26,True,False
+98c74d26-831c-1344-f3cd-7ce4a7ae6060,ea95158b-f426-6455-484e-de9d25b81081,var-98c74d26,Nike Zoom Fly 6 - US 7,nike-nike-zoom-fly-6-us-7,190.0,usd,102,True,False
+5bac4005-74bb-10c1-5ea8-579f8ae6fd23,ea95158b-f426-6455-484e-de9d25b81081,var-5bac4005,Nike Zoom Fly 6 - US 7.5,nike-nike-zoom-fly-6-us-7.5,190.0,usd,42,True,False
+1f33a653-2eb2-e4c0-ac2c-793e0af85179,ea95158b-f426-6455-484e-de9d25b81081,var-1f33a653,Nike Zoom Fly 6 - US 8,nike-nike-zoom-fly-6-us-8,180.0,usd,23,True,False
+1091fcfc-56b6-1eaf-9c4a-79c28b8417f5,ea95158b-f426-6455-484e-de9d25b81081,var-1091fcfc,Nike Zoom Fly 6 - US 8.5,nike-nike-zoom-fly-6-us-8.5,180.0,usd,86,True,False
+3ccff027-447f-517f-041c-82d923da8fda,ea95158b-f426-6455-484e-de9d25b81081,var-3ccff027,Nike Zoom Fly 6 - US 9,nike-nike-zoom-fly-6-us-9,180.0,usd,139,True,False
+849287ee-d346-817b-46de-1f5d24d0109c,ea95158b-f426-6455-484e-de9d25b81081,var-849287ee,Nike Zoom Fly 6 - US 9.5,nike-nike-zoom-fly-6-us-9.5,180.0,usd,130,True,False
+fa5f3bb9-5759-3978-6a5a-4664310492a5,ea95158b-f426-6455-484e-de9d25b81081,var-fa5f3bb9,Nike Zoom Fly 6 - US 10,nike-nike-zoom-fly-6-us-10,180.0,usd,47,True,False
+f0bfa425-dab4-46cf-43b1-cba8dec117b5,ea95158b-f426-6455-484e-de9d25b81081,var-f0bfa425,Nike Zoom Fly 6 - US 10.5,nike-nike-zoom-fly-6-us-10.5,180.0,usd,12,True,False
+ab42f098-2d5e-8a76-b1c2-7c7681f161d5,ea95158b-f426-6455-484e-de9d25b81081,var-ab42f098,Nike Zoom Fly 6 - US 11,nike-nike-zoom-fly-6-us-11,180.0,usd,113,True,False
+c2845840-b68f-1e8c-d034-90992094a062,14d06adb-97d0-6a79-2685-83f4aa832cf4,var-c2845840,Nike Tennis Classic - US 7,nike-nike-tennis-classic-us-7,95.0,usd,71,True,False
+31c8738c-8e59-6899-05f8-939e0be362bb,14d06adb-97d0-6a79-2685-83f4aa832cf4,var-31c8738c,Nike Tennis Classic - US 7.5,nike-nike-tennis-classic-us-7.5,95.0,usd,27,True,False
+3527d7b2-6427-6a02-034f-50a1fab5559e,14d06adb-97d0-6a79-2685-83f4aa832cf4,var-3527d7b2,Nike Tennis Classic - US 8,nike-nike-tennis-classic-us-8,95.0,usd,96,True,False
+4648d87f-a3f1-d0df-3dff-963500fd4437,14d06adb-97d0-6a79-2685-83f4aa832cf4,var-4648d87f,Nike Tennis Classic - US 8.5,nike-nike-tennis-classic-us-8.5,105.0,usd,56,True,False
+cf5bb6c9-a1a6-576a-2340-f8bb5fd848fd,14d06adb-97d0-6a79-2685-83f4aa832cf4,var-cf5bb6c9,Nike Tennis Classic - US 9,nike-nike-tennis-classic-us-9,95.0,usd,19,True,False
+eb8d6e5a-f91a-cd44-e959-0e6b9fcf7d37,14d06adb-97d0-6a79-2685-83f4aa832cf4,var-eb8d6e5a,Nike Tennis Classic - US 9.5,nike-nike-tennis-classic-us-9.5,95.0,usd,21,True,False
+bde66621-74ae-4756-1908-42f72226f46b,14d06adb-97d0-6a79-2685-83f4aa832cf4,var-bde66621,Nike Tennis Classic - US 10,nike-nike-tennis-classic-us-10,95.0,usd,59,True,False
+19ba37f5-60d6-2710-76e5-8bd445613e90,9212db24-d424-8f04-6f94-fc130bb4c0f1,var-19ba37f5,Tennis Classic CS - US 7,nike-tennis-classic-cs-us-7,95.0,usd,44,True,False
+0e51a430-be01-dca1-f0e3-73eef2251acf,9212db24-d424-8f04-6f94-fc130bb4c0f1,var-0e51a430,Tennis Classic CS - US 7.5,nike-tennis-classic-cs-us-7.5,95.0,usd,86,True,False
+9fc62864-5d9f-7c14-05f5-73663333fd16,9212db24-d424-8f04-6f94-fc130bb4c0f1,var-9fc62864,Tennis Classic CS - US 8,nike-tennis-classic-cs-us-8,100.0,usd,62,True,False
+de48585d-caa3-e4fc-66eb-479282853245,9212db24-d424-8f04-6f94-fc130bb4c0f1,var-de48585d,Tennis Classic CS - US 8.5,nike-tennis-classic-cs-us-8.5,105.0,usd,17,True,False
+046d09c6-2bf5-f319-7ee1-2b4652a90f29,9212db24-d424-8f04-6f94-fc130bb4c0f1,var-046d09c6,Tennis Classic CS - US 9,nike-tennis-classic-cs-us-9,95.0,usd,12,True,False
+514d1c13-3939-1c69-3f1c-9709cc52f1fe,9212db24-d424-8f04-6f94-fc130bb4c0f1,var-514d1c13,Tennis Classic CS - US 9.5,nike-tennis-classic-cs-us-9.5,95.0,usd,65,True,False
+5e18cb4e-35f1-00f7-5048-693156569d22,9212db24-d424-8f04-6f94-fc130bb4c0f1,var-5e18cb4e,Tennis Classic CS - US 10,nike-tennis-classic-cs-us-10,95.0,usd,13,True,False
+c1fce3c8-883f-ebcb-46e6-a9869606211f,9212db24-d424-8f04-6f94-fc130bb4c0f1,var-c1fce3c8,Tennis Classic CS - US 10.5,nike-tennis-classic-cs-us-10.5,95.0,usd,13,True,False
+79aea123-e14b-f23a-c94e-3dc5093d13fe,217911c3-6064-35bd-20b6-0645ae2291fb,var-79aea123,Nike Vomero Plus - US 7,nike-nike-vomero-plus-us-7,185.0,usd,23,True,False
+7dc4a803-a41f-5821-7dc4-e92c07e9f879,217911c3-6064-35bd-20b6-0645ae2291fb,var-7dc4a803,Nike Vomero Plus - US 7.5,nike-nike-vomero-plus-us-7.5,180.0,usd,65,True,False
+1ff8fd56-ca31-69ec-6d2b-f849681fde65,217911c3-6064-35bd-20b6-0645ae2291fb,var-1ff8fd56,Nike Vomero Plus - US 8,nike-nike-vomero-plus-us-8,180.0,usd,79,True,False
+027a3536-d991-1cd7-9a24-848a98db9cdd,217911c3-6064-35bd-20b6-0645ae2291fb,var-027a3536,Nike Vomero Plus - US 8.5,nike-nike-vomero-plus-us-8.5,180.0,usd,21,True,False
+54df3b63-7a26-bb2b-adbf-58f4975b345a,217911c3-6064-35bd-20b6-0645ae2291fb,var-54df3b63,Nike Vomero Plus - US 9,nike-nike-vomero-plus-us-9,180.0,usd,27,True,False
+bdc59224-e9e9-29f0-b492-fd59645bb5aa,217911c3-6064-35bd-20b6-0645ae2291fb,var-bdc59224,Nike Vomero Plus - US 9.5,nike-nike-vomero-plus-us-9.5,180.0,usd,8,True,False
+8f12e781-1241-e1a7-f8a4-4c559c77cdbc,217911c3-6064-35bd-20b6-0645ae2291fb,var-8f12e781,Nike Vomero Plus - US 10,nike-nike-vomero-plus-us-10,180.0,usd,87,True,False
+a1d937d0-cdb8-9729-e79c-b626531a5f80,a47cb196-3870-d7e9-bd2c-12e51f500fd2,var-a1d937d0,Nike Structure Plus - US 7,nike-nike-structure-plus-us-7,170.0,usd,56,True,False
+bb4a617f-68e8-4163-853e-828dfab57f16,a47cb196-3870-d7e9-bd2c-12e51f500fd2,var-bb4a617f,Nike Structure Plus - US 7.5,nike-nike-structure-plus-us-7.5,180.0,usd,18,True,False
+bf15c7ff-0081-11e5-fb8d-f17271b007f9,a47cb196-3870-d7e9-bd2c-12e51f500fd2,var-bf15c7ff,Nike Structure Plus - US 8,nike-nike-structure-plus-us-8,170.0,usd,74,True,False
+21d8a44a-830d-6485-989f-c8c5ca8ebc4b,a47cb196-3870-d7e9-bd2c-12e51f500fd2,var-21d8a44a,Nike Structure Plus - US 8.5,nike-nike-structure-plus-us-8.5,180.0,usd,112,True,False
+ef144f51-0b9c-3edc-8517-42a0f35931a9,a47cb196-3870-d7e9-bd2c-12e51f500fd2,var-ef144f51,Nike Structure Plus - US 9,nike-nike-structure-plus-us-9,170.0,usd,97,True,False
+04065b9d-a4ba-829d-c0a7-1a2389179540,a47cb196-3870-d7e9-bd2c-12e51f500fd2,var-04065b9d,Nike Structure Plus - US 9.5,nike-nike-structure-plus-us-9.5,180.0,usd,46,True,False
+51c3e0fa-1d5d-5143-2b7a-bd4366c47362,a47cb196-3870-d7e9-bd2c-12e51f500fd2,var-51c3e0fa,Nike Structure Plus - US 10,nike-nike-structure-plus-us-10,170.0,usd,126,True,False
+125f704b-c43f-6019-a8f0-8b4333ec7b51,a47cb196-3870-d7e9-bd2c-12e51f500fd2,var-125f704b,Nike Structure Plus - US 10.5,nike-nike-structure-plus-us-10.5,170.0,usd,113,True,False
+794b376a-45a4-65c3-3a64-488d7e261d81,a47cb196-3870-d7e9-bd2c-12e51f500fd2,var-794b376a,Nike Structure Plus - US 11,nike-nike-structure-plus-us-11,170.0,usd,43,True,False
+010e0c00-13e1-edbf-f42f-e8cc90edbabf,a47cb196-3870-d7e9-bd2c-12e51f500fd2,var-010e0c00,Nike Structure Plus - US 12,nike-nike-structure-plus-us-12,170.0,usd,104,True,False
+b9898774-9861-7387-9197-b6c5b9c6898d,a47cb196-3870-d7e9-bd2c-12e51f500fd2,var-b9898774,Nike Structure Plus - US 13,nike-nike-structure-plus-us-13,170.0,usd,26,True,False
+9ff4ca52-d116-76bd-c0d6-fc7deb19c7bf,860fb644-ad49-d8b2-503e-51780f781547,var-9ff4ca52,Nike Air Max Ishod - US 7,nike-nike-air-max-ishod-us-7,115.0,usd,118,True,False
+c9acb117-e818-42a7-d865-b65126bdee52,860fb644-ad49-d8b2-503e-51780f781547,var-c9acb117,Nike Air Max Ishod - US 7.5,nike-nike-air-max-ishod-us-7.5,115.0,usd,133,True,False
+291917b4-269c-76f4-f06a-cd4bdcfce321,860fb644-ad49-d8b2-503e-51780f781547,var-291917b4,Nike Air Max Ishod - US 8,nike-nike-air-max-ishod-us-8,120.0,usd,150,True,False
+02f62a56-9d8f-aade-e8a4-db3c6dc51b65,860fb644-ad49-d8b2-503e-51780f781547,var-02f62a56,Nike Air Max Ishod - US 8.5,nike-nike-air-max-ishod-us-8.5,115.0,usd,91,True,False
+77c92ef4-6989-a363-156b-2d4f7c58e28c,860fb644-ad49-d8b2-503e-51780f781547,var-77c92ef4,Nike Air Max Ishod - US 9,nike-nike-air-max-ishod-us-9,115.0,usd,113,True,False
+8dacb636-7567-7bd6-21f2-804cd10ea8c4,860fb644-ad49-d8b2-503e-51780f781547,var-8dacb636,Nike Air Max Ishod - US 9.5,nike-nike-air-max-ishod-us-9.5,115.0,usd,65,True,False
+6599e268-c6a5-7f58-5c8f-34dacd84b335,860fb644-ad49-d8b2-503e-51780f781547,var-6599e268,Nike Air Max Ishod - US 10,nike-nike-air-max-ishod-us-10,125.0,usd,136,True,False
+f2d994ce-86e8-dcfb-591b-71f461164b42,860fb644-ad49-d8b2-503e-51780f781547,var-f2d994ce,Nike Air Max Ishod - US 10.5,nike-nike-air-max-ishod-us-10.5,115.0,usd,70,True,False
+683b8e96-2a4f-226d-a85d-3de52bf2911b,860fb644-ad49-d8b2-503e-51780f781547,var-683b8e96,Nike Air Max Ishod - US 11,nike-nike-air-max-ishod-us-11,115.0,usd,150,True,False
+6b38af44-41e2-098c-ab06-6ee3a80bf086,860fb644-ad49-d8b2-503e-51780f781547,var-6b38af44,Nike Air Max Ishod - US 12,nike-nike-air-max-ishod-us-12,125.0,usd,30,True,False
+0f32c606-44c8-959e-3e1a-ed6ff5a4cd7b,860fb644-ad49-d8b2-503e-51780f781547,var-0f32c606,Nike Air Max Ishod - US 13,nike-nike-air-max-ishod-us-13,115.0,usd,6,True,False
+d0c216c9-f919-8665-a94f-a92167faa76f,24f8505b-439d-cb55-40b4-ecee53e31d17,var-d0c216c9,Nike SB React Leo - US 7,nike-nike-sb-react-leo-us-7,105.0,usd,127,True,False
+9e4bdab7-6304-0687-05e9-67330710e399,24f8505b-439d-cb55-40b4-ecee53e31d17,var-9e4bdab7,Nike SB React Leo - US 7.5,nike-nike-sb-react-leo-us-7.5,110.0,usd,87,True,False
+22f32283-9bd0-968b-ccf2-98e03c3fac8d,24f8505b-439d-cb55-40b4-ecee53e31d17,var-22f32283,Nike SB React Leo - US 8,nike-nike-sb-react-leo-us-8,110.0,usd,115,True,False
+41e50921-cf64-6f4c-3c51-fc7acbd9cdd1,24f8505b-439d-cb55-40b4-ecee53e31d17,var-41e50921,Nike SB React Leo - US 8.5,nike-nike-sb-react-leo-us-8.5,105.0,usd,116,True,False
+1ab8760e-9690-88aa-44c5-678069c4b7da,24f8505b-439d-cb55-40b4-ecee53e31d17,var-1ab8760e,Nike SB React Leo - US 9,nike-nike-sb-react-leo-us-9,100.0,usd,115,True,False
+70a9a683-df41-7a69-bf06-fbf6a4b1dba8,24f8505b-439d-cb55-40b4-ecee53e31d17,var-70a9a683,Nike SB React Leo - US 9.5,nike-nike-sb-react-leo-us-9.5,105.0,usd,127,True,False
+d30e640a-90ba-8a37-a802-92c7689dcdcf,24f8505b-439d-cb55-40b4-ecee53e31d17,var-d30e640a,Nike SB React Leo - US 10,nike-nike-sb-react-leo-us-10,100.0,usd,136,True,False
+940a8182-7456-66f5-faba-95f5c0155867,7a600487-4028-1fe1-10c0-9c7ad66de1d0,var-940a8182,Nike NEXT% TOUR 3 - US 7,nike-nike-next-tour-3-us-7,205.0,usd,41,True,False
+e85eecc3-d8cc-ba0c-f3cc-d7521d62224e,7a600487-4028-1fe1-10c0-9c7ad66de1d0,var-e85eecc3,Nike NEXT% TOUR 3 - US 7.5,nike-nike-next-tour-3-us-7.5,200.0,usd,41,True,False
+9f5f8a14-3049-6315-c822-5190fff0fb0a,7a600487-4028-1fe1-10c0-9c7ad66de1d0,var-9f5f8a14,Nike NEXT% TOUR 3 - US 8,nike-nike-next-tour-3-us-8,200.0,usd,100,True,False
+bc473af4-c468-3584-0935-544f234a7224,7a600487-4028-1fe1-10c0-9c7ad66de1d0,var-bc473af4,Nike NEXT% TOUR 3 - US 8.5,nike-nike-next-tour-3-us-8.5,200.0,usd,142,True,False
+000c120b-9b61-ebd8-d0f6-be12742e3658,7a600487-4028-1fe1-10c0-9c7ad66de1d0,var-000c120b,Nike NEXT% TOUR 3 - US 9,nike-nike-next-tour-3-us-9,210.0,usd,116,True,False
+6782baff-57f6-0a9d-3fc5-43bc9d67806b,7a600487-4028-1fe1-10c0-9c7ad66de1d0,var-6782baff,Nike NEXT% TOUR 3 - US 9.5,nike-nike-next-tour-3-us-9.5,210.0,usd,133,True,False
+e9dfc52f-3432-0322-3357-99242b141514,7a600487-4028-1fe1-10c0-9c7ad66de1d0,var-e9dfc52f,Nike NEXT% TOUR 3 - US 10,nike-nike-next-tour-3-us-10,200.0,usd,74,True,False
+7e28cc33-9309-a6b3-4f5e-fbca09718a9a,7a600487-4028-1fe1-10c0-9c7ad66de1d0,var-7e28cc33,Nike NEXT% TOUR 3 - US 10.5,nike-nike-next-tour-3-us-10.5,200.0,usd,111,True,False
+7aa5fdf9-3589-581f-b7ca-cb68523344c1,7a600487-4028-1fe1-10c0-9c7ad66de1d0,var-7aa5fdf9,Nike NEXT% TOUR 3 - US 11,nike-nike-next-tour-3-us-11,200.0,usd,144,True,False
+382c26e9-ed26-ae21-f2c0-cbae9c67ec26,7a600487-4028-1fe1-10c0-9c7ad66de1d0,var-382c26e9,Nike NEXT% TOUR 3 - US 12,nike-nike-next-tour-3-us-12,200.0,usd,136,True,False
+e0de7021-6dc7-a4aa-4d41-4532207d9614,7a600487-4028-1fe1-10c0-9c7ad66de1d0,var-e0de7021,Nike NEXT% TOUR 3 - US 13,nike-nike-next-tour-3-us-13,200.0,usd,27,True,False
+63f600f7-dbb4-5dc1-1b39-40a79f9ec94a,b3568b2a-247c-b63a-eeac-721613c5d6d9,var-63f600f7,Nike Victory Tour 4 - US 7,nike-nike-victory-tour-4-us-7,210.0,usd,120,True,False
+8ada8f07-f9b2-c7c0-63f2-f154f031892c,b3568b2a-247c-b63a-eeac-721613c5d6d9,var-8ada8f07,Nike Victory Tour 4 - US 7.5,nike-nike-victory-tour-4-us-7.5,205.0,usd,32,True,False
+f5466c04-c2ca-ff39-afcc-e2b757b5ede5,b3568b2a-247c-b63a-eeac-721613c5d6d9,var-f5466c04,Nike Victory Tour 4 - US 8,nike-nike-victory-tour-4-us-8,200.0,usd,47,True,False
+fc9b9dbb-769a-fe1e-a06d-1455d8c848de,b3568b2a-247c-b63a-eeac-721613c5d6d9,var-fc9b9dbb,Nike Victory Tour 4 - US 8.5,nike-nike-victory-tour-4-us-8.5,205.0,usd,17,True,False
+4f433aa3-8441-440b-bf17-99265f271523,b3568b2a-247c-b63a-eeac-721613c5d6d9,var-4f433aa3,Nike Victory Tour 4 - US 9,nike-nike-victory-tour-4-us-9,200.0,usd,44,True,False
+e7122e07-3315-609b-3e52-bc01e2b77edd,b3568b2a-247c-b63a-eeac-721613c5d6d9,var-e7122e07,Nike Victory Tour 4 - US 9.5,nike-nike-victory-tour-4-us-9.5,200.0,usd,63,True,False
+f1c64864-f6db-fea0-38ea-72925300806b,b3568b2a-247c-b63a-eeac-721613c5d6d9,var-f1c64864,Nike Victory Tour 4 - US 10,nike-nike-victory-tour-4-us-10,210.0,usd,88,True,False
+c6103ac0-2f07-5a11-5c5e-223c1a4d3c97,b3568b2a-247c-b63a-eeac-721613c5d6d9,var-c6103ac0,Nike Victory Tour 4 - US 10.5,nike-nike-victory-tour-4-us-10.5,200.0,usd,84,True,False
+9c4537f4-45d0-b415-e813-ef6bb6d00d4b,b3568b2a-247c-b63a-eeac-721613c5d6d9,var-9c4537f4,Nike Victory Tour 4 - US 11,nike-nike-victory-tour-4-us-11,200.0,usd,48,True,False
+190b3d3e-10fd-e65e-b03f-a4b2945fa680,b3568b2a-247c-b63a-eeac-721613c5d6d9,var-190b3d3e,Nike Victory Tour 4 - US 12,nike-nike-victory-tour-4-us-12,200.0,usd,55,True,False
+09470f5f-786b-3b45-95dd-74f66b8ef7c9,8733f964-99c6-5ec1-dda7-fc84ea56ac27,var-09470f5f,Jordan 6 Rings - US 7,nike-jordan-6-rings-us-7,136.97,usd,82,True,False
+7d3d2a32-0cc3-f843-ad17-eb28ca506d9f,8733f964-99c6-5ec1-dda7-fc84ea56ac27,var-7d3d2a32,Jordan 6 Rings - US 7.5,nike-jordan-6-rings-us-7.5,141.97,usd,53,True,False
+412ad9d7-01ad-4ac0-1831-701b21075ef0,8733f964-99c6-5ec1-dda7-fc84ea56ac27,var-412ad9d7,Jordan 6 Rings - US 8,nike-jordan-6-rings-us-8,136.97,usd,103,True,False
+136ebc07-a39c-ed51-0a46-00ac502a7b50,8733f964-99c6-5ec1-dda7-fc84ea56ac27,var-136ebc07,Jordan 6 Rings - US 8.5,nike-jordan-6-rings-us-8.5,131.97,usd,101,True,False
+2f94ab4e-494a-3bc2-b909-64c1b69b559d,8733f964-99c6-5ec1-dda7-fc84ea56ac27,var-2f94ab4e,Jordan 6 Rings - US 9,nike-jordan-6-rings-us-9,141.97,usd,102,True,False
+a9b75401-8b68-cec9-4d8d-db4efd3b6446,8733f964-99c6-5ec1-dda7-fc84ea56ac27,var-a9b75401,Jordan 6 Rings - US 9.5,nike-jordan-6-rings-us-9.5,131.97,usd,118,True,False
+6f5f2d4c-3331-7c0e-6789-7aa8546cc629,8733f964-99c6-5ec1-dda7-fc84ea56ac27,var-6f5f2d4c,Jordan 6 Rings - US 10,nike-jordan-6-rings-us-10,141.97,usd,48,True,False
+16f8854a-b39f-7bbf-f9d5-51b940a6ec4c,8733f964-99c6-5ec1-dda7-fc84ea56ac27,var-16f8854a,Jordan 6 Rings - US 10.5,nike-jordan-6-rings-us-10.5,131.97,usd,43,True,False
+b6b994e5-b504-96c5-aeb3-57fa92ed8423,8733f964-99c6-5ec1-dda7-fc84ea56ac27,var-b6b994e5,Jordan 6 Rings - US 11,nike-jordan-6-rings-us-11,131.97,usd,37,True,False
+849dbdb6-7555-d97d-f4c3-f71b8d721ee5,8733f964-99c6-5ec1-dda7-fc84ea56ac27,var-849dbdb6,Jordan 6 Rings - US 12,nike-jordan-6-rings-us-12,141.97,usd,145,True,False
+b9e914e5-664c-4453-d1b5-1a5ce27ac663,8733f964-99c6-5ec1-dda7-fc84ea56ac27,var-b9e914e5,Jordan 6 Rings - US 13,nike-jordan-6-rings-us-13,131.97,usd,135,True,False
+cfb3da83-58c0-1b3f-932f-757bf3ebf4f6,c605f5fb-d3d7-d141-17aa-d2bb422d4752,var-cfb3da83,"Air Jordan 4 ""Toro"" - US 7",nike-air-jordan-4-toro--us-7,230.0,usd,59,True,False
+9fa33851-77e9-8e48-8dfd-13093d961331,c605f5fb-d3d7-d141-17aa-d2bb422d4752,var-9fa33851,"Air Jordan 4 ""Toro"" - US 7.5",nike-air-jordan-4-toro--us-7.5,220.0,usd,14,True,False
+3a270e49-2ebe-d99c-91af-6bc176943157,c605f5fb-d3d7-d141-17aa-d2bb422d4752,var-3a270e49,"Air Jordan 4 ""Toro"" - US 8",nike-air-jordan-4-toro--us-8,220.0,usd,148,True,False
+7524fc45-2b17-4c41-bb4c-3f9813cbd343,c605f5fb-d3d7-d141-17aa-d2bb422d4752,var-7524fc45,"Air Jordan 4 ""Toro"" - US 8.5",nike-air-jordan-4-toro--us-8.5,220.0,usd,92,True,False
+fee9fb53-78f6-c19c-a9b8-8e1e62f0fb85,c605f5fb-d3d7-d141-17aa-d2bb422d4752,var-fee9fb53,"Air Jordan 4 ""Toro"" - US 9",nike-air-jordan-4-toro--us-9,230.0,usd,6,True,False
+5aa836d1-adbb-cc74-2ca9-80accf309aa8,c605f5fb-d3d7-d141-17aa-d2bb422d4752,var-5aa836d1,"Air Jordan 4 ""Toro"" - US 9.5",nike-air-jordan-4-toro--us-9.5,220.0,usd,38,True,False
+3c4ec9d9-9c29-c186-aebb-41823e0c1035,c605f5fb-d3d7-d141-17aa-d2bb422d4752,var-3c4ec9d9,"Air Jordan 4 ""Toro"" - US 10",nike-air-jordan-4-toro--us-10,220.0,usd,102,True,False
+bf28a7c7-c992-47ed-6487-452df3dd3d64,c605f5fb-d3d7-d141-17aa-d2bb422d4752,var-bf28a7c7,"Air Jordan 4 ""Toro"" - US 10.5",nike-air-jordan-4-toro--us-10.5,230.0,usd,138,True,False
+7c29719a-ceb9-5bbe-a1cf-d1a11ec8d6ba,fd026efe-d47f-7299-a210-55a4c65c4e5b,var-7c29719a,Nike Air Force 1 Low Retro - US 7,nike-nike-air-force-1-low-retro-us-7,125.0,usd,120,True,False
+28cf81c8-ed2d-5e47-3436-c25dcca61999,fd026efe-d47f-7299-a210-55a4c65c4e5b,var-28cf81c8,Nike Air Force 1 Low Retro - US 7.5,nike-nike-air-force-1-low-retro-us-7.5,135.0,usd,22,True,False
+35e8cfb7-3127-2b54-cec9-f1ef9921dd9f,fd026efe-d47f-7299-a210-55a4c65c4e5b,var-35e8cfb7,Nike Air Force 1 Low Retro - US 8,nike-nike-air-force-1-low-retro-us-8,125.0,usd,87,True,False
+c588bf8f-4d8c-7e69-bb08-5c298c7d89f6,fd026efe-d47f-7299-a210-55a4c65c4e5b,var-c588bf8f,Nike Air Force 1 Low Retro - US 8.5,nike-nike-air-force-1-low-retro-us-8.5,125.0,usd,28,True,False
+e9623a5c-d260-1fe6-06bf-7ae30721d480,fd026efe-d47f-7299-a210-55a4c65c4e5b,var-e9623a5c,Nike Air Force 1 Low Retro - US 9,nike-nike-air-force-1-low-retro-us-9,125.0,usd,108,True,False
+51cb7f09-aa56-41e6-0411-a204d405e609,fd026efe-d47f-7299-a210-55a4c65c4e5b,var-51cb7f09,Nike Air Force 1 Low Retro - US 9.5,nike-nike-air-force-1-low-retro-us-9.5,125.0,usd,8,True,False
+a59dc0fa-1874-c37d-7af8-df287ee9113d,fd026efe-d47f-7299-a210-55a4c65c4e5b,var-a59dc0fa,Nike Air Force 1 Low Retro - US 10,nike-nike-air-force-1-low-retro-us-10,135.0,usd,39,True,False
+9633778b-daa8-98af-34a3-d7d10209318b,24b45acf-9a94-543f-a54b-b564a16002ba,var-9633778b,"Air Max 1 ""Royals"" - US 7",nike-air-max-1-royals--us-7,155.0,usd,104,True,False
+ab47c87c-510c-b38c-680d-04097b41111c,24b45acf-9a94-543f-a54b-b564a16002ba,var-ab47c87c,"Air Max 1 ""Royals"" - US 7.5",nike-air-max-1-royals--us-7.5,160.0,usd,60,True,False
+69cc9cc9-8964-2e4a-9741-8e26ef190d18,24b45acf-9a94-543f-a54b-b564a16002ba,var-69cc9cc9,"Air Max 1 ""Royals"" - US 8",nike-air-max-1-royals--us-8,160.0,usd,135,True,False
+cbfe6dba-5422-35c4-a8af-f6ec95c80564,24b45acf-9a94-543f-a54b-b564a16002ba,var-cbfe6dba,"Air Max 1 ""Royals"" - US 8.5",nike-air-max-1-royals--us-8.5,150.0,usd,19,True,False
+f548ef8a-b3f7-8258-0ba5-d970a926c069,24b45acf-9a94-543f-a54b-b564a16002ba,var-f548ef8a,"Air Max 1 ""Royals"" - US 9",nike-air-max-1-royals--us-9,150.0,usd,108,True,False
+b8b6b6ba-11f1-92f1-88d4-b7faca068646,24b45acf-9a94-543f-a54b-b564a16002ba,var-b8b6b6ba,"Air Max 1 ""Royals"" - US 9.5",nike-air-max-1-royals--us-9.5,150.0,usd,149,True,False
+a1118cfb-eaf8-0eac-7b37-72f4936352a1,24b45acf-9a94-543f-a54b-b564a16002ba,var-a1118cfb,"Air Max 1 ""Royals"" - US 10",nike-air-max-1-royals--us-10,155.0,usd,48,True,False
+da19f44c-5598-d787-9166-1688620e9abc,1edec31d-53ed-7dcf-14ee-0a6c3353b544,var-da19f44c,Jordan Sixty Plus Low - US 7,nike-jordan-sixty-plus-low-us-7,160.0,usd,61,True,False
+8c805853-4b8a-6520-416e-ac8db9e5a0dc,1edec31d-53ed-7dcf-14ee-0a6c3353b544,var-8c805853,Jordan Sixty Plus Low - US 7.5,nike-jordan-sixty-plus-low-us-7.5,170.0,usd,21,True,False
+9cce4aa1-6393-c394-2785-65d402322fcb,1edec31d-53ed-7dcf-14ee-0a6c3353b544,var-9cce4aa1,Jordan Sixty Plus Low - US 8,nike-jordan-sixty-plus-low-us-8,160.0,usd,77,True,False
+793fcb2e-e33f-6663-11dd-6e3f6e7b52c7,1edec31d-53ed-7dcf-14ee-0a6c3353b544,var-793fcb2e,Jordan Sixty Plus Low - US 8.5,nike-jordan-sixty-plus-low-us-8.5,160.0,usd,110,True,False
+3fe3188b-95e3-fd4c-5882-88859352f714,1edec31d-53ed-7dcf-14ee-0a6c3353b544,var-3fe3188b,Jordan Sixty Plus Low - US 9,nike-jordan-sixty-plus-low-us-9,160.0,usd,16,True,False
+4707060d-814a-9fd8-99ee-eae99fae8199,1edec31d-53ed-7dcf-14ee-0a6c3353b544,var-4707060d,Jordan Sixty Plus Low - US 9.5,nike-jordan-sixty-plus-low-us-9.5,160.0,usd,104,True,False
+6386621e-d45d-3213-0983-b61dcf07a2f0,1edec31d-53ed-7dcf-14ee-0a6c3353b544,var-6386621e,Jordan Sixty Plus Low - US 10,nike-jordan-sixty-plus-low-us-10,165.0,usd,6,True,False
+cee170a4-6a78-114d-bfbb-14f165ad5b84,1edec31d-53ed-7dcf-14ee-0a6c3353b544,var-cee170a4,Jordan Sixty Plus Low - US 10.5,nike-jordan-sixty-plus-low-us-10.5,160.0,usd,34,True,False
+1ad3194a-443d-4283-7ad1-68de3d3f4305,1edec31d-53ed-7dcf-14ee-0a6c3353b544,var-1ad3194a,Jordan Sixty Plus Low - US 11,nike-jordan-sixty-plus-low-us-11,170.0,usd,132,True,False
+cf248dd5-e6d0-e15e-5e99-f9c508d39e66,1edec31d-53ed-7dcf-14ee-0a6c3353b544,var-cf248dd5,Jordan Sixty Plus Low - US 12,nike-jordan-sixty-plus-low-us-12,160.0,usd,84,True,False
+131b9e57-22e0-4f27-16b0-f70f5ffa45df,bb9d36c1-c143-8c32-83a1-03924c609a4a,var-131b9e57,Jordan Son of Mars Low - US 7,nike-jordan-son-of-mars-low-us-7,170.0,usd,20,True,False
+decae5e6-2196-19d4-fa75-07decd35260e,bb9d36c1-c143-8c32-83a1-03924c609a4a,var-decae5e6,Jordan Son of Mars Low - US 7.5,nike-jordan-son-of-mars-low-us-7.5,165.0,usd,109,True,False
+38c83424-8f2c-6679-8f01-e8eab54d6648,bb9d36c1-c143-8c32-83a1-03924c609a4a,var-38c83424,Jordan Son of Mars Low - US 8,nike-jordan-son-of-mars-low-us-8,165.0,usd,8,True,False
+f9212e22-7a44-62c0-bcbe-8e63a742e07e,bb9d36c1-c143-8c32-83a1-03924c609a4a,var-f9212e22,Jordan Son of Mars Low - US 8.5,nike-jordan-son-of-mars-low-us-8.5,165.0,usd,68,True,False
+aa49e99c-6586-281c-6901-c092aafd87a0,bb9d36c1-c143-8c32-83a1-03924c609a4a,var-aa49e99c,Jordan Son of Mars Low - US 9,nike-jordan-son-of-mars-low-us-9,175.0,usd,67,True,False
+a10bba8e-3a8a-e621-6a97-6a5ef33e63fb,bb9d36c1-c143-8c32-83a1-03924c609a4a,var-a10bba8e,Jordan Son of Mars Low - US 9.5,nike-jordan-son-of-mars-low-us-9.5,165.0,usd,111,True,False
+e400c74e-562c-60d5-73ce-b134f4b8acbc,bb9d36c1-c143-8c32-83a1-03924c609a4a,var-e400c74e,Jordan Son of Mars Low - US 10,nike-jordan-son-of-mars-low-us-10,175.0,usd,60,True,False
+98906499-358c-38df-b4dd-3b429d3aacc1,bb9d36c1-c143-8c32-83a1-03924c609a4a,var-98906499,Jordan Son of Mars Low - US 10.5,nike-jordan-son-of-mars-low-us-10.5,170.0,usd,41,True,False
+31f8ed74-267f-ae92-f136-723efa60dd69,bb9d36c1-c143-8c32-83a1-03924c609a4a,var-31f8ed74,Jordan Son of Mars Low - US 11,nike-jordan-son-of-mars-low-us-11,165.0,usd,92,True,False
+ceb4b806-bf6a-4c33-3a8a-fd3899e3b568,153540ec-54cd-2403-c2ba-e8c94c05d66b,var-ceb4b806,Nike Free Metcon 7 - US 7,nike-nike-free-metcon-7-us-7,125.0,usd,126,True,False
+b54cf048-0d14-167c-4ca8-6a94b1cc0ef9,153540ec-54cd-2403-c2ba-e8c94c05d66b,var-b54cf048,Nike Free Metcon 7 - US 7.5,nike-nike-free-metcon-7-us-7.5,130.0,usd,116,True,False
+8a88f0ce-bcfb-2b03-4437-5356916bb292,153540ec-54cd-2403-c2ba-e8c94c05d66b,var-8a88f0ce,Nike Free Metcon 7 - US 8,nike-nike-free-metcon-7-us-8,135.0,usd,23,True,False
+f3795344-efce-1e91-8ffd-1421edf75aae,153540ec-54cd-2403-c2ba-e8c94c05d66b,var-f3795344,Nike Free Metcon 7 - US 8.5,nike-nike-free-metcon-7-us-8.5,130.0,usd,128,True,False
+e62179c0-4aed-865f-d7e5-0411b6f08639,153540ec-54cd-2403-c2ba-e8c94c05d66b,var-e62179c0,Nike Free Metcon 7 - US 9,nike-nike-free-metcon-7-us-9,130.0,usd,15,True,False
+a7c3a73b-7460-888d-c220-17cbaf2f57e8,153540ec-54cd-2403-c2ba-e8c94c05d66b,var-a7c3a73b,Nike Free Metcon 7 - US 9.5,nike-nike-free-metcon-7-us-9.5,125.0,usd,143,True,False
+e2bfc301-6986-31ee-5f9b-d4913d2de994,10da24aa-81ac-565e-893f-5553c7ef84b5,var-e2bfc301,Nike Metcon 10 - US 7,nike-nike-metcon-10-us-7,124.97,usd,12,True,False
+286a5b4f-6be5-8b58-fb17-29ea27419938,10da24aa-81ac-565e-893f-5553c7ef84b5,var-286a5b4f,Nike Metcon 10 - US 7.5,nike-nike-metcon-10-us-7.5,124.97,usd,132,True,False
+17458419-3630-cdea-a6f3-6185f7604f73,10da24aa-81ac-565e-893f-5553c7ef84b5,var-17458419,Nike Metcon 10 - US 8,nike-nike-metcon-10-us-8,124.97,usd,45,True,False
+e781177f-479c-9270-6a4e-59d84a45db23,10da24aa-81ac-565e-893f-5553c7ef84b5,var-e781177f,Nike Metcon 10 - US 8.5,nike-nike-metcon-10-us-8.5,124.97,usd,137,True,False
+83575792-ccc7-bfe3-2698-273a8d387d9a,10da24aa-81ac-565e-893f-5553c7ef84b5,var-83575792,Nike Metcon 10 - US 9,nike-nike-metcon-10-us-9,134.97,usd,136,True,False
+c81634fb-ef4a-e864-6dc8-ef4f9def55cc,10da24aa-81ac-565e-893f-5553c7ef84b5,var-c81634fb,Nike Metcon 10 - US 9.5,nike-nike-metcon-10-us-9.5,124.97,usd,69,True,False
+f5d706af-0ba4-8d2d-a65b-c141219c9b48,10da24aa-81ac-565e-893f-5553c7ef84b5,var-f5d706af,Nike Metcon 10 - US 10,nike-nike-metcon-10-us-10,129.97,usd,132,True,False
+b09a1b78-23a4-d940-1b9c-ca52d0aca21c,10da24aa-81ac-565e-893f-5553c7ef84b5,var-b09a1b78,Nike Metcon 10 - US 10.5,nike-nike-metcon-10-us-10.5,134.97,usd,141,True,False
+fe5e3c90-55d6-ddb8-e15c-93e179e8fb4f,10da24aa-81ac-565e-893f-5553c7ef84b5,var-fe5e3c90,Nike Metcon 10 - US 11,nike-nike-metcon-10-us-11,124.97,usd,31,True,False
+3b842431-34ff-d42c-636c-9ba0f17517ac,10da24aa-81ac-565e-893f-5553c7ef84b5,var-3b842431,Nike Metcon 10 - US 12,nike-nike-metcon-10-us-12,124.97,usd,82,True,False
+708cbcc0-a684-1fd5-164c-677358a0bf4b,10da24aa-81ac-565e-893f-5553c7ef84b5,var-708cbcc0,Nike Metcon 10 - US 13,nike-nike-metcon-10-us-13,124.97,usd,95,True,False
+fdcf4c01-031d-c7d9-da36-29e01157d27c,d5e4f061-d895-bfdf-7971-bc0d87cdb4e4,var-fdcf4c01,Nike Air Max Plus OG Premium - US 7,nike-nike-air-max-plus-og-premium-us-7,190.0,usd,110,True,False
+3d5aa741-a0f6-5d79-a7d8-888447f072a9,d5e4f061-d895-bfdf-7971-bc0d87cdb4e4,var-3d5aa741,Nike Air Max Plus OG Premium - US 7.5,nike-nike-air-max-plus-og-premium-us-7.5,195.0,usd,30,True,False
+86cadc0e-ab99-51f9-f2d3-de2cb3cd52c4,d5e4f061-d895-bfdf-7971-bc0d87cdb4e4,var-86cadc0e,Nike Air Max Plus OG Premium - US 8,nike-nike-air-max-plus-og-premium-us-8,190.0,usd,77,True,False
+d0d520ff-855d-f6de-e5d9-965ffb70a449,d5e4f061-d895-bfdf-7971-bc0d87cdb4e4,var-d0d520ff,Nike Air Max Plus OG Premium - US 8.5,nike-nike-air-max-plus-og-premium-us-8.5,190.0,usd,150,True,False
+c1c978e6-a8cd-efd7-5a81-903da8ce9361,d5e4f061-d895-bfdf-7971-bc0d87cdb4e4,var-c1c978e6,Nike Air Max Plus OG Premium - US 9,nike-nike-air-max-plus-og-premium-us-9,190.0,usd,66,True,False
+c56d532f-7f2c-536d-8715-3e11e519790b,d5e4f061-d895-bfdf-7971-bc0d87cdb4e4,var-c56d532f,Nike Air Max Plus OG Premium - US 9.5,nike-nike-air-max-plus-og-premium-us-9.5,190.0,usd,37,True,False
+05424035-2507-a2ab-d6ac-5b8633dcefb0,d5e4f061-d895-bfdf-7971-bc0d87cdb4e4,var-05424035,Nike Air Max Plus OG Premium - US 10,nike-nike-air-max-plus-og-premium-us-10,195.0,usd,145,True,False
+d41e509c-2001-3cbb-38ff-9d70fe87028e,d5e4f061-d895-bfdf-7971-bc0d87cdb4e4,var-d41e509c,Nike Air Max Plus OG Premium - US 10.5,nike-nike-air-max-plus-og-premium-us-10.5,190.0,usd,126,True,False
+4f34696c-0fb1-ef26-1d09-d4c07c98d8b4,455c6b0c-3606-9d78-f60c-638fe714daac,var-4f34696c,Jordan 1 Low TD - US 7,nike-jordan-1-low-td-us-7,145.0,usd,88,True,False
+7e531fca-a3b4-0048-beab-9877fefcd216,455c6b0c-3606-9d78-f60c-638fe714daac,var-7e531fca,Jordan 1 Low TD - US 7.5,nike-jordan-1-low-td-us-7.5,145.0,usd,39,True,False
+0114a1b2-1306-0a15-d14e-c52ba50e2894,455c6b0c-3606-9d78-f60c-638fe714daac,var-0114a1b2,Jordan 1 Low TD - US 8,nike-jordan-1-low-td-us-8,150.0,usd,100,True,False
+929510b4-1aa1-346f-5fc0-ef61f0c076d3,455c6b0c-3606-9d78-f60c-638fe714daac,var-929510b4,Jordan 1 Low TD - US 8.5,nike-jordan-1-low-td-us-8.5,145.0,usd,140,True,False
+767940a9-9bc1-8fe2-8fa7-885ea3f764b0,455c6b0c-3606-9d78-f60c-638fe714daac,var-767940a9,Jordan 1 Low TD - US 9,nike-jordan-1-low-td-us-9,150.0,usd,24,True,False
+300e9db8-934a-640a-b389-c5f1871f3e2f,455c6b0c-3606-9d78-f60c-638fe714daac,var-300e9db8,Jordan 1 Low TD - US 9.5,nike-jordan-1-low-td-us-9.5,145.0,usd,72,True,False
+563fa45b-93c8-bcbc-0a29-fb1de4d930e2,455c6b0c-3606-9d78-f60c-638fe714daac,var-563fa45b,Jordan 1 Low TD - US 10,nike-jordan-1-low-td-us-10,155.0,usd,21,True,False
+fcc1d6e6-ee88-2afb-417f-65a3198f93b8,455c6b0c-3606-9d78-f60c-638fe714daac,var-fcc1d6e6,Jordan 1 Low TD - US 10.5,nike-jordan-1-low-td-us-10.5,145.0,usd,24,True,False
+b661f23a-c251-dd2b-c857-097dd47c52ca,455c6b0c-3606-9d78-f60c-638fe714daac,var-b661f23a,Jordan 1 Low TD - US 11,nike-jordan-1-low-td-us-11,145.0,usd,77,True,False
+2a111f47-db71-83ba-5d62-4716bf424b9a,455c6b0c-3606-9d78-f60c-638fe714daac,var-2a111f47,Jordan 1 Low TD - US 12,nike-jordan-1-low-td-us-12,145.0,usd,102,True,False
+85771698-e949-b857-fb12-2107b6c6dee6,455c6b0c-3606-9d78-f60c-638fe714daac,var-85771698,Jordan 1 Low TD - US 13,nike-jordan-1-low-td-us-13,145.0,usd,14,True,False
+d0656a88-1c4d-d070-33b9-595e8101a1dc,e425a75b-2e5e-58c8-2297-8d52f262adad,var-d0656a88,Jordan 1 Mid TD - US 7,nike-jordan-1-mid-td-us-7,160.0,usd,78,True,False
+564a4052-63a1-f930-2245-217bde8bcd43,e425a75b-2e5e-58c8-2297-8d52f262adad,var-564a4052,Jordan 1 Mid TD - US 7.5,nike-jordan-1-mid-td-us-7.5,165.0,usd,42,True,False
+3b8bb440-1884-0a28-b90c-9e4d403a4c3a,e425a75b-2e5e-58c8-2297-8d52f262adad,var-3b8bb440,Jordan 1 Mid TD - US 8,nike-jordan-1-mid-td-us-8,160.0,usd,47,True,False
+b02e3816-5ca4-c9ef-b13a-2b59824229f0,e425a75b-2e5e-58c8-2297-8d52f262adad,var-b02e3816,Jordan 1 Mid TD - US 8.5,nike-jordan-1-mid-td-us-8.5,165.0,usd,79,True,False
+d0b1b44f-d39c-fc9a-33d4-fd561248edcf,e425a75b-2e5e-58c8-2297-8d52f262adad,var-d0b1b44f,Jordan 1 Mid TD - US 9,nike-jordan-1-mid-td-us-9,155.0,usd,60,True,False
+ae683122-9588-5207-e52f-48ad7386f97b,e425a75b-2e5e-58c8-2297-8d52f262adad,var-ae683122,Jordan 1 Mid TD - US 9.5,nike-jordan-1-mid-td-us-9.5,155.0,usd,119,True,False
+0921a60a-8eee-8137-fa33-6453cef94332,e425a75b-2e5e-58c8-2297-8d52f262adad,var-0921a60a,Jordan 1 Mid TD - US 10,nike-jordan-1-mid-td-us-10,165.0,usd,112,True,False
+c60d2fba-a7bd-812a-89f6-eb392da531db,e425a75b-2e5e-58c8-2297-8d52f262adad,var-c60d2fba,Jordan 1 Mid TD - US 10.5,nike-jordan-1-mid-td-us-10.5,160.0,usd,61,True,False
+027f1958-f6e4-2912-77a9-a858ebfef922,e425a75b-2e5e-58c8-2297-8d52f262adad,var-027f1958,Jordan 1 Mid TD - US 11,nike-jordan-1-mid-td-us-11,155.0,usd,65,True,False
+67322214-97d8-0f77-30d7-74e960c73875,e425a75b-2e5e-58c8-2297-8d52f262adad,var-67322214,Jordan 1 Mid TD - US 12,nike-jordan-1-mid-td-us-12,160.0,usd,102,True,False
+7a2a07ca-f63b-383a-ff17-93dee48b27fb,a49890c5-7321-637b-9f68-697d3ba8d9d2,var-7a2a07ca,Nike ReactX Rejuven8 - US 7,nike-nike-reactx-rejuven8-us-7,75.0,usd,140,True,False
+43a9ce8f-2c03-7ef2-77c6-7ffc5603d5b2,a49890c5-7321-637b-9f68-697d3ba8d9d2,var-43a9ce8f,Nike ReactX Rejuven8 - US 7.5,nike-nike-reactx-rejuven8-us-7.5,80.0,usd,41,True,False
+7e7b2d8f-b344-1b99-298f-623117683f0a,a49890c5-7321-637b-9f68-697d3ba8d9d2,var-7e7b2d8f,Nike ReactX Rejuven8 - US 8,nike-nike-reactx-rejuven8-us-8,80.0,usd,135,True,False
+0a4c56bd-e5c7-bd36-2782-500a8cadee05,a49890c5-7321-637b-9f68-697d3ba8d9d2,var-0a4c56bd,Nike ReactX Rejuven8 - US 8.5,nike-nike-reactx-rejuven8-us-8.5,80.0,usd,67,True,False
+60363a50-3d77-3178-8958-1b42463ceb29,a49890c5-7321-637b-9f68-697d3ba8d9d2,var-60363a50,Nike ReactX Rejuven8 - US 9,nike-nike-reactx-rejuven8-us-9,75.0,usd,90,True,False
+26c3048a-a4c7-c870-a3fb-bf645ad86444,a49890c5-7321-637b-9f68-697d3ba8d9d2,var-26c3048a,Nike ReactX Rejuven8 - US 9.5,nike-nike-reactx-rejuven8-us-9.5,75.0,usd,23,True,False
+ce1246fb-b3c8-e8b5-e331-c3660eab2481,a49890c5-7321-637b-9f68-697d3ba8d9d2,var-ce1246fb,Nike ReactX Rejuven8 - US 10,nike-nike-reactx-rejuven8-us-10,85.0,usd,102,True,False
+11cdafbc-ae24-1441-811e-c6d33013938b,a49890c5-7321-637b-9f68-697d3ba8d9d2,var-11cdafbc,Nike ReactX Rejuven8 - US 10.5,nike-nike-reactx-rejuven8-us-10.5,85.0,usd,55,True,False
+26bfbbfe-7742-868d-0505-7b863f62197c,a49890c5-7321-637b-9f68-697d3ba8d9d2,var-26bfbbfe,Nike ReactX Rejuven8 - US 11,nike-nike-reactx-rejuven8-us-11,85.0,usd,72,True,False
+ef6beb26-0e13-cc4b-5d0f-96cec4d2329d,a5190833-8d34-60c3-910d-d239d25832a2,var-ef6beb26,Nike Calm 2.0 - US 7,nike-nike-calm-2-0-us-7,55.0,usd,134,True,False
+ab12ad3d-37dc-feb0-8912-26c33088dc84,a5190833-8d34-60c3-910d-d239d25832a2,var-ab12ad3d,Nike Calm 2.0 - US 7.5,nike-nike-calm-2-0-us-7.5,55.0,usd,138,True,False
+fdca889d-91e5-9cf1-5125-2c7ed4ea61b6,a5190833-8d34-60c3-910d-d239d25832a2,var-fdca889d,Nike Calm 2.0 - US 8,nike-nike-calm-2-0-us-8,55.0,usd,120,True,False
+fab7d96f-1769-99f9-f8ec-19fe954b9fb3,a5190833-8d34-60c3-910d-d239d25832a2,var-fab7d96f,Nike Calm 2.0 - US 8.5,nike-nike-calm-2-0-us-8.5,55.0,usd,16,True,False
+d5c4e6b6-91c2-444f-5966-a81106087b07,a5190833-8d34-60c3-910d-d239d25832a2,var-d5c4e6b6,Nike Calm 2.0 - US 9,nike-nike-calm-2-0-us-9,55.0,usd,37,True,False
+af593d83-b97e-9a63-a266-a9af93b39a3a,a5190833-8d34-60c3-910d-d239d25832a2,var-af593d83,Nike Calm 2.0 - US 9.5,nike-nike-calm-2-0-us-9.5,55.0,usd,14,True,False
+0565370c-bc10-ba99-482a-44e8a90935da,a5190833-8d34-60c3-910d-d239d25832a2,var-0565370c,Nike Calm 2.0 - US 10,nike-nike-calm-2-0-us-10,55.0,usd,27,True,False
+9773116f-f8cb-42fb-e7b1-a11dd956850f,a5190833-8d34-60c3-910d-d239d25832a2,var-9773116f,Nike Calm 2.0 - US 10.5,nike-nike-calm-2-0-us-10.5,65.0,usd,61,True,False
+42a13fbf-e580-20cc-ba84-24371932c5a5,088789cc-f55a-e221-215f-e5e3b4828010,var-42a13fbf,Nike Zoom Vomero 5 - US 7,nike-nike-zoom-vomero-5-us-7,180.0,usd,56,True,False
+b3a8e13f-d03b-de6b-429a-cb754808c6bf,088789cc-f55a-e221-215f-e5e3b4828010,var-b3a8e13f,Nike Zoom Vomero 5 - US 7.5,nike-nike-zoom-vomero-5-us-7.5,170.0,usd,92,True,False
+78b155e9-5c67-c628-8e3d-92cb2cb6e6c9,088789cc-f55a-e221-215f-e5e3b4828010,var-78b155e9,Nike Zoom Vomero 5 - US 8,nike-nike-zoom-vomero-5-us-8,170.0,usd,16,True,False
+5bd85b6c-dcde-004a-8840-77ea9b2cc328,088789cc-f55a-e221-215f-e5e3b4828010,var-5bd85b6c,Nike Zoom Vomero 5 - US 8.5,nike-nike-zoom-vomero-5-us-8.5,170.0,usd,61,True,False
+97d5be30-d939-7f48-a7cb-c9d64c8a69f5,088789cc-f55a-e221-215f-e5e3b4828010,var-97d5be30,Nike Zoom Vomero 5 - US 9,nike-nike-zoom-vomero-5-us-9,170.0,usd,76,True,False
+3c7397f4-43c7-7d3b-5a18-4f4e74306a09,088789cc-f55a-e221-215f-e5e3b4828010,var-3c7397f4,Nike Zoom Vomero 5 - US 9.5,nike-nike-zoom-vomero-5-us-9.5,170.0,usd,9,True,False
+b6f972f4-8848-0484-3c15-d74d83a1be1d,088789cc-f55a-e221-215f-e5e3b4828010,var-b6f972f4,Nike Zoom Vomero 5 - US 10,nike-nike-zoom-vomero-5-us-10,170.0,usd,30,True,False
+f4bcb72a-3cce-22c5-e190-a7ca340cb662,088789cc-f55a-e221-215f-e5e3b4828010,var-f4bcb72a,Nike Zoom Vomero 5 - US 10.5,nike-nike-zoom-vomero-5-us-10.5,170.0,usd,58,True,False
+2327f6a3-ea6e-7999-df80-14987425102a,088789cc-f55a-e221-215f-e5e3b4828010,var-2327f6a3,Nike Zoom Vomero 5 - US 11,nike-nike-zoom-vomero-5-us-11,170.0,usd,95,True,False
+2ee79a8f-4e1a-729d-1ed6-e2ef5e5544ff,6ac86478-9eb7-e382-fca6-17dcd1947dfc,var-2ee79a8f,Nike Shox Z - US 7,nike-nike-shox-z-us-7,140.0,usd,94,True,False
+6302e8e5-e61f-bb09-a30c-4126502817ff,6ac86478-9eb7-e382-fca6-17dcd1947dfc,var-6302e8e5,Nike Shox Z - US 7.5,nike-nike-shox-z-us-7.5,140.0,usd,132,True,False
+ec43c98f-d6d1-ef44-3cb7-2586350839f5,6ac86478-9eb7-e382-fca6-17dcd1947dfc,var-ec43c98f,Nike Shox Z - US 8,nike-nike-shox-z-us-8,135.0,usd,138,True,False
+881c8631-140f-08a9-8ae6-2fd9edba700c,6ac86478-9eb7-e382-fca6-17dcd1947dfc,var-881c8631,Nike Shox Z - US 8.5,nike-nike-shox-z-us-8.5,135.0,usd,8,True,False
+131e1dd2-8ee7-dcdb-d96b-8a64192881c5,6ac86478-9eb7-e382-fca6-17dcd1947dfc,var-131e1dd2,Nike Shox Z - US 9,nike-nike-shox-z-us-9,135.0,usd,66,True,False
+4186d0e3-a047-5fac-aee9-e5155f51a404,6ac86478-9eb7-e382-fca6-17dcd1947dfc,var-4186d0e3,Nike Shox Z - US 9.5,nike-nike-shox-z-us-9.5,135.0,usd,46,True,False

@@ -1,0 +1,54 @@
+- main [ref=f6e2]:
+  - navigation [ref=f6e5]:
+    - button "Menu" [ref=f6e12] [cursor=pointer]
+    - link "Medusa Store" [ref=f6e14] [cursor=pointer]:
+      - /url: /cn
+    - link "Cart (0)" [ref=f6e16] [cursor=pointer]:
+      - /url: /cn/cart
+  - generic [ref=f6e17]:
+    - generic [ref=f6e19]:
+      - paragraph [ref=f6e20]: Men's Footwear
+      - heading "Ua Charged Assert 10 Mens Running Shoes" [level=1] [ref=f6e21]
+      - paragraph [ref=f6e22]: These are running shoes anyone can wear to go faster—with Charged Cushioning® to help protect against impact, a breathable upper, and durability for miles.
+    - img "Thumbnail" [ref=f6e26]
+    - generic [ref=f6e27]:
+      - generic [ref=f6e28]: CN¥69.97
+      - paragraph [ref=f6e29]: 173 available
+      - button "Add to cart" [ref=f6e31] [cursor=pointer]
+  - generic [ref=f6e33]:
+    - generic [ref=f6e34]:
+      - link "Medusa Store" [ref=f6e36] [cursor=pointer]:
+        - /url: /cn
+      - generic [ref=f6e37]:
+        - generic [ref=f6e38]:
+          - generic [ref=f6e39]: Store
+          - list [ref=f6e40]:
+            - listitem [ref=f6e41]:
+              - link "Products" [ref=f6e42] [cursor=pointer]:
+                - /url: /cn/store
+            - listitem [ref=f6e43]:
+              - link "Cart" [ref=f6e44] [cursor=pointer]:
+                - /url: /cn/cart
+        - generic [ref=f6e45]:
+          - generic [ref=f6e46]: Medusa
+          - list [ref=f6e47]:
+            - listitem [ref=f6e48]:
+              - link "GitHub" [ref=f6e49] [cursor=pointer]:
+                - /url: https://github.com/medusajs
+            - listitem [ref=f6e50]:
+              - link "Documentation" [ref=f6e51] [cursor=pointer]:
+                - /url: https://docs.medusajs.com
+            - listitem [ref=f6e52]:
+              - link "Source code" [ref=f6e53] [cursor=pointer]:
+                - /url: https://github.com/medusajs/nextjs-starter-medusa
+    - generic [ref=f6e54]:
+      - paragraph [ref=f6e55]: © 2026 Medusa Store. All rights reserved.
+      - paragraph [ref=f6e56]:
+        - text: Powered by
+        - link [ref=f6e57] [cursor=pointer]:
+          - /url: https://www.medusajs.com
+          - img [ref=f6e58]
+        - text: "&"
+        - link [ref=f6e60] [cursor=pointer]:
+          - /url: https://nextjs.org
+          - img [ref=f6e61]

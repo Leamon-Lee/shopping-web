@@ -1,0 +1,88 @@
+- main [ref=f1e2]:
+  - navigation [ref=f1e5]:
+    - button "Menu" [ref=f1e12] [cursor=pointer]
+    - link "Medusa Store" [ref=f1e14] [cursor=pointer]:
+      - /url: /cn
+    - link "Cart (0)" [ref=f1e16] [cursor=pointer]:
+      - /url: /cn/cart
+  - generic [ref=f1e18]:
+    - generic [ref=f1e19]:
+      - heading "Ecommerce Starter Template" [level=1] [ref=f1e20]
+      - heading "Powered by Medusa and Next.js" [level=2] [ref=f1e21]
+    - link "View on GitHub" [ref=f1e22] [cursor=pointer]:
+      - /url: https://github.com/medusajs/nextjs-starter-medusa
+      - button "View on GitHub" [ref=f1e23]:
+        - text: View on GitHub
+        - img [ref=f1e24]
+  - generic [ref=f1e28]:
+    - generic [ref=f1e29]:
+      - generic [ref=f1e30]:
+        - paragraph [ref=f1e31]: Featured
+        - heading "New arrivals" [level=2] [ref=f1e32]
+      - link "View store" [ref=f1e33] [cursor=pointer]:
+        - /url: ./store
+    - list [ref=f1e34]:
+      - listitem [ref=f1e35]:
+        - link "Thumbnail Nike Air Max 95 Big Bubble CN¥190.00 Men's Shoes" [ref=f1e36] [cursor=pointer]:
+          - /url: /cn/products/nike-air-max-95-big-bubble
+          - generic [ref=f1e37]:
+            - img "Thumbnail" [ref=f1e39]
+            - generic [ref=f1e40]:
+              - generic [ref=f1e41]: Nike Air Max 95 Big Bubble
+              - generic [ref=f1e42]: CN¥190.00
+            - paragraph [ref=f1e43]: Men's Shoes
+      - listitem [ref=f1e44]:
+        - link "Thumbnail Nike Shox R4 SE Fade CN¥155.00 Men's Shoes" [ref=f1e45] [cursor=pointer]:
+          - /url: /cn/products/nike-shox-r4-se-fade
+          - generic [ref=f1e46]:
+            - img "Thumbnail" [ref=f1e48]
+            - generic [ref=f1e49]:
+              - generic [ref=f1e50]: Nike Shox R4 SE Fade
+              - generic [ref=f1e51]: CN¥155.00
+            - paragraph [ref=f1e52]: Men's Shoes
+      - listitem [ref=f1e53]:
+        - link "Thumbnail ACG LDV CN¥130.00 Men's Shoes" [ref=f1e54] [cursor=pointer]:
+          - /url: /cn/products/acg-ldv
+          - generic [ref=f1e55]:
+            - img "Thumbnail" [ref=f1e57]
+            - generic [ref=f1e58]:
+              - generic [ref=f1e59]: ACG LDV
+              - generic [ref=f1e60]: CN¥130.00
+            - paragraph [ref=f1e61]: Men's Shoes
+  - generic [ref=f1e63]:
+    - generic [ref=f1e64]:
+      - link "Medusa Store" [ref=f1e66] [cursor=pointer]:
+        - /url: /cn
+      - generic [ref=f1e67]:
+        - generic [ref=f1e68]:
+          - generic [ref=f1e69]: Store
+          - list [ref=f1e70]:
+            - listitem [ref=f1e71]:
+              - link "Products" [ref=f1e72] [cursor=pointer]:
+                - /url: /cn/store
+            - listitem [ref=f1e73]:
+              - link "Cart" [ref=f1e74] [cursor=pointer]:
+                - /url: /cn/cart
+        - generic [ref=f1e75]:
+          - generic [ref=f1e76]: Medusa
+          - list [ref=f1e77]:
+            - listitem [ref=f1e78]:
+              - link "GitHub" [ref=f1e79] [cursor=pointer]:
+                - /url: https://github.com/medusajs
+            - listitem [ref=f1e80]:
+              - link "Documentation" [ref=f1e81] [cursor=pointer]:
+                - /url: https://docs.medusajs.com
+            - listitem [ref=f1e82]:
+              - link "Source code" [ref=f1e83] [cursor=pointer]:
+                - /url: https://github.com/medusajs/nextjs-starter-medusa
+    - generic [ref=f1e84]:
+      - paragraph [ref=f1e85]: © 2026 Medusa Store. All rights reserved.
+      - paragraph [ref=f1e86]:
+        - text: Powered by
+        - link [ref=f1e87] [cursor=pointer]:
+          - /url: https://www.medusajs.com
+          - img [ref=f1e88]
+        - text: "&"
+        - link [ref=f1e90] [cursor=pointer]:
+          - /url: https://nextjs.org
+          - img [ref=f1e91]

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#FFFFFF"/>
+  <rect x="80" y="100" width="240" height="200" rx="12" fill="#E8344A" opacity="0.15"/>
+  <text x="200" y="210" text-anchor="middle" font-family="Arial,sans-serif"
+        font-size="24" fill="#E8344A" font-weight="bold">UNIQLO</text>
+  <text x="200" y="245" text-anchor="middle" font-family="Arial,sans-serif"
+        font-size="14" fill="#999">Product Image</text>
+</svg>
