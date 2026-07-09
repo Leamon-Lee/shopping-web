@@ -1,0 +1,46 @@
+id,product_id,variant_id_str,name,sku,price,currency_code,inventory_count,manages_inventory,allows_backorder
+c4255419-ab4e-1918-11de-7176de74745c,d330bfe8-ff53-c445-04e7-1b329f815522,var-c4255419,Ua Slipspeed Unisex Training Shoes - Gray,3026197-107-10/11.5,102.97,usd,87,True,False
+c2da63dd-f35e-ad49-c6f1-eef247d74bba,ced13f0d-3ec6-cd8f-8cab-33217ee1556d,var-c2da63dd,Ua Arc 96 Unisex Shoes - White,6006060-101-6.5/8,118.97,usd,110,True,False
+2e9c6964-808d-9675-04f4-1eb301adda29,fba05bca-e3e9-7b60-acfc-fa2d407e78f4,var-2e9c6964,Ua Drive Pro Clone Mens Golf Shoes - White,6006116-100-10.5,190.0,usd,58,True,False
+f25f077b-fdb0-428d-0e9e-0576eae1f33c,86c6abb9-e622-dc14-7c69-2e7f91bb5bdb,var-f25f077b,Ua Apparition Unisex Shoes - Red,3027595-622-7/8.5,104.97,usd,106,True,False
+b2a20499-8049-287f-c6e0-25ac5c43e327,11f63e27-f9e5-2253-d7b3-06bda4ebcc1e,var-b2a20499,Ua Echo Slipspeed Unisex Shoes - Blue,6006061-425-10/11.5,134.97,usd,184,True,False
+f11a40c0-3a3d-ba0c-c4a4-f7dc07d8d654,a1365395-5bfa-aad7-3a1d-68d42775da03,var-f11a40c0,Ua Charged Commit Tr 5 Mens Training Shoes - Blue,6007140-430-12,80.0,usd,138,True,False
+8063adbc-b728-d2fe-d8d0-4f3483c35f83,f95b02df-5de8-120e-cb7c-cc4b639a4d98,var-8063adbc,Ua Charged Chase Mens Running Shoes - Gray,6014417-011-7,80.0,usd,23,True,False
+5d92a0d9-093f-8518-f955-43fcc8292853,b8d83efb-2596-3d57-19f6-f058374a0576,var-5d92a0d9,Ua Halo Trainer Unisex Training Shoes - Gray,6007640-069-10/11.5,124.97,usd,80,True,False
+194e20e8-b7ef-08f3-a684-3b2c86f709c7,8bbe22ee-0999-c1d5-4078-18f932df8f57,var-194e20e8,Ua Nova Slipspeed Unisex Shoes - Blue,6006062-425-9.5/11,102.97,usd,60,True,False
+981bd4bb-01b5-d2d8-15fb-0094d7766b80,533432d2-8009-7d46-3829-2a665a7139f8,var-981bd4bb,Ua Charged Expanse Mid Leather Waterproof Mens Hiking Boots - Brown,6010410-230-11,170.0,usd,88,True,False
+594363b0-cad9-85b4-9d81-9cf583df76a8,17a1c8d9-2f8c-29d5-e7da-af0cf00409a4,var-594363b0,Ua Charged Assert 11 Camo Mens Running Shoes - Black,6013582-001-10.5,78.0,usd,94,True,False
+6ef90257-bd3e-1800-e1c6-599dc4191a8a,eb5100ac-8468-6a47-4170-362e0c91560c,var-6ef90257,Ua Charged Assert 10 Mens Running Shoes - Black,3026175-004-11,69.97,usd,107,True,False
+bc3da698-eb19-7aa0-a642-5a163fbf1ce3,f6fcf697-8605-cb16-4d08-35aad55e178a,var-bc3da698,Ua Reign 6 Mens Training Shoes - Black,3027341-001-10.5,140.0,usd,80,True,False
+96dc079e-a4e0-c057-c54d-0f3cddae2e7f,daa240cb-c50a-dd70-b8be-f38ce31533de,var-96dc079e,Ua Charged Assert 10 Mens Wide 4E Running Shoes - Black,3026176-001-11,69.97,usd,113,True,False
+8ddc27d0-eac3-31db-a74e-6614858e5cf1,33342331-e59d-5b9d-812b-9891d481fbf2,var-8ddc27d0,Ua Charged Assert 11 Camo Wide 4E Mens Running Shoes - Gray,6014707-024-10.5,78.0,usd,137,True,False
+a11e3142-deb4-8750-7db0-544ace6817ee,630f0cbb-a0f5-e47e-90e5-ece3388a1ec8,var-a11e3142,Ua Charged Gemini Mens Running Shoes - Black,3026501-002-10.5,98.97,usd,92,True,False
+0be56b3f-4b43-29d6-20ea-d4b6ce655219,3034d5ff-3d80-7260-ad3c-0e6ba2d6e51f,var-0be56b3f,Ua Spotlight Pro Suede Mens Football Cleats - Black,6000074-001-10.5,140.0,usd,39,True,False
+6e18510a-db94-a5b9-53c6-e96f1190d28d,e9050d8f-636b-a349-bf8f-7a09b44b4ca8,var-6e18510a,Ua Locker V Camo Mens Slides - Black,6000840-002-10,25.0,usd,100,True,False
+bfc8315e-417a-a857-9de4-b1469aba4531,fed6b2af-800f-668b-bb37-ecd7fb3fd710,var-bfc8315e,Ua Charged Edge Mens Training Shoes - Gray,3026727-011-10,64.97,usd,147,True,False
+9dcc6919-90f4-4079-2ca7-27335f020d6e,8330c94a-3f94-c11d-331b-388bc5dfaa37,var-9dcc6919,Ua Valsetz Zip Mens Tactical Boots - Black,3027383-001-6,165.0,usd,175,True,False
+86cbe24c-8530-c67a-a621-952457c2bee5,9cec81b1-333e-ef39-00f4-be5562b23f6f,var-86cbe24c,Ua Lockdown 7 Low Unisex Basketball Shoes - Red,3027646-600-12/13.5,48.97,usd,41,True,False
+79f70137-fdb9-9759-5a03-4767f9f0bdca,6ba304ba-71d4-818f-d21d-e4a275edc211,var-79f70137,Ua Ignite Pro 8 T Mens Sandals - Black,6009366-003-10,40.0,usd,189,True,False
+8d3ae643-24c4-d9eb-ebff-b7c2bc59cd6a,4f0ab3fa-88a7-a6fa-2666-6961ba30beb4,var-8d3ae643,Ua Pulse Mens Sportstyle Shoes - Black,6011642-002-7,110.0,usd,30,True,False
+af71942e-a7fa-d52e-59dd-bec1a84adc4f,95f3a9ae-1af5-6c0f-c4fd-307a36020992,var-af71942e,Ua Blur Pro Football Cleats - Pink,6006206-694-11,110.0,usd,165,True,False
+d6639cf4-b67b-b809-6f0a-f405f66844e4,ca682346-2d2f-fc4a-ccf6-3663e6cd3046,var-d6639cf4,Ua Halo Tour Spikeless Mens Golf Shoes - Gray,6007316-069-11,142.97,usd,156,True,False
+efe72345-3d5e-e7da-c242-8954e184804d,11765434-6820-2f7b-c701-80e94130de08,var-efe72345,Ua Surge 5 Mens Running Shoes - Gray,6010459-011-10,65.0,usd,186,True,False
+5df2c3e5-3091-d4cd-e33e-12fd4c6a3257,5f513eab-0688-1f4e-5aa4-5526fa91fd99,var-5df2c3e5,Ua Halo Runner 2 Mens Running Shoes - Black,6010212-001-12,150.0,usd,149,True,False
+ed8d9448-7068-81bb-f503-f317e338bf82,89c135d8-27ae-eb45-1e90-3549723cfaa7,var-ed8d9448,Ua X Dodge Hb-Lo Unisex Shoes - Black,6016525-001-10.5/12,140.0,usd,107,True,False
+d802ebc5-4faa-e4c4-0888-9344ccb89a35,1514d6e8-737c-5881-cd13-d941b3996a56,var-d802ebc5,Ua Valsetz Waterproof Zip Mens Tactical Boots - Black,3027679-001-10.5,180.0,usd,187,True,False
+3f2d2307-121d-ecff-d5a1-f9a27d83625a,21f21541-8a98-7dbc-97b9-8359c93905f3,var-3f2d2307,Ua Pursuit 4 Mens Running Shoes - Gray,3028254-011-8,55.97,usd,72,True,False
+6f674832-edc8-9c15-0f6d-d079504a2f2d,20497217-c84f-66ee-b5f8-c0c01068e195,var-6f674832,Ua Phantom X Womens Shoes - Gray,6007184-069-6,132.97,usd,141,True,False
+a094fc09-54aa-f523-e498-05e4b574c1c8,5c57225d-017e-94a0-c21d-833a67b95405,var-a094fc09,Ua Charged Turbulence 3 Womens Running Shoes - White,6006718-100-8,79.97,usd,120,True,False
+ef54a749-6b47-565e-509e-e97c6e164a56,3c2ddce0-7df7-a635-1ab5-7da346693b50,var-ef54a749,Ua Ace Low 2 Womens Volleyball Shoes - White,6006273-100-6,125.0,usd,64,True,False
+d19f3316-64e8-30e1-664f-1270bb8a11a7,5ea72b5b-0501-05f6-cc7d-69fcce6f5546,var-d19f3316,Ua Radiant Tr Womens Training Shoes - White,6007142-101-7,85.0,usd,88,True,False
+3d8ac76d-1983-b761-8e84-f03ea6b5731e,0695fa83-8541-bbae-178b-fc95ebe4fa65,var-3d8ac76d,Ua Charged Assert 11 Womens Running Shoes - White,6006724-101-8,75.0,usd,133,True,False
+12c31151-7351-94af-6a23-08a9245886a6,e67d7332-9d7d-52fc-6e2b-9bd2fcb90570,var-12c31151,Ua Charged Gemini Womens Running Shoes - Green,3026500-323-8.5,98.97,usd,176,True,False
+f5627cf5-53ea-3048-c08a-2cbcb9ee42a9,541d23ae-c84a-ff7b-89bd-51f6748624f8,var-f5627cf5,Ua Aurora 3 Womens Training Shoes - Black,6000760-002-8,70.0,usd,59,True,False
+24ef927d-7d2d-ead2-4692-422ec9c62455,bb98f49f-8d0d-5d87-a3c3-11a0a2ac2c3f,var-24ef927d,Ua Mirage Sport Womens Shoes - White,6005798-101-8,64.97,usd,179,True,False
+c33f5717-ccf1-f9a5-27ca-529d8f462c5d,3ad811f8-93a5-3d84-58bb-3a5a096b0b4f,var-c33f5717,Ua Stellar Womens Tactical Boots - Black,3028724-001-7,120.0,usd,26,True,False
+bab68ed0-ecbc-23a6-e090-eb17de4554ec,fca9fae8-2e1c-e6f8-578b-7d2c1cf59aca,var-bab68ed0,Ua Ignite Pro 8 Fixed Strap Womens Slides - Black,6009217-001-8,40.0,usd,36,True,False
+24b46668-6236-5286-8ef7-55378c39b56c,dac1a213-10e8-6eda-ee1b-38d922139c3e,var-24b46668,Ua Velociti Pace Womens Running Shoes - White,6009108-106-8,94.97,usd,175,True,False
+fde50346-875f-2de8-28a3-c2c1ac640ab4,c08100af-9f45-f233-5599-46988d63c251,var-fde50346,Ua Rogue 5 Womens Running Shoes - Blue,3028262-464-9,79.97,usd,186,True,False
+ae325e3e-bed1-20a8-df12-b9ef6d97be24,d60c924f-4411-16ad-fecf-15535f78bba1,var-ae325e3e,Ua Surge 5 Special Edition Womens Running Shoes - Black,6020317-001-8,70.0,usd,97,True,False
+3b616c24-a098-987a-341b-6406c261be0b,b8cb3341-9aee-37e7-4771-a11462bfd563,var-3b616c24,Ua Pursuit 4 Womens Running Shoes - Green,3028261-348-8.5,67.97,usd,132,True,False
+a60ae98a-b478-3890-b58b-eb80b6956350,8cdee5cd-69a5-95df-d418-66e4afa80339,var-a60ae98a,Ua Charged Rogue 6 Womens Running Shoes - White,6006720-101-8,79.97,usd,31,True,False

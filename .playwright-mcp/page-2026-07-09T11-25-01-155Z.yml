@@ -1,0 +1,177 @@
+- main [ref=f5e2]:
+  - navigation [ref=f5e5]:
+    - button "Menu" [ref=f5e12] [cursor=pointer]
+    - link "Medusa Store" [ref=f5e14] [cursor=pointer]:
+      - /url: /cn
+    - link "Cart (0)" [ref=f5e16] [cursor=pointer]:
+      - /url: /cn/cart
+  - generic [ref=f5e17]:
+    - generic [ref=f5e19]:
+      - paragraph [ref=f5e20]: Sort by
+      - radiogroup [ref=f5e21]:
+        - generic [ref=f5e22]:
+          - img [ref=f5e23]
+          - radio [checked]
+          - generic [ref=f5e25]: Latest Arrivals
+        - generic [ref=f5e26]:
+          - radio
+          - generic [ref=f5e27]: "Price: Low -> High"
+        - generic [ref=f5e28]:
+          - radio
+          - generic [ref=f5e29]: "Price: High -> Low"
+    - generic [ref=f5e30]:
+      - heading "All products" [level=1] [ref=f5e32]
+      - list [ref=f5e33]:
+        - listitem [ref=f5e34]:
+          - link "Thumbnail ACG LDV CN¥130.00 Men's Shoes" [ref=f5e35] [cursor=pointer]:
+            - /url: /cn/products/acg-ldv
+            - generic [ref=f5e36]:
+              - img "Thumbnail" [ref=f5e38]
+              - generic [ref=f5e39]:
+                - generic [ref=f5e40]: ACG LDV
+                - generic [ref=f5e41]: CN¥130.00
+              - paragraph [ref=f5e42]: Men's Shoes
+        - listitem [ref=f5e43]:
+          - link "Thumbnail ACG Zegama Hike CN¥190.00 Men's Shoes" [ref=f5e44] [cursor=pointer]:
+            - /url: /cn/products/acg-zegama-hike
+            - generic [ref=f5e45]:
+              - img "Thumbnail" [ref=f5e47]
+              - generic [ref=f5e48]:
+                - generic [ref=f5e49]: ACG Zegama Hike
+                - generic [ref=f5e50]: CN¥190.00
+              - paragraph [ref=f5e51]: Men's Shoes
+        - listitem [ref=f5e52]:
+          - link "Thumbnail ACG Zegama Trail CN¥180.00 Men's Shoes" [ref=f5e53] [cursor=pointer]:
+            - /url: /cn/products/acg-zegama-trail
+            - generic [ref=f5e54]:
+              - img "Thumbnail" [ref=f5e56]
+              - generic [ref=f5e57]:
+                - generic [ref=f5e58]: ACG Zegama Trail
+                - generic [ref=f5e59]: CN¥180.00
+              - paragraph [ref=f5e60]: Men's Shoes
+        - listitem [ref=f5e61]:
+          - link "Thumbnail Air Jordan 1 Mid CN¥97.97 Men's Shoes" [ref=f5e62] [cursor=pointer]:
+            - /url: /cn/products/air-jordan-1-mid
+            - generic [ref=f5e63]:
+              - img "Thumbnail" [ref=f5e65]
+              - generic [ref=f5e66]:
+                - generic [ref=f5e67]: Air Jordan 1 Mid
+                - generic [ref=f5e68]: CN¥97.97
+              - paragraph [ref=f5e69]: Men's Shoes
+        - listitem [ref=f5e70]:
+          - link "Thumbnail Air Jordan 3 Retro \"True Blue\" CN¥230.00 Men's Shoes" [ref=f5e71] [cursor=pointer]:
+            - /url: /cn/products/air-jordan-3-retro-true-blue
+            - generic [ref=f5e72]:
+              - img "Thumbnail" [ref=f5e74]
+              - generic [ref=f5e75]:
+                - generic [ref=f5e76]: Air Jordan 3 Retro "True Blue"
+                - generic [ref=f5e77]: CN¥230.00
+              - paragraph [ref=f5e78]: Men's Shoes
+        - listitem [ref=f5e79]:
+          - link "Thumbnail Air Jordan 4 \"Toro\" CN¥220.00 Men's Shoes" [ref=f5e80] [cursor=pointer]:
+            - /url: /cn/products/air-jordan-4-toro
+            - generic [ref=f5e81]:
+              - img "Thumbnail" [ref=f5e83]
+              - generic [ref=f5e84]:
+                - generic [ref=f5e85]: Air Jordan 4 "Toro"
+                - generic [ref=f5e86]: CN¥220.00
+              - paragraph [ref=f5e87]: Men's Shoes
+        - listitem [ref=f5e88]:
+          - link "Thumbnail Air Jordan 4 RM CN¥87.97 Men's Shoes" [ref=f5e89] [cursor=pointer]:
+            - /url: /cn/products/air-jordan-4-rm
+            - generic [ref=f5e90]:
+              - img "Thumbnail" [ref=f5e92]
+              - generic [ref=f5e93]:
+                - generic [ref=f5e94]: Air Jordan 4 RM
+                - generic [ref=f5e95]: CN¥87.97
+              - paragraph [ref=f5e96]: Men's Shoes
+        - listitem [ref=f5e97]:
+          - link "Thumbnail Air Jordan 7 Retro \"Miró\" CN¥255.00 Men's Shoes" [ref=f5e98] [cursor=pointer]:
+            - /url: /cn/products/air-jordan-7-retro-mir
+            - generic [ref=f5e99]:
+              - img "Thumbnail" [ref=f5e101]
+              - generic [ref=f5e102]:
+                - generic [ref=f5e103]: Air Jordan 7 Retro "Miró"
+                - generic [ref=f5e104]: CN¥255.00
+              - paragraph [ref=f5e105]: Men's Shoes
+        - listitem [ref=f5e106]:
+          - link "Thumbnail Air Max 1 \"Royals\" CN¥150.00 Men's Shoes" [ref=f5e107] [cursor=pointer]:
+            - /url: /cn/products/air-max-1-royals
+            - generic [ref=f5e108]:
+              - img "Thumbnail" [ref=f5e110]
+              - generic [ref=f5e111]:
+                - generic [ref=f5e112]: Air Max 1 "Royals"
+                - generic [ref=f5e113]: CN¥150.00
+              - paragraph [ref=f5e114]: Men's Shoes
+        - listitem [ref=f5e115]:
+          - 'link "Thumbnail Britto: S-1992 - Britto Landscape CN¥85.00 Men''s Shoes" [ref=f5e116] [cursor=pointer]':
+            - /url: /cn/products/britto-s-1992-britto-landscape
+            - generic [ref=f5e117]:
+              - img "Thumbnail" [ref=f5e119]
+              - generic [ref=f5e120]:
+                - generic [ref=f5e121]: "Britto: S-1992 - Britto Landscape"
+                - generic [ref=f5e122]: CN¥85.00
+              - paragraph [ref=f5e123]: Men's Shoes
+        - listitem [ref=f5e124]:
+          - 'link "Thumbnail Britto: S-1992 - Britto Landscapes CN¥85.00 Men''s Shoes" [ref=f5e125] [cursor=pointer]':
+            - /url: /cn/products/britto-s-1992-britto-landscapes
+            - generic [ref=f5e126]:
+              - img "Thumbnail" [ref=f5e128]
+              - generic [ref=f5e129]:
+                - generic [ref=f5e130]: "Britto: S-1992 - Britto Landscapes"
+                - generic [ref=f5e131]: CN¥85.00
+              - paragraph [ref=f5e132]: Men's Shoes
+        - listitem [ref=f5e133]:
+          - 'link "Thumbnail Care Bears: Arch Fit Arcade - Brighten The Day CN¥85.00 Women''s Shoes" [ref=f5e134] [cursor=pointer]':
+            - /url: /cn/products/care-bears-arch-fit-arcade-brighten-the-day
+            - generic [ref=f5e135]:
+              - img "Thumbnail" [ref=f5e137]
+              - generic [ref=f5e138]:
+                - generic [ref=f5e139]: "Care Bears: Arch Fit Arcade - Brighten The Day"
+                - generic [ref=f5e140]: CN¥85.00
+              - paragraph [ref=f5e141]: Women's Shoes
+      - generic [ref=f5e143]:
+        - button "1" [disabled] [ref=f5e144]
+        - button "2" [ref=f5e145] [cursor=pointer]
+        - button "3" [ref=f5e146] [cursor=pointer]
+        - button "4" [ref=f5e147] [cursor=pointer]
+        - button "5" [ref=f5e148] [cursor=pointer]
+        - generic [ref=f5e149]: ...
+        - button "12" [ref=f5e150] [cursor=pointer]
+  - generic [ref=f5e152]:
+    - generic [ref=f5e153]:
+      - link "Medusa Store" [ref=f5e155] [cursor=pointer]:
+        - /url: /cn
+      - generic [ref=f5e156]:
+        - generic [ref=f5e157]:
+          - generic [ref=f5e158]: Store
+          - list [ref=f5e159]:
+            - listitem [ref=f5e160]:
+              - link "Products" [ref=f5e161] [cursor=pointer]:
+                - /url: /cn/store
+            - listitem [ref=f5e162]:
+              - link "Cart" [ref=f5e163] [cursor=pointer]:
+                - /url: /cn/cart
+        - generic [ref=f5e164]:
+          - generic [ref=f5e165]: Medusa
+          - list [ref=f5e166]:
+            - listitem [ref=f5e167]:
+              - link "GitHub" [ref=f5e168] [cursor=pointer]:
+                - /url: https://github.com/medusajs
+            - listitem [ref=f5e169]:
+              - link "Documentation" [ref=f5e170] [cursor=pointer]:
+                - /url: https://docs.medusajs.com
+            - listitem [ref=f5e171]:
+              - link "Source code" [ref=f5e172] [cursor=pointer]:
+                - /url: https://github.com/medusajs/nextjs-starter-medusa
+    - generic [ref=f5e173]:
+      - paragraph [ref=f5e174]: © 2026 Medusa Store. All rights reserved.
+      - paragraph [ref=f5e175]:
+        - text: Powered by
+        - link [ref=f5e176] [cursor=pointer]:
+          - /url: https://www.medusajs.com
+          - img [ref=f5e177]
+        - text: "&"
+        - link [ref=f5e179] [cursor=pointer]:
+          - /url: https://nextjs.org
+          - img [ref=f5e180]
