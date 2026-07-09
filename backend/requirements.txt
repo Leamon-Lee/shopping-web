@@ -22,3 +22,7 @@ python-dotenv>=1.0
 
 # 文件上传支持
 python-multipart>=0.0.9
+
+# HTML 解析（用于爬虫）
+beautifulsoup4>=4.12
+lxml>=5.0

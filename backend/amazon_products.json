@@ -1,0 +1,1070 @@
+{
+  "metadata": {
+    "source": "https://www.amazon.com",
+    "scraped_at": "2026-07-09T11:11:38",
+    "total_products": 100,
+    "categories_count": 10
+  },
+  "categories": {
+    "Electronics": {
+      "name": "Electronics",
+      "description": "Electronics products from Amazon",
+      "products": [
+        {
+          "name": "Yubico - YubiKey 5 Nano C - Multi-Factor authentication (MFA) Security Key and passkey, Connect via USB, FIDO Certified",
+          "price": 2180.08,
+          "image_url": "https://m.media-amazon.com/images/I/31xyjb10HSL._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B07HBTBJ5S",
+          "description": "High-quality electronics item. Yubico - YubiKey 5 Nano C - Multi-Factor authentication (MFA) Security Key and passkey, Connect via USB, FIDO."
+        },
+        {
+          "name": "Yubico - YubiKey 5C NFC - Multi-Factor authentication (MFA) Security Key and passkey, Connect via USB-C or NFC, FIDO",
+          "price": 1859.48,
+          "image_url": "https://m.media-amazon.com/images/I/41DkFsG8yEL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B08DHL1YDL",
+          "description": "High-quality electronics item. Yubico - YubiKey 5C NFC - Multi-Factor authentication (MFA) Security Key and passkey, Connect via USB-C or NFC,."
+        },
+        {
+          "name": "20\" Screen Magnifier for Smartphone,3D HD Mobile Phone Magnifying Projector Screen Enlarger Expanders for Videos and",
+          "price": 1282.08,
+          "image_url": "https://m.media-amazon.com/images/I/71Rv-E8M9hL._AC_UL320_.jpg",
+          "rating": 3.6,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0GQG7K28Z",
+          "description": "High-quality electronics item. 20\" Screen Magnifier for Smartphone,3D HD Mobile Phone Magnifying Projector Screen Enlarger Expanders for Videos."
+        },
+        {
+          "name": "Compressed Air Duster, Electric Air Duster with Powerful 40MM Brushless Motor and 430G Storm Force, 360W Max Power &",
+          "price": 2885.08,
+          "image_url": "https://m.media-amazon.com/images/I/61vXxVBjLkL._AC_UL320_.jpg",
+          "rating": 5.0,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0H2LP12TZ",
+          "description": "High-quality electronics item. Compressed Air Duster, Electric Air Duster with Powerful 40MM Brushless Motor and 430G Storm Force, 360W Max Power."
+        },
+        {
+          "name": "WOLFBOX MegaFlow 50 Compressed Air Duster-110000RPM Super Power Electric Air Duster, 3-Gear Adjustable Mini Blower with",
+          "price": 1035.22,
+          "image_url": "https://m.media-amazon.com/images/I/713BEhBxXWL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/WOLFBOX-MF50-Electric-Duster-110000RPM-Adjustable/dp/B0DSW7R4VN/ref=sr_1_5",
+          "asin": "B0DSW7R4VN",
+          "description": "High-quality electronics item. WOLFBOX MegaFlow 50 Compressed Air Duster-110000RPM Super Power Electric Air Duster, 3-Gear Adjustable Mini Blower."
+        },
+        {
+          "name": "WOLFBOX MF60&MF70 Compressed Air Duster-110000RPM Super Power Electric Air Duster, 3-Speed Adjustable Rechargeable",
+          "price": 974.3,
+          "image_url": "https://m.media-amazon.com/images/I/71zeGEFy1aL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/WOLFBOX-Compressed-Duster-110000RPM-Adjustable-Rechargeable/dp/B0GF74ZGDZ/ref=sr_1_6",
+          "asin": "B0GF74ZGDZ",
+          "description": "High-quality electronics item. WOLFBOX MF60&MF70 Compressed Air Duster-110000RPM Super Power Electric Air Duster, 3-Speed Adjustable."
+        },
+        {
+          "name": "Reyke Key Finder, 80dB+ RF Item Locator Tags with 131ft. Working Range, Wireless Remote Tracker for Wallet, Phone,",
+          "price": 544.7,
+          "image_url": "https://m.media-amazon.com/images/I/61wyI9aWkvL._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Reyke-Tracker-Wireless-Flashlight-Receivers/dp/B08R9PTZ5G/ref=sr_1_7",
+          "asin": "B08R9PTZ5G",
+          "description": "High-quality electronics item. Reyke Key Finder, 80dB+ RF Item Locator Tags with 131ft. Working Range, Wireless Remote Tracker for Wallet,."
+        },
+        {
+          "name": "Wall Charger, Surge Protector, QINLIANF 5 Outlet Extender with 4 USB Charging Ports, 3-Sided 1680J Power Strip Multi",
+          "price": 319.96,
+          "image_url": "https://m.media-amazon.com/images/I/51lGPGOkjUL._AC_UL320_.jpg",
+          "rating": 4.7,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Charger-Protector-QINLIANF-Extender-Charging/dp/B08R6S1M1K/ref=sr_1_8",
+          "asin": "B08R6S1M1K",
+          "description": "High-quality electronics item. Wall Charger, Surge Protector, QINLIANF 5 Outlet Extender with 4 USB Charging Ports, 3-Sided 1680J Power Strip."
+        },
+        {
+          "name": "LC-dolida Sleep Headphones, 3D Sleep Mask Bluetooth Wireless Music Eye Mask, Sleeping Headphones for Side Sleepers",
+          "price": 832.6,
+          "image_url": "https://m.media-amazon.com/images/I/71GGksIzY-L._AC_UL320_.jpg",
+          "rating": 4.3,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Headphones-Bluetooth-LC-dolida-Ultra-Thin-Meditation/dp/B07T6FNLQV/ref=sr_1_9",
+          "asin": "B07T6FNLQV",
+          "description": "High-quality electronics item. LC-dolida Sleep Headphones, 3D Sleep Mask Bluetooth Wireless Music Eye Mask, Sleeping Headphones for Side."
+        },
+        {
+          "name": "Keyboard Cleaning Kit Laptop Cleaner, All-in-1 Computer Screen Cleaning Brush Tool, Multi-Function PC Accessories",
+          "price": 480.58,
+          "image_url": "https://m.media-amazon.com/images/I/71AJth10-BL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Keyboard-Cleaning-Computer-Multi-Function-Electronic/dp/B0C2VBXRYG/ref=sr_1_10",
+          "asin": "B0C2VBXRYG",
+          "description": "High-quality electronics item. Keyboard Cleaning Kit Laptop Cleaner, All-in-1 Computer Screen Cleaning Brush Tool, Multi-Function PC."
+        }
+      ]
+    },
+    "Clothing": {
+      "name": "Clothing",
+      "description": "Clothing products from Amazon",
+      "products": [
+        {
+          "name": "Adenorah Mens Oversized Hoodies Pullover Women Fall Acid Wash Plain Preppy Hoodie Streetwear Cotton Vintage Hooded",
+          "price": 1282.08,
+          "image_url": "https://m.media-amazon.com/images/I/61laugvKFIL._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0DJP553ZW",
+          "description": "High-quality clothing item. Adenorah Mens Oversized Hoodies Pullover Women Fall Acid Wash Plain Preppy Hoodie Streetwear Cotton Vintage."
+        },
+        {
+          "name": "Men's Cotton T-Shirts Oversized Unisex Short Sleeves Casual Loose Wash Solid Basic Tee Tops",
+          "price": 1096.13,
+          "image_url": "https://m.media-amazon.com/images/I/71HnxvA8O9L._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0CY4HWBQ9",
+          "description": "Premium clothing product. Priced at $1096.13. Men's Cotton T-Shirts Oversized Unisex Short Sleeves Casual Loose Wash Solid Basic Tee Tops."
+        },
+        {
+          "name": "Linnhoy Men's Women's Shirts Unisex 3D Graphic Print Fashion T-Shirts for Adults Teens Novelty Casual Tee Tops Size",
+          "price": 480.58,
+          "image_url": "https://m.media-amazon.com/images/I/81AM69o5OnL._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0CRP67PSK",
+          "description": "High-quality clothing item. Linnhoy Men's Women's Shirts Unisex 3D Graphic Print Fashion T-Shirts for Adults Teens Novelty Casual Tee Tops."
+        },
+        {
+          "name": "Yasswete Unisex Men's and Women's Novelty Hoodies 3D Fashion Digital Print Pullover Hooded Sweatshirts with Pockets",
+          "price": 801.18,
+          "image_url": "https://m.media-amazon.com/images/I/71teOxqnD-L._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B07FBC3DGL",
+          "description": "High-quality clothing item. Yasswete Unisex Men's and Women's Novelty Hoodies 3D Fashion Digital Print Pullover Hooded Sweatshirts with."
+        },
+        {
+          "name": "Men's Cotton T-Shirts Oversized Unisex Short Sleeves Casual Loose Wash Solid Basic Tee Tops",
+          "price": 1096.13,
+          "image_url": "https://m.media-amazon.com/images/I/71HnxvA8O9L._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Oversized-T-Shirts-Vintage-Sleeves-ArmyGreen/dp/B0CY4H2QTJ/ref=sr_1_5",
+          "asin": "B0CY4H2QTJ",
+          "description": "Premium clothing product. Priced at $1096.13. Men's Cotton T-Shirts Oversized Unisex Short Sleeves Casual Loose Wash Solid Basic Tee Tops."
+        },
+        {
+          "name": "JMIERR Mens Summer Outfits 2 Piece Short Sets Beach Waffle 1/4 Zip Polo Shirts Casual Loose Pant Loungewear",
+          "price": 1217.96,
+          "image_url": "https://m.media-amazon.com/images/I/71w9X9QIRLL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/JMIERR-Summer-Outfits-Textured-Vacation/dp/B0G3WT6FJW/ref=sr_1_6",
+          "asin": "B0G3WT6FJW",
+          "description": "High-quality clothing item. JMIERR Mens Summer Outfits 2 Piece Short Sets Beach Waffle 1/4 Zip Polo Shirts Casual Loose Pant."
+        },
+        {
+          "name": "Oversized Tshirts for Men Women Graphic Tees Y2k Tops Jersey Shirts V Neck Short Sleeve Summer Fashion Clothes",
+          "price": 416.46,
+          "image_url": "https://m.media-amazon.com/images/I/71D8mXWN3pL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Tisfeer-Oversized-Tshirts-Graphic-Fashion/dp/B0FG87K4SG/ref=sr_1_7",
+          "asin": "B0FG87K4SG",
+          "description": "High-quality clothing item. Oversized Tshirts for Men Women Graphic Tees Y2k Tops Jersey Shirts V Neck Short Sleeve Summer Fashion."
+        },
+        {
+          "name": "Y2k Grunge Plaid Zip Up Hoodie Men Women Reversible Oversized Emo 2000s Graphic Hoodie Fall Baggy Sweatshirts",
+          "price": 1282.08,
+          "image_url": "https://m.media-amazon.com/images/I/41ghU9onVHL._AC_UL320_.jpg",
+          "rating": 4.0,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/HOHOPEACH-Reversible-Oversized-Graphic-Sweatshirts/dp/B0FRFN5R6K/ref=sr_1_8",
+          "asin": "B0FRFN5R6K",
+          "description": "High-quality clothing item. Y2k Grunge Plaid Zip Up Hoodie Men Women Reversible Oversized Emo 2000s Graphic Hoodie Fall Baggy."
+        },
+        {
+          "name": "Baggy Cargo Pants for Men Women Wide Leg Jeans Y2k Hip Hop High Waisted Pants Casual Streetwear Grunge Clothes Black",
+          "price": 1124.99,
+          "image_url": "https://m.media-amazon.com/images/I/61oSXXkgh5L._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Hugboom-Waisted-Streetwear-Clothes-Black-M/dp/B0CRKS4QCM/ref=sr_1_9",
+          "asin": "B0CRKS4QCM",
+          "description": "High-quality clothing item. Baggy Cargo Pants for Men Women Wide Leg Jeans Y2k Hip Hop High Waisted Pants Casual Streetwear Grunge Clothes."
+        },
+        {
+          "name": "Baggy Jeans for Woman Men High Waisted Barrel Leg Jeans Casual Loose Denim Pants Streetwear Clothes",
+          "price": 1038.42,
+          "image_url": "https://m.media-amazon.com/images/I/61KgSOFcYEL._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Lafaguw-Waisted-Streetwear-Clothes-Black1-S/dp/B0DPSL8Y31/ref=sr_1_10",
+          "asin": "B0DPSL8Y31",
+          "description": "Premium clothing product. Priced at $1038.42. Baggy Jeans for Woman Men High Waisted Barrel Leg Jeans Casual Loose Denim Pants Streetwear Clothes."
+        }
+      ]
+    },
+    "Home & Kitchen": {
+      "name": "Home & Kitchen",
+      "description": "Home & Kitchen products from Amazon",
+      "products": [
+        {
+          "name": "Aidoclip 10PCS Set Non-Scratch Steel Wool Dishcloth - Multi Purpose Wire Dishwashing Rags Kitchen Towels and Dishcloths",
+          "price": 224.1,
+          "image_url": "https://m.media-amazon.com/images/I/81T6ZS9WbOL._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0CMHFJCMV",
+          "description": "High-quality home & kitchen item. Aidoclip 10PCS Set Non-Scratch Steel Wool Dishcloth - Multi Purpose Wire Dishwashing Rags Kitchen Towels and."
+        },
+        {
+          "name": "SunnyPoint NeverRust Deluxe Kitchen & Bathroom Sink Sponge Holder Organizer with Adhesive Mount - Additional Suction",
+          "price": 416.46,
+          "image_url": "https://m.media-amazon.com/images/I/714uOywyqOL._AC_UL320_.jpg",
+          "rating": 4.3,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B08CDRDRGC",
+          "description": "High-quality home & kitchen item. SunnyPoint NeverRust Deluxe Kitchen & Bathroom Sink Sponge Holder Organizer with Adhesive Mount - Additional."
+        },
+        {
+          "name": "BLUE GINKGO Over the Sink Colander Strainer Basket - Wash Vegetables and Fruits, Drain Cooked Pasta and Dry Dishes -",
+          "price": 608.82,
+          "image_url": "https://m.media-amazon.com/images/I/71Wi4iH3vHL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B087RQCQQZ",
+          "description": "High-quality home & kitchen item. BLUE GINKGO Over the Sink Colander Strainer Basket - Wash Vegetables and Fruits, Drain Cooked Pasta and Dry Dishes."
+        },
+        {
+          "name": "84 Pieces Black Silverware Set Service for 12 Flatware Set with Straws Stainless Steel Utensils Cutlery Set Dishwasher",
+          "price": 1923.28,
+          "image_url": "https://m.media-amazon.com/images/I/61fG+4y-M8L._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B09MRFN6G4",
+          "description": "High-quality home & kitchen item. 84 Pieces Black Silverware Set Service for 12 Flatware Set with Straws Stainless Steel Utensils Cutlery Set."
+        },
+        {
+          "name": "Mixing Bowls with Airtight Lids Set, 26PCS Stainless Steel Khaki Bowls with Grater Attachments, Non-Slip Bottoms &",
+          "price": 1153.84,
+          "image_url": "https://m.media-amazon.com/images/I/71qSOq9842L._AC_UL320_.jpg",
+          "rating": 4.8,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Airtight-Stainless-Attachments-Non-Slip-Bottoms/dp/B0BWHJ1FNK/ref=sr_1_5",
+          "asin": "B0BWHJ1FNK",
+          "description": "High-quality home & kitchen item. Mixing Bowls with Airtight Lids Set, 26PCS Stainless Steel Khaki Bowls with Grater Attachments, Non-Slip Bottoms."
+        },
+        {
+          "name": "Astercook Deep-Carbonized Bamboo Cutting Boards for Kitchen with Wood Storage Stand, Reversible Charcuterie & Chopping",
+          "price": 760.46,
+          "image_url": "https://m.media-amazon.com/images/I/91xky+JYmZL._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Astercook-Deep-Carbonized-Reversible-Charcuterie-Easy-Grip/dp/B0FH6YL3XC/ref=sr_1_6",
+          "asin": "B0FH6YL3XC",
+          "description": "High-quality home & kitchen item. Astercook Deep-Carbonized Bamboo Cutting Boards for Kitchen with Wood Storage Stand, Reversible Charcuterie &."
+        },
+        {
+          "name": "TrendPlain 16oz/470ml Glass Olive Oil Sprayer for Cooking – 2 in 1 Olive Oil Dispenser Bottle for Kitchen Gadgets and",
+          "price": 256.16,
+          "image_url": "https://m.media-amazon.com/images/I/716HuBmcRsL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/TrendPlain-16oz-Dispenser-Bottle-Kitchen/dp/B0CJF94M8J/ref=sr_1_7",
+          "asin": "B0CJF94M8J",
+          "description": "High-quality home & kitchen item. TrendPlain 16oz/470ml Glass Olive Oil Sprayer for Cooking – 2 in 1 Olive Oil Dispenser Bottle for Kitchen Gadgets."
+        },
+        {
+          "name": "Umite Chef Food Grade Thickened Silicone (Stainless Steel Core) Kitchen Gadgets Tools Set - Kitchen Cooking Utensils",
+          "price": 640.88,
+          "image_url": "https://m.media-amazon.com/images/I/71ADf0IHRzL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Utensils-Umite-Chef-Silicone-Resistant/dp/B0C991SKFS/ref=sr_1_8",
+          "asin": "B0C991SKFS",
+          "description": "High-quality home & kitchen item. Umite Chef Food Grade Thickened Silicone (Stainless Steel Core) Kitchen Gadgets Tools Set - Kitchen Cooking."
+        },
+        {
+          "name": "Cisily Sponge Holder for Kitchen Sink, Sink Caddy Organizer with High Brush Holder, Kitchen Countertop Organizers and",
+          "price": 448.52,
+          "image_url": "https://m.media-amazon.com/images/I/81shIEM-H2L._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Cisily-Organzier-Rustproof-Stainless-Organizer/dp/B0C3QZ7SNF/ref=sr_1_9",
+          "asin": "B0C3QZ7SNF",
+          "description": "High-quality home & kitchen item. Cisily Sponge Holder for Kitchen Sink, Sink Caddy Organizer with High Brush Holder, Kitchen Countertop Organizers."
+        },
+        {
+          "name": "Electric Salt and Pepper Grinder Set Automatic Battery Pepper Mill Shakers Adjustable Coarseness Upgraded Larger",
+          "price": 705.0,
+          "image_url": "https://m.media-amazon.com/images/I/71NpF4JP7HL._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Electric-Automatic-Adjustable-Coarseness-Upgraded/dp/B0DJSQQ1ZW/ref=sr_1_10",
+          "asin": "B0DJSQQ1ZW",
+          "description": "High-quality home & kitchen item. Electric Salt and Pepper Grinder Set Automatic Battery Pepper Mill Shakers Adjustable Coarseness Upgraded."
+        }
+      ]
+    },
+    "Books": {
+      "name": "Books",
+      "description": "Books products from Amazon",
+      "products": [
+        {
+          "name": "Amazon Kindle Kids 16GB (newest model) - If it breaks, we will replace it, includes ad-free books and cover, with",
+          "price": null,
+          "image_url": "https://m.media-amazon.com/images/I/817khLTvuJL._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0CNVBQK38",
+          "description": "High-quality books item. Amazon Kindle Kids 16GB (newest model) - If it breaks, we will replace it, includes ad-free books and cover,."
+        },
+        {
+          "name": "Something in the Water: Reese's Book Club: A Novel",
+          "price": 304.89,
+          "image_url": "https://m.media-amazon.com/images/I/91z4fk9-0NL._AC_UL320_.jpg",
+          "rating": 4.0,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "1524797677",
+          "description": "Premium books product. Priced at $304.89. Something in the Water: Reese's Book Club: A Novel."
+        },
+        {
+          "name": "Malibu Rising: A Read with Jenna Pick: A Novel",
+          "price": 287.26,
+          "image_url": "https://m.media-amazon.com/images/I/91G7B0ZPYbL._AC_UL320_.jpg",
+          "rating": 4.2,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "1524798673",
+          "description": "Premium books product. Priced at $287.26. Malibu Rising: A Read with Jenna Pick: A Novel."
+        },
+        {
+          "name": "Trust (Pulitzer Prize Winner)",
+          "price": 285.98,
+          "image_url": "https://m.media-amazon.com/images/I/910lg-mg-sL._AC_UL320_.jpg",
+          "rating": 4.1,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "0593420322",
+          "description": "Premium books product. Priced at $285.98. Trust (Pulitzer Prize Winner)."
+        },
+        {
+          "name": "Theo of Golden: A Novel",
+          "price": 480.26,
+          "image_url": "https://m.media-amazon.com/images/I/81P0NvoRrWL._AC_UL320_.jpg",
+          "rating": 4.7,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Theo-Golden-Novel-Allen-Levi/dp/1668236516/ref=sr_1_5",
+          "asin": "1668236516",
+          "description": "Premium books product. Priced at $480.26. Theo of Golden: A Novel."
+        },
+        {
+          "name": "The Last Letter: A Novel",
+          "price": 0.0,
+          "image_url": "https://m.media-amazon.com/images/I/91sNxOG1IML._AC_UL320_.jpg",
+          "rating": 4.7,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/The-Last-Letter-Rebecca-Yarros-audiobook/dp/B07QP97BKW/ref=sr_1_6",
+          "asin": "B07QP97BKW",
+          "description": "Premium books product. The Last Letter: A Novel."
+        },
+        {
+          "name": "Regime Change: Inside the Imperial Presidency of Donald Trump",
+          "price": 1090.04,
+          "image_url": "https://m.media-amazon.com/images/I/81xgiFIRBRL._AC_UL320_.jpg",
+          "rating": 4.7,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Regime-Change-Inside-Imperial-Presidency/dp/1668067242/ref=sr_1_7",
+          "asin": "1668067242",
+          "description": "Premium books product. Priced at $1090.04. Regime Change: Inside the Imperial Presidency of Donald Trump."
+        },
+        {
+          "name": "Yesteryear: A GMA Book Club Pick: A Novel",
+          "price": 0.0,
+          "image_url": "https://m.media-amazon.com/images/I/81gOlbDWpeL._AC_UL320_.jpg",
+          "rating": 4.2,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Audible-Yesteryear-A-Novel/dp/B0FKTTYMVG/ref=sr_1_8",
+          "asin": "B0FKTTYMVG",
+          "description": "Premium books product. Yesteryear: A GMA Book Club Pick: A Novel."
+        },
+        {
+          "name": "Whistler: A Novel",
+          "price": 0.0,
+          "image_url": "https://m.media-amazon.com/images/I/916FUdvfvcL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Audible-Whistler-A-Novel/dp/B0FWG871V8/ref=sr_1_9",
+          "asin": "B0FWG871V8",
+          "description": "Premium books product. Whistler: A Novel."
+        },
+        {
+          "name": "The Calamity Club: A Novel",
+          "price": 0.0,
+          "image_url": "https://m.media-amazon.com/images/I/81jTCL84AoL._AC_UL320_.jpg",
+          "rating": 4.7,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/The-Calamity-Club-A-Novel/dp/B0FTB8MDVN/ref=sr_1_10",
+          "asin": "B0FTB8MDVN",
+          "description": "Premium books product. The Calamity Club: A Novel."
+        }
+      ]
+    },
+    "Sports & Outdoors": {
+      "name": "Sports & Outdoors",
+      "description": "Sports & Outdoors products from Amazon",
+      "products": [
+        {
+          "name": "Deekin 16 Pieces Scooter Boards with Handles - Plastic Caster Sitting Scooter for Kids Indoor or Outdoor Physical",
+          "price": 6732.28,
+          "image_url": "https://m.media-amazon.com/images/I/71z8dyCYdJL._AC_UL320_.jpg",
+          "rating": 5.0,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0CB34ZTY1",
+          "description": "High-quality sports & outdoors item. Deekin 16 Pieces Scooter Boards with Handles - Plastic Caster Sitting Scooter for Kids Indoor or Outdoor."
+        },
+        {
+          "name": "8 Pcs Sports Balls Set Include Football Basketball Soccer Volleyball with Equipment Bag Pump for Adult Outdoor",
+          "price": 2404.18,
+          "image_url": "https://m.media-amazon.com/images/I/81vEsEe0k+L._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0C1SXKZCG",
+          "description": "High-quality sports & outdoors item. 8 Pcs Sports Balls Set Include Football Basketball Soccer Volleyball with Equipment Bag Pump for Adult."
+        },
+        {
+          "name": "Jazzminton-Sport – The Original Paddle Game with Net for Indoors & Outdoors – Active, Joint-Friendly Family Fun – Like",
+          "price": 6411.68,
+          "image_url": "https://m.media-amazon.com/images/I/81lkneapHPL._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B09MDTL3G1",
+          "description": "High-quality sports & outdoors item. Jazzminton-Sport – The Original Paddle Game with Net for Indoors & Outdoors – Active, Joint-Friendly Family Fun –."
+        },
+        {
+          "name": "Syhood 30 Pack 7 Inch Plastic Traffic Cones Sports Training Agility Marker Mini Cones for Soccer, Skating, Football,",
+          "price": 833.24,
+          "image_url": "https://m.media-amazon.com/images/I/713oTPNS4iL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0CGV69VTB",
+          "description": "High-quality sports & outdoors item. Syhood 30 Pack 7 Inch Plastic Traffic Cones Sports Training Agility Marker Mini Cones for Soccer, Skating,."
+        },
+        {
+          "name": "Kids Soccer Goals for Backyard Set - 2 of 4' x 3' Portable Soccer Goal Training Equipment, Pop Up Toddler Soccer Net",
+          "price": 1268.93,
+          "image_url": "https://m.media-amazon.com/images/I/8115xtDdu-L._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Kids-Soccer-Goals-Backyard-Set/dp/B0B1PQBL9W/ref=sr_1_5",
+          "asin": "B0B1PQBL9W",
+          "description": "High-quality sports & outdoors item. Kids Soccer Goals for Backyard Set - 2 of 4' x 3' Portable Soccer Goal Training Equipment, Pop Up Toddler Soccer."
+        },
+        {
+          "name": "Soccer Goal, Kids Soccer Goals for Backyard Set, 2 Pack of Portable Pop Up Soccer Net with Soccer Ball, Cones, Complete",
+          "price": 1268.29,
+          "image_url": "https://m.media-amazon.com/images/I/81PtSg+kA7L._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Soccer-Goals-Backyard-Portable-Equipment/dp/B0DGGP55H6/ref=sr_1_6",
+          "asin": "B0DGGP55H6",
+          "description": "High-quality sports & outdoors item. Soccer Goal, Kids Soccer Goals for Backyard Set, 2 Pack of Portable Pop Up Soccer Net with Soccer Ball, Cones,."
+        },
+        {
+          "name": "25/50/100pcs Disc Cones, Agility Soccer Cones with Carry Bag and Holder, Soccer Cones for Sports Training, Football,",
+          "price": 288.22,
+          "image_url": "https://m.media-amazon.com/images/I/61iefuaSJ3L._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/FGBNM-Training-Football-Basketball-Equipment/dp/B0CPLCVK6N/ref=sr_1_7",
+          "asin": "B0CPLCVK6N",
+          "description": "High-quality sports & outdoors item. 25/50/100pcs Disc Cones, Agility Soccer Cones with Carry Bag and Holder, Soccer Cones for Sports Training,."
+        },
+        {
+          "name": "GoSports Slammo Game Set – Ultimate Lawn and Beach Game for Outdoor Fun",
+          "price": null,
+          "image_url": "https://m.media-amazon.com/images/I/81uYRqbXM1L._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/GoSports-Slammo-Balls-Carrying-Rules/dp/B00K8ANYZU/ref=sr_1_8",
+          "asin": "B00K8ANYZU",
+          "description": "Premium sports & outdoors product. GoSports Slammo Game Set – Ultimate Lawn and Beach Game for Outdoor Fun."
+        },
+        {
+          "name": "Sports Equipment Garage Organizer,Garage Ball Storage Rack for Sports with Wheels-Upgraded 3 Layers Sports Organizer",
+          "price": 1827.1,
+          "image_url": "https://m.media-amazon.com/images/I/71tUQeHJuHL._AC_UL320_.jpg",
+          "rating": 4.2,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/DUDUXI-Equipment-Organizer-Wheels-Upgraded-Basketball/dp/B0DPMVXTP4/ref=sr_1_9",
+          "asin": "B0DPMVXTP4",
+          "description": "High-quality sports & outdoors item. Sports Equipment Garage Organizer,Garage Ball Storage Rack for Sports with Wheels-Upgraded 3 Layers Sports."
+        },
+        {
+          "name": "Franklin Sports Blackhawk Backyard Soccer Goal - Portable Pop Up Soccer Nets - Youth + Adult Folding Indoor + Outdoor",
+          "price": null,
+          "image_url": "https://m.media-amazon.com/images/I/91f7YCbvByL._AC_UL320_.jpg",
+          "rating": 4.3,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Franklin-Sports-Blackhawk-Portable-Soccer/dp/B00WL6LC1W/ref=sr_1_10",
+          "asin": "B00WL6LC1W",
+          "description": "High-quality sports & outdoors item. Franklin Sports Blackhawk Backyard Soccer Goal - Portable Pop Up Soccer Nets - Youth + Adult Folding Indoor +."
+        }
+      ]
+    },
+    "Beauty & Health": {
+      "name": "Beauty & Health",
+      "description": "Beauty & Health products from Amazon",
+      "products": [
+        {
+          "name": "eos Shea Better Body Lotion Vanilla Cashmere, 24-Hour Moisture Skin Care, Lightweight & Non-Greasy, Natural Shea,",
+          "price": 319.64,
+          "image_url": "https://m.media-amazon.com/images/I/61IQUadfGEL._AC_UL320_.jpg",
+          "rating": 4.7,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/eos-Cashmere-Moisture-Lightweight-Non-Greasy/dp/B08KT2Z93D/ref=sr_1_1",
+          "asin": "B08KT2Z93D",
+          "description": "High-quality beauty & health item. eos Shea Better Body Lotion Vanilla Cashmere, 24-Hour Moisture Skin Care, Lightweight & Non-Greasy, Natural."
+        },
+        {
+          "name": "Summer Fridays Jet Lag™ Essentials - Mini Hydrating Skin Care Set With Jet Lag™ Mask, Eye Patches, Deep Hydration Face",
+          "price": 1090.04,
+          "image_url": "https://m.media-amazon.com/images/I/61VMCb9rs0L._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0DY1WSW83",
+          "description": "High-quality beauty & health item. Summer Fridays Jet Lag™ Essentials - Mini Hydrating Skin Care Set With Jet Lag™ Mask, Eye Patches, Deep Hydration."
+        },
+        {
+          "name": "Anua PDRN Collagen Glow Facial Serum Spray, Hydrating Face Mist, Hyaluronic Acid, dewy glass finish, All Skin Types,",
+          "price": 673.26,
+          "image_url": "https://m.media-amazon.com/images/I/71LQ-32prpL._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0FVT77ZLL",
+          "description": "High-quality beauty & health item. Anua PDRN Collagen Glow Facial Serum Spray, Hydrating Face Mist, Hyaluronic Acid, dewy glass finish, All Skin."
+        },
+        {
+          "name": "BIODANCE Collagen Peptide Eye Patches, Anti Wrinkle & Smile Line Patches for Face, Under Eye Mask for Fine Lines & Eye",
+          "price": 737.38,
+          "image_url": "https://m.media-amazon.com/images/I/61jB74Wpd5L._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0GD6R7CFJ",
+          "description": "High-quality beauty & health item. BIODANCE Collagen Peptide Eye Patches, Anti Wrinkle & Smile Line Patches for Face, Under Eye Mask for Fine Lines &."
+        },
+        {
+          "name": "NAZANO 24K Gold Under Eye Patches - 60 Pack Eye Masks | for Puffy Eyes Dark Circles, Bags & Wrinkles with Collagen &",
+          "price": 320.28,
+          "image_url": "https://m.media-amazon.com/images/I/71w25DflEoL._AC_UL320_.jpg",
+          "rating": 4.2,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Under-Eye-Patches-Treatments-Wrinkles/dp/B09NXS395V/ref=sr_1_5",
+          "asin": "B09NXS395V",
+          "description": "High-quality beauty & health item. NAZANO 24K Gold Under Eye Patches - 60 Pack Eye Masks | for Puffy Eyes Dark Circles, Bags & Wrinkles with Collagen."
+        },
+        {
+          "name": "QUSTERE Pimple Patches for Face, Hydrocolloid Acne Patches, Cute Star Zit Covers, Colorful Spot Stickers with Tea Tree,",
+          "price": 224.1,
+          "image_url": "https://m.media-amazon.com/images/I/61z6f2krgNL._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/QUSTERE-Hydrocolloid-Colorful-Stickers-Salicylic/dp/B0CDH47BN9/ref=sr_1_6",
+          "asin": "B0CDH47BN9",
+          "description": "High-quality beauty & health item. QUSTERE Pimple Patches for Face, Hydrocolloid Acne Patches, Cute Star Zit Covers, Colorful Spot Stickers with Tea."
+        },
+        {
+          "name": "BIODANCE Bio-Collagen Real Deep Mask, Hydrating Overnight Hydrogel Face Mask, Pore Minimizing, Elasticity, Plumping,",
+          "price": 548.23,
+          "image_url": "https://m.media-amazon.com/images/I/51ubxqzNGIL._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Biodance-Bio-Collagen-Tightening-Hydrating-Molecular/dp/B0B2RM68G2/ref=sr_1_7",
+          "asin": "B0B2RM68G2",
+          "description": "High-quality beauty & health item. BIODANCE Bio-Collagen Real Deep Mask, Hydrating Overnight Hydrogel Face Mask, Pore Minimizing, Elasticity,."
+        },
+        {
+          "name": "medicube Toner Pads Zero Pore Pad 2.0 | Dual-Textured Facial Pad for Exfoliation and Pore Care with 4.5% AHA Lactic",
+          "price": 672.94,
+          "image_url": "https://m.media-amazon.com/images/I/71Mcspt-6AL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Medicube-Zero-Pore-Pads-Dual-Textured/dp/B09V7Z4TJG/ref=sr_1_8",
+          "asin": "B09V7Z4TJG",
+          "description": "High-quality beauty & health item. medicube Toner Pads Zero Pore Pad 2.0 | Dual-Textured Facial Pad for Exfoliation and Pore Care with 4.5% AHA."
+        },
+        {
+          "name": "Sleeping lip mask, Nourish & Hydrate Lip Mask With Vitamin C, Antioxidants, Lip Balm, Lip Skin Care, Improve Lip Color,",
+          "price": 159.98,
+          "image_url": "https://m.media-amazon.com/images/I/51NE-jfWPpL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Sleeping-Nourish-Hydrate-Vitamin-Antioxidants/dp/B0CNV5SG4S/ref=sr_1_9",
+          "asin": "B0CNV5SG4S",
+          "description": "High-quality beauty & health item. Sleeping lip mask, Nourish & Hydrate Lip Mask With Vitamin C, Antioxidants, Lip Balm, Lip Skin Care, Improve Lip."
+        },
+        {
+          "name": "CHMI Under Eye Patches (50 Pairs) - 24K Gold Eye Patches for Puffy Eyes, Dark Circles, EyeBags and Wrinkles, Collagen",
+          "price": 271.55,
+          "image_url": "https://m.media-amazon.com/images/I/81yyVOb7GKL._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/CHMI-Under-Eye-Patches-Pairs/dp/B0CMV2DCXT/ref=sr_1_10",
+          "asin": "B0CMV2DCXT",
+          "description": "High-quality beauty & health item. CHMI Under Eye Patches (50 Pairs) - 24K Gold Eye Patches for Puffy Eyes, Dark Circles, EyeBags and Wrinkles,."
+        }
+      ]
+    },
+    "Toys & Games": {
+      "name": "Toys & Games",
+      "description": "Toys & Games products from Amazon",
+      "products": [
+        {
+          "name": "Brain Teaser Puzzles for Adults and Kids, 18Pcs Puzzle Games Set, 3D Wooden Plastic Metal Puzzle, Unlock Interlock Mind",
+          "price": 608.82,
+          "image_url": "https://m.media-amazon.com/images/I/71o3iytz1IL._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0D2NWDF4Z",
+          "description": "High-quality toys & games item. Brain Teaser Puzzles for Adults and Kids, 18Pcs Puzzle Games Set, 3D Wooden Plastic Metal Puzzle, Unlock Interlock."
+        },
+        {
+          "name": "STEM Puzzle Game The Brain Square with 160000+ Solutions Pattern Matching Blocks Brain Teaser Toy Roll Dice & Race Your",
+          "price": 576.76,
+          "image_url": "https://m.media-amazon.com/images/I/71B51tc1zlL._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0FJX49NRP",
+          "description": "High-quality toys & games item. STEM Puzzle Game The Brain Square with 160000+ Solutions Pattern Matching Blocks Brain Teaser Toy Roll Dice & Race."
+        },
+        {
+          "name": "24 Pcs Brain Teaser Puzzles for Adults and Teens - Metal Puzzles 3D Puzzle Game Toys for Adults Teens - Wooden Unlock",
+          "price": 769.12,
+          "image_url": "https://m.media-amazon.com/images/I/81RhXLiXpkL._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0GCZMK8DX",
+          "description": "High-quality toys & games item. 24 Pcs Brain Teaser Puzzles for Adults and Teens - Metal Puzzles 3D Puzzle Game Toys for Adults Teens - Wooden."
+        },
+        {
+          "name": "RLYLF 30pcs Brain Teaser Puzzles Game for Adults and Kids Ancient Wooden and Metal Puzzles 3D Educational Toys IQ Logic",
+          "price": 746.04,
+          "image_url": "https://m.media-amazon.com/images/I/71vcW8lrtGL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0BHTPV2TM",
+          "description": "High-quality toys & games item. RLYLF 30pcs Brain Teaser Puzzles Game for Adults and Kids Ancient Wooden and Metal Puzzles 3D Educational Toys IQ."
+        },
+        {
+          "name": "Educational Insights Kanoodle - 3D Brain Teaser Puzzles for Kids, Spatial Puzzle Games for Adults, Teens and Kids,",
+          "price": 320.28,
+          "image_url": "https://m.media-amazon.com/images/I/71v68G+xVAL._AC_UL320_.jpg",
+          "rating": 4.7,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Educational-Insights-Kanoodle-Twisting-Solitaire/dp/B000FGECAI/ref=sr_1_5",
+          "asin": "B000FGECAI",
+          "description": "High-quality toys & games item. Educational Insights Kanoodle - 3D Brain Teaser Puzzles for Kids, Spatial Puzzle Games for Adults, Teens and."
+        },
+        {
+          "name": "Fidget Puzzle Cube for Kids and Adults - 6-Sided Wooden Puzzle Game Fidget Toy for Anxiety Relief - Handheld Maze Cube",
+          "price": 320.28,
+          "image_url": "https://m.media-amazon.com/images/I/71IIMHrF2UL._AC_UL320_.jpg",
+          "rating": 4.3,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Fidget-Puzzle-Cube-Kids-Adults/dp/B0DHJR2JWF/ref=sr_1_6",
+          "asin": "B0DHJR2JWF",
+          "description": "High-quality toys & games item. Fidget Puzzle Cube for Kids and Adults - 6-Sided Wooden Puzzle Game Fidget Toy for Anxiety Relief - Handheld Maze."
+        },
+        {
+          "name": "ThinkFun Gravity Maze - Falling Marble Logic Game - Challenging STEM Toy for Kids 8-12 - Gravity Marble Maze -",
+          "price": null,
+          "image_url": "https://m.media-amazon.com/images/I/81iwJf07veL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/ThinkFun-Gravity-Marble-Logic-Girls/dp/B00IUAAK2A/ref=sr_1_7",
+          "asin": "B00IUAAK2A",
+          "description": "High-quality toys & games item. ThinkFun Gravity Maze - Falling Marble Logic Game - Challenging STEM Toy for Kids 8-12 - Gravity Marble Maze."
+        },
+        {
+          "name": "Metal Wire Puzzle Set of 24 with Pouch,Brain Teaser IQ Test Disentanglemen Iron Link Unlock Interlock Game Chinese Ring",
+          "price": 320.28,
+          "image_url": "https://m.media-amazon.com/images/I/81UxODpsSNL._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/AUKEXLY-Disentanglemen-Interlock-Chinese-Challenge/dp/B0CD657V3T/ref=sr_1_8",
+          "asin": "B0CD657V3T",
+          "description": "High-quality toys & games item. Metal Wire Puzzle Set of 24 with Pouch,Brain Teaser IQ Test Disentanglemen Iron Link Unlock Interlock Game Chinese."
+        },
+        {
+          "name": "KINGOU Hexagon Tangram Puzzle Wooden Brain Puzzles for Kids & Adult Challenge Wooden Brain Teasers Puzzle Games for",
+          "price": 256.16,
+          "image_url": "https://m.media-amazon.com/images/I/61SXiiwByRL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/KINGOU-Hexagon-Tangram-Handmade-Disentanglement/dp/B07XLWJ4Q8/ref=sr_1_9",
+          "asin": "B07XLWJ4Q8",
+          "description": "High-quality toys & games item. KINGOU Hexagon Tangram Puzzle Wooden Brain Puzzles for Kids & Adult Challenge Wooden Brain Teasers Puzzle Games."
+        },
+        {
+          "name": "Handheld Fidget Puzzle Game for Kids and Adults - Challenging Wooden Labyrinth Marble Maze for Teen Boys - Fun Brain",
+          "price": 416.46,
+          "image_url": "https://m.media-amazon.com/images/I/81PWIQRsJPL._AC_UL320_.jpg",
+          "rating": 4.2,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Handheld-Fidget-Puzzle-Game-Adults/dp/B0F87MQQPZ/ref=sr_1_10",
+          "asin": "B0F87MQQPZ",
+          "description": "High-quality toys & games item. Handheld Fidget Puzzle Game for Kids and Adults - Challenging Wooden Labyrinth Marble Maze for Teen Boys - Fun."
+        }
+      ]
+    },
+    "Automotive": {
+      "name": "Automotive",
+      "description": "Automotive products from Amazon",
+      "products": [
+        {
+          "name": "LAUNCH CRP129E V2.0 Elite OBD2 Scanner Diagnostic Tool, 12 Reset Scan Tool, FCA AutoAuth, ABS SRS Transmission Engine",
+          "price": 6283.44,
+          "image_url": "https://m.media-amazon.com/images/I/8170xfOE0QL._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0DKH5871C",
+          "description": "High-quality automotive item. LAUNCH CRP129E V2.0 Elite OBD2 Scanner Diagnostic Tool, 12 Reset Scan Tool, FCA AutoAuth, ABS SRS Transmission."
+        },
+        {
+          "name": "Auto Trim Removal Tool Set - 12pcs (No Scratch Plastic Pry Kit) - Auto Trim Car Tools, Easy Door Panel Removal Tool for",
+          "price": 479.94,
+          "image_url": "https://m.media-amazon.com/images/I/71OwtQUD4lL._AC_UL320_.jpg",
+          "rating": 4.7,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B07PFSBXMW",
+          "description": "High-quality automotive item. Auto Trim Removal Tool Set - 12pcs (No Scratch Plastic Pry Kit) - Auto Trim Car Tools, Easy Door Panel Removal Tool."
+        },
+        {
+          "name": "502 PCS DT Deutsch Connector Kit - 2/3/4/6/8/12 Pin Waterproof Connectors with 145 Pairs 16# Solid Terminal Contacts,",
+          "price": 3846.88,
+          "image_url": "https://m.media-amazon.com/images/I/91fOVThanSL._AC_UL320_.jpg",
+          "rating": 4.8,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0DHZBGF4Q",
+          "description": "High-quality automotive item. 502 PCS DT Deutsch Connector Kit - 2/3/4/6/8/12 Pin Waterproof Connectors with 145 Pairs 16# Solid Terminal."
+        },
+        {
+          "name": "ROTATION 6-Piece Heavy Duty Car Vehicle Trim Clip Removal Set Door Upholstery Remover Chrome Car Door Panel",
+          "price": 961.48,
+          "image_url": "https://m.media-amazon.com/images/I/51xo1IweDhL._AC_UL320_.jpg",
+          "rating": 4.7,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B09Y9HFGGQ",
+          "description": "High-quality automotive item. ROTATION 6-Piece Heavy Duty Car Vehicle Trim Clip Removal Set Door Upholstery Remover Chrome Car Door."
+        },
+        {
+          "name": "BFXM 5PCS Auto Trim Removal Tool kit, Car Accessories Clip Pry Tools Kit No Scratch Plastic, Car Door Panel Rivet",
+          "price": 179.22,
+          "image_url": "https://m.media-amazon.com/images/I/615JABRNJXL._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Removal-Accessories-Automotive-Interior-Fastener/dp/B0D41FNZTT/ref=sr_1_5",
+          "asin": "B0D41FNZTT",
+          "description": "High-quality automotive item. BFXM 5PCS Auto Trim Removal Tool kit, Car Accessories Clip Pry Tools Kit No Scratch Plastic, Car Door Panel."
+        },
+        {
+          "name": "GOOACC 5PCS Auto Trim Removal Tool Kit No-Scratch Pry Tool Kit for Car Door Clip Panel & Audio Dashboard Dismantle -5PCS",
+          "price": 272.51,
+          "image_url": "https://m.media-amazon.com/images/I/61vDByDoROL._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/GOOACC-Removal-No-Scratch-Dashboard-Dismantle/dp/B07V22YC9J/ref=sr_1_6_mod_primary_new",
+          "asin": "B07V22YC9J",
+          "description": "High-quality automotive item. GOOACC 5PCS Auto Trim Removal Tool Kit No-Scratch Pry Tool Kit for Car Door Clip Panel & Audio Dashboard Dismantle."
+        },
+        {
+          "name": "XBRN Auto Trim Removal Tool Kit,13 Pcs Car Panel Door Window Tools Kit,Auto Clip Fastener Remover Pry Tool Set Blue",
+          "price": 167.35,
+          "image_url": "https://m.media-amazon.com/images/I/61Fl4ZcoV5L._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/XBRN-Removal-Window-Fastener-Remover/dp/B07R44VJHN/ref=sr_1_7",
+          "asin": "B07R44VJHN",
+          "description": "High-quality automotive item. XBRN Auto Trim Removal Tool Kit,13 Pcs Car Panel Door Window Tools Kit,Auto Clip Fastener Remover Pry Tool Set."
+        },
+        {
+          "name": "BFXM 2PCS Brake Caliper Hanger Compression Mechanic Tool with Rubber Tips, Durable Steel, Rust-Proof Automotive Tools",
+          "price": 152.28,
+          "image_url": "https://m.media-amazon.com/images/I/61wyT7lXkLL._AC_UL320_.jpg",
+          "rating": 4.8,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Caliper-Hangers-Rust-Proof-Automotive-Suspension/dp/B0D6Y2XZL7/ref=sr_1_8",
+          "asin": "B0D6Y2XZL7",
+          "description": "High-quality automotive item. BFXM 2PCS Brake Caliper Hanger Compression Mechanic Tool with Rubber Tips, Durable Steel, Rust-Proof Automotive."
+        },
+        {
+          "name": "Scissor Car Jack 2 Ton (4409 lbs) Tire Changing Kit with Lug Wrench - Emergency Kit for Car, SUV, MPV",
+          "price": 961.48,
+          "image_url": "https://m.media-amazon.com/images/I/71oQGvEdOQL._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Scissor-Universal-Emergency-Wrench-Changing/dp/B0CNT31DS4/ref=sr_1_9",
+          "asin": "B0CNT31DS4",
+          "description": "High-quality automotive item. Scissor Car Jack 2 Ton (4409 lbs) Tire Changing Kit with Lug Wrench - Emergency Kit for Car, SUV,."
+        },
+        {
+          "name": "BFXM Car Window Breaker Hammer and Seat Belt Cutter 2-in-1, Car Accessories, Emergency Escape Tool, Safety Glass",
+          "price": 217.69,
+          "image_url": "https://m.media-amazon.com/images/I/71P7MvZFNcL._AC_UL320_.jpg",
+          "rating": 4.7,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Breaker-Emergency-Automotive-Essentials-Accessories/dp/B0D8HQY461/ref=sr_1_10",
+          "asin": "B0D8HQY461",
+          "description": "High-quality automotive item. BFXM Car Window Breaker Hammer and Seat Belt Cutter 2-in-1, Car Accessories, Emergency Escape Tool, Safety."
+        }
+      ]
+    },
+    "Groceries": {
+      "name": "Groceries",
+      "description": "Groceries products from Amazon",
+      "products": [
+        {
+          "name": "Urban Accents Movie Night Popcorn Gift Set – Includes 3 Gourmet Popcorn Kernel Varieties & 5 Flavorful Seasonings –",
+          "price": 703.72,
+          "image_url": "https://m.media-amazon.com/images/I/818hCAEz0tL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B07JN5467R",
+          "description": "High-quality groceries item. Urban Accents Movie Night Popcorn Gift Set – Includes 3 Gourmet Popcorn Kernel Varieties & 5 Flavorful Seasonings."
+        },
+        {
+          "name": "Blueprint Bryan Johnson Matcha Powder – Ceremonial Grade Japanese Matcha – Green Tea for Energy & Focus – Natural",
+          "price": 1122.1,
+          "image_url": "https://m.media-amazon.com/images/I/41rqw4yre2L._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0DNGDQNPF",
+          "description": "High-quality groceries item. Blueprint Bryan Johnson Matcha Powder – Ceremonial Grade Japanese Matcha – Green Tea for Energy & Focus –."
+        },
+        {
+          "name": "Korean Food Misugaru, Total Net Weight 1.32 lb (600g), 30 Sticks – 0.71 oz Each, Multigrain & Honey Powder Sticks,",
+          "price": 480.58,
+          "image_url": "https://m.media-amazon.com/images/I/7155bkADjnL._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Korean-Misugaru-Total-Weight-Sticks/dp/B0FSRFY436/ref=sr_1_3",
+          "asin": "B0FSRFY436",
+          "description": "High-quality groceries item. Korean Food Misugaru, Total Net Weight 1.32 lb (600g), 30 Sticks – 0.71 oz Each, Multigrain & Honey Powder."
+        },
+        {
+          "name": "Pringles Cheddar Cheese Potato Crisps, 5.5 Ounce",
+          "price": null,
+          "image_url": "https://m.media-amazon.com/images/I/61Nw0hEUbnL._AC_UL320_.jpg",
+          "rating": 3.8,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Pringles-Cheddar-Cheese-Potato-Crisps/dp/B01HICZYGC/ref=sr_1_4",
+          "asin": "B01HICZYGC",
+          "description": "Premium groceries product. Pringles Cheddar Cheese Potato Crisps, 5.5 Ounce."
+        },
+        {
+          "name": "Lipton Black Tea Bags, Hot or Iced High Caffeine Tea, 100 Total Bags",
+          "price": 157.74,
+          "image_url": "https://m.media-amazon.com/images/I/61OCcbBlWiL._AC_UL320_.jpg",
+          "rating": 4.8,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Lipton-Black-Bags-Caffeine-Total/dp/B0DX5XQNRH/ref=sr_1_5",
+          "asin": "B0DX5XQNRH",
+          "description": "Premium groceries product. Priced at $157.74. Lipton Black Tea Bags, Hot or Iced High Caffeine Tea, 100 Total Bags."
+        },
+        {
+          "name": "Designer Wellness Protein Smoothie, Original Variety Pack, 12g Whey Protein, Real Fruit Smoothie Snack, No Added Sugar,",
+          "price": 1282.08,
+          "image_url": "https://m.media-amazon.com/images/I/71Sw-QQSAXL._AC_UL320_.jpg",
+          "rating": 3.8,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Designer-Wellness-Smoothie-Gluten-Free-Artificial/dp/B09KVK6CF5/ref=sr_1_6",
+          "asin": "B09KVK6CF5",
+          "description": "High-quality groceries item. Designer Wellness Protein Smoothie, Original Variety Pack, 12g Whey Protein, Real Fruit Smoothie Snack, No Added."
+        },
+        {
+          "name": "Lonico Wooden Play Food Toys for Kids, Market Grocery Store Toys with Snack & Shopping Bag & Apron for Toddlers,",
+          "price": 1153.84,
+          "image_url": "https://m.media-amazon.com/images/I/81NvZ09bZ7L._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Lonico-Shopping-Toddlers-Accessories-Christmas/dp/B0DF7MD8BC/ref=sr_1_7",
+          "asin": "B0DF7MD8BC",
+          "description": "High-quality groceries item. Lonico Wooden Play Food Toys for Kids, Market Grocery Store Toys with Snack & Shopping Bag & Apron for."
+        },
+        {
+          "name": "TEA ZONE B3007a 10.6 oz Rainbow Mini Mochi Bag",
+          "price": 320.28,
+          "image_url": "https://m.media-amazon.com/images/I/61A7nCIrBXL._AC_UL320_.jpg",
+          "rating": 4.1,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Zone-10-6-Rainbow-Mini-Mochi/dp/B01G1EXYGK/ref=sr_1_8",
+          "asin": "B01G1EXYGK",
+          "description": "Premium groceries product. Priced at $320.28. TEA ZONE B3007a 10.6 oz Rainbow Mini Mochi Bag."
+        },
+        {
+          "name": "OLIPOP Minis Prebiotic Soda Pop, Strawberry Vanilla, Pantry Pack Packed with Prebiotics, Fiber, and Botanicals, Gluten",
+          "price": 320.28,
+          "image_url": "https://m.media-amazon.com/images/I/71ukALnKz8L._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/OLIPOP-Prebiotic-Strawberry-Prebiotics-Botanicals/dp/B0FBPZTN7N/ref=sr_1_9",
+          "asin": "B0FBPZTN7N",
+          "description": "High-quality groceries item. OLIPOP Minis Prebiotic Soda Pop, Strawberry Vanilla, Pantry Pack Packed with Prebiotics, Fiber, and Botanicals,."
+        },
+        {
+          "name": "SumDirect Clear Zipper Resealable Stand Up Drink Bags Pouches,Snack Packing Bags for Food Snack Tea and Drinking,",
+          "price": 563.94,
+          "image_url": "https://m.media-amazon.com/images/I/61NrlhB5PSL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/SumDirect-Resealable-Pouches-Packing-Drinking/dp/B071ZPKZ6Y/ref=sr_1_10",
+          "asin": "B071ZPKZ6Y",
+          "description": "High-quality groceries item. SumDirect Clear Zipper Resealable Stand Up Drink Bags Pouches,Snack Packing Bags for Food Snack Tea and."
+        }
+      ]
+    },
+    "Office Supplies": {
+      "name": "Office Supplies",
+      "description": "Office Supplies products from Amazon",
+      "products": [
+        {
+          "name": "File Folder, PANDRI 120 Pack Colored File Folder, 1/3 Cut Tab, Letter Size, Assorted 12 Colors Filing Folder for Office",
+          "price": 778.74,
+          "image_url": "https://m.media-amazon.com/images/I/61t99PmvQdL._AC_UL320_.jpg",
+          "rating": 4.8,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0D9YMMPL2",
+          "description": "High-quality office supplies item. File Folder, PANDRI 120 Pack Colored File Folder, 1/3 Cut Tab, Letter Size, Assorted 12 Colors Filing Folder for."
+        },
+        {
+          "name": "Paper Organizer Letter Tray, 4 Pack Acrylic Stackable Desk File Organizer,Versatile Clear Office Organizer for File",
+          "price": 576.44,
+          "image_url": "https://m.media-amazon.com/images/I/71oYlq75s4L._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0D1R92WSZ",
+          "description": "High-quality office supplies item. Paper Organizer Letter Tray, 4 Pack Acrylic Stackable Desk File Organizer,Versatile Clear Office Organizer for."
+        },
+        {
+          "name": "BEYGORM Magnetic Dry Erase Marker Holder for Whiteboard,Non-slip Acrylic Magnet Pen Holder for Fridge",
+          "price": 416.46,
+          "image_url": "https://m.media-amazon.com/images/I/81ViBxtYFoL._AC_UL320_.jpg",
+          "rating": 4.6,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0CHJNZWCR",
+          "description": "High-quality office supplies item. BEYGORM Magnetic Dry Erase Marker Holder for Whiteboard,Non-slip Acrylic Magnet Pen Holder for."
+        },
+        {
+          "name": "PAPERPAL Paperclips for Office School & Personal Use, #1 Nonskid Paper Clip (1-2/7\"), 2000 Medium Paper Clips (20 Boxes",
+          "price": 961.48,
+          "image_url": "https://m.media-amazon.com/images/I/71hpyzVSUoL._AC_UL320_.jpg",
+          "rating": 4.7,
+          "reviews_count": null,
+          "product_url": "",
+          "asin": "B0BCF1S973",
+          "description": "High-quality office supplies item. PAPERPAL Paperclips for Office School & Personal Use, #1 Nonskid Paper Clip (1-2/7\"), 2000 Medium Paper Clips (20."
+        },
+        {
+          "name": "10 Pack to Do List Notepad Lined Sticky Notes, 3\"x4\", 500 Sheets, Sticky Notes with Lines, to Do List Planner, Square",
+          "price": 256.16,
+          "image_url": "https://m.media-amazon.com/images/I/718N7GMF6eL._AC_UL320_.jpg",
+          "rating": 4.3,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/EOOUT-Notepad-Sticky-Planner-Meeting/dp/B0BJ6T13GJ/ref=sr_1_5",
+          "asin": "B0BJ6T13GJ",
+          "description": "High-quality office supplies item. 10 Pack to Do List Notepad Lined Sticky Notes, 3\"x4\", 500 Sheets, Sticky Notes with Lines, to Do List Planner,."
+        },
+        {
+          "name": "UIXJODO Colorful Pens, 6 Pcs Colored Pens Fine Point Smooth Writing Pen, 0.5mm Colored Ink Gel Pen for Journaling Note",
+          "price": 244.94,
+          "image_url": "https://m.media-amazon.com/images/I/714ATwU0shL._AC_UL320_.jpg",
+          "rating": 4.5,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/UIXJODO-Colorful-Colored-Journaling-Supplies/dp/B0DCJSZ46W/ref=sr_1_6",
+          "asin": "B0DCJSZ46W",
+          "description": "High-quality office supplies item. UIXJODO Colorful Pens, 6 Pcs Colored Pens Fine Point Smooth Writing Pen, 0.5mm Colored Ink Gel Pen for Journaling."
+        },
+        {
+          "name": "Aesthetic Desk Accessories Set - A Complete Desktop Organizer Set For Women Enhances Any Office Decor - An Office",
+          "price": 737.06,
+          "image_url": "https://m.media-amazon.com/images/I/81vf11m8oHL._AC_UL320_.jpg",
+          "rating": 4.7,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Aesthetic-Desk-Accessories-Set-Organizer/dp/B0F22FSZV7/ref=sr_1_7",
+          "asin": "B0F22FSZV7",
+          "description": "High-quality office supplies item. Aesthetic Desk Accessories Set - A Complete Desktop Organizer Set For Women Enhances Any Office Decor - An."
+        },
+        {
+          "name": "deli Office Supplies Set, 1045 Pcs-Desk Accessory Organizer Kit, Stapler Set, Rotating Multi-Functional Pen Holder,",
+          "price": 801.18,
+          "image_url": "https://m.media-amazon.com/images/I/71BJaIizibL._AC_UL320_.jpg",
+          "rating": 4.4,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Rotating-Organizer-Dispenser-Sharpener-Accessories/dp/B08CDKPNFY/ref=sr_1_8",
+          "asin": "B08CDKPNFY",
+          "description": "High-quality office supplies item. deli Office Supplies Set, 1045 Pcs-Desk Accessory Organizer Kit, Stapler Set, Rotating Multi-Functional Pen."
+        },
+        {
+          "name": "17 in 1 Black Desk Organizers and Accessories Set, 3 Office Desk Supplies Storage Organization, 4 Pens, Stapler,",
+          "price": 961.48,
+          "image_url": "https://m.media-amazon.com/images/I/81V3OLDY9RL._AC_UL320_.jpg",
+          "rating": 4.8,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Organizers-Accessories-Supplies-Organization-Dispenser/dp/B0CMQ4LFG2/ref=sr_1_9",
+          "asin": "B0CMQ4LFG2",
+          "description": "High-quality office supplies item. 17 in 1 Black Desk Organizers and Accessories Set, 3 Office Desk Supplies Storage Organization, 4 Pens,."
+        },
+        {
+          "name": "Simple Trending 7 Tier Desk File Organizer, Letter Tray Paper Organizer with Pen Holder and Metal Hanging Basket, Black",
+          "price": 816.57,
+          "image_url": "https://m.media-amazon.com/images/I/91AUT7AZwJL._AC_UL320_.jpg",
+          "rating": 4.7,
+          "reviews_count": null,
+          "product_url": "https://www.amazon.com/Simple-Trending-Organizer-Vertical-Document/dp/B07R7FZ6RG/ref=sr_1_10",
+          "asin": "B07R7FZ6RG",
+          "description": "High-quality office supplies item. Simple Trending 7 Tier Desk File Organizer, Letter Tray Paper Organizer with Pen Holder and Metal Hanging Basket,."
+        }
+      ]
+    }
+  }
+}

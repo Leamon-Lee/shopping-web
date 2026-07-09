@@ -47,6 +47,10 @@ const nextConfig = {
         hostname: "picsum.photos",
       },
       {
+        protocol: "https",
+        hostname: "m.media-amazon.com",
+      },
+      {
         protocol: "http",
         hostname: "localhost",
         port: "9000",

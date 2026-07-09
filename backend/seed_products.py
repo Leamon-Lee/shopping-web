@@ -1,10 +1,19 @@
-"""Seed ~100 products into the database for testing."""
+"""Seed products into the database from Amazon scraped data or hardcoded fallback.
+
+Usage:
+    python seed_products.py                     # Use amazon_products.json if available, else hardcoded
+    python seed_products.py --source hardcoded  # Force hardcoded data
+    python seed_products.py --source amazon     # Force Amazon data (fails if file missing)
+"""
+import argparse
 import asyncio
 import hashlib
+import json
 import random
 import re
 import sys
 import os
+from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -13,6 +22,10 @@ from online_shopping.database import async_session
 from online_shopping.models.category import ProductCategory
 from online_shopping.models.product import Product
 from online_shopping.models.product_image import ProductImage
+
+# ---------------------------------------------------------------------------
+# Hardcoded fallback data
+# ---------------------------------------------------------------------------
 
 CATEGORIES = [
     ("Electronics", "Electronic devices and accessories"),
@@ -151,6 +164,10 @@ PRODUCTS_BY_CATEGORY = {
 }
 
 
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
 def slugify(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
@@ -160,31 +177,122 @@ def make_hash(name: str, cat: str) -> str:
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
-async def seed():
+# ---------------------------------------------------------------------------
+# Data loading
+# ---------------------------------------------------------------------------
+
+def load_amazon_data() -> dict | None:
+    """Load product data from amazon_products.json if it exists and is valid."""
+    json_path = Path(__file__).parent / "amazon_products.json"
+    if not json_path.exists():
+        print(f"Amazon data file not found: {json_path}")
+        return None
+
+    try:
+        with open(json_path, encoding="utf-8") as f:
+            data = json.load(f)
+    except (json.JSONDecodeError, OSError) as e:
+        print(f"Failed to parse amazon_products.json: {e}")
+        return None
+
+    categories_data = data.get("categories")
+    if not categories_data:
+        print("amazon_products.json has no categories data.")
+        return None
+
+    # Convert to the format expected by seed(): {category_name: [(name, desc, price, image_url), ...]}
+    result: dict[str, list[tuple]] = {}
+    for cat_name, cat_info in categories_data.items():
+        products = cat_info.get("products", [])
+        if not products:
+            continue
+        items: list[tuple] = []
+        for p in products:
+            name = p.get("name", "")
+            desc = p.get("description", f"{cat_name} product")
+            price = p.get("price")
+            image_url = p.get("image_url", "")
+            # Ensure price is always positive (DB constraint: price > 0)
+            if price is None or price <= 0:
+                price = round(random.uniform(9.99, 299.99), 2)
+            if not name:
+                continue
+            items.append((name, desc, float(price), image_url))
+        if items:
+            result[cat_name] = items
+
+    metadata = data.get("metadata", {})
+    total = metadata.get("total_products", sum(len(v) for v in result.values()))
+    source = metadata.get("source", "unknown")
+    print(f"Loaded {total} products from Amazon data ({source}).")
+    return result if result else None
+
+
+def load_hardcoded_data() -> dict[str, list[tuple]]:
+    """Convert hardcoded product data to the unified format."""
+    result: dict[str, list[tuple]] = {}
+    for cat_name, products in PRODUCTS_BY_CATEGORY.items():
+        result[cat_name] = [(name, desc, float(price), "") for name, desc, price in products]
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Seed logic
+# ---------------------------------------------------------------------------
+
+async def seed(products_data: dict[str, list[tuple]]):
+    """Seed the database with the given product data.
+
+    products_data format: {category_name: [(name, description, price, image_url), ...]}
+    """
     async with async_session() as db:
-        # Clear existing data
-        from online_shopping.models.product_image import ProductImage
+        # Clear existing data (order matters for FK constraints)
         from online_shopping.models.product_variant import ProductVariant
         await db.execute(ProductImage.__table__.delete())
         await db.execute(ProductVariant.__table__.delete())
         await db.execute(Product.__table__.delete())
         await db.execute(ProductCategory.__table__.delete())
-        await db.commit()
+        await db.flush()
         print("Cleared existing products.")
 
+        # Insert categories
         categories = {}
-        for cat_name, cat_desc in CATEGORIES:
+        for cat_name in products_data:
+            cat_desc = f"{cat_name} products"
+            for c_name, c_desc in CATEGORIES:
+                if c_name == cat_name:
+                    cat_desc = c_desc
+                    break
             cat = ProductCategory(name=cat_name, description=cat_desc)
             db.add(cat)
             await db.flush()
             categories[cat_name] = cat
 
+        # Insert products with duplicate detection
+        seen_hashes: set[str] = set()
+        seen_slugs: set[str] = set()
         count = 0
-        for cat_name, products in PRODUCTS_BY_CATEGORY.items():
+        for cat_name, products in products_data.items():
             category = categories[cat_name]
-            for name, desc, price in products:
+            for item in products:
+                name = item[0]
+                desc = item[1]
+                price = item[2]
+                image_url = item[3] if len(item) > 3 else ""
+
                 slug = slugify(name)
                 product_hash = make_hash(name, cat_name)
+
+                # Deduplicate: if hash or slug exists, append suffix
+                suffix = 1
+                original_name = name
+                while product_hash in seen_hashes or slug in seen_slugs:
+                    suffix += 1
+                    name = f"{original_name} #{suffix}"
+                    slug = slugify(name)
+                    product_hash = make_hash(name, cat_name)
+                seen_hashes.add(product_hash)
+                seen_slugs.add(slug)
                 product = Product(
                     product_hash=product_hash,
                     category_id=category.id,
@@ -197,21 +305,61 @@ async def seed():
                 db.add(product)
                 await db.flush()
 
-                # Generate placeholder image URLs using picsum.photos (consistent per product)
-                import urllib.parse
-                for rank in range(random.randint(1, 4)):
-                    img_seed = f"{product_hash}{rank}"
-                    img_url = f"https://picsum.photos/seed/{img_seed}/400/400"
+                # Generate image URLs
+                if image_url:
+                    # Use the Amazon image as primary, add fallback picsum images
                     db.add(ProductImage(
                         product_id=product.id,
-                        image_url=img_url,
-                        rank=rank,
+                        image_url=image_url,
+                        rank=0,
                     ))
+                    for rank in range(1, random.randint(1, 3)):
+                        img_seed = f"{product_hash}{rank}"
+                        fb_url = f"https://picsum.photos/seed/{img_seed}/400/400"
+                        db.add(ProductImage(
+                            product_id=product.id,
+                            image_url=fb_url,
+                            rank=rank,
+                        ))
+                else:
+                    for rank in range(random.randint(1, 4)):
+                        img_seed = f"{product_hash}{rank}"
+                        fb_url = f"https://picsum.photos/seed/{img_seed}/400/400"
+                        db.add(ProductImage(
+                            product_id=product.id,
+                            image_url=fb_url,
+                            rank=rank,
+                        ))
                 count += 1
 
         await db.commit()
-        print(f"Seeded {count} products across {len(CATEGORIES)} categories.")
+        print(f"Seeded {count} products across {len(products_data)} categories.")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Seed product data into the database")
+    parser.add_argument(
+        "--source",
+        choices=["auto", "amazon", "hardcoded"],
+        default="auto",
+        help="Data source: auto (try Amazon JSON first), amazon, or hardcoded",
+    )
+    args = parser.parse_args()
+
+    products_data = None
+
+    if args.source in ("auto", "amazon"):
+        products_data = load_amazon_data()
+
+    if products_data is None:
+        if args.source == "amazon":
+            print("ERROR: amazon_products.json not found. Run amazon_scraper.py first.")
+            sys.exit(1)
+        print("Falling back to hardcoded product data.")
+        products_data = load_hardcoded_data()
+
+    asyncio.run(seed(products_data))
 
 
 if __name__ == "__main__":
-    asyncio.run(seed())
+    main()
