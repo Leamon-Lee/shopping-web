@@ -24,6 +24,18 @@ export default async function Nav() {
 
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
             <div className="hidden small:flex items-center gap-x-6 h-full">
+              <a className="hover:text-ui-fg-base" href="/hall">
+                Hall
+              </a>
+              <a className="hover:text-ui-fg-base" href="/customer-panel">
+                Customer Panel
+              </a>
+              <a className="hover:text-ui-fg-base" href="/manager">
+                Manager
+              </a>
+              <a className="hover:text-ui-fg-base" href="/admin">
+                Admin
+              </a>
               <LocalizedClientLink
                 className="hover:text-ui-fg-base"
                 href="/account"

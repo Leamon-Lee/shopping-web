@@ -8,7 +8,12 @@ services:
       PYTHONUNBUFFERED: "1"
       PYTHONPATH: /app
       TZ: Asia/Shanghai
-      DATABASE_URL: postgresql://shopping_user:shopping_password@postgres:5432/shopping
+      DATABASE_URL: postgresql+asyncpg://shopping_user:shopping_password@postgres:5432/shopping
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin123
+      MINIO_BUCKET_PRODUCTS: shopping-products
+      MINIO_BUCKET_DATA: shopping-data
     ports:
       - "8001:8001"
     volumes:

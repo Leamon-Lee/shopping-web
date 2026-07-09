@@ -31,8 +31,13 @@ class ProductCreate(ProductBase):
     pass
 
 
+class ImageOut(BaseModel):
+    image_url: str
+    rank: int = 0
+
+
 class ProductOut(ProductBase):
-    pass
+    images: list[ImageOut] = []
 
 
 class CartItemCreate(BaseModel):
@@ -114,3 +119,41 @@ class AccountOut(BaseModel):
     shipping_address: AddressOut
     email: str
     phone: PhoneOut
+    addresses: list[AddressOut] = []
+
+
+class LoginPayload(BaseModel):
+    email: str = Field(min_length=1)
+    password: str = Field(min_length=1)
+
+
+class RegisterPayload(BaseModel):
+    email: str = Field(min_length=1)
+    password: str = Field(min_length=8)
+    first_name: str = ""
+    last_name: str = ""
+    phone_country_code: str = ""
+    phone_number: str = ""
+    street: str = ""
+    city: str = ""
+    state: str = ""
+    postal_code: str = ""
+    country: str = ""
+
+
+class AddressCreate(BaseModel):
+    street: str = Field(min_length=1)
+    city: str = Field(min_length=1)
+    state: str = ""
+    postal_code: str = ""
+    country: str = ""
+    is_default_shipping: bool = False
+
+
+class AddressUpdate(BaseModel):
+    street: str | None = None
+    city: str | None = None
+    state: str | None = None
+    postal_code: str | None = None
+    country: str | None = None
+    is_default_shipping: bool | None = None

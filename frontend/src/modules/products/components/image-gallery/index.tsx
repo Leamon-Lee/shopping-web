@@ -37,9 +37,9 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
               className="relative aspect-[29/34] w-full overflow-hidden bg-ui-bg-subtle"
               id={image.id}
             >
-              {!!image.url && (
+              {!!(image.url || image.image_url) && (
                 <Image
-                  src={image.url}
+                  src={image.url || image.image_url}
                   priority={index <= 2 ? true : false}
                   className="absolute inset-0 rounded-rounded"
                   alt={`Product image ${index + 1}`}

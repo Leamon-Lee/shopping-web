@@ -1,7 +1,18 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from online_shopping.api.routers import cart, health, orders, payments, products, regions
+from online_shopping.api.routers import accounts, cart, health, orders, payments, products, regions
+
+from contextlib import asynccontextmanager
+from online_shopping.database import engine
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 开发环境可打开自动建表；生产用 Alembic migration
+    # async with engine.begin() as conn:
+    #     await conn.run_sync(Base.metadata.create_all)
+    yield
+    await engine.dispose()
 
 
 def create_app() -> FastAPI:
@@ -9,6 +20,7 @@ def create_app() -> FastAPI:
         title="Online Shopping Backend",
         version="0.1.0",
         description="FastAPI API for the online shopping domain model.",
+        lifespan=lifespan,
     )
     app.add_middleware(
         CORSMiddleware,
@@ -23,6 +35,7 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
     app.include_router(health.router)
+    app.include_router(accounts.router, prefix="/accounts", tags=["accounts"])
     app.include_router(products.router, prefix="/products", tags=["products"])
     app.include_router(regions.router, prefix="/regions", tags=["regions"])
     app.include_router(cart.router, prefix="/cart", tags=["cart"])
