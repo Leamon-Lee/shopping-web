@@ -2,31 +2,58 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from online_shopping.domain.entities.account import Account
+
 if TYPE_CHECKING:
-    from online_shopping.domain.entities.account import Account
-    from online_shopping.domain.entities.product import Product
-    from online_shopping.domain.entities.product_category import ProductCategory
+    from online_shopping.domain.entities.category import Category
+    from online_shopping.domain.entities.shop import Shop
+
 
 class Admin:
-    # 创建管理员实体，并记录管理员账户及其可管理的商品和分类。
     def __init__(
         self,
         account: Account,
-        products: list[Product] | None = None,
-        product_categories: list[ProductCategory] | None = None,
-    ):
+        shops: list[Shop] | None = None,
+        categories: list[Category] | None = None,
+    ) -> None:
         self.__account = account
-        self.__products = products or []
-        self.__product_categories = product_categories or []
+        self.__shops = shops or []
+        self.__categories = categories or []
 
-    # 封禁或阻止指定用户，后续应实现状态变更和权限校验。
-    def block_user(self) -> bool:
-        pass
+    @property
+    def account(self) -> Account:
+        return self.__account
 
-    # 新增商品分类，后续应校验分类名称唯一性并保存分类。
-    def add_new_product_category(self) -> bool:
-        pass
+    def block_user(self, account: Account) -> bool:
+        account.block()
+        return True
 
-    # 修改已有商品分类，后续应校验分类存在并更新分类信息。
-    def modify_product_category(self) -> bool:
-        pass
+    @property
+    def shops(self) -> tuple[Shop, ...]:
+        return tuple(self.__shops)
+
+    @property
+    def categories(self) -> tuple[Category, ...]:
+        return tuple(self.__categories)
+
+    def review_shop(self, shop: Shop) -> bool:
+        return True
+
+    def add_category(self, category: Category) -> Category:
+        self.__categories.append(category)
+        return category
+
+    def modify_category(self, category: Category) -> Category:
+        return category
+
+    def remove_category(self, category: Category) -> bool:
+        category_id = category.category_id
+        before_count = len(self.__categories)
+        self.__categories = [
+            existing_category
+            for existing_category in self.__categories
+            if category_id is None
+            or existing_category.category_id is None
+            or existing_category.category_id.value != category_id.value
+        ]
+        return len(self.__categories) != before_count

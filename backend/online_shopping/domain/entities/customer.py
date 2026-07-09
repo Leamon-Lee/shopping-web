@@ -1,26 +1,57 @@
 from __future__ import annotations
 
-from online_shopping.domain.entities.shopping_cart import ShoppingCart
-
 from typing import TYPE_CHECKING
+
+from online_shopping.domain.entities.account import Account
+from online_shopping.domain.entities.shopping_cart import ShoppingCart
 
 if TYPE_CHECKING:
     from online_shopping.domain.entities.order import Order
-    from online_shopping.domain.interfaces.search import Search
+    from online_shopping.domain.entities.product import Product
+    from online_shopping.domain.entities.product_review import ProductReview
 
 
 class Customer:
-    # 创建客户实体，并建立客户与购物车、订单、搜索能力之间的关系。
     def __init__(
         self,
+        account: Account,
         shopping_cart: ShoppingCart,
         orders: list[Order] | None = None,
-        search: Search | None = None,
-    ):
+        product_reviews: list[ProductReview] | None = None,
+    ) -> None:
+        self.__account = account
         self.__shopping_cart = shopping_cart
         self.__orders = orders or []
-        self.__search = search
+        self.__product_reviews = product_reviews or []
 
-    # 返回客户当前购物车，后续可用于购物车查看和结算。
+    @property
+    def account(self) -> Account:
+        return self.__account
+
+    @property
+    def orders(self) -> tuple[Order, ...]:
+        return tuple(self.__orders)
+
+    @property
+    def product_reviews(self) -> tuple[ProductReview, ...]:
+        return tuple(self.__product_reviews)
+
     def get_shopping_cart(self) -> ShoppingCart:
         return self.__shopping_cart
+
+    def place_order(self) -> Order:
+        if not self.__orders:
+            raise ValueError("No order has been prepared for this customer.")
+        return self.__orders[-1]
+
+    def add_product_review(self, product: Product) -> ProductReview:
+        from online_shopping.domain.entities.product_review import ProductReview
+        from online_shopping.domain.value_objects.product_values import Rating, ReviewContent
+
+        product_review = ProductReview(
+            rating=Rating(5),
+            review=ReviewContent("Customer review pending content."),
+            product=product,
+        )
+        self.__product_reviews.append(product_review)
+        return product_review

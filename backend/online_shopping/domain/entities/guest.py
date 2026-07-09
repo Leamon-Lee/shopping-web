@@ -1,7 +1,11 @@
-from online_shopping.domain.entities.customer import Customer
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from online_shopping.domain.entities.account import Account
 
 
-class Guest(Customer):
-    # 注册新账户，后续应收集账户信息并生成正式会员账户。
-    def register_account(self) -> bool:
-        pass
+class Guest:
+    def register_account(self, account: Account) -> Account:
+        return account

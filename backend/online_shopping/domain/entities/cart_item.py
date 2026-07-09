@@ -1,32 +1,30 @@
-from online_shopping.domain.entities.product import Product
-from online_shopping.domain.value_objects.product_values import (
-    Price,
-    ProductVariantId,
-    Quantity,
-)
+from __future__ import annotations
+
+from online_shopping.domain.entities.product_variant import ProductVariant
+from online_shopping.domain.value_objects.product_values import Price, Quantity
 from online_shopping.domain.value_objects.store_values import CartItemId
 
 
-class Item:
+class CartItem:
     def __init__(
         self,
         quantity: Quantity,
-        price: Price,
-        product: Product,
+        product_variant: ProductVariant,
+        price: Price | None = None,
         item_id: CartItemId | None = None,
-        product_variant_id: ProductVariantId | None = None,
     ) -> None:
         self.__item_id = item_id
+        self.__product_variant = product_variant
         self.__quantity = quantity
-        self.__price = price
-        self.__product = product
-        self.__product_variant_id = (
-            product_variant_id or product.get_default_variant().variant_id
-        )
+        self.__price = price or product_variant.price
 
     @property
     def item_id(self) -> CartItemId | None:
         return self.__item_id
+
+    @property
+    def product_variant(self) -> ProductVariant:
+        return self.__product_variant
 
     @property
     def quantity(self) -> Quantity:
@@ -37,19 +35,11 @@ class Item:
         return self.__price
 
     @property
-    def product(self) -> Product:
-        return self.__product
-
-    @property
-    def product_variant_id(self) -> ProductVariantId:
-        return self.__product_variant_id
-
-    @property
     def subtotal(self) -> float:
         return round(self.__price.value * self.__quantity.value, 2)
 
     def update_quantity(self, quantity: Quantity) -> bool:
-        if not self.__product.is_available(quantity.value):
+        if not self.__product_variant.is_available(quantity.value):
             return False
         self.__quantity = quantity
         return True

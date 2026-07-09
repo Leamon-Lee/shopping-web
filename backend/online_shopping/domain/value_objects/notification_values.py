@@ -23,3 +23,13 @@ class NotificationId:
 # 表示通知正文内容，后续由不同通知渠道发送。
 class NotificationContent:
     value: str
+
+
+@dataclass(frozen=True)
+class Contact:
+    value: str
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.value, str) or not self.value.strip():
+            raise ValueError("Contact cannot be empty.")
+        object.__setattr__(self, "value", self.value.strip())

@@ -149,7 +149,7 @@ def create_order(payload: OrderCreate) -> OrderOut | None:
         )
     order = OrderOut(
         order_number=order_number,
-        status=OrderStatus.PENDING,
+        status=OrderStatus.CREATED,
         items=[item for item in items if item is not None],
         payment=payment,
     )

@@ -4,7 +4,7 @@ from online_shopping.domain.value_objects.order_values import OrderId, OrderNumb
 
 
 def test_order_defaults_to_pending() -> None:
-    assert Order(OrderId(1)).status == OrderStatus.PENDING
+    assert Order(OrderId(1)).status == OrderStatus.CREATED
 
 
 def test_order_accepts_backend_order_number() -> None:

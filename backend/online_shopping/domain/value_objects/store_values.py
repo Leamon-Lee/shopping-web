@@ -3,6 +3,26 @@ import re
 
 
 @dataclass(frozen=True)
+class ShopId:
+    value: str
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.value, str) or not self.value.strip():
+            raise ValueError("Shop ID cannot be empty.")
+        object.__setattr__(self, "value", self.value.strip())
+
+
+@dataclass(frozen=True)
+class ShopName:
+    value: str
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.value, str) or not self.value.strip():
+            raise ValueError("Shop name cannot be empty.")
+        object.__setattr__(self, "value", self.value.strip())
+
+
+@dataclass(frozen=True)
 class CartId:
     value: str
 

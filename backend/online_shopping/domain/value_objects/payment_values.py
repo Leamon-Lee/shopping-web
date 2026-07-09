@@ -69,6 +69,36 @@ class Amount:
 
 PaymentCurrencyCode = CurrencyCode
 
+
+@dataclass(frozen=True)
+class PaymentId:
+    value: str
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.value, str) or not self.value.strip():
+            raise ValueError("Payment ID cannot be empty.")
+        object.__setattr__(self, "value", self.value.strip())
+
+
+@dataclass(frozen=True)
+class TransactionId:
+    value: str
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.value, str) or not self.value.strip():
+            raise ValueError("Transaction ID cannot be empty.")
+        object.__setattr__(self, "value", self.value.strip())
+
+
+@dataclass(frozen=True)
+class PaymentProvider:
+    value: str
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.value, str) or not self.value.strip():
+            raise ValueError("Payment provider cannot be empty.")
+        object.__setattr__(self, "value", self.value.strip())
+
 __all__ = [
     "AccountNumber",
     "Amount",
@@ -77,6 +107,9 @@ __all__ = [
     "CardNumber",
     "Code",
     "PaymentCurrencyCode",
+    "PaymentId",
+    "PaymentProvider",
     "RoutingNumber",
     "SecurityCode",
+    "TransactionId",
 ]

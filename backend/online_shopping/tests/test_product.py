@@ -2,6 +2,7 @@ import pytest
 
 from online_shopping.domain.entities.product import Product
 from online_shopping.domain.entities.product_category import ProductCategory
+from online_shopping.domain.entities.product_variant import ProductVariant
 from online_shopping.domain.value_objects.product_values import (
     CategoryDescription,
     CategoryName,
@@ -10,8 +11,11 @@ from online_shopping.domain.value_objects.product_values import (
     ProductDescription,
     ProductName,
     ProductSlug,
+    ProductVariantId,
+    ProductVariantName,
     Quantity,
     Rating,
+    Sku,
 )
 
 
@@ -41,8 +45,16 @@ def test_product_gets_backend_slug_and_default_variant() -> None:
         name=ProductName("Everyday Tote"),
         description=ProductDescription("Durable cotton tote"),
         price=Price(29),
-        available_item_count=ProductCount(25),
         category=category,
+        variants=[
+            ProductVariant(
+                variant_id=ProductVariantId("variant_everyday-tote"),
+                name=ProductVariantName("Default Variant"),
+                sku=Sku("SKU-EVERYDAY-TOTE"),
+                price=Price(29),
+                inventory_count=ProductCount(25),
+            )
+        ],
     )
 
     assert product.slug == ProductSlug("everyday-tote")
