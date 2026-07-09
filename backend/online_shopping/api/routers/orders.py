@@ -86,7 +86,7 @@ async def create_order(payload: OrderCreate, db: AsyncSession = Depends(get_db))
     validated_items = []
     for item in payload.items:
         result = await db.execute(
-            select(Product).where(Product.name.ilike(item.product_name))
+            select(Product).options(selectinload(Product.category)).where(Product.name.ilike(item.product_name))
         )
         product = result.scalars().first()
         if product is None:

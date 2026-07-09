@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from online_shopping.api.deps import get_db
-from online_shopping.api.schemas import CategoryOut, ProductOut
+from online_shopping.api.schemas import CategoryOut, ImageOut, ProductOut
 from online_shopping.models.category import ProductCategory
 from online_shopping.models.product import Product
 from online_shopping.models.product_image import ProductImage
@@ -24,12 +25,13 @@ def _product_to_out(product: Product) -> ProductOut:
             name=category.name if category else "",
             description=category.description if category else "",
         ),
+        images=[ImageOut(image_url=img.image_url, rank=img.rank) for img in product.images],
     )
 
 
 @router.get("", response_model=list[ProductOut])
 async def list_products(db: AsyncSession = Depends(get_db)) -> list[ProductOut]:
-    result = await db.execute(select(Product))
+    result = await db.execute(select(Product).options(selectinload(Product.category), selectinload(Product.images)))
     return [_product_to_out(p) for p in result.scalars().all()]
 
 
@@ -45,7 +47,7 @@ async def list_categories(db: AsyncSession = Depends(get_db)) -> list[CategoryOu
 @router.get("/{product_name}", response_model=ProductOut)
 async def get_product(product_name: str, db: AsyncSession = Depends(get_db)) -> ProductOut:
     result = await db.execute(
-        select(Product).where(Product.name.ilike(product_name))
+        select(Product).options(selectinload(Product.category), selectinload(Product.images)).where(Product.name.ilike(product_name))
     )
     product = result.scalars().first()
     if product is None:
@@ -66,7 +68,7 @@ async def create_product(
     product_hash = generate_product_hash(name, category_name)
 
     existing = await db.execute(
-        select(Product).where(Product.product_hash == product_hash)
+        select(Product).options(selectinload(Product.category), selectinload(Product.images)).where(Product.product_hash == product_hash)
     )
     if existing.scalars().first():
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Product already exists.")

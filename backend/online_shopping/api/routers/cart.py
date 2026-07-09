@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from online_shopping.api.deps import get_db
-from online_shopping.api.schemas import CartItemCreate, CartItemUpdate, CartItemOut, ShoppingCartOut, ProductOut, CategoryOut
+from online_shopping.api.schemas import CartItemCreate, CartItemUpdate, CartItemOut, ShoppingCartOut, ProductOut, CategoryOut, ImageOut
 from online_shopping.models.product import Product
 
 router = APIRouter()
@@ -23,6 +24,7 @@ def _product_to_short_out(product: Product) -> ProductOut:
             name=category.name if category else "",
             description=category.description if category else "",
         ),
+        images=[ImageOut(image_url=img.image_url, rank=img.rank) for img in product.images],
     )
 
 
@@ -40,7 +42,7 @@ async def get_cart() -> ShoppingCartOut:
 @router.post("/items", response_model=ShoppingCartOut, status_code=status.HTTP_201_CREATED)
 async def add_item(payload: CartItemCreate, db: AsyncSession = Depends(get_db)) -> ShoppingCartOut:
     result = await db.execute(
-        select(Product).where(Product.name.ilike(payload.product_name))
+        select(Product).options(selectinload(Product.category), selectinload(Product.images)).where(Product.name.ilike(payload.product_name))
     )
     product = result.scalars().first()
     if product is None:

@@ -31,8 +31,13 @@ class ProductCreate(ProductBase):
     pass
 
 
+class ImageOut(BaseModel):
+    image_url: str
+    rank: int = 0
+
+
 class ProductOut(ProductBase):
-    pass
+    images: list[ImageOut] = []
 
 
 class CartItemCreate(BaseModel):

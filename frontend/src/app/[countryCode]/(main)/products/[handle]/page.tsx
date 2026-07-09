@@ -73,7 +73,7 @@ export default async function ProductPage(props: Props) {
       </div>
       <div className="block w-full relative">
         <div className="grid grid-cols-1 gap-4">
-          <Thumbnail thumbnail={null} images={[]} size="full" />
+          <Thumbnail thumbnail={null} images={(product as any).images ?? []} size="full" />
         </div>
       </div>
       <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-6">
