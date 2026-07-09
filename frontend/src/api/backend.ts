@@ -1,13 +1,12 @@
 import type {
   BackendAccount,
-  BackendLoginPayload,
+  BackendAddress,
   BackendOrder,
   BackendOrderPayload,
   BackendProduct,
   BackendProductCategory,
   BackendProductFormPayload,
   BackendRegion,
-  BackendRegisterAccountPayload,
   BackendShoppingCart,
 } from "../types/backend"
 
@@ -26,7 +25,14 @@ async function backendFetch<T>(path: string, init?: RequestInit): Promise<T> {
   })
 
   if (!response.ok) {
-    throw new Error(`Backend request failed: ${response.status} ${path}`)
+    let detail = ""
+    try {
+      const body = await response.json()
+      detail = typeof body.detail === "string" ? body.detail : JSON.stringify(body.detail)
+    } catch {
+      // ignore parse errors
+    }
+    throw new Error(detail || `Backend request failed: ${response.status} ${path}`)
   }
 
   return response.json() as Promise<T>
@@ -116,14 +122,82 @@ export async function getOrder(orderNumber: string): Promise<BackendOrder> {
   return backendFetch<BackendOrder>(`/orders/${encodeURIComponent(orderNumber)}`)
 }
 
-export async function login(
-  _payload: BackendLoginPayload
-): Promise<BackendAccount> {
-  throw new Error("Backend-native login endpoint is not implemented yet.")
+export async function login(payload: {
+  email: string
+  password: string
+}): Promise<BackendAccount> {
+  return backendFetch<BackendAccount>("/accounts/login", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  })
 }
 
-export async function registerAccount(
-  _payload: BackendRegisterAccountPayload
+export async function registerAccount(payload: Record<string, any>): Promise<BackendAccount> {
+  return backendFetch<BackendAccount>("/accounts/register", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  })
+}
+
+export async function retrieveCustomer(
+  email: string
 ): Promise<BackendAccount> {
-  throw new Error("Backend-native register endpoint is not implemented yet.")
+  return backendFetch<BackendAccount>(
+    `/accounts/me?email=${encodeURIComponent(email)}`
+  )
+}
+
+export async function updateCustomer(
+  email: string,
+  payload: Record<string, any>
+): Promise<BackendAccount> {
+  const params = new URLSearchParams({ email, ...payload })
+  return backendFetch<BackendAccount>(`/accounts/me?${params.toString()}`, {
+    method: "PUT",
+  })
+}
+
+export async function listCustomerAddresses(
+  email: string
+): Promise<BackendAddress[]> {
+  return backendFetch<BackendAddress[]>(
+    `/accounts/me/addresses?email=${encodeURIComponent(email)}`
+  )
+}
+
+export async function addCustomerAddress(
+  email: string,
+  payload: BackendAddress
+): Promise<BackendAddress[]> {
+  return backendFetch<BackendAddress[]>(
+    `/accounts/me/addresses?email=${encodeURIComponent(email)}`,
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }
+  )
+}
+
+export async function updateCustomerAddress(
+  email: string,
+  addressId: string,
+  payload: Partial<BackendAddress>
+): Promise<BackendAddress[]> {
+  return backendFetch<BackendAddress[]>(
+    `/accounts/me/addresses/${addressId}?email=${encodeURIComponent(email)}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }
+  )
+}
+
+export async function deleteCustomerAddress(
+  email: string,
+  addressId: string
+): Promise<BackendAddress[]> {
+  return backendFetch<BackendAddress[]>(
+    `/accounts/me/addresses/${addressId}?email=${encodeURIComponent(email)}`,
+    { method: "DELETE" }
+  )
 }
