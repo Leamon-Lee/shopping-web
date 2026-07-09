@@ -227,7 +227,7 @@ CREATE INDEX IF NOT EXISTS idx_payments_order ON payments(order_id);
 
 #### 代码位置
 
-哈希生成逻辑收敛在 **`backend/online_shopping/domain/services/hash_service.py`**，作为领域服务供 API 路由和业务服务统一调用：
+哈希生成逻辑收敛在 **`backend/online_shopping/services/hash_service.py`**，作为领域服务供 API 路由和业务服务统一调用：
 
 ```
 backend/online_shopping/domain/services/
@@ -427,9 +427,12 @@ backend/online_shopping/
 │   └── payment.py
 ├── storage.py              # [新] MinIO 客户端封装
 ├── domain/                 # (现有，保持不变)
-│   └── services/
-│       └── hash_service.py # [新] 商品哈希生成服务
-└── services/               # (现有，后续改为读写数据库)
+└── services/               # (现有)
+    ├── hash_service.py     # [新] 商品哈希生成服务
+    ├── catalog_service.py  # (现有，后续改为读写数据库)
+    ├── order_service.py
+    ├── payment_service.py
+    └── shipment_service.py
 ```
 
 ### 6.2 核心配置 `config.py`
@@ -528,35 +531,74 @@ def get_image_url(product_hash: str, file_name: str) -> str:
 
 ### 6.5 FastAPI 生命周期变更 `app.py`
 
-```python
-from contextlib import asynccontextmanager
-from fastapi import FastAPI
-from online_shopping.database import engine
+在现有 `create_app()` 基础上**增加两处修改**（不是替换整个文件）：
 
+**修改 1 — 新增 import**（文件顶部）：
+
+```python
+# 新增
+from contextlib import asynccontextmanager
+from online_shopping.database import engine
+```
+
+**修改 2 — `create_app()` 增加 lifespan 参数**：
+
+```python
+# 新增 lifespan
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # 启动时不自动建表（生产用 migration），开发环境可打开
+    # 开发环境可打开自动建表；生产用 Alembic migration
     # async with engine.begin() as conn:
     #     await conn.run_sync(Base.metadata.create_all)
     yield
     await engine.dispose()
 
-app = FastAPI(lifespan=lifespan, ...)
+
+def create_app() -> FastAPI:
+    app = FastAPI(
+        title="Online Shopping Backend",
+        version="0.1.0",
+        description="FastAPI API for the online shopping domain model.",
+        lifespan=lifespan,                           # <-- 新增这一行
+    )
+    # ... CORS、routers 等其余代码完全不变
 ```
 
-### 6.6 路由层变更示例
+现有 `app.py` 中的 CORS 中间件、路由注册等代码全部保留不动。
 
-以商品创建 + 图片上传为例，展示哈希如何串联 PostgreSQL 与 MinIO：
+### 6.6 依赖注入 `deps.py`（新建）
+
+路由不直接创建数据库连接或 MinIO 客户端，而是通过 FastAPI `Depends` 注入。`deps.py` 集中管理这些依赖：
+
+```python
+from fastapi import Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+from minio import Minio
+from online_shopping.database import async_session
+from online_shopping.storage import get_minio_client
+
+async def get_db() -> AsyncSession:
+    async with async_session() as session:
+        yield session
+
+def get_minio() -> Minio:
+    return get_minio_client()
+```
+
+### 6.7 路由层变更示例
+
+以 `api/routers/products.py` 为例，**在现有路由文件中增加创建商品端点**。路由通过 `Depends` 注入依赖，调用 `hash_service` 和 `storage` 完成 PostgreSQL + MinIO 联动：
 
 ```python
 from fastapi import APIRouter, Depends, UploadFile, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from online_shopping.database import get_db
+from online_shopping.api.deps import get_db, get_minio
+from online_shopping.services.hash_service import generate_product_hash
 from online_shopping.storage import upload_product_image, get_image_url
-from online_shopping.domain.services.hash_service import generate_product_hash
 
 router = APIRouter()
 
+# ... 现有路由 (GET /products, GET /products/{name} 等) 全部保留 ...
 
 @router.post("/products")
 async def create_product(
@@ -567,42 +609,42 @@ async def create_product(
     files: list[UploadFile],
     db: AsyncSession = Depends(get_db),
 ):
-    # 1. 计算商品哈希（统一入口，所有创建路径都走同一个函数）
+    # 1. 计算商品哈希
     product_hash = generate_product_hash(name, category_name)
 
-    # 2. 检查哈希是否已存在（防止重复商品）
+    # 2. 检查哈希是否已存在
     # existing = await db.execute(
     #     select(ProductModel).where(ProductModel.product_hash == product_hash)
     # )
     # if existing.scalar_one_or_none():
     #     raise HTTPException(status_code=409, detail="商品已存在")
 
-    # 3. 写入 PostgreSQL（product_hash 作为唯一标识）
-    # product = ProductModel(
-    #     product_hash=product_hash,
-    #     name=name,
-    #     slug=slugify(name),
-    #     description=description,
-    #     price=price,
-    #     ...
-    # )
+    # 3. 写入 PostgreSQL
+    # product = ProductModel(product_hash=product_hash, name=name, ...)
     # db.add(product)
-    # await db.flush()  # 获取 product.id
+    # await db.flush()
 
-    # 4. 图片上传到 MinIO（路径基于哈希，不依赖自增 ID）
+    # 4. 图片上传到 MinIO
     for idx, file in enumerate(files):
         object_path = upload_product_image(product_hash, file.filename, await file.read())
         image_url = get_image_url(product_hash, file.filename)
-        # image_model = ProductImage(
-        #     product_id=product.id,
-        #     image_url=image_url,
-        #     rank=idx,
-        # )
+        # image_model = ProductImage(product_id=product.id, image_url=image_url, rank=idx)
         # db.add(image_model)
 
     # await db.commit()
     return {"product_hash": product_hash, "image_count": len(files)}
 ```
+
+### 6.8 各新增文件职责总览
+
+| 文件 | 职责 | 被谁调用 |
+|------|------|----------|
+| `api/deps.py` | 提供 `get_db`、`get_minio` 依赖注入 | 所有路由文件（通过 `Depends`） |
+| `services/hash_service.py` | `generate_product_hash()` 算法唯一入口 | 路由、catalog_service |
+| `storage.py` | MinIO 客户端、上传、URL 生成 | 路由、catalog_service |
+| `database.py` | SQLAlchemy engine + session factory | `deps.py` |
+| `config.py` | 统一配置读取 | 所有模块 |
+| `models/*.py` | ORM 模型映射 PostgreSQL 表 | 路由、services |
 
 ---
 
@@ -703,6 +745,7 @@ alembic init migrations
 | `docker-compose.minio.yml` | MinIO 容器定义 + 初始化 |
 | `backend/online_shopping/config.py` | 统一配置 |
 | `backend/online_shopping/database.py` | SQLAlchemy engine + session |
+| `backend/online_shopping/services/hash_service.py` | 商品哈希生成服务 |
 | `backend/online_shopping/storage.py` | MinIO 客户端封装 |
 | `backend/online_shopping/models/` | SQLAlchemy ORM 模型目录 |
 
