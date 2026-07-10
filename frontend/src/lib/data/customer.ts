@@ -1,26 +1,48 @@
 "use server"
 
-import {
-  login as apiLogin,
-  registerAccount as apiRegister,
-  retrieveCustomer as apiRetrieveCustomer,
-  updateCustomer as apiUpdateCustomer,
-  addCustomerAddress as apiAddCustomerAddress,
-  updateCustomerAddress as apiUpdateCustomerAddress,
-  deleteCustomerAddress as apiDeleteCustomerAddress,
-} from "../../api/backend"
 import { cookies } from "next/headers"
+import type { Account, TokenResponse } from "types/backend"
 
-const SESSION_COOKIE = "shopping_email"
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8001"
 
-async function getSessionEmail(): Promise<string | null> {
-  const store = await cookies()
-  return store.get(SESSION_COOKIE)?.value ?? null
+const TOKEN_COOKIE = "shopping_token"
+
+async function backendFetch<T>(path: string, init?: RequestInit): Promise<T> {
+  const cookieStore = await cookies()
+  const token = cookieStore.get(TOKEN_COOKIE)?.value
+
+  const headers: Record<string, string> = {
+    "content-type": "application/json",
+    ...(init?.headers as Record<string, string> | undefined),
+  }
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`
+  }
+
+  const response = await fetch(`${BACKEND_URL}${path}`, {
+    ...init,
+    headers,
+    cache: "no-store",
+  })
+
+  if (!response.ok) {
+    let detail = ""
+    try {
+      const body = await response.json()
+      detail = typeof body.detail === "string" ? body.detail : JSON.stringify(body.detail)
+    } catch {
+      // ignore parse errors
+    }
+    throw new Error(detail || `Backend request failed: ${response.status} ${path}`)
+  }
+
+  return response.json() as Promise<T>
 }
 
-async function setSessionEmail(email: string) {
+async function setTokenCookie(token: string) {
   const store = await cookies()
-  store.set(SESSION_COOKIE, email, {
+  store.set(TOKEN_COOKIE, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -28,136 +50,177 @@ async function setSessionEmail(email: string) {
   })
 }
 
-export const retrieveCustomer = async () => {
-  const email = await getSessionEmail()
-  if (!email) return null
-  try {
-    return await apiRetrieveCustomer(email)
-  } catch {
-    return null
-  }
+async function getToken(): Promise<string | null> {
+  const store = await cookies()
+  return store.get(TOKEN_COOKIE)?.value ?? null
 }
 
-export const updateCustomer = async (_prevState: any, formData: FormData) => {
-  const email = await getSessionEmail()
-  if (!email) return "Not logged in."
-  try {
-    const entries: Record<string, any> = {}
-    formData.forEach((value, key) => {
-      entries[key] = value
-    })
-    await apiUpdateCustomer(email, entries)
-    return null
-  } catch (e: any) {
-    return e.message || "Failed to update customer."
-  }
-}
+// ── Public auth actions ──────────────────────────────────────────────
 
-export async function signup(_prevState: any, formData: FormData) {
-  const payload: Record<string, any> = {}
-  formData.forEach((value, key) => {
-    payload[key] = value
-  })
-
-  try {
-    await apiRegister({
-      email: payload.email?.toString() ?? "",
-      password: payload.password?.toString() ?? "",
-      first_name: payload.first_name?.toString() ?? "",
-      last_name: payload.last_name?.toString() ?? "",
-      phone_country_code: "",
-      phone_number: payload.phone?.toString() ?? "",
-      street: "",
-      city: "",
-      state: "",
-      postal_code: "",
-      country: "",
-    })
-    await setSessionEmail(payload.email?.toString() ?? "")
-    return null
-  } catch (e: any) {
-    return e.message || "Registration failed."
-  }
-}
-
-export async function login(_prevState: any, formData: FormData) {
+export async function login(_prevState: unknown, formData: FormData): Promise<string | null> {
   const email = formData.get("email")?.toString() ?? ""
   const password = formData.get("password")?.toString() ?? ""
 
   try {
-    await apiLogin({ email, password })
-    await setSessionEmail(email)
+    const result = await backendFetch<TokenResponse>("/accounts/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    })
+    await setTokenCookie(result.access_token)
     return null
-  } catch (e: any) {
-    return e.message || "Login failed."
+  } catch (e: unknown) {
+    return e instanceof Error ? e.message : "Login failed."
+  }
+}
+
+export async function signup(_prevState: unknown, formData: FormData): Promise<string | null> {
+  const payload: Record<string, string> = {}
+  formData.forEach((value, key) => {
+    payload[key] = value.toString()
+  })
+
+  try {
+    await backendFetch<Account>("/accounts/register", {
+      method: "POST",
+      body: JSON.stringify({
+        email: payload.email ?? "",
+        password: payload.password ?? "",
+        first_name: payload.first_name ?? "",
+        last_name: payload.last_name ?? "",
+        phone_country_code: "",
+        phone_number: payload.phone ?? "",
+        street: "",
+        city: "",
+        state: "",
+        postal_code: "",
+        country: "",
+      }),
+    })
+    // Auto-login after registration
+    const loginResult = await backendFetch<TokenResponse>("/accounts/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email: payload.email ?? "",
+        password: payload.password ?? "",
+      }),
+    })
+    await setTokenCookie(loginResult.access_token)
+    return null
+  } catch (e: unknown) {
+    return e instanceof Error ? e.message : "Registration failed."
   }
 }
 
 export async function signout() {
   const store = await cookies()
-  store.delete(SESSION_COOKIE)
+  store.delete(TOKEN_COOKIE)
+}
+
+// ── Authenticated actions ────────────────────────────────────────────
+
+export async function retrieveCustomer(): Promise<Account | null> {
+  const token = await getToken()
+  if (!token) return null
+  try {
+    return await backendFetch<Account>("/accounts/me")
+  } catch {
+    return null
+  }
+}
+
+export async function updateCustomer(
+  _prevState: unknown,
+  formData: FormData
+): Promise<string | null> {
+  const entries: Record<string, string> = {}
+  formData.forEach((value, key) => {
+    entries[key] = value.toString()
+  })
+  try {
+    await backendFetch<Account>("/accounts/me", {
+      method: "PUT",
+      body: JSON.stringify({
+        first_name: entries.first_name,
+        last_name: entries.last_name,
+        phone_number: entries.phone_number,
+        phone_country_code: entries.phone_country_code,
+      }),
+    })
+    return null
+  } catch (e: unknown) {
+    return e instanceof Error ? e.message : "Failed to update customer."
+  }
+}
+
+export async function addCustomerAddress(
+  _prevState: unknown,
+  formData: FormData
+): Promise<string | null> {
+  const payload: Record<string, unknown> = {}
+  formData.forEach((value, key) => {
+    payload[key] = value
+  })
+  try {
+    await backendFetch("/accounts/me/addresses", {
+      method: "POST",
+      body: JSON.stringify({
+        street: payload.street ?? payload.address_1 ?? "",
+        city: payload.city ?? "",
+        state: payload.state ?? payload.province ?? "",
+        postal_code: payload.postal_code ?? "",
+        country: payload.country_code ?? payload.country ?? "",
+        is_default_shipping: false,
+      }),
+    })
+    return null
+  } catch (e: unknown) {
+    return e instanceof Error ? e.message : "Failed to add address."
+  }
+}
+
+export async function deleteCustomerAddress(addressId: string): Promise<string | null> {
+  try {
+    await backendFetch(`/accounts/me/addresses/${addressId}`, { method: "DELETE" })
+    return null
+  } catch (e: unknown) {
+    return e instanceof Error ? e.message : "Failed to delete address."
+  }
+}
+
+export async function updateCustomerAddress(
+  _prevState: unknown,
+  formData: FormData
+): Promise<string | null> {
+  const addressId = formData.get("address_id")?.toString() ?? ""
+  const payload: Record<string, unknown> = {}
+  formData.forEach((value, key) => {
+    if (key !== "address_id") payload[key] = value
+  })
+  try {
+    await backendFetch(`/accounts/me/addresses/${addressId}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        street: payload.street ?? payload.address_1 ?? undefined,
+        city: payload.city ?? undefined,
+        state: payload.state ?? payload.province ?? undefined,
+        postal_code: payload.postal_code ?? undefined,
+        country: payload.country_code ?? payload.country ?? undefined,
+      }),
+    })
+    return null
+  } catch (e: unknown) {
+    return e instanceof Error ? e.message : "Failed to update address."
+  }
+}
+
+export async function listCustomerAddresses() {
+  try {
+    return await backendFetch<import("types/backend").Address[]>("/accounts/me/addresses")
+  } catch {
+    return []
+  }
 }
 
 export async function transferCart() {
   // Cart transfer between guest and logged-in states — not yet implemented
-}
-
-export const addCustomerAddress = async (_prevState: any, formData: FormData) => {
-  const email = await getSessionEmail()
-  if (!email) return "Not logged in."
-
-  const payload: Record<string, any> = {}
-  formData.forEach((value, key) => {
-    payload[key] = value
-  })
-
-  try {
-    await apiAddCustomerAddress(email, {
-      street: payload.street ?? payload.address_1 ?? "",
-      city: payload.city ?? "",
-      state: payload.state ?? payload.province ?? "",
-      postal_code: payload.postal_code ?? "",
-      country: payload.country_code ?? payload.country ?? "",
-      is_default_shipping: false,
-    } as any)
-    return null
-  } catch (e: any) {
-    return e.message || "Failed to add address."
-  }
-}
-
-export const deleteCustomerAddress = async (addressId: string) => {
-  const email = await getSessionEmail()
-  if (!email) return "Not logged in."
-  try {
-    await apiDeleteCustomerAddress(email, addressId)
-  } catch (e: any) {
-    return e.message || "Failed to delete address."
-  }
-}
-
-export const updateCustomerAddress = async (_prevState: any, formData: FormData) => {
-  const email = await getSessionEmail()
-  if (!email) return "Not logged in."
-
-  const addressId = formData.get("address_id")?.toString() ?? ""
-  const payload: Record<string, any> = {}
-  formData.forEach((value, key) => {
-    if (key !== "address_id") {
-      payload[key] = value
-    }
-  })
-
-  try {
-    await apiUpdateCustomerAddress(email, addressId, {
-      street: payload.street ?? payload.address_1 ?? undefined,
-      city: payload.city ?? undefined,
-      state: payload.state ?? payload.province ?? undefined,
-      postal_code: payload.postal_code ?? undefined,
-      country: payload.country_code ?? payload.country ?? undefined,
-    })
-    return null
-  } catch (e: any) {
-    return e.message || "Failed to update address."
-  }
 }

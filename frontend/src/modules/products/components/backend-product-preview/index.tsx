@@ -19,7 +19,7 @@ export default function BackendProductPreview({
   const name = backendProductName(product)
 
   return (
-    <LocalizedClientLink href={`/products/${backendProductSlug(product)}`} className="group">
+    <LocalizedClientLink href={`/shop/${backendProductSlug(product)}`} className="group">
       <div data-testid="product-wrapper">
         <Thumbnail thumbnail={null} images={(product as any).images ?? []} size="full" isFeatured={isFeatured} />
         <div className="flex txt-compact-medium mt-4 justify-between">

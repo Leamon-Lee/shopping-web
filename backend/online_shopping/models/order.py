@@ -13,6 +13,7 @@ from online_shopping.models import Base
 if TYPE_CHECKING:
     from online_shopping.models.account import Account
     from online_shopping.models.payment import Payment
+    from online_shopping.models.shipment import Shipment
 
 
 class Order(Base):
@@ -29,6 +30,7 @@ class Order(Base):
     account: Mapped[Account | None] = relationship("Account", back_populates="orders")
     items: Mapped[list[OrderItem]] = relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")
     payments: Mapped[list[Payment]] = relationship("Payment", back_populates="order")
+    shipments: Mapped[list[Shipment]] = relationship("Shipment", back_populates="order")
 
 
 class OrderItem(Base):

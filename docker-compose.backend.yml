@@ -1,6 +1,6 @@
 services:
   backend:
-    image: python:3.14.6-slim-trixie
+    image: python:3.12-slim
     container_name: shopping-backend
     working_dir: /app
     restart: unless-stopped
@@ -14,6 +14,10 @@ services:
       MINIO_SECRET_KEY: minioadmin123
       MINIO_BUCKET_PRODUCTS: shopping-products
       MINIO_BUCKET_DATA: shopping-data
+      PUBLIC_MINIO_BASE_URL: http://localhost:9000
+      PIP_INDEX_URL: https://pypi.tuna.tsinghua.edu.cn/simple
+      PIP_DEFAULT_TIMEOUT: "120"
+      PIP_RETRIES: "10"
     ports:
       - "8001:8001"
     volumes:
@@ -21,17 +25,18 @@ services:
     command:
       - /bin/sh
       - -c
-      - >
-        python -m pip install --no-cache-dir -r requirements.txt
-        && uvicorn online_shopping.api.app:app --host 0.0.0.0 --port 8001 --reload
+      - |
+        pip install --no-cache-dir fastapi pydantic starlette
+        pip install --no-cache-dir uvicorn sqlalchemy asyncpg minio passlib bcrypt python-jose python-dotenv python-multipart beautifulsoup4 lxml cryptography
+        uvicorn online_shopping.api.app:app --host 0.0.0.0 --port 8001 --reload
     healthcheck:
       test:
         - CMD-SHELL
         - python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/health', timeout=3)"
       interval: 10s
       timeout: 5s
-      retries: 10
-      start_period: 20s
+      retries: 15
+      start_period: 90s
     networks:
       - shopping-net
 

@@ -1,11 +1,5 @@
-import CustomerPanel from "@modules/customer/templates/customer-panel"
-import { Metadata } from "next"
+import { redirect } from "next/navigation"
 
-export const metadata: Metadata = {
-  title: "Customer Panel",
-  description: "Customer dashboard and shopping tools.",
-}
-
-export default function CustomerPanelPage() {
-  return <CustomerPanel />
+export default function CustomerPanelRedirect() {
+  redirect("/customer")
 }

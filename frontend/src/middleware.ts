@@ -1,101 +1,73 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 
-const DEFAULT_REGION = process.env.NEXT_PUBLIC_DEFAULT_REGION || "us"
+const TOKEN_COOKIE = "shopping_token"
 
-const regionMap = new Map<string, number>([[DEFAULT_REGION, 1]])
+// ── Route categories ─────────────────────────────────────────────────
 
-/**
- * Fetches regions from Medusa and sets the region cookie.
- * @param request
- * @param response
- */
-async function getCountryCode(
-  request: NextRequest,
-  regionMap: Map<string, number>
-) {
-  try {
-    let countryCode
+const PUBLIC_PATTERNS = [
+  /^\/$/,                           // home
+  /^\/hall/,                        // marketplace
+  /^\/products/,                    // product browsing
+  /^\/categories/,                  // category browsing
+  /^\/shops/,                       // shop browsing
+  /^\/shop/,                        // legacy shop route
+  /^\/cart/,                        // cart (guest allowed)
+  /^\/auth/,                        // auth pages
+  /^\/sign-in/,                     // legacy sign-in pages
+  /^\/_next/,                       // Next.js internals
+  /^\/api/,                         // API routes (if any)
+  /^\/favicon\.ico/,                // favicon
+  /^\/images/,                      // static images
+  /^\/assets/,                      // static assets
+  /\.(png|svg|jpg|jpeg|gif|webp)$/, // image files
+]
 
-    const vercelCountryCode = request.headers
-      .get("x-vercel-ip-country")
-      ?.toLowerCase()
+const CUSTOMER_PATTERNS = [/^\/customer/]
+const MANAGER_PATTERNS = [/^\/manager/]
+const ADMIN_PATTERNS = [/^\/admin/]
 
-    const urlCountryCode = request.nextUrl.pathname.split("/")[1]?.toLowerCase()
+// ── Helper ───────────────────────────────────────────────────────────
 
-    if (urlCountryCode && regionMap.has(urlCountryCode)) {
-      countryCode = urlCountryCode
-    } else if (vercelCountryCode && regionMap.has(vercelCountryCode)) {
-      countryCode = vercelCountryCode
-    } else if (regionMap.has(DEFAULT_REGION)) {
-      countryCode = DEFAULT_REGION
-    } else if (regionMap.keys().next().value) {
-      countryCode = regionMap.keys().next().value
-    }
-
-    return countryCode
-  } catch (error) {
-    if (process.env.NODE_ENV === "development") {
-      console.error(
-        "Middleware.ts: Error getting the country code."
-      )
-    }
-  }
+function hasToken(request: NextRequest): boolean {
+  return request.cookies.has(TOKEN_COOKIE)
 }
 
-/**
- * Middleware to handle region selection and onboarding status.
- */
-export async function middleware(request: NextRequest) {
-  let redirectUrl = request.nextUrl.href
+function matchesAny(pathname: string, patterns: RegExp[]): boolean {
+  return patterns.some((pattern) => pattern.test(pathname))
+}
 
-  let response = NextResponse.redirect(redirectUrl, 307)
+// ── Main middleware ──────────────────────────────────────────────────
 
-  let cacheIdCookie = request.cookies.get("_medusa_cache_id")
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
 
-  let cacheId = cacheIdCookie?.value || crypto.randomUUID()
-
-  const countryCode = regionMap && (await getCountryCode(request, regionMap))
-
-  const urlHasCountryCode =
-    countryCode && request.nextUrl.pathname.split("/")[1].includes(countryCode)
-
-  // if one of the country codes is in the url and the cache id is set, return next
-  if (urlHasCountryCode && cacheIdCookie) {
+  // Allow public routes without authentication
+  if (matchesAny(pathname, PUBLIC_PATTERNS)) {
     return NextResponse.next()
   }
 
-  // if one of the country codes is in the url and the cache id is not set, set the cache id and redirect
-  if (urlHasCountryCode && !cacheIdCookie) {
-    response.cookies.set("_medusa_cache_id", cacheId, {
-      maxAge: 60 * 60 * 24,
-    })
+  // Check for protected routes
+  const isCustomer = matchesAny(pathname, CUSTOMER_PATTERNS)
+  const isManager = matchesAny(pathname, MANAGER_PATTERNS)
+  const isAdmin = matchesAny(pathname, ADMIN_PATTERNS)
 
-    return response
-  }
-
-  // check if the url is a static asset
-  if (request.nextUrl.pathname.includes(".")) {
+  if (isCustomer || isManager || isAdmin) {
+    if (!hasToken(request)) {
+      const loginUrl = new URL("/auth/login", request.url)
+      loginUrl.searchParams.set("redirect", pathname)
+      return NextResponse.redirect(loginUrl)
+    }
+    // User has a token — allow access (full role check happens on backend API)
     return NextResponse.next()
   }
 
-  const redirectPath =
-    request.nextUrl.pathname === "/" ? "" : request.nextUrl.pathname
-
-  const queryString = request.nextUrl.search ? request.nextUrl.search : ""
-
-  // If no country code is set, we redirect to the relevant region.
-  if (!urlHasCountryCode && countryCode) {
-    redirectUrl = `${request.nextUrl.origin}/${countryCode}${redirectPath}${queryString}`
-    response = NextResponse.redirect(`${redirectUrl}`, 307)
-  } else if (!urlHasCountryCode && !countryCode) {
-    return NextResponse.next()
-  }
-
-  return response
+  // All other routes pass through
+  return NextResponse.next()
 }
 
 export const config = {
   matcher: [
-    "/((?!api|admin|manager|hall|customer-panel|_next/static|_next/image|favicon.ico|images|assets|png|svg|jpg|jpeg|gif|webp).*)",
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|svg|jpg|jpeg|gif|webp)$).*)",
   ],
 }

@@ -12,15 +12,17 @@ const PRODUCT_LIMIT = 12
 export default async function PaginatedProducts({
   sortBy,
   page,
+  shop,
 }: {
   sortBy?: SortOptions
   page: number
+  shop?: string
   countryCode: string
   categoryId?: string
   collectionId?: string
   productsIds?: string[]
 }) {
-  const products = await listProducts()
+  const products = await listProducts(shop)
   const sortedProducts =
     sortBy === "price_asc"
       ? [...products].sort((a, b) => backendProductPrice(a) - backendProductPrice(b))

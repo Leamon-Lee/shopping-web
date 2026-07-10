@@ -18,7 +18,7 @@ export default async function Nav() {
               className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
               data-testid="nav-store-link"
             >
-              Medusa Store
+              Shopping Web
             </LocalizedClientLink>
           </div>
 
@@ -27,13 +27,16 @@ export default async function Nav() {
               <a className="hover:text-ui-fg-base" href="/hall">
                 Hall
               </a>
-              <a className="hover:text-ui-fg-base" href="/customer-panel">
-                Customer Panel
+              <a className="hover:text-ui-fg-base" href="/shop">
+                Shop
               </a>
-              <a className="hover:text-ui-fg-base" href="/manager">
+              <a className="hover:text-ui-fg-base" href="/sign-in/customer">
+                Customer
+              </a>
+              <a className="hover:text-ui-fg-base" href="/sign-in/manager">
                 Manager
               </a>
-              <a className="hover:text-ui-fg-base" href="/admin">
+              <a className="hover:text-ui-fg-base" href="/sign-in/admin">
                 Admin
               </a>
               <LocalizedClientLink

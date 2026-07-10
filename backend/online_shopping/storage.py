@@ -1,7 +1,9 @@
 from minio import Minio
+
 from online_shopping.config import settings
 
 _minio_client: Minio | None = None
+
 
 def get_minio_client() -> Minio:
     global _minio_client
@@ -16,18 +18,10 @@ def get_minio_client() -> Minio:
 
 
 def build_image_path(product_hash: str, file_name: str) -> str:
-    """基于商品哈希构造 MinIO 对象路径"""
     return f"products/{product_hash}/{file_name}"
 
 
 def upload_product_image(product_hash: str, file_name: str, data: bytes, content_type: str = "image/jpeg") -> str:
-    """
-    上传商品图片到 MinIO。
-    :param product_hash: 商品 SHA-256 哈希（与 PostgreSQL products.product_hash 一致）
-    :param file_name:   文件名，如 'main.jpg'
-    :param data:        图片二进制数据
-    :return:            存储的相对路径
-    """
     client = get_minio_client()
     object_path = build_image_path(product_hash, file_name)
     client.put_object(
@@ -41,5 +35,5 @@ def upload_product_image(product_hash: str, file_name: str, data: bytes, content
 
 
 def get_image_url(product_hash: str, file_name: str) -> str:
-    """生成图片访问 URL（可直接存入 product_images.image_url）"""
-    return f"/minio/{settings.minio_bucket_products}/{build_image_path(product_hash, file_name)}"
+    base_url = settings.public_minio_base_url.rstrip("/")
+    return f"{base_url}/{settings.minio_bucket_products}/{build_image_path(product_hash, file_name)}"

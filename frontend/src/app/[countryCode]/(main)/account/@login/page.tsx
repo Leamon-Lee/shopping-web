@@ -1,12 +1,8 @@
-import { Metadata } from "next"
+import { redirect } from "next/navigation"
 
-import LoginTemplate from "@modules/account/templates/login-template"
-
-export const metadata: Metadata = {
-  title: "Sign in",
-  description: "Sign in to your Medusa Store account.",
-}
-
-export default function Login() {
-  return <LoginTemplate />
+export default async function CountryLogin(props: {
+  params: Promise<{ countryCode: string }>
+}) {
+  await props.params
+  redirect("/auth/login")
 }

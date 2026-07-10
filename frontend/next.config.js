@@ -67,6 +67,10 @@ const nextConfig = {
         protocol: "http",
         hostname: "underarmour.scene7.com",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.shopify.com",
+      },
       ...(S3_HOSTNAME && S3_PATHNAME
         ? [
             {

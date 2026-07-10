@@ -3,30 +3,10 @@
 import UnderlineLink from "@modules/common/components/interactive-link"
 
 import AccountNav from "../components/account-nav"
-import type {
-  BackendAddress,
-  BackendCart,
-  BackendCartLineItem,
-  BackendCollection,
-  BackendCustomer,
-  BackendOrder,
-  BackendOrderLineItem,
-  BackendPaymentSession,
-  BackendPrice,
-  BackendProduct,
-  BackendProductCategory,
-  BackendProductImage,
-  BackendProductListParams,
-  BackendProductOption,
-  BackendProductVariant,
-  BackendPromotion,
-  BackendRecord,
-  BackendRegion,
-  BackendShippingOption,
-} from "types/backend"
+import type { Account } from "types/backend"
 
 interface AccountLayoutProps {
-  customer: BackendCustomer | null
+  customer: Account | null
   children: React.ReactNode
 }
 

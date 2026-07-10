@@ -1,12 +1,7 @@
-export type ValueObject<T> = {
-  value: T
-}
+// ── Strict types matching FastAPI Pydantic schemas ──────────────────
+// All types match backend online_shopping/api/schemas.py
 
-export type BackendValue<T> = T | ValueObject<T>
-
-export type BackendRecord = Record<string, any>
-
-export type BackendAccountStatus =
+export type AccountStatus =
   | "active"
   | "blocked"
   | "banned"
@@ -14,16 +9,16 @@ export type BackendAccountStatus =
   | "archived"
   | "unknown"
 
-export type BackendOrderStatus =
-  | "unshipped"
+export type OrderStatus =
+  | "created"
   | "pending"
+  | "unshipped"
   | "shipped"
   | "complete"
   | "canceled"
   | "refund_applied"
 
-export type BackendPaymentStatus =
-  | "unpaid"
+export type PaymentStatus =
   | "pending"
   | "completed"
   | "failed"
@@ -34,213 +29,357 @@ export type BackendPaymentStatus =
   | "settled"
   | "refunded"
 
-export type BackendShipmentStatus =
+export type ShipmentStatus =
   | "pending"
   | "shipped"
   | "delivered"
   | "on_hold"
 
-export type BackendName = {
+// ── Account ──────────────────────────────────────────────────────────
+
+export interface Name {
   first_name: string
   last_name: string
 }
 
-export type BackendPhone = {
+export interface Phone {
   country_code: string
   number: string
 }
 
-export type BackendAddress = BackendRecord & {
+export interface Address {
+  id?: string
   street: string
   city: string
   state: string
   postal_code: string
   country: string
-  first_name?: string
-  last_name?: string
+  is_default_shipping?: boolean
+  // Legacy compatibility
   address_1?: string
   address_2?: string
   company?: string
   country_code?: string
   province?: string
   phone?: string
+  first_name?: string
+  last_name?: string
 }
 
-export type BackendProductCategory = BackendRecord & {
+export interface Account {
+  user_name: string
+  status: AccountStatus
+  name: Name
+  shipping_address: Address
+  email: string
+  phone: Phone
+  addresses: Address[]
+}
+
+// ── Auth ─────────────────────────────────────────────────────────────
+
+export interface LoginPayload {
+  email: string
+  password: string
+}
+
+export interface RegisterPayload {
+  email: string
+  password: string
+  first_name?: string
+  last_name?: string
+  phone_country_code?: string
+  phone_number?: string
+  street?: string
+  city?: string
+  state?: string
+  postal_code?: string
+  country?: string
+}
+
+export interface TokenResponse {
+  access_token: string
+  token_type: "bearer"
+  user: Account
+}
+
+export interface AccountUpdate {
+  first_name?: string | null
+  last_name?: string | null
+  phone_number?: string | null
+  phone_country_code?: string | null
+}
+
+// ── Product / Category / Image ───────────────────────────────────────
+
+export interface Category {
   name: string
   description: string
-  category_children?: BackendProductCategory[]
-  parent_category?: BackendProductCategory | null
-  products?: BackendProduct[]
 }
 
-export type BackendRegion = BackendRecord & {
-  region_id: string
+export interface ProductImage {
+  image_url: string
+  url: string | null
+  rank: number
+}
+
+export interface ProductVariant {
+  id: string
+  title: string
   name: string
-  currency_code: string
-  countries: Array<{
-    country_code: string
-    iso_2?: string
-    display_name: string
-  }>
+  sku: string
+  price: number
+  inventory_quantity: number
+  inventory_count: number
+  manage_inventory: boolean
+  allow_backorder: boolean
+  product: Record<string, unknown> | null
+  options: Record<string, unknown>[]
+  // Legacy Medusa compatibility
+  calculated_price?: { calculated_amount?: number } | null
+  calculated_amount?: number
 }
 
-export type BackendProductVariant = BackendRecord & {
-  options?: BackendRecord[]
+/** Product with optional computed minimum price (legacy sort utility). */
+export interface MinPricedProduct extends Product {
+  _minPrice?: number
+  created_at?: string
 }
 
-export type BackendProductOption = BackendRecord
-export type BackendProductImage = BackendRecord
-export type BackendProductListParams = Record<string, any>
+export interface Product {
+  id: string | null
+  name: string
+  slug: string | null
+  handle: string | null
+  title: string | null
+  description: string
+  price: number
+  available_item_count: number
+  category: Category
+  thumbnail: string | null
+  images: ProductImage[]
+  variants: ProductVariant[]
+  options: BackendProductOption[]
+  shop?: {
+    shop_id?: string
+    shop_name?: string
+  }
+  // Legacy Medusa compatibility
+  created_at?: string
+  updated_at?: string
+  tags?: Record<string, unknown>[]
+}
 
-export type BackendProduct = BackendRecord & {
+export interface ProductCreate {
   name: string
   description: string
   price: number
   available_item_count: number
-  category: BackendProductCategory
-  variants?: BackendProductVariant[]
-  options?: BackendProductOption[]
-  tags?: BackendRecord[]
-  images?: BackendProductImage[]
+  category: Category
 }
 
-export type BackendProductReview = {
-  rating: number
-  review: string
-  product: BackendProduct
+// ── Cart ─────────────────────────────────────────────────────────────
+
+export interface CartItemCreate {
+  product_name: string
+  quantity: number
 }
 
-export type BackendItem = BackendRecord & {
+export interface CartItem {
+  id: string
   quantity: number
   price: number
-  product: BackendProduct
+  unit_price: number | null
+  total: number | null
+  product: Product
+  product_title: string
+  product_handle: string
+  thumbnail: string | null
+  variant: ProductVariant | null
+  created_at: string | null
 }
 
-export type BackendCartLineItem = BackendRecord & {
-  quantity: number
-  price?: number
-  product?: BackendProduct
-  variant?: BackendProductVariant
+export interface ShoppingCart {
+  id: string | null
+  items: CartItem[]
+  total_quantity: number
+  subtotal: number
+  total: number | null
+  currency_code: string
+  region: Record<string, unknown>
+  promotions: Record<string, unknown>[]
+  shipping_methods: Record<string, unknown>[]
 }
 
-export type BackendOrderLineItem = BackendCartLineItem
+// ── Order ────────────────────────────────────────────────────────────
 
-export type BackendPromotion = BackendRecord
-export type BackendPaymentSession = BackendRecord
-export type BackendPrice = BackendRecord & {
-  price_rules?: BackendRecord[]
+export interface Payment {
+  status: PaymentStatus
+  amount: number | null
+  currency: string | null
 }
 
+export interface Shipment {
+  status: ShipmentStatus
+  shipment_date: string | null
+  estimated_arrival: string | null
+  shipment_method: string | null
+}
+
+export interface OrderCreate {
+  order_number?: string | null
+  items?: CartItemCreate[]
+  payment?: {
+    amount: number
+    currency: string
+  } | null
+}
+
+export interface Order {
+  order_number: string
+  status: OrderStatus
+  order_date: string | null
+  items: CartItem[]
+  payment: Payment | null
+  shipments: Shipment[]
+}
+
+// ── Shop / Hall ──────────────────────────────────────────────────────
+
+export interface ShopSummary {
+  id: string
+  name: string
+  slug: string
+  product_count: number
+  categories: string[]
+}
+
+export interface HallSection {
+  title: string
+  slug: string
+  shop: ShopSummary
+  products: Product[]
+}
+
+export interface HallPayload {
+  route: "/hall"
+  products: Product[]
+  shops: ShopSummary[]
+  categories: Array<{ name: string; slug: string }>
+  sections: HallSection[]
+}
+
+// ── Region ───────────────────────────────────────────────────────────
+
+export interface RegionCountry {
+  country_code: string
+  display_name: string
+}
+
+export interface Region {
+  region_id: string
+  name: string
+  currency_code: string
+  countries: RegionCountry[]
+}
+
+// ── Address management ───────────────────────────────────────────────
+
+export interface AddressCreate {
+  street: string
+  city: string
+  state?: string
+  postal_code?: string
+  country?: string
+  is_default_shipping?: boolean
+}
+
+// ── Utility types ────────────────────────────────────────────────────
+
+/** Unwraps a value object `{ value: T }` back to `T`, or returns the value as-is. */
+export type Unwrapped<T> = T extends { value: infer V } ? V : T
+
+export function unwrapValue<T>(value: T): Unwrapped<T> {
+  if (value !== null && typeof value === "object" && "value" in (value as object)) {
+    return (value as { value: unknown }).value as Unwrapped<T>
+  }
+  return value as Unwrapped<T>
+}
+
+// ── Backward-compatible aliases (for gradual migration) ─────────────
+// Old code imports these; new code should use the primary names above.
+
+export type BackendRecord = Record<string, unknown>
+export type BackendAccountStatus = AccountStatus
+export type BackendOrderStatus = OrderStatus
+export type BackendPaymentStatus = PaymentStatus
+export type BackendShipmentStatus = ShipmentStatus
+export type BackendName = Name
+export type BackendPhone = Phone
+export type BackendAddress = Address & Record<string, unknown>
+export type BackendProductCategory = Category
+export type BackendProductVariant = ProductVariant
+export type BackendProductImage = ProductImage
+export type BackendProductOption = Record<string, unknown> & { values?: Array<{ value?: string }> }
+export type BackendProductListParams = Record<string, unknown>
+export type BackendProduct = Product
+export type BackendShopSummary = ShopSummary
+export type BackendHallSection = HallSection
+export type BackendHallPayload = HallPayload
+export type BackendItem = CartItem
+export type BackendCartLineItem = CartItem
+export type BackendOrderLineItem = CartItem
+export type BackendPromotion = Record<string, unknown>
+export type BackendPaymentSession = Record<string, unknown>
+export type BackendPrice = Record<string, unknown> & { price_rules?: Record<string, unknown>[] }
 export type BackendFreeShippingPrice = BackendPrice & {
   target_reached: boolean
   target_remaining: number
   remaining_percentage: number
 }
-export type BackendShippingOption = BackendRecord & {
-  rules?: BackendRecord[]
-}
-export type BackendCollection = BackendRecord & {
-  products?: BackendProduct[]
-}
-
-export type BackendShoppingCart = BackendRecord & {
-  items: BackendItem[]
-  total_quantity?: number
-  subtotal?: number
-  currency_code: string
-  promotions?: BackendPromotion[]
-  shipping_methods?: BackendRecord[]
-  payment_collection?: BackendRecord & {
-    payment_sessions?: BackendPaymentSession[]
-  }
-}
-
-export type BackendCart = BackendShoppingCart
-
-export type BackendPayment = {
-  status: BackendPaymentStatus
-  amount?: BackendValue<number> | null
-  currency?: string | null
-}
-
-export type BackendShipmentLog = {
-  status: BackendShipmentStatus
-  creation_date: BackendValue<string>
-}
-
+export type BackendShippingOption = Record<string, unknown> & { rules?: Record<string, unknown>[] }
+export type BackendCollection = Record<string, unknown> & { products?: Product[] }
+export type BackendShoppingCart = ShoppingCart
+export type BackendCart = ShoppingCart
+export type BackendPayment = Payment
+export type BackendShipmentLog = { status: ShipmentStatus; creation_date: { value: string } }
 export type BackendShipment = {
-  shipment_date: BackendValue<string>
-  estimated_arrival: BackendValue<string>
-  shipment_method: BackendValue<string>
+  shipment_date: { value: string }
+  estimated_arrival: { value: string }
+  shipment_method: { value: string }
   shipment_logs?: BackendShipmentLog[]
 }
-
-export type BackendOrderLog = {
-  creation_date: string
-  status: BackendOrderStatus
-}
-
-export type BackendOrder = BackendRecord & {
-  order_number: string
-  status: BackendOrderStatus
-  order_date?: BackendValue<string> | null
-  items: BackendItem[]
+export type BackendOrderLog = { creation_date: string; status: OrderStatus }
+export type BackendOrder = Order & {
   order_logs?: BackendOrderLog[]
   shipments?: BackendShipment[]
-  payment?: BackendPayment | null
-  currency_code: string
-  shipping_methods?: BackendRecord[]
+  currency_code?: string
+  shipping_methods?: Record<string, unknown>[]
 }
-
-export type BackendAccount = BackendRecord & {
-  user_name: string
-  status: BackendAccountStatus
-  name: BackendName
-  shipping_address: BackendAddress
-  email: string
-  phone: any
-  addresses: BackendRecord[]
-}
-
-export type BackendCustomer = BackendAccount
-
+export type BackendAccount = Account
+export type BackendCustomer = Account
 export type BackendNotification = {
-  notification_id: BackendValue<number>
-  created_on: BackendValue<string>
-  content: BackendValue<string>
+  notification_id: { value: number }
+  created_on: { value: string }
+  content: { value: string }
 }
-
-export type BackendProductFormPayload = {
-  name: string
-  description: string
-  price: number
-  available_item_count: number
-  category: {
-    name: string
-    description: string
-  }
-}
-
-export type BackendAddressPayload = BackendAddress
-
-export type BackendLoginPayload = {
-  user_name: string
-  password: string
-}
-
-export type BackendRegisterAccountPayload = BackendLoginPayload & {
-  name: BackendName
-  shipping_address: BackendAddress
+export type BackendProductFormPayload = ProductCreate
+export type BackendAddressPayload = Address
+export type BackendLoginPayload = LoginPayload
+export type BackendRegisterAccountPayload = LoginPayload & {
+  name: Name
+  shipping_address: Address
   email: string
-  phone: BackendPhone
+  phone: Phone
 }
-
 export type BackendOrderPayload = {
   order_number?: string
-  items?: Array<{
-    product_name: string
-    quantity: number
-  }>
-  payment?: BackendPayment
+  items?: Array<{ product_name: string; quantity: number }>
+  payment?: Payment
 }
+export type BackendRegion = Region
+export type BackendProductReview = { rating: number; review: string; product: Product }
+
+// Value object helpers (legacy)
+export type BackendValue<T> = T | { value: T }
+export type ValueObject<T> = { value: T }

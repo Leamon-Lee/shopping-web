@@ -17,25 +17,81 @@ from pathlib import Path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "backend"))
 
 from sqlalchemy import text
+from online_shopping.config import settings
 from online_shopping.database import async_session
-from online_shopping.storage import get_minio_client
+from online_shopping.storage import build_image_path, get_minio_client
 
 DATASET_DIR = Path(__file__).parent / "docker" / "postgres" / "dataset"
 IMAGES_DIR = DATASET_DIR / "imgs"
+SEED_MANAGER_PREFIX = "seed_mgr_"
+
+
+BRAND_LABELS = {
+    "dell": "Dell",
+    "haier": "Haier",
+    "muji": "Muji",
+    "nike": "Nike",
+    "skechers": "Skechers",
+    "underarmour": "Under Armour",
+    "uniqlo": "Uniqlo",
+    "xiaomi": "Xiaomi",
+}
+
+
+def brand_label(brand: str) -> str:
+    return BRAND_LABELS.get(brand, brand.replace("_", " ").title())
+
+
+def seed_uuid(kind: str, brand: str) -> uuid.UUID:
+    return uuid.uuid5(uuid.NAMESPACE_DNS, f"shopping-web-seed-{kind}-{brand}")
 
 
 async def clear_existing():
     async with async_session() as db:
-        await db.execute(text("DELETE FROM product_images"))
-        await db.execute(text("DELETE FROM product_variants"))
-        await db.execute(text("DELETE FROM products"))
-        await db.execute(text("DELETE FROM product_categories"))
+        await db.execute(text("DELETE FROM shop_products"))
+        await db.execute(text("DELETE FROM product_approvals"))
+        await db.execute(
+            text(
+                "DELETE FROM shops WHERE manager_id IN ("
+                "SELECT m.id FROM managers m "
+                "JOIN accounts a ON a.id = m.account_id "
+                "WHERE a.user_name LIKE :seed_prefix"
+                ")"
+            ),
+            {"seed_prefix": f"{SEED_MANAGER_PREFIX}%"},
+        )
+        await db.execute(
+            text(
+                "DELETE FROM managers WHERE account_id IN ("
+                "SELECT id FROM accounts WHERE user_name LIKE :seed_prefix"
+                ")"
+            ),
+            {"seed_prefix": f"{SEED_MANAGER_PREFIX}%"},
+        )
+        await db.execute(
+            text("DELETE FROM accounts WHERE user_name LIKE :seed_prefix"),
+            {"seed_prefix": f"{SEED_MANAGER_PREFIX}%"},
+        )
+        for table in [
+            "cart_items",
+            "category_products",
+            "catalog_products",
+            "product_reviews",
+            "product_images",
+            "product_variants",
+            "products",
+            "product_categories",
+        ]:
+            await db.execute(text(f"DELETE FROM {table}"))
         await db.commit()
         print("Cleared existing product data.")
 
 
 async def import_all():
-    brands = ["nike", "skechers", "underarmour"]
+    brands = sorted({
+        path.name.removesuffix("_products.csv")
+        for path in DATASET_DIR.glob("*_products.csv")
+    })
 
     # ---- Load all CSV data ----
     # Categories with dedup by normalized name
@@ -69,6 +125,15 @@ async def import_all():
                     raw_cid = row.get("category_id", "")
                     if raw_cid and raw_cid in cat_id_map:
                         row["category_id"] = cat_id_map[raw_cid]
+                    elif raw_cid:
+                        fallback_name = f"{brand.title()} Catalog {raw_cid[:8]}"
+                        if fallback_name not in cat_by_name:
+                            cat_by_name[fallback_name] = {
+                                "id": raw_cid,
+                                "name": fallback_name,
+                                "description": f"Imported {brand.title()} products.",
+                            }
+                        cat_id_map[raw_cid] = raw_cid
                     all_products.append(row)
                     product_hash_map[row["id"]] = row["product_hash"]
 
@@ -136,11 +201,19 @@ async def import_all():
             if row["product_id"] not in successful_product_ids:
                 continue
             try:
+                image_url = row["image_url"]
+                if image_url and not image_url.startswith("http"):
+                    image_name = os.path.basename(image_url)
+                    product_hash = product_hash_map.get(row["product_id"], row["product_id"])
+                    image_url = (
+                        f"{settings.public_minio_base_url.rstrip('/')}/"
+                        f"{settings.minio_bucket_products}/{build_image_path(product_hash, image_name)}"
+                    )
                 await db.execute(
                     text("INSERT INTO product_images (id, product_id, image_url, rank) "
                          "VALUES (:id, :pid, :url, :rank)"),
                     {"id": uuid.UUID(row["id"]), "pid": uuid.UUID(row["product_id"]),
-                     "url": row["image_url"], "rank": int(row["rank"])},
+                     "url": image_url, "rank": int(row["rank"])},
                 )
                 await db.commit()
                 img_count += 1
@@ -171,7 +244,104 @@ async def import_all():
                 await db.rollback()
         print(f"Inserted {var_count} variants.")
 
-    # Step 5: Upload local images to MinIO
+        default_var_count = 0
+        for row in all_products:
+            if row["id"] not in successful_product_ids:
+                continue
+            result = await db.execute(
+                text("SELECT 1 FROM product_variants WHERE product_id = :pid LIMIT 1"),
+                {"pid": uuid.UUID(row["id"])},
+            )
+            if result.first():
+                continue
+            slug = row["slug"]
+            await db.execute(
+                text(
+                    "INSERT INTO product_variants (id, product_id, variant_id_str, "
+                    "name, sku, price, inventory_count) "
+                    "VALUES (:id, :pid, :vid_str, :name, :sku, :price, :inv)"
+                ),
+                {
+                    "id": uuid.uuid4(),
+                    "pid": uuid.UUID(row["id"]),
+                    "vid_str": f"variant_{slug}",
+                    "name": "Default Variant",
+                    "sku": f"SKU-{slug[:40].upper()}-{row['id'][:8]}",
+                    "price": float(row["price"]),
+                    "inv": int(row["available_item_count"]),
+                },
+            )
+            default_var_count += 1
+        await db.commit()
+        print(f"Inserted {default_var_count} default variants.")
+
+        # Step 5: Insert seed shops and connect imported products to their source shop.
+        brand_products: dict[str, list[dict]] = {}
+        for row in all_products:
+            if row["id"] in successful_product_ids:
+                brand_products.setdefault(row["_brand"], []).append(row)
+
+        shop_count = 0
+        shop_product_count = 0
+        for brand, rows in sorted(brand_products.items()):
+            account_id = seed_uuid("account", brand)
+            manager_id = seed_uuid("manager", brand)
+            shop_id = seed_uuid("shop", brand)
+            manager_user_name = f"{SEED_MANAGER_PREFIX}{brand}"[:20]
+            label = brand_label(brand)
+
+            await db.execute(
+                text(
+                    "INSERT INTO accounts (id, user_name, password_hash, status, "
+                    "first_name, last_name, email) "
+                    "VALUES (:id, :user_name, :password_hash, 'active', :first_name, "
+                    "'Manager', :email) "
+                    "ON CONFLICT (user_name) DO UPDATE SET "
+                    "email = EXCLUDED.email, status = 'active'"
+                ),
+                {
+                    "id": account_id,
+                    "user_name": manager_user_name,
+                    "password_hash": "seeded-development-password",
+                    "first_name": label,
+                    "email": f"{manager_user_name}@shopping.local",
+                },
+            )
+            await db.execute(
+                text(
+                    "INSERT INTO managers (id, account_id) VALUES (:id, :account_id) "
+                    "ON CONFLICT (account_id) DO NOTHING"
+                ),
+                {"id": manager_id, "account_id": account_id},
+            )
+            await db.execute(
+                text(
+                    "INSERT INTO shops (id, manager_id, name, status, reviewed_at) "
+                    "VALUES (:id, :manager_id, :name, 'active', now()) "
+                    "ON CONFLICT (name) DO UPDATE SET status = 'active'"
+                ),
+                {"id": shop_id, "manager_id": manager_id, "name": label},
+            )
+            shop_count += 1
+
+            for row in rows:
+                await db.execute(
+                    text(
+                        "INSERT INTO shop_products (shop_id, product_id, added_by_manager_id) "
+                        "VALUES (:shop_id, :product_id, :manager_id) "
+                        "ON CONFLICT (shop_id, product_id) DO NOTHING"
+                    ),
+                    {
+                        "shop_id": shop_id,
+                        "product_id": uuid.UUID(row["id"]),
+                        "manager_id": manager_id,
+                    },
+                )
+                shop_product_count += 1
+        await db.commit()
+        print(f"Inserted {shop_count} shops and {shop_product_count} shop-product links.")
+
+    # Step 6: Upload local images to MinIO
     await upload_to_minio(all_images, successful_product_ids, product_hash_map)
     print("\nImport complete!")
 
@@ -201,7 +371,12 @@ async def upload_to_minio(all_images, successful_ids, hash_map):
         try:
             product_hash = hash_map.get(row["product_id"], row["product_id"])
             data = img_path.read_bytes()
-            content_type = "image/svg+xml" if img_path.suffix == ".svg" else "image/png"
+            suffix = img_path.suffix.lower()
+            content_type = (
+                "image/svg+xml" if suffix == ".svg"
+                else "image/jpeg" if suffix in {".jpg", ".jpeg"}
+                else "image/png"
+            )
             object_name = f"products/{product_hash}/{img_path.name}"
 
             client.put_object(

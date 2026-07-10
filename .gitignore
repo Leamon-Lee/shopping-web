@@ -8,3 +8,5 @@ build/
 *.egg-info/
 backend/logs/
 frontend/logs/
+*-run.log
+*-run.err.log

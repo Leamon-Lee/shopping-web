@@ -33,11 +33,33 @@ class ProductCreate(ProductBase):
 
 class ImageOut(BaseModel):
     image_url: str
+    url: str | None = None
     rank: int = 0
 
 
+class ProductVariantOut(BaseModel):
+    id: str
+    title: str
+    name: str
+    sku: str
+    price: float
+    inventory_quantity: int
+    inventory_count: int
+    manage_inventory: bool = True
+    allow_backorder: bool = False
+    product: dict | None = None
+    options: list[dict] = Field(default_factory=list)
+
+
 class ProductOut(ProductBase):
-    images: list[ImageOut] = []
+    id: str | None = None
+    slug: str | None = None
+    handle: str | None = None
+    title: str | None = None
+    thumbnail: str | None = None
+    images: list[ImageOut] = Field(default_factory=list)
+    variants: list[ProductVariantOut] = Field(default_factory=list)
+    options: list[dict] = Field(default_factory=list)
 
 
 class CartItemCreate(BaseModel):
@@ -50,15 +72,29 @@ class CartItemUpdate(BaseModel):
 
 
 class CartItemOut(BaseModel):
+    id: str = ""
     quantity: int = Field(ge=1)
     price: float = Field(gt=0)
     product: ProductOut
+    product_title: str
+    product_handle: str
+    thumbnail: str | None = None
+    variant: ProductVariantOut | None = None
+    unit_price: float | None = None
+    total: float | None = None
+    created_at: str | None = None
 
 
 class ShoppingCartOut(BaseModel):
+    id: str | None = None
     items: list[CartItemOut]
     total_quantity: int
     subtotal: float
+    total: float | None = None
+    currency_code: str = "cny"
+    region: dict = Field(default_factory=lambda: {"id": "reg_cny", "currency_code": "cny"})
+    promotions: list[dict] = Field(default_factory=list)
+    shipping_methods: list[dict] = Field(default_factory=list)
 
 
 class PaymentCreate(BaseModel):
@@ -105,10 +141,10 @@ class PhoneOut(BaseModel):
 
 
 class AddressOut(BaseModel):
-    street_address: str
+    street: str
     city: str
     state: str
-    zip_code: str
+    postal_code: str
     country: str
 
 
@@ -157,3 +193,21 @@ class AddressUpdate(BaseModel):
     postal_code: str | None = None
     country: str | None = None
     is_default_shipping: bool | None = None
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: AccountOut
+
+
+class AccountUpdate(BaseModel):
+    first_name: str | None = None
+    last_name: str | None = None
+    phone_number: str | None = None
+    phone_country_code: str | None = None
+
+
+class AccountRole(BaseModel):
+    """Role claim embedded in JWT for frontend authorization."""
+    role: str = "customer"  # "customer", "manager", or "admin"

@@ -9,33 +9,13 @@ import User from "@modules/common/icons/user"
 import MapPin from "@modules/common/icons/map-pin"
 import Package from "@modules/common/icons/package"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import type {
-  BackendAddress,
-  BackendCart,
-  BackendCartLineItem,
-  BackendCollection,
-  BackendCustomer,
-  BackendOrder,
-  BackendOrderLineItem,
-  BackendPaymentSession,
-  BackendPrice,
-  BackendProduct,
-  BackendProductCategory,
-  BackendProductImage,
-  BackendProductListParams,
-  BackendProductOption,
-  BackendProductVariant,
-  BackendPromotion,
-  BackendRecord,
-  BackendRegion,
-  BackendShippingOption,
-} from "types/backend"
+import type { Account } from "types/backend"
 import { signout } from "@lib/data/customer"
 
 const AccountNav = ({
   customer,
 }: {
-  customer: BackendCustomer | null
+  customer: Account | null
 }) => {
   const route = usePathname()
   const { countryCode } = useParams() as { countryCode: string }
@@ -61,7 +41,7 @@ const AccountNav = ({
         ) : (
           <>
             <div className="text-xl-semi mb-4 px-8">
-              Hello {customer?.first_name}
+              Hello {customer?.name?.first_name}
             </div>
             <div className="text-base-regular">
               <ul>

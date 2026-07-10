@@ -33,7 +33,7 @@ import { Locale } from "@lib/data/locales"
 
 const SideMenuItems = {
   Home: "/",
-  Store: "/store",
+  Shop: "/shop",
   Account: "/account",
   Cart: "/cart",
 }
@@ -146,8 +146,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                         />
                       </div>
                       <Text className="flex justify-between txt-compact-small">
-                        漏 {new Date().getFullYear()} Medusa Store. All rights
-                        reserved.
+                        (c) {new Date().getFullYear()} Shopping Web. All rights reserved.
                       </Text>
                     </div>
                   </div>

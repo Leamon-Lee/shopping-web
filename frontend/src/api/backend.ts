@@ -1,24 +1,42 @@
+import { cookies } from "next/headers"
 import type {
-  BackendAccount,
-  BackendAddress,
-  BackendOrder,
-  BackendOrderPayload,
-  BackendProduct,
-  BackendProductCategory,
-  BackendProductFormPayload,
-  BackendRegion,
-  BackendShoppingCart,
-} from "../types/backend"
+  Account,
+  Address,
+  HallPayload,
+  Order,
+  Product,
+  Category,
+  ShoppingCart,
+  TokenResponse,
+} from "types/backend"
 
 const BACKEND_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL ||
-  "http://localhost:8001"
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8001"
+
+const TOKEN_COOKIE = "shopping_token"
+
+async function getAuthHeaders(): Promise<Record<string, string>> {
+  const headers: Record<string, string> = {
+    "content-type": "application/json",
+  }
+  try {
+    const cookieStore = await cookies()
+    const token = cookieStore.get(TOKEN_COOKIE)?.value
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`
+    }
+  } catch {
+    // cookies() throws outside of server context — skip auth
+  }
+  return headers
+}
 
 async function backendFetch<T>(path: string, init?: RequestInit): Promise<T> {
+  const headers = await getAuthHeaders()
   const response = await fetch(`${BACKEND_URL}${path}`, {
     ...init,
     headers: {
-      "content-type": "application/json",
+      ...headers,
       ...(init?.headers ?? {}),
     },
     cache: "no-store",
@@ -38,46 +56,70 @@ async function backendFetch<T>(path: string, init?: RequestInit): Promise<T> {
   return response.json() as Promise<T>
 }
 
-export async function listRegions(): Promise<BackendRegion[]> {
-  return backendFetch<BackendRegion[]>("/regions")
+// ── Regions ──────────────────────────────────────────────────────────
+
+export async function listRegions() {
+  return backendFetch<Record<string, unknown>[]>("/regions")
 }
 
-export async function getRegion(regionId: string): Promise<BackendRegion> {
-  return backendFetch<BackendRegion>(`/regions/${regionId}`)
+export async function getRegion(regionId: string) {
+  return backendFetch<Record<string, unknown>>(`/regions/${regionId}`)
 }
 
-export async function listProducts(): Promise<BackendProduct[]> {
-  return backendFetch<BackendProduct[]>("/products")
+// ── Products ─────────────────────────────────────────────────────────
+
+export async function listProducts(shop?: string, q?: string, limit?: number, offset?: number): Promise<Product[]> {
+  const params = new URLSearchParams()
+  if (shop) params.set("shop", shop)
+  if (q) params.set("q", q)
+  if (limit !== undefined) params.set("limit", String(limit))
+  if (offset !== undefined) params.set("offset", String(offset))
+  const query = params.toString() ? `?${params.toString()}` : ""
+  return backendFetch<Product[]>(`/shop${query}`)
 }
 
-export async function getProduct(productName: string): Promise<BackendProduct> {
-  return backendFetch<BackendProduct>(
-    `/products/${encodeURIComponent(productName)}`
-  )
+export async function searchProducts(q: string, limit?: number): Promise<Product[]> {
+  const params = new URLSearchParams({ q })
+  if (limit !== undefined) params.set("limit", String(limit))
+  return backendFetch<Product[]>(`/shop/search?${params.toString()}`)
 }
 
-export async function createProduct(
-  payload: BackendProductFormPayload
-): Promise<BackendProduct> {
-  return backendFetch<BackendProduct>("/products", {
+export async function getHall(): Promise<HallPayload> {
+  return backendFetch<HallPayload>("/hall")
+}
+
+export async function getProduct(productName: string): Promise<Product> {
+  return backendFetch<Product>(`/shop/${encodeURIComponent(productName)}`)
+}
+
+export async function createProduct(payload: {
+  name: string
+  description: string
+  price: number
+  available_item_count: number
+  category: { name: string; description: string }
+}): Promise<Product> {
+  return backendFetch<Product>("/shop", {
     method: "POST",
     body: JSON.stringify(payload),
   })
 }
 
-export async function listCategories(): Promise<BackendProductCategory[]> {
-  return backendFetch<BackendProductCategory[]>("/products/categories")
+export async function listCategories(): Promise<Category[]> {
+  return backendFetch<Category[]>("/shop/categories")
 }
 
-export async function getCart(): Promise<BackendShoppingCart> {
-  return backendFetch<BackendShoppingCart>("/cart")
+// ── Cart ─────────────────────────────────────────────────────────────
+
+export async function getCart(): Promise<ShoppingCart> {
+  return backendFetch<ShoppingCart>("/cart")
 }
 
 export async function addCartItem(payload: {
   product_name: string
   quantity: number
-}): Promise<BackendShoppingCart> {
-  return backendFetch<BackendShoppingCart>("/cart/items", {
+}): Promise<ShoppingCart> {
+  return backendFetch<ShoppingCart>("/cart/items", {
     method: "POST",
     body: JSON.stringify(payload),
   })
@@ -86,8 +128,8 @@ export async function addCartItem(payload: {
 export async function updateCartItem(
   productName: string,
   quantity: number
-): Promise<BackendShoppingCart> {
-  return backendFetch<BackendShoppingCart>(
+): Promise<ShoppingCart> {
+  return backendFetch<ShoppingCart>(
     `/cart/items/${encodeURIComponent(productName)}`,
     {
       method: "PATCH",
@@ -96,108 +138,108 @@ export async function updateCartItem(
   )
 }
 
-export async function deleteCartItem(
-  productName: string
-): Promise<BackendShoppingCart> {
-  return backendFetch<BackendShoppingCart>(
+export async function deleteCartItem(productName: string): Promise<ShoppingCart> {
+  return backendFetch<ShoppingCart>(
     `/cart/items/${encodeURIComponent(productName)}`,
     { method: "DELETE" }
   )
 }
 
-export async function placeOrder(
-  payload: BackendOrderPayload = {}
-): Promise<BackendOrder> {
-  return backendFetch<BackendOrder>("/orders", {
+// ── Orders ───────────────────────────────────────────────────────────
+
+export async function placeOrder(payload: {
+  order_number?: string
+  items?: Array<{ product_name: string; quantity: number }>
+  payment?: { amount: number; currency: string }
+} = {}): Promise<Order> {
+  return backendFetch<Order>("/orders", {
     method: "POST",
     body: JSON.stringify(payload),
   })
 }
 
-export async function listOrders(): Promise<BackendOrder[]> {
-  return backendFetch<BackendOrder[]>("/orders")
+export async function listOrders(): Promise<Order[]> {
+  return backendFetch<Order[]>("/orders")
 }
 
-export async function getOrder(orderNumber: string): Promise<BackendOrder> {
-  return backendFetch<BackendOrder>(`/orders/${encodeURIComponent(orderNumber)}`)
+export async function getOrder(orderNumber: string): Promise<Order> {
+  return backendFetch<Order>(`/orders/${encodeURIComponent(orderNumber)}`)
 }
+
+// ── Auth ─────────────────────────────────────────────────────────────
 
 export async function login(payload: {
   email: string
   password: string
-}): Promise<BackendAccount> {
-  return backendFetch<BackendAccount>("/accounts/login", {
+}): Promise<TokenResponse> {
+  return backendFetch<TokenResponse>("/accounts/login", {
     method: "POST",
     body: JSON.stringify(payload),
   })
 }
 
-export async function registerAccount(payload: Record<string, any>): Promise<BackendAccount> {
-  return backendFetch<BackendAccount>("/accounts/register", {
+export async function registerAccount(payload: Record<string, unknown>): Promise<Account> {
+  return backendFetch<Account>("/accounts/register", {
     method: "POST",
     body: JSON.stringify(payload),
   })
 }
 
-export async function retrieveCustomer(
-  email: string
-): Promise<BackendAccount> {
-  return backendFetch<BackendAccount>(
-    `/accounts/me?email=${encodeURIComponent(email)}`
-  )
+export async function retrieveCustomer(): Promise<Account> {
+  return backendFetch<Account>("/accounts/me")
 }
 
-export async function updateCustomer(
-  email: string,
-  payload: Record<string, any>
-): Promise<BackendAccount> {
-  const params = new URLSearchParams({ email, ...payload })
-  return backendFetch<BackendAccount>(`/accounts/me?${params.toString()}`, {
+export async function updateCustomer(payload: Record<string, unknown>): Promise<Account> {
+  return backendFetch<Account>("/accounts/me", {
     method: "PUT",
+    body: JSON.stringify(payload),
   })
 }
 
-export async function listCustomerAddresses(
-  email: string
-): Promise<BackendAddress[]> {
-  return backendFetch<BackendAddress[]>(
-    `/accounts/me/addresses?email=${encodeURIComponent(email)}`
-  )
+export async function listCustomerAddresses(): Promise<Address[]> {
+  return backendFetch<Address[]>("/accounts/me/addresses")
 }
 
-export async function addCustomerAddress(
-  email: string,
-  payload: BackendAddress
-): Promise<BackendAddress[]> {
-  return backendFetch<BackendAddress[]>(
-    `/accounts/me/addresses?email=${encodeURIComponent(email)}`,
-    {
-      method: "POST",
-      body: JSON.stringify(payload),
-    }
-  )
+export async function addCustomerAddress(payload: {
+  street: string
+  city: string
+  state?: string
+  postal_code?: string
+  country?: string
+  is_default_shipping?: boolean
+}): Promise<Address[]> {
+  return backendFetch<Address[]>("/accounts/me/addresses", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  })
 }
 
 export async function updateCustomerAddress(
-  email: string,
   addressId: string,
-  payload: Partial<BackendAddress>
-): Promise<BackendAddress[]> {
-  return backendFetch<BackendAddress[]>(
-    `/accounts/me/addresses/${addressId}?email=${encodeURIComponent(email)}`,
-    {
-      method: "PUT",
-      body: JSON.stringify(payload),
-    }
-  )
+  payload: Record<string, unknown>
+): Promise<Address[]> {
+  return backendFetch<Address[]>(`/accounts/me/addresses/${addressId}`, {
+    method: "PUT",
+    body: JSON.stringify(payload),
+  })
 }
 
-export async function deleteCustomerAddress(
-  email: string,
-  addressId: string
-): Promise<BackendAddress[]> {
-  return backendFetch<BackendAddress[]>(
-    `/accounts/me/addresses/${addressId}?email=${encodeURIComponent(email)}`,
-    { method: "DELETE" }
-  )
+export async function deleteCustomerAddress(addressId: string): Promise<Address[]> {
+  return backendFetch<Address[]>(`/accounts/me/addresses/${addressId}`, {
+    method: "DELETE",
+  })
+}
+
+// ── Panel dashboards ─────────────────────────────────────────────────
+
+export async function getAdminPanel(): Promise<Record<string, unknown>> {
+  return backendFetch<Record<string, unknown>>("/admin")
+}
+
+export async function getManagerPanel(): Promise<Record<string, unknown>> {
+  return backendFetch<Record<string, unknown>>("/manager")
+}
+
+export async function getCustomerPanel(): Promise<Record<string, unknown>> {
+  return backendFetch<Record<string, unknown>>("/customer")
 }

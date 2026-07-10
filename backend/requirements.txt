@@ -17,6 +17,9 @@ minio>=7.2
 # 密码哈希
 passlib[bcrypt]>=1.7
 
+# JWT 认证
+python-jose[cryptography]>=3.3
+
 # 环境变量管理
 python-dotenv>=1.0
 
