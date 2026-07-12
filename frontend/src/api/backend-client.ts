@@ -8,13 +8,15 @@ import type {
   Address,
   HallPayload,
   Order,
+  PaginatedHallProducts,
   Product,
   Category,
   ShoppingCart,
   TokenResponse,
 } from "types/backend"
 
-const BACKEND_URL =
+const BACKEND_PROXY_URL = "/api/backend"
+const DIRECT_BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8001"
 
 function getClientToken(): string | null {
@@ -33,24 +35,40 @@ async function clientFetch<T>(path: string, init?: RequestInit): Promise<T> {
     headers["Authorization"] = `Bearer ${token}`
   }
 
-  const response = await fetch(`${BACKEND_URL}${path}`, {
-    ...init,
-    headers,
-    cache: "no-store",
-  })
+  const urls = [`${BACKEND_PROXY_URL}${path}`, `${DIRECT_BACKEND_URL}${path}`]
+  let lastError: Error | null = null
 
-  if (!response.ok) {
-    let detail = ""
+  for (const url of urls) {
     try {
-      const body = await response.json()
-      detail = typeof body.detail === "string" ? body.detail : JSON.stringify(body.detail)
-    } catch {
-      // ignore parse errors
+      const response = await fetch(url, {
+        ...init,
+        headers,
+        cache: "no-store",
+      })
+
+      if (!response.ok) {
+        let detail = ""
+        try {
+          const body = await response.json()
+          detail =
+            typeof body.detail === "string"
+              ? body.detail
+              : JSON.stringify(body.detail)
+        } catch {
+          // ignore parse errors
+        }
+        throw new Error(
+          detail || `Backend request failed: ${response.status} ${path}`
+        )
+      }
+
+      return response.json() as Promise<T>
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error))
     }
-    throw new Error(detail || `Backend request failed: ${response.status} ${path}`)
   }
 
-  return response.json() as Promise<T>
+  throw lastError ?? new Error(`Backend request failed: ${path}`)
 }
 
 // ── Public read endpoints ────────────────────────────────────────────
@@ -73,6 +91,23 @@ export async function searchProducts(q: string, limit?: number): Promise<Product
 
 export async function getHall(): Promise<HallPayload> {
   return clientFetch<HallPayload>("/hall")
+}
+
+export async function getHallProducts(params?: {
+  q?: string
+  shop?: string
+  category?: string
+  limit?: number
+  offset?: number
+}): Promise<PaginatedHallProducts> {
+  const sp = new URLSearchParams()
+  if (params?.q) sp.set("q", params.q)
+  if (params?.shop) sp.set("shop", params.shop)
+  if (params?.category) sp.set("category", params.category)
+  sp.set("limit", String(params?.limit ?? 24))
+  sp.set("offset", String(params?.offset ?? 0))
+  const qs = sp.toString()
+  return clientFetch<PaginatedHallProducts>(`/hall/products${qs ? `?${qs}` : ""}`)
 }
 
 export async function getProduct(productName: string): Promise<Product> {

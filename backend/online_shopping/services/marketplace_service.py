@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import re
-from collections import defaultdict
 
 from online_shopping.api.mappers import product_to_out
 from online_shopping.repositories.catalog_repository import CatalogRepository
@@ -22,6 +21,11 @@ def stable_unique(values: list[str]) -> list[str]:
     return output
 
 
+SECTION_PRODUCT_CAP = 8
+DEFAULT_PAGE_LIMIT = 24
+MAX_PAGE_LIMIT = 60
+
+
 class MarketplaceService:
     def __init__(
         self,
@@ -32,24 +36,18 @@ class MarketplaceService:
         self.marketplace_repository = marketplace_repository
 
     async def hall_payload(self) -> dict:
-        products = await self.catalog_repository.list_products()
+        """Return marketplace metadata, shops, categories, and capped sections.
+
+        The full product catalog is no longer included — the frontend fetches
+        paginated product batches via GET /hall/products.
+        """
         shop_summaries = await self.marketplace_repository.list_shop_summaries()
         product_shops = await self.marketplace_repository.product_shop_map()
 
-        enriched_products = []
-        products_by_shop: dict[str, list[dict]] = defaultdict(list)
+        # Build category list from all shop categories
         category_names: list[str] = []
-
-        for product in products:
-            payload = product_to_out(product).model_dump()
-            shop_meta = product_shops.get(str(product.id), {})
-            payload["shop"] = shop_meta
-            enriched_products.append(payload)
-
-            if shop_meta.get("shop_name"):
-                products_by_shop[shop_meta["shop_name"]].append(payload)
-            if product.category:
-                category_names.append(product.category.name)
+        for shop in shop_summaries:
+            category_names.extend(shop.categories)
 
         shops = [
             {
@@ -62,24 +60,83 @@ class MarketplaceService:
             for shop in shop_summaries
         ]
 
-        sections = [
-            {
-                "title": shop["name"],
-                "slug": shop["slug"],
-                "shop": shop,
-                "products": products_by_shop.get(shop["name"], [])[:8],
-            }
-            for shop in shops
-            if products_by_shop.get(shop["name"])
-        ]
+        # Build capped sections: up to SECTION_PRODUCT_CAP products per shop
+        sections: list[dict] = []
+        for shop in shops:
+            shop_products = await self.catalog_repository.list_products_paginated(
+                shop=shop["slug"],
+                limit=SECTION_PRODUCT_CAP,
+                offset=0,
+            )
+            if shop_products:
+                enriched = []
+                for product in shop_products:
+                    payload = product_to_out(product).model_dump()
+                    shop_meta = product_shops.get(str(product.id), {})
+                    payload["shop"] = shop_meta
+                    enriched.append(payload)
+                sections.append({
+                    "title": shop["name"],
+                    "slug": shop["slug"],
+                    "shop": shop,
+                    "products": enriched,
+                })
+
+        # Marketplace-level stats
+        product_count = sum(shop["product_count"] for shop in shops)
 
         return {
             "route": "/hall",
-            "products": enriched_products,
             "shops": shops,
             "categories": [
                 {"name": name, "slug": slugify(name)}
                 for name in stable_unique(category_names)
             ],
             "sections": sections,
+            "product_count": product_count,
+            "shop_count": len(shops),
+            "category_count": len(stable_unique(category_names)),
+        }
+
+    async def hall_products_paginated(
+        self,
+        *,
+        q: str | None = None,
+        shop: str | None = None,
+        category: str | None = None,
+        limit: int = DEFAULT_PAGE_LIMIT,
+        offset: int = 0,
+    ) -> dict:
+        """Return a paginated page of products with marketplace shop metadata."""
+        limit = max(1, min(limit, MAX_PAGE_LIMIT))
+        offset = max(0, offset)
+
+        products = await self.catalog_repository.list_products_paginated(
+            shop=shop,
+            q=q,
+            category=category,
+            limit=limit,
+            offset=offset,
+        )
+        total = await self.catalog_repository.count_products(
+            shop=shop,
+            q=q,
+            category=category,
+        )
+
+        product_shops = await self.marketplace_repository.product_shop_map()
+
+        enriched = []
+        for product in products:
+            payload = product_to_out(product).model_dump()
+            shop_meta = product_shops.get(str(product.id), {})
+            payload["shop"] = shop_meta
+            enriched.append(payload)
+
+        return {
+            "products": enriched,
+            "count": total,
+            "limit": limit,
+            "offset": offset,
+            "has_more": offset + limit < total,
         }

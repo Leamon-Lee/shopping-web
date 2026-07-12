@@ -10,7 +10,7 @@ import { FormEvent, useState } from "react"
 function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const redirect = searchParams.get("redirect") || "/customer"
+  const redirect = searchParams.get("redirect") || "/hall"
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
@@ -22,11 +22,12 @@ function LoginForm() {
     const formData = new FormData(event.currentTarget)
     const result = await login(null, formData)
 
-    if (result) {
-      setError(result)
+    if (result?.error) {
+      setError(result.error)
       setLoading(false)
     } else {
-      router.push(redirect)
+      router.push(searchParams.has("redirect") ? redirect : result?.redirectTo ?? redirect)
+      router.refresh()
     }
   }
 

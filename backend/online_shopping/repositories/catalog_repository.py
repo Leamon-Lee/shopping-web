@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from sqlalchemy import String, cast, or_, select, text
+from sqlalchemy import String, cast, func, or_, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -32,6 +32,91 @@ class CatalogRepository:
 
         result = await self.db.execute(query)
         return list(result.scalars().all())
+
+    async def list_products_paginated(
+        self,
+        *,
+        shop: str | None = None,
+        q: str | None = None,
+        category: str | None = None,
+        limit: int = 24,
+        offset: int = 0,
+    ) -> list[Product]:
+        """Paginated product listing with optional DB-level filters."""
+        product_ids: set[str] | None = None
+        if shop:
+            ids = await self._product_ids_for_shop(shop)
+            if not ids:
+                return []
+            product_ids = set(ids)
+
+        query = (
+            select(Product)
+            .options(
+                selectinload(Product.category),
+                selectinload(Product.images),
+                selectinload(Product.variants),
+            )
+            .order_by(Product.created_at.desc())
+        )
+
+        if product_ids is not None:
+            query = query.where(Product.id.in_(product_ids))
+
+        if q:
+            search_term = f"%{q.strip().lower()}%"
+            query = query.where(
+                or_(
+                    func.lower(Product.name).like(search_term),
+                    func.lower(Product.description).like(search_term),
+                )
+            )
+
+        if category:
+            query = query.join(ProductCategory, Product.category_id == ProductCategory.id).where(
+                func.lower(ProductCategory.name) == category.strip().lower()
+            )
+
+        query = query.offset(offset).limit(limit)
+        result = await self.db.execute(query)
+        return list(result.scalars().all())
+
+    async def count_products(
+        self,
+        *,
+        shop: str | None = None,
+        q: str | None = None,
+        category: str | None = None,
+    ) -> int:
+        """Count products matching the given filters."""
+        product_ids: set[str] | None = None
+        if shop:
+            ids = await self._product_ids_for_shop(shop)
+            if not ids:
+                return 0
+            product_ids = set(ids)
+
+        query = select(func.count(Product.id))
+
+        if product_ids is not None:
+            query = query.where(Product.id.in_(product_ids))
+
+        if q:
+            search_term = f"%{q.strip().lower()}%"
+            query = query.where(
+                or_(
+                    func.lower(Product.name).like(search_term),
+                    func.lower(Product.description).like(search_term),
+                )
+            )
+
+        if category:
+            query = query.join(ProductCategory, Product.category_id == ProductCategory.id).where(
+                func.lower(ProductCategory.name) == category.strip().lower()
+            )
+
+        result = await self.db.execute(query)
+        return result.scalar_one()
 
     async def _product_ids_for_shop(self, shop: str) -> list[str]:
         normalized = shop.strip().lower()

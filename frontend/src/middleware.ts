@@ -11,6 +11,8 @@ const PUBLIC_PATTERNS = [
   /^\/products/,                    // product browsing
   /^\/categories/,                  // category browsing
   /^\/shops/,                       // shop browsing
+  /^\/catlog/,                      // category catalog browsing
+  /^\/catalog/,                     // category catalog browsing
   /^\/shop/,                        // legacy shop route
   /^\/cart/,                        // cart (guest allowed)
   /^\/auth/,                        // auth pages

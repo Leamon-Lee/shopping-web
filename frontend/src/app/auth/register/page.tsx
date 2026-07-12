@@ -19,11 +19,12 @@ export default function RegisterPage() {
     const formData = new FormData(event.currentTarget)
     const result = await signup(null, formData)
 
-    if (result) {
-      setError(result)
+    if (result?.error) {
+      setError(result.error)
       setLoading(false)
     } else {
-      router.push("/customer")
+      router.push(result?.redirectTo ?? "/hall")
+      router.refresh()
     }
   }
 
