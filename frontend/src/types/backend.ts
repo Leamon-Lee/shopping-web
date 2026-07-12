@@ -263,10 +263,20 @@ export interface HallSection {
 
 export interface HallPayload {
   route: "/hall"
-  products: Product[]
   shops: ShopSummary[]
   categories: Array<{ name: string; slug: string }>
   sections: HallSection[]
+  product_count: number
+  shop_count: number
+  category_count: number
+}
+
+export interface PaginatedHallProducts {
+  products: Product[]
+  count: number
+  limit: number
+  offset: number
+  has_more: boolean
 }
 
 // ── Region ───────────────────────────────────────────────────────────

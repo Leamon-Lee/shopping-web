@@ -4,6 +4,7 @@ import type {
   Address,
   HallPayload,
   Order,
+  PaginatedHallProducts,
   Product,
   Category,
   ShoppingCart,
@@ -86,6 +87,23 @@ export async function searchProducts(q: string, limit?: number): Promise<Product
 
 export async function getHall(): Promise<HallPayload> {
   return backendFetch<HallPayload>("/hall")
+}
+
+export async function getHallProducts(params?: {
+  q?: string
+  shop?: string
+  category?: string
+  limit?: number
+  offset?: number
+}): Promise<PaginatedHallProducts> {
+  const searchParams = new URLSearchParams()
+  if (params?.q) searchParams.set("q", params.q)
+  if (params?.shop) searchParams.set("shop", params.shop)
+  if (params?.category) searchParams.set("category", params.category)
+  if (params?.limit !== undefined) searchParams.set("limit", String(params.limit))
+  if (params?.offset !== undefined) searchParams.set("offset", String(params.offset))
+  const query = searchParams.toString() ? `?${searchParams.toString()}` : ""
+  return backendFetch<PaginatedHallProducts>(`/hall/products${query}`)
 }
 
 export async function getProduct(productName: string): Promise<Product> {

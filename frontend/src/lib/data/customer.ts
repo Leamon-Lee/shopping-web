@@ -8,6 +8,15 @@ const BACKEND_URL =
 
 const TOKEN_COOKIE = "shopping_token"
 
+export type AuthActionResult = {
+  error?: string
+  redirectTo?: string
+}
+
+function customerHallPath(userName: string) {
+  return `/customer/${encodeURIComponent(userName)}/hall`
+}
+
 async function backendFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const cookieStore = await cookies()
   const token = cookieStore.get(TOKEN_COOKIE)?.value
@@ -46,6 +55,7 @@ async function setTokenCookie(token: string) {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
+    path: "/",
     maxAge: 60 * 60 * 24 * 7, // 7 days
   })
 }
@@ -57,7 +67,10 @@ async function getToken(): Promise<string | null> {
 
 // ── Public auth actions ──────────────────────────────────────────────
 
-export async function login(_prevState: unknown, formData: FormData): Promise<string | null> {
+export async function login(
+  _prevState: unknown,
+  formData: FormData
+): Promise<AuthActionResult | null> {
   const email = formData.get("email")?.toString() ?? ""
   const password = formData.get("password")?.toString() ?? ""
 
@@ -67,13 +80,16 @@ export async function login(_prevState: unknown, formData: FormData): Promise<st
       body: JSON.stringify({ email, password }),
     })
     await setTokenCookie(result.access_token)
-    return null
+    return { redirectTo: customerHallPath(result.user.user_name) }
   } catch (e: unknown) {
-    return e instanceof Error ? e.message : "Login failed."
+    return { error: e instanceof Error ? e.message : "Login failed." }
   }
 }
 
-export async function signup(_prevState: unknown, formData: FormData): Promise<string | null> {
+export async function signup(
+  _prevState: unknown,
+  formData: FormData
+): Promise<AuthActionResult | null> {
   const payload: Record<string, string> = {}
   formData.forEach((value, key) => {
     payload[key] = value.toString()
@@ -105,15 +121,18 @@ export async function signup(_prevState: unknown, formData: FormData): Promise<s
       }),
     })
     await setTokenCookie(loginResult.access_token)
-    return null
+    return { redirectTo: customerHallPath(loginResult.user.user_name) }
   } catch (e: unknown) {
-    return e instanceof Error ? e.message : "Registration failed."
+    return { error: e instanceof Error ? e.message : "Registration failed." }
   }
 }
 
 export async function signout() {
   const store = await cookies()
-  store.delete(TOKEN_COOKIE)
+  store.delete({
+    name: TOKEN_COOKIE,
+    path: "/",
+  })
 }
 
 // ── Authenticated actions ────────────────────────────────────────────

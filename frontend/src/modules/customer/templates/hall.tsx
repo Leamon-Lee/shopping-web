@@ -1,275 +1,429 @@
 "use client"
 
-import { Badge, Button } from "@medusajs/ui"
+import { Badge, Button, clx } from "@medusajs/ui"
 import Input from "@modules/common/components/input"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import BackendProductPreview from "@modules/products/components/backend-product-preview"
-import { useMemo, useState } from "react"
+import { useIntersection } from "@lib/hooks/use-in-view"
+import { useSearchParams } from "next/navigation"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { getHallProducts } from "../../../api/backend-client"
 import type {
+  Account,
   BackendHallPayload,
-  BackendHallSection,
   BackendProduct,
-  BackendShopSummary,
 } from "../../../types/backend"
 import {
   backendCategoryName,
   backendProductName,
+  backendProductPrice,
+  formatBackendMoney,
 } from "../../../lib/backend-native"
+import { productHref } from "../../../lib/marketplace-routes"
 
-const HallTemplate = ({ data }: { data: BackendHallPayload }) => {
-  const [query, setQuery] = useState("")
-  const [shopSlug, setShopSlug] = useState("all")
-  const [categorySlug, setCategorySlug] = useState("all")
+const BATCH_SIZE = 30
+const SEARCH_DEBOUNCE_MS = 300
+const IMAGE_PRELOAD_COUNT = 18
 
-  const shopBySlug = useMemo(
-    () => new Map(data.shops.map((shop) => [shop.slug, shop])),
-    [data.shops]
-  )
+function uniqueProducts(products: BackendProduct[]) {
+  const seen = new Set<string>()
 
-  const filteredProducts = useMemo(() => {
-    const normalized = query.trim().toLowerCase()
-    const selectedShop = shopBySlug.get(shopSlug)
-    const selectedCategory = data.categories.find(
-      (category) => category.slug === categorySlug
-    )
+  return products.filter((product) => {
+    const key = product.id ?? backendProductName(product)
+    if (seen.has(key)) return false
 
-    return data.products.filter((product) => {
-      const productName = backendProductName(product)
-      const categoryName = backendCategoryName(product.category)
-      const shopName = product.shop?.shop_name ?? ""
-      const searchText = [productName, categoryName, shopName]
-        .join(" ")
-        .toLowerCase()
+    seen.add(key)
+    return true
+  })
+}
 
-      return (
-        (!normalized || searchText.includes(normalized)) &&
-        (!selectedShop || shopName === selectedShop.name) &&
-        (!selectedCategory || categoryName === selectedCategory.name)
+function distributeIntoColumns(products: BackendProduct[], columnCount: number) {
+  const columns: Array<Array<{ product: BackendProduct; index: number }>> =
+    Array.from({ length: columnCount }, () => [])
+
+  products.forEach((product, index) => {
+    columns[index % columnCount].push({ product, index })
+  })
+
+  return columns
+}
+
+function useResponsiveColumnCount() {
+  const [columnCount, setColumnCount] = useState(5)
+
+  useEffect(() => {
+    const updateColumnCount = () => {
+      if (window.innerWidth >= 1280) {
+        setColumnCount(5)
+      } else if (window.innerWidth >= 1024) {
+        setColumnCount(4)
+      } else {
+        setColumnCount(2)
+      }
+    }
+
+    updateColumnCount()
+    window.addEventListener("resize", updateColumnCount)
+
+    return () => window.removeEventListener("resize", updateColumnCount)
+  }, [])
+
+  return columnCount
+}
+
+const HallTemplate = ({
+  data,
+  initialProducts: serverInitialProducts,
+  initialHasMore,
+  currentUser,
+}: {
+  data: BackendHallPayload
+  initialProducts?: BackendProduct[]
+  initialHasMore?: boolean
+  currentUser?: Account | null
+}) => {
+  const searchParams = useSearchParams()
+  const shops = Array.isArray(data?.shops) ? data.shops : []
+  const categories = Array.isArray(data?.categories) ? data.categories : []
+  const initialShopSlug = searchParams.get("shop") ?? "all"
+  const initialCategorySlug = searchParams.get("category") ?? "all"
+  const customerBasePath = currentUser
+    ? `/customer/${encodeURIComponent(currentUser.user_name)}`
+    : null
+  const hallPath = customerBasePath ? `${customerBasePath}/hall` : "/hall"
+  const shopsPath = currentUser
+    ? `/${encodeURIComponent(currentUser.user_name)}/shops`
+    : "/shops"
+  const catlogPath = currentUser
+    ? `/${encodeURIComponent(currentUser.user_name)}/catlog`
+    : "/catlog"
+  const initialProducts = useMemo(
+    () => {
+      if (Array.isArray(serverInitialProducts) && serverInitialProducts.length) {
+        return serverInitialProducts
+      }
+
+      return (Array.isArray(data?.sections) ? data.sections : []).flatMap(
+        (section) => section.products
       )
-    })
-  }, [categorySlug, data.categories, data.products, query, shopBySlug, shopSlug])
+    },
+    [data, serverInitialProducts]
+  )
+  const productCount = data?.product_count ?? 0
 
-  const filteredSections = useMemo(
-    () =>
-      data.sections
-        .map((section) => ({
-          ...section,
-          products: section.products.filter((product) =>
-            filteredProducts.some((item) => item.id === product.id)
-          ),
-        }))
-        .filter((section) => section.products.length > 0),
-    [data.sections, filteredProducts]
+  const [query, setQuery] = useState("")
+  const [debouncedQuery, setDebouncedQuery] = useState("")
+  const [shopSlug, setShopSlug] = useState(initialShopSlug)
+  const [categorySlug, setCategorySlug] = useState(initialCategorySlug)
+  const [products, setProducts] = useState<BackendProduct[]>(initialProducts)
+  const [totalCount, setTotalCount] = useState(productCount)
+  const [offset, setOffset] = useState(initialProducts.length)
+  const [hasMore, setHasMore] = useState(
+    initialHasMore ?? initialProducts.length < productCount
+  )
+  const [loading, setLoading] = useState(false)
+  const [initialLoad, setInitialLoad] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const sentinelRef = useRef<HTMLDivElement | null>(null)
+  const loadingRef = useRef(false)
+  const isVisible = useIntersection(sentinelRef, "900px")
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(query.trim())
+    }, SEARCH_DEBOUNCE_MS)
+
+    return () => clearTimeout(timer)
+  }, [query])
+
+  const fetchPage = useCallback(
+    async (nextOffset: number) => {
+      if (loadingRef.current) return
+
+      loadingRef.current = true
+      setLoading(true)
+      setError(null)
+
+      try {
+        const result = await getHallProducts({
+          q: debouncedQuery || undefined,
+          shop: shopSlug !== "all" ? shopSlug : undefined,
+          category: categorySlug !== "all" ? categorySlug : undefined,
+          limit: BATCH_SIZE,
+          offset: nextOffset,
+        })
+
+        setProducts((current) =>
+          nextOffset === 0
+            ? uniqueProducts(result.products)
+            : uniqueProducts([...current, ...result.products])
+        )
+        setTotalCount(result.count)
+        setOffset(nextOffset + result.products.length)
+        setHasMore(result.has_more)
+      } catch (err) {
+        if (nextOffset === 0) {
+          setProducts(initialProducts)
+          setOffset(initialProducts.length)
+          setHasMore(false)
+          setError(
+            initialProducts.length > 0
+              ? null
+              : err instanceof Error
+              ? err.message
+              : "Failed to load products"
+          )
+        } else {
+          setError(err instanceof Error ? err.message : "Failed to load more")
+        }
+      } finally {
+        loadingRef.current = false
+        setLoading(false)
+        setInitialLoad(false)
+      }
+    },
+    [categorySlug, debouncedQuery, initialProducts, shopSlug]
   )
 
-  const featuredProducts = filteredProducts.slice(0, 8)
+  useEffect(() => {
+    if (!debouncedQuery && shopSlug === "all" && categorySlug === "all") {
+      setProducts(initialProducts)
+      setTotalCount(productCount)
+      setOffset(initialProducts.length)
+      setHasMore(initialHasMore ?? initialProducts.length < productCount)
+      setInitialLoad(false)
+      setError(null)
+      return
+    }
+
+    setInitialLoad(false)
+    setProducts(initialProducts)
+    setOffset(0)
+    setHasMore(true)
+    void fetchPage(0)
+  }, [
+    categorySlug,
+    debouncedQuery,
+    fetchPage,
+    initialHasMore,
+    initialProducts,
+    productCount,
+    shopSlug,
+  ])
+
+  useEffect(() => {
+    if (isVisible && hasMore && !loading && !initialLoad) {
+      void fetchPage(offset)
+    }
+  }, [fetchPage, hasMore, initialLoad, isVisible, loading, offset])
+
+  useEffect(() => {
+    const loadNearBottom = () => {
+      if (!hasMore || initialLoad || loadingRef.current) return
+
+      const distanceToBottom =
+        document.documentElement.scrollHeight -
+        (window.scrollY + window.innerHeight)
+
+      if (distanceToBottom < 1200) {
+        void fetchPage(offset)
+      }
+    }
+
+    window.addEventListener("scroll", loadNearBottom, { passive: true })
+    window.addEventListener("resize", loadNearBottom)
+    loadNearBottom()
+
+    return () => {
+      window.removeEventListener("scroll", loadNearBottom)
+      window.removeEventListener("resize", loadNearBottom)
+    }
+  }, [fetchPage, hasMore, initialLoad, offset])
+
+  useEffect(() => {
+    products.slice(0, IMAGE_PRELOAD_COUNT).forEach((product) => {
+      const imageUrl = getProductImageUrl(product)
+      if (!imageUrl) return
+
+      const image = new window.Image()
+      image.decoding = "async"
+      image.src = imageUrl
+    })
+  }, [products])
+
+  const activeShopName = useMemo(
+    () => shops.find((shop) => shop.slug === shopSlug)?.name,
+    [shopSlug, shops]
+  )
+  const activeCategoryName = useMemo(
+    () => categories.find((category) => category.slug === categorySlug)?.name,
+    [categorySlug, categories]
+  )
+
+  const clearFilters = () => {
+    setQuery("")
+    setDebouncedQuery("")
+    setShopSlug("all")
+    setCategorySlug("all")
+  }
+
+  const activeFilterCount =
+    Number(Boolean(debouncedQuery)) +
+    Number(shopSlug !== "all") +
+    Number(categorySlug !== "all")
 
   return (
     <div className="min-h-screen bg-ui-bg-base text-ui-fg-base">
-      <header className="sticky top-0 inset-x-0 z-50 group">
-        <div className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">
-          <div className="content-container txt-xsmall-plus text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
-            <LocalizedClientLink href="/hall" className="text-ui-fg-base">
-              SHOPPING HALL
+      <header className="sticky inset-x-0 top-0 z-50 border-b border-ui-border-base bg-white">
+        <div className="content-container flex h-16 items-center justify-between text-small-regular text-ui-fg-subtle">
+          <LocalizedClientLink href={hallPath} className="text-ui-fg-base">
+            SHOPPING HALL
+          </LocalizedClientLink>
+          <nav className="hidden items-center gap-x-6 small:flex">
+            <LocalizedClientLink className="hover:text-ui-fg-base" href={hallPath}>
+              Hall
             </LocalizedClientLink>
-            <nav className="hidden items-center gap-x-6 small:flex">
-              <a className="hover:text-ui-fg-base" href="#shops">
-                Shops
-              </a>
-              <a className="hover:text-ui-fg-base" href="#categories">
-                Categories
-              </a>
-              <a className="hover:text-ui-fg-base" href="#products">
-                Products
-              </a>
-            </nav>
-            <div className="flex items-center gap-x-4">
+            <LocalizedClientLink className="hover:text-ui-fg-base" href={shopsPath}>
+              Shops
+            </LocalizedClientLink>
+            <LocalizedClientLink className="hover:text-ui-fg-base" href={catlogPath}>
+              Catlog
+            </LocalizedClientLink>
+          </nav>
+          <div className="flex items-center gap-x-4">
+            <LocalizedClientLink href="/cart" className="hover:text-ui-fg-base">
+              Cart
+            </LocalizedClientLink>
+            {currentUser ? (
               <LocalizedClientLink
-                href="/cart"
+                href={customerBasePath ?? "/customer"}
                 className="hover:text-ui-fg-base"
               >
-                Cart
+                Account
               </LocalizedClientLink>
+            ) : (
               <LocalizedClientLink
-                href="/sign-in/customer"
+                href="/auth/login"
                 className="hover:text-ui-fg-base"
               >
                 Sign in
               </LocalizedClientLink>
-            </div>
+            )}
           </div>
         </div>
       </header>
 
-      <main className="content-container py-12">
-        <section className="grid grid-cols-1 gap-8 border-b border-ui-border-base pb-12 small:grid-cols-[1fr_320px]">
-          <div>
-            <p className="txt-xsmall-plus uppercase text-ui-fg-muted">
-              Marketplace
-            </p>
-            <h1 className="mt-2 text-3xl-semi text-ui-fg-base">
-              Browse every shop in one hall
-            </h1>
-            <p className="mt-3 max-w-2xl text-base-regular text-ui-fg-subtle">
-              Search across Nike, Muji, Uniqlo, Xiaomi, Dell, Haier, and other
-              imported shops. Product data, shop index, images, inventory, and
-              categories are loaded from the backend database.
-            </p>
-            <div className="mt-6 max-w-2xl">
-              <Input
-                label="Search product, shop, or category"
-                name="hall-search"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-              />
-            </div>
-          </div>
-
-          <div className="rounded-rounded border border-ui-border-base bg-white p-5">
-            <h2 className="text-base-semi">Hall index</h2>
-            <div className="mt-4 grid grid-cols-2 gap-2 text-small-regular">
-              <Button variant="secondary" className="h-10 justify-start">
-                {data.shops.length} shops
-              </Button>
-              <Button variant="secondary" className="h-10 justify-start">
-                {data.products.length} products
-              </Button>
-              <Button variant="secondary" className="h-10 justify-start">
-                {data.categories.length} categories
-              </Button>
-              <Button variant="secondary" className="h-10 justify-start">
-                Backend live
-              </Button>
-            </div>
-            <p className="mt-4 text-small-regular text-ui-fg-muted">
-              The hall is the marketplace entry point. The shop route is used
-              for focused product browsing after a shop is selected.
-            </p>
-          </div>
-        </section>
-
-        <section id="shops" className="py-12 border-b border-ui-border-base">
-          <div className="mb-5 flex flex-col gap-3 small:flex-row small:items-end small:justify-between">
-            <div>
+      <main className="content-container py-8">
+        <section className="border-b border-ui-border-base pb-8">
+          <div className="flex flex-col gap-5 small:flex-row small:items-end small:justify-between">
+            <div className="max-w-3xl">
               <p className="txt-xsmall-plus uppercase text-ui-fg-muted">
-                Shops
+                Product discovery
               </p>
-              <h2 className="mt-2 text-xl-semi">Browse by shop</h2>
+              <h1 className="mt-2 text-3xl-semi text-ui-fg-base">
+                Recommended products from every shop
+              </h1>
+              <p className="mt-3 text-base-regular text-ui-fg-subtle">
+                Scroll the hall to keep loading products. The feed mixes shops
+                and categories so the homepage feels like a product showcase
+                instead of a shop directory.
+              </p>
             </div>
-            <Badge>{data.shops.length} active shops</Badge>
+            <div className="flex gap-2">
+              <Badge>{productCount} products</Badge>
+              <Badge>{shops.length} shops</Badge>
+            </div>
           </div>
-          <div className="grid grid-cols-1 gap-4 small:grid-cols-3 medium:grid-cols-4">
-            {data.shops.map((shop) => (
-              <ShopCard
-                key={shop.id}
-                shop={shop}
-                active={shopSlug === shop.slug}
-                onSelect={() => setShopSlug(shop.slug)}
-              />
-            ))}
-          </div>
-        </section>
 
-        <section
-          id="categories"
-          className="py-12 border-b border-ui-border-base"
-        >
-          <div className="mb-5">
-            <p className="txt-xsmall-plus uppercase text-ui-fg-muted">
-              Categories
-            </p>
-            <h2 className="mt-2 text-xl-semi">Product index</h2>
-          </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="mt-6 grid grid-cols-1 gap-3 small:grid-cols-[1fr_auto]">
+            <Input
+              label="Search products"
+              name="hall-search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+            />
             <Button
-              variant={categorySlug === "all" ? "primary" : "secondary"}
-              className="h-10"
-              onClick={() => setCategorySlug("all")}
+              variant="secondary"
+              className="h-10 self-end"
+              onClick={clearFilters}
+              disabled={activeFilterCount === 0}
             >
-              All categories
+              Clear
             </Button>
-            {data.categories.map((category) => (
-              <Button
-                key={category.slug}
-                variant={
-                  categorySlug === category.slug ? "primary" : "secondary"
-                }
-                className="h-10"
-                onClick={() => setCategorySlug(category.slug)}
-              >
-                {category.name}
-              </Button>
-            ))}
+          </div>
+
+          <div id="filters" className="mt-5 flex flex-col gap-4">
+            <FilterStrip
+              label="Shops"
+              allLabel="All shops"
+              value={shopSlug}
+              items={shops.map((shop) => ({
+                label: shop.name,
+                value: shop.slug,
+                meta: shop.product_count,
+              }))}
+              onChange={setShopSlug}
+            />
+            <FilterStrip
+              label="Categories"
+              allLabel="All categories"
+              value={categorySlug}
+              items={categories.map((category) => ({
+                label: category.name,
+                value: category.slug,
+              }))}
+              onChange={setCategorySlug}
+            />
           </div>
         </section>
 
-        <section className="grid grid-cols-1 gap-8 py-12 small:grid-cols-[260px_1fr]">
-          <aside className="small:sticky small:top-24 small:self-start">
-            <div className="rounded-rounded border border-ui-border-base bg-white p-5">
-              <h2 className="text-base-semi">Refine</h2>
-              <div className="mt-4 flex flex-col gap-4">
-                <label className="flex flex-col gap-2 text-small-regular text-ui-fg-subtle">
-                  Shop
-                  <select
-                    value={shopSlug}
-                    onChange={(event) => setShopSlug(event.target.value)}
-                    className="h-10 rounded-rounded border border-ui-border-base bg-ui-bg-field px-3 text-ui-fg-base outline-none hover:bg-ui-bg-field-hover"
-                  >
-                    <option value="all">All shops</option>
-                    {data.shops.map((shop) => (
-                      <option key={shop.id} value={shop.slug}>
-                        {shop.name}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="flex flex-col gap-2 text-small-regular text-ui-fg-subtle">
-                  Category
-                  <select
-                    value={categorySlug}
-                    onChange={(event) => setCategorySlug(event.target.value)}
-                    className="h-10 rounded-rounded border border-ui-border-base bg-ui-bg-field px-3 text-ui-fg-base outline-none hover:bg-ui-bg-field-hover"
-                  >
-                    <option value="all">All categories</option>
-                    {data.categories.map((category) => (
-                      <option key={category.slug} value={category.slug}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+        <section id="products" className="py-8">
+          <div className="mb-6 flex flex-col gap-2 small:flex-row small:items-end small:justify-between">
+            <div>
+              <h2 className="text-xl-semi">Today&apos;s product feed</h2>
+              <p className="mt-2 text-small-regular text-ui-fg-subtle">
+                {feedSummary(totalCount, activeShopName, activeCategoryName)}
+              </p>
+            </div>
+            {!loading && products.length > 0 && (
+              <Badge>{products.length} shown</Badge>
+            )}
+          </div>
+
+          {products.length > 0 ? (
+            <MasonryProductFeed products={products} currentUser={currentUser} />
+          ) : !loading && !initialLoad ? (
+            <EmptyFeed onClear={clearFilters} />
+          ) : null}
+
+          <div ref={sentinelRef} className="pt-8">
+            {loading && (
+              <div>
+                <p className="text-center text-small-regular text-ui-fg-subtle">
+                  Loading products...
+                </p>
+                <MasonrySkeleton />
+              </div>
+            )}
+
+            {error && (
+              <div className="mx-auto mt-6 max-w-md rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-5 text-center">
+                <p className="text-small-regular text-ui-fg-subtle">{error}</p>
                 <Button
                   variant="secondary"
-                  className="h-10"
-                  onClick={() => {
-                    setQuery("")
-                    setShopSlug("all")
-                    setCategorySlug("all")
-                  }}
+                  className="mt-3 h-10"
+                  onClick={() => void fetchPage(offset)}
                 >
-                  Clear filters
+                  Retry
                 </Button>
               </div>
-            </div>
-          </aside>
+            )}
 
-          <div className="flex flex-col gap-y-12">
-            <ProductSection
-              id="products"
-              title="Featured products"
-              description="A cross-shop view of imported inventory from the database."
-              products={featuredProducts}
-            />
-
-            {filteredSections.map((section) => (
-              <ShopProductSection key={section.slug} section={section} />
-            ))}
-
-            <ProductSection
-              title="All matching products"
-              description={`${filteredProducts.length} products match the current hall filters.`}
-              products={filteredProducts}
-            />
+            {!loading && !hasMore && products.length > 0 && (
+              <p className="mt-6 text-center text-small-regular text-ui-fg-muted">
+                You&apos;ve reached the end of this feed.
+              </p>
+            )}
           </div>
         </section>
       </main>
@@ -277,104 +431,221 @@ const HallTemplate = ({ data }: { data: BackendHallPayload }) => {
   )
 }
 
-const ShopCard = ({
-  shop,
-  active,
-  onSelect,
+const FilterStrip = ({
+  label,
+  allLabel,
+  value,
+  items,
+  onChange,
 }: {
-  shop: BackendShopSummary
-  active: boolean
-  onSelect: () => void
+  label: string
+  allLabel: string
+  value: string
+  items: Array<{ label: string; value: string; meta?: number }>
+  onChange: (value: string) => void
 }) => {
   return (
-    <div className="rounded-rounded border border-ui-border-base bg-white p-5">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h3 className="text-base-semi">{shop.name}</h3>
-          <p className="mt-1 text-small-regular text-ui-fg-subtle">
-            {shop.product_count} products
-          </p>
-        </div>
-        <Badge>{shop.categories.length} categories</Badge>
-      </div>
-      <p className="mt-4 min-h-[40px] text-small-regular text-ui-fg-muted">
-        {shop.categories.slice(0, 3).join(", ") || "Imported catalog"}
-      </p>
-      <div className="mt-4 flex gap-2">
-        <Button
-          variant={active ? "primary" : "secondary"}
-          className="h-10 flex-1"
-          onClick={onSelect}
+    <div>
+      <p className="mb-2 txt-xsmall-plus uppercase text-ui-fg-muted">{label}</p>
+      <div className="flex gap-2 overflow-x-auto pb-1">
+        <button
+          type="button"
+          onClick={() => onChange("all")}
+          className={filterButtonClass(value === "all")}
         >
-          Filter
-        </Button>
-        <LocalizedClientLink
-          href={`/shop?shop=${shop.slug}`}
-          className="flex h-10 flex-1 items-center justify-center rounded-rounded border border-ui-border-base text-small-regular hover:shadow-borders-interactive-with-active"
-        >
-          Open
-        </LocalizedClientLink>
+          {allLabel}
+        </button>
+        {items.map((item) => (
+          <button
+            key={item.value}
+            type="button"
+            onClick={() => onChange(item.value)}
+            className={filterButtonClass(value === item.value)}
+          >
+            <span>{item.label}</span>
+            {item.meta !== undefined && (
+              <span className="text-ui-fg-muted">{item.meta}</span>
+            )}
+          </button>
+        ))}
       </div>
     </div>
   )
 }
 
-const ShopProductSection = ({ section }: { section: BackendHallSection }) => {
-  return (
-    <ProductSection
-      id={`shop-${section.slug}`}
-      title={`${section.title} products`}
-      description={`${section.shop.product_count} products from ${section.title}.`}
-      products={section.products}
-    />
+const filterButtonClass = (active: boolean) =>
+  clx(
+    "flex h-9 shrink-0 items-center gap-2 rounded-rounded border px-3 text-small-regular transition-colors",
+    active
+      ? "border-ui-fg-base bg-ui-fg-base text-ui-bg-base"
+      : "border-ui-border-base bg-white text-ui-fg-subtle hover:bg-ui-bg-subtle hover:text-ui-fg-base"
   )
-}
 
-const ProductSection = ({
-  id,
-  title,
-  description,
+const MasonryProductFeed = ({
   products,
+  currentUser,
 }: {
-  id?: string
-  title: string
-  description: string
   products: BackendProduct[]
+  currentUser?: Account | null
 }) => {
+  const columnCount = useResponsiveColumnCount()
+  const columns = useMemo(
+    () => distributeIntoColumns(products, columnCount),
+    [columnCount, products]
+  )
+
   return (
-    <section id={id}>
-      <div className="mb-5 flex flex-col gap-3 small:flex-row small:items-end small:justify-between">
-        <div>
-          <h2 className="text-xl-semi">{title}</h2>
-          <p className="mt-2 max-w-2xl text-small-regular text-ui-fg-subtle">
-            {description}
-          </p>
-        </div>
-        <Badge>{products.length} products</Badge>
-      </div>
-      {products.length > 0 ? (
-        <ul className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
-          {products.map((product) => (
-            <li key={product.id ?? backendProductName(product)}>
-              <BackendProductPreview product={product} />
-              {product.shop?.shop_name && (
-                <p className="mt-2 text-small-regular text-ui-fg-muted">
-                  {product.shop.shop_name}
-                </p>
-              )}
+    <div className="grid grid-cols-2 gap-4 small:grid-cols-4 medium:grid-cols-5">
+      {columns.map((column, columnIndex) => (
+        <ul key={columnIndex} className="flex min-w-0 flex-col gap-5">
+          {column.map(({ product, index }) => (
+            <li key={`${product.id ?? backendProductName(product)}-${index}`}>
+              <HallProductCard
+                product={product}
+                priority={index < 8}
+                currentUser={currentUser}
+              />
             </li>
           ))}
         </ul>
-      ) : (
-        <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-6">
-          <h3 className="text-base-semi">No products found</h3>
-          <p className="mt-2 text-small-regular text-ui-fg-subtle">
-            Try another shop, category, or search term.
-          </p>
-        </div>
-      )}
-    </section>
+      ))}
+    </div>
   )
+}
+
+const HallProductCard = ({
+  product,
+  priority,
+  currentUser,
+}: {
+  product: BackendProduct
+  priority: boolean
+  currentUser?: Account | null
+}) => {
+  const imageUrl = getProductImageUrl(product)
+  const name = backendProductName(product)
+  const category = backendCategoryName(product.category)
+  const [imageRatio, setImageRatio] = useState(4 / 5)
+
+  return (
+    <LocalizedClientLink
+      href={productHref(product, currentUser)}
+      className="group block"
+    >
+      <article className="overflow-hidden rounded-rounded border border-ui-border-base bg-white shadow-elevation-card-rest transition-shadow duration-150 group-hover:shadow-elevation-card-hover">
+        <div
+          className="relative w-full overflow-hidden bg-ui-bg-subtle"
+          style={{ aspectRatio: imageRatio }}
+        >
+          {imageUrl ? (
+            <img
+              src={imageUrl}
+              alt={name}
+              className="absolute inset-0 h-full w-full bg-ui-bg-subtle object-cover"
+              loading={priority ? "eager" : "lazy"}
+              decoding="async"
+              fetchPriority={priority ? "high" : "auto"}
+              onLoad={(event) => {
+                const image = event.currentTarget
+                if (image.naturalWidth > 0 && image.naturalHeight > 0) {
+                  setImageRatio(image.naturalWidth / image.naturalHeight)
+                }
+              }}
+            />
+          ) : (
+            <div className="absolute inset-0 bg-ui-bg-subtle" />
+          )}
+        </div>
+        <div className="p-3">
+          <div className="flex items-start justify-between gap-3">
+            <h3 className="line-clamp-2 text-small-regular text-ui-fg-base">
+              {name}
+            </h3>
+            <span className="shrink-0 text-small-regular text-ui-fg-muted">
+              {formatBackendMoney(backendProductPrice(product))}
+            </span>
+          </div>
+          <div className="mt-2 flex items-center justify-between gap-3 text-small-regular text-ui-fg-muted">
+            <span className="line-clamp-1">{category}</span>
+            {product.shop?.shop_name && (
+              <span className="line-clamp-1 text-right">
+                {product.shop.shop_name}
+              </span>
+            )}
+          </div>
+        </div>
+      </article>
+    </LocalizedClientLink>
+  )
+}
+
+const MasonrySkeleton = () => {
+  return (
+    <div className="mt-5 grid grid-cols-2 gap-4 small:grid-cols-4 medium:grid-cols-5">
+      {Array.from({ length: 5 }).map((_, columnIndex) => (
+        <ul key={columnIndex} className="flex min-w-0 flex-col gap-5">
+          {Array.from({ length: columnIndex < 2 ? 2 : 1 }).map((__, index) => {
+            const itemIndex = columnIndex * 2 + index
+
+            return (
+              <li key={itemIndex}>
+                <div className="overflow-hidden rounded-rounded border border-ui-border-base bg-white">
+                  <div
+                    className={clx(
+                      "w-full animate-pulse bg-ui-bg-subtle",
+                      itemIndex % 3 === 0
+                        ? "aspect-[3/4]"
+                        : itemIndex % 3 === 1
+                        ? "aspect-square"
+                        : "aspect-[4/5]"
+                    )}
+                  />
+                  <div className="p-3">
+                    <div className="h-4 w-3/4 animate-pulse rounded bg-ui-bg-subtle" />
+                    <div className="mt-2 h-3 w-1/2 animate-pulse rounded bg-ui-bg-subtle" />
+                  </div>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+      ))}
+    </div>
+  )
+}
+
+const EmptyFeed = ({ onClear }: { onClear: () => void }) => {
+  return (
+    <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-6">
+      <h3 className="text-base-semi">No products found</h3>
+      <p className="mt-2 text-small-regular text-ui-fg-subtle">
+        Try another search term or remove the current filters.
+      </p>
+      <Button variant="secondary" className="mt-4 h-10" onClick={onClear}>
+        Clear filters
+      </Button>
+    </div>
+  )
+}
+
+function getProductImageUrl(product: BackendProduct): string | null {
+  return (
+    product.thumbnail ||
+    product.images?.[0]?.url ||
+    product.images?.[0]?.image_url ||
+    null
+  )
+}
+
+function feedSummary(
+  totalCount: number,
+  shopName?: string,
+  categoryName?: string
+) {
+  const filters = [shopName, categoryName].filter(Boolean)
+  const suffix = filters.length ? ` in ${filters.join(" / ")}` : ""
+
+  return `${totalCount} products${suffix}. Keep scrolling to load more.`
 }
 
 export default HallTemplate
