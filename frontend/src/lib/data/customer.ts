@@ -106,6 +106,7 @@ export async function signup(
         last_name: payload.last_name ?? "",
         phone_country_code: "",
         phone_number: payload.phone ?? "",
+        role: payload.role ?? "customer",
         street: "",
         city: "",
         state: "",
@@ -122,6 +123,9 @@ export async function signup(
       }),
     })
     await setTokenCookie(loginResult.access_token)
+    const role = loginResult.user?.role ?? "customer"
+    if (role === "manager") return { redirectTo: "/manager" }
+    if (role === "admin") return { redirectTo: "/admin" }
     return { redirectTo: customerHallPath(loginResult.user.user_name) }
   } catch (e: unknown) {
     return { error: e instanceof Error ? e.message : "Registration failed." }

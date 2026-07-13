@@ -87,16 +87,15 @@ const HallTemplate = ({
   const categories = Array.isArray(data?.categories) ? data.categories : []
   const initialShopSlug = searchParams.get("shop") ?? "all"
   const initialCategorySlug = searchParams.get("category") ?? "all"
-  const customerBasePath = currentUser
+  const accountPath = currentUser
+    ? currentUser.role === "manager" ? "/manager"
+    : currentUser.role === "admin" ? "/admin"
+    : `/customer/${encodeURIComponent(currentUser.user_name)}`
+    : null
+  const customerBasePath = currentUser && currentUser.role !== "manager" && currentUser.role !== "admin"
     ? `/customer/${encodeURIComponent(currentUser.user_name)}`
     : null
   const hallPath = customerBasePath ? `${customerBasePath}/hall` : "/hall"
-  const shopsPath = currentUser
-    ? `/${encodeURIComponent(currentUser.user_name)}/shops`
-    : "/shops"
-  const catlogPath = currentUser
-    ? `/${encodeURIComponent(currentUser.user_name)}/catlog`
-    : "/catlog"
   const initialProducts = useMemo(
     () => {
       if (Array.isArray(serverInitialProducts) && serverInitialProducts.length) {
@@ -275,30 +274,21 @@ const HallTemplate = ({
 
   return (
     <div className="min-h-screen bg-ui-bg-base text-ui-fg-base">
-      <header className="sticky inset-x-0 top-0 z-50 border-b border-ui-border-base bg-white">
+      <header className="sticky inset-x-0 top-0 z-50 border-b border-ui-border-base bg-gray-200">
         <div className="content-container flex h-16 items-center justify-between text-small-regular text-ui-fg-subtle">
           <LocalizedClientLink href={hallPath} className="text-ui-fg-base">
             SHOPPING HALL
           </LocalizedClientLink>
-          <nav className="hidden items-center gap-x-6 small:flex">
-            <LocalizedClientLink className="hover:text-ui-fg-base" href={hallPath}>
-              Hall
-            </LocalizedClientLink>
-            <LocalizedClientLink className="hover:text-ui-fg-base" href={shopsPath}>
-              Shops
-            </LocalizedClientLink>
-            <LocalizedClientLink className="hover:text-ui-fg-base" href={catlogPath}>
-              Catlog
-            </LocalizedClientLink>
-          </nav>
           <div className="flex items-center gap-x-4">
-            <LocalizedClientLink href="/cart" className="hover:text-ui-fg-base">
-              Cart
-            </LocalizedClientLink>
+            {(!currentUser || (currentUser.role !== "manager" && currentUser.role !== "admin")) && (
+              <LocalizedClientLink href="/cart" className="hover:text-ui-fg-base">
+                Cart
+              </LocalizedClientLink>
+            )}
             {currentUser ? (
               <>
                 <LocalizedClientLink
-                  href={customerBasePath ?? "/customer"}
+                  href={accountPath ?? "/customer"}
                   className="hover:text-ui-fg-base"
                 >
                   Account

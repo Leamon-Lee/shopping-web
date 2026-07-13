@@ -17,28 +17,17 @@ export function productShopSlug(product: BackendProduct) {
   return backendSlug(product.shop?.shop_name ?? "shop")
 }
 
-export function shopHref(shop: BackendShopSummary, currentUser?: Account | null) {
-  const username = userNamePath(currentUser)
-
-  return username
-    ? `/${username}/${shop.slug}`
-    : `/shop?shop=${encodeURIComponent(shop.slug)}`
+export function shopHref(shop: BackendShopSummary, _currentUser?: Account | null) {
+  return `/shop?shop=${encodeURIComponent(shop.slug)}`
 }
 
 export function productHref(
   product: BackendProduct,
-  currentUser?: Account | null,
-  fallbackShopSlug?: string
+  _currentUser?: Account | null,
+  _fallbackShopSlug?: string
 ) {
-  const username = userNamePath(currentUser)
   const productSlug = product.slug || backendProductSlug(product)
-  const shopSlug = product.shop?.shop_name
-    ? productShopSlug(product)
-    : fallbackShopSlug ?? productShopSlug(product)
-
-  return username
-    ? `/${username}/${shopSlug}/${productSlug}`
-    : `/shop/${productSlug}`
+  return `/shop/${productSlug}`
 }
 
 export function productMatchesRoute(product: BackendProduct, routeValue: string) {

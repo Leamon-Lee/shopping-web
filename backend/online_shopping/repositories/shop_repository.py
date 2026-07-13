@@ -49,3 +49,7 @@ class ShopRepository:
         shop.status = status
         await self.db.flush()
         return shop
+
+    async def delete(self, shop: Shop) -> None:
+        await self.db.delete(shop)
+        await self.db.flush()

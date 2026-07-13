@@ -36,7 +36,13 @@ export const listProducts = async ({
 
   if (productIds.length) {
     const ids = new Set(productIds)
-    products = products.filter((product) => ids.has(String(product.name)))
+    products = products.filter(
+      (product) =>
+        ids.has(String(product.id)) ||
+        ids.has(String(product.name)) ||
+        ids.has(String(product.slug ?? "")) ||
+        ids.has(String(product.handle ?? ""))
+    )
   }
 
   const count = products.length

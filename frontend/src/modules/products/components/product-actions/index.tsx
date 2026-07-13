@@ -58,6 +58,7 @@ export default function ProductActions({
 
   const [options, setOptions] = useState<Record<string, string | undefined>>({})
   const [isAdding, setIsAdding] = useState(false)
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null)
   const countryCode = useParams().countryCode as string
 
   // If there is only 1 variant, preselect the options
@@ -142,21 +143,43 @@ export default function ProductActions({
 
   // add the selected variant to the cart
   const handleAddToCart = async () => {
-    if (!selectedVariant?.id) return null
+    if (!selectedVariant?.id && !product.variants?.length) return null
 
     setIsAdding(true)
+    setToast(null)
 
-    await addToCart({
-      variantId: selectedVariant.id,
-      quantity: 1,
-      countryCode,
-    })
-
-    setIsAdding(false)
+    try {
+      await addToCart({
+        variantId: selectedVariant?.id || product.variants?.[0]?.id,
+        productName: !selectedVariant?.id ? (product.title ?? product.name) : undefined,
+        quantity: 1,
+        countryCode,
+      })
+      window.dispatchEvent(new CustomEvent("cart-updated"))
+      setToast({ message: "Added to cart!", type: "success" })
+    } catch {
+      setToast({ message: "Failed to add to cart. Please try again.", type: "error" })
+    } finally {
+      setIsAdding(false)
+      setTimeout(() => setToast(null), 3000)
+    }
   }
 
   return (
     <>
+      {toast && (
+        <div className="fixed top-20 right-4 z-[100] animate-in fade-in slide-in-from-top-2">
+          <div
+            className={`rounded-lg px-4 py-3 text-small-regular shadow-lg ${
+              toast.type === "success"
+                ? "bg-green-600 text-white"
+                : "bg-red-600 text-white"
+            }`}
+          >
+            {toast.message}
+          </div>
+        </div>
+      )}
       <div className="flex flex-col gap-y-2" ref={actionsRef}>
         <div>
           {(product.variants?.length ?? 0) > 1 && (

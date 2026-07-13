@@ -50,16 +50,19 @@ def _account_to_out(account: Account) -> AccountOut:
             number=account.phone_number or "",
         ),
         addresses=[_address_to_out(a) for a in account.addresses],
+        role=account.role,
     )
 
 
 def _address_to_out(address: Address) -> AddressOut:
     return AddressOut(
+        id=str(address.id),
         street=address.street,
         city=address.city,
         state=address.state,
         postal_code=address.postal_code,
         country=address.country,
+        is_default_shipping=address.is_default_shipping,
     )
 
 
@@ -76,10 +79,19 @@ async def register(payload: RegisterPayload, db: AsyncSession = Depends(get_db))
     if existing.scalars().first():
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Account already exists.")
 
+    role = payload.role if payload.role in ("customer", "manager", "admin") else "customer"
+    if role == "admin":
+        admin_check = await db.execute(
+            select(Account).where(Account.role == "admin").limit(1)
+        )
+        if admin_check.scalars().first():
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin account already exists.")
+
     account = Account(
         user_name=payload.email,
         password_hash=bcrypt.hashpw(payload.password.encode(), bcrypt.gensalt()).decode(),
         status=AccountStatus.ACTIVE.value,
+        role=role,
         first_name=payload.first_name or "",
         last_name=payload.last_name or "",
         email=payload.email,
@@ -250,6 +262,75 @@ async def delete_address(
     return [_address_to_out(a) for a in current_user.addresses]
 
 
+# ── Payment Method endpoints (protected) ──────────────────────────────
+
+from pydantic import BaseModel as PydanticBase, Field as PydanticField
+
+
+class PaymentMethodCreate(PydanticBase):
+    label: str = PydanticField(min_length=1, max_length=100)
+    method_type: str = "credit_card"
+
+
+class PaymentMethodOut(PydanticBase):
+    id: str
+    label: str
+    method_type: str
+
+
+def _payment_method_to_out(pm) -> PaymentMethodOut:
+    return PaymentMethodOut(id=str(pm.id), label=pm.label, method_type=pm.method_type)
+
+
+async def _get_user_pms(db: AsyncSession, account_id) -> list:
+    from online_shopping.models.payment_method import PaymentMethod as PMModel
+    result = await db.execute(
+        select(PMModel).where(PMModel.account_id == account_id).order_by(PMModel.created_at)
+    )
+    return list(result.scalars().all())
+
+
+@router.get("/me/payment-methods", response_model=list[PaymentMethodOut])
+async def list_payment_methods(
+    current_user: Account = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -> list[PaymentMethodOut]:
+    pms = await _get_user_pms(db, current_user.id)
+    return [_payment_method_to_out(pm) for pm in pms]
+
+
+@router.post("/me/payment-methods", response_model=list[PaymentMethodOut], status_code=status.HTTP_201_CREATED)
+async def add_payment_method(
+    payload: PaymentMethodCreate,
+    current_user: Account = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -> list[PaymentMethodOut]:
+    from online_shopping.models.payment_method import PaymentMethod as PMModel
+    pm = PMModel(account_id=current_user.id, label=payload.label, method_type=payload.method_type)
+    db.add(pm)
+    await db.commit()
+    pms = await _get_user_pms(db, current_user.id)
+    return [_payment_method_to_out(p) for p in pms]
+
+
+@router.delete("/me/payment-methods/{pm_id}", response_model=list[PaymentMethodOut])
+async def delete_payment_method(
+    pm_id: str,
+    current_user: Account = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -> list[PaymentMethodOut]:
+    from online_shopping.models.payment_method import PaymentMethod as PMModel
+    from uuid import UUID
+    result = await db.execute(select(PMModel).where(PMModel.id == UUID(pm_id), PMModel.account_id == current_user.id))
+    pm = result.scalars().first()
+    if pm is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Payment method not found.")
+    await db.delete(pm)
+    await db.commit()
+    pms = await _get_user_pms(db, current_user.id)
+    return [_payment_method_to_out(p) for p in pms]
+
+
 # ── Wishlist endpoints (protected) ──────────────────────────────────
 
 
@@ -334,9 +415,11 @@ async def list_my_reviews(
 ) -> dict:
     """List reviews written by the current user."""
     from online_shopping.models.review import Review
+    from sqlalchemy.orm import selectinload
 
     result = await db.execute(
         select(Review)
+        .options(selectinload(Review.product))
         .where(Review.account_id == current_user.id)
         .order_by(Review.created_at.desc())
     )
@@ -346,9 +429,12 @@ async def list_my_reviews(
             {
                 "id": str(r.id),
                 "product_id": str(r.product_id),
+                "product_name": r.product.name if r.product else "",
+                "product_slug": r.product.slug if r.product else "",
                 "rating": r.rating,
                 "title": r.title,
                 "content": r.content,
+                "created_at": r.created_at.isoformat() if r.created_at else None,
             }
             for r in reviews
         ]

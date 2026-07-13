@@ -60,7 +60,7 @@ def product_to_out(product: Product) -> ProductOut:
         price=float(product.price),
         available_item_count=product.available_item_count,
         category=CategoryOut(
-            name=category.name if category else "",
+            name=category.name if category else "Uncategorized",
             description=category.description if category else "",
         ),
         thumbnail=image_outputs[0].image_url if image_outputs else None,
@@ -119,7 +119,7 @@ def order_to_out(order: Order) -> OrderOut:
                 description="",
                 price=float(item.price),
                 available_item_count=0,
-                category=CategoryOut(name="", description=""),
+                category=CategoryOut(name=item.product_name or "Unknown", description=""),
             ),
             product_title=item.product_name,
             product_handle=item.product_name.lower().replace(" ", "-"),

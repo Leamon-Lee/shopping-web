@@ -42,7 +42,7 @@ const ShopsTemplate = ({
 
   return (
     <main className="min-h-screen bg-ui-bg-base text-ui-fg-base">
-      <header className="sticky inset-x-0 top-0 z-50 border-b border-ui-border-base bg-white">
+      <header className="sticky inset-x-0 top-0 z-50 border-b border-ui-border-base bg-gray-200">
         <div className="content-container flex h-16 items-center justify-between text-small-regular text-ui-fg-subtle">
           <LocalizedClientLink href={hallPath} className="text-ui-fg-base">
             SHOPPING HALL

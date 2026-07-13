@@ -43,11 +43,7 @@ class MarketplaceService:
         """
         shop_summaries = await self.marketplace_repository.list_shop_summaries()
         product_shops = await self.marketplace_repository.product_shop_map()
-
-        # Build category list from all shop categories
-        category_names: list[str] = []
-        for shop in shop_summaries:
-            category_names.extend(shop.categories)
+        product_categories = await self.catalog_repository.list_categories()
 
         shops = [
             {
@@ -89,13 +85,13 @@ class MarketplaceService:
             "route": "/hall",
             "shops": shops,
             "categories": [
-                {"name": name, "slug": slugify(name)}
-                for name in stable_unique(category_names)
+                {"name": c.name, "slug": c.name}
+                for c in product_categories
             ],
             "sections": sections,
             "product_count": product_count,
             "shop_count": len(shops),
-            "category_count": len(stable_unique(category_names)),
+            "category_count": len(product_categories),
         }
 
     async def hall_products_paginated(

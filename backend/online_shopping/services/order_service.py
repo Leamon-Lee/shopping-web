@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from itertools import count
+import uuid as _uuid
+from datetime import datetime, timezone
 
 from fastapi import HTTPException, status
 from sqlalchemy import select
@@ -16,8 +17,6 @@ from online_shopping.models.payment import Payment
 from online_shopping.repositories.cart_repository import CartRepository
 from online_shopping.repositories.catalog_repository import CatalogRepository
 from online_shopping.repositories.order_repository import OrderRepository
-
-_order_numbers = count(1001)
 
 
 class OrderService:
@@ -53,12 +52,27 @@ class OrderService:
                 (cart_item.variant.product, cart_item.quantity, cart_item.variant)
                 for cart_item in cart.items
             ]
+            # Fallback: if email-based cart is empty, try the guest cart
+            if not validated_items and email:
+                guest_cart = await self.carts.get_default_cart(email=None)
+                if guest_cart.items:
+                    cart = guest_cart
+                    validated_items = [
+                        (cart_item.variant.product, cart_item.quantity, cart_item.variant)
+                        for cart_item in guest_cart.items
+                    ]
 
         if not validated_items:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Order must have at least one item.",
             )
+
+        # Always identify the cart to clear — guest cart should also be cleared
+        if cart is None and email is None:
+            cart = await self.carts.get_default_cart(email=None)
+        elif cart is None and email:
+            cart = await self.carts.get_default_cart(email=email)
 
         # Resolve account if email provided
         account_id = None
@@ -70,7 +84,7 @@ class OrderService:
             if account:
                 account_id = account.id
 
-        order_number = payload.order_number or f"ORD-{next(_order_numbers)}"
+        order_number = payload.order_number or f"ORD-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{str(_uuid.uuid4())[:6].upper()}"
         order = Order(
             order_number=order_number,
             status=OrderStatus.CREATED.value,
@@ -105,8 +119,19 @@ class OrderService:
             currency=payment_payload.currency if payment_payload else "CNY",
         ))
 
-        if cart is not None:
+        # Remove ordered items from cart (not the entire cart)
+        if payload.items:
+            for item in payload.items:
+                existing = await self.carts.find_item(cart, item.product_name)
+                if existing:
+                    await self.carts.delete_item(existing)
+        else:
             await self.carts.clear(cart)
+
+        # Also clean up guest cart for logged-in users
+        if email:
+            guest_cart = await self.carts.get_default_cart(email=None)
+            await self.carts.clear(guest_cart)
 
         await self.db.commit()
         created = await self.orders.get_by_number(order.order_number)

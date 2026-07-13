@@ -35,3 +35,4 @@ class Account(Base):
     addresses: Mapped[list[Address]] = relationship("Address", back_populates="account", cascade="all, delete-orphan")
     orders: Mapped[list[Order]] = relationship("Order", back_populates="account")
     shops: Mapped[list[Shop]] = relationship("Shop", back_populates="owner")
+    payment_methods: Mapped[list["PaymentMethod"]] = relationship("PaymentMethod", back_populates="account", cascade="all, delete-orphan")

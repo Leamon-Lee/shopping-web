@@ -3,8 +3,8 @@
 import { Badge, Button, Table } from "@medusajs/ui"
 import Spinner from "@modules/common/icons/spinner"
 import Input from "@modules/common/components/input"
-import { useEffect, useMemo, useState } from "react"
-import { getAdminPanel, getAdminUsers, getAdminProducts, getAdminOrders } from "api/backend-client"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { getAdminUsers, getAdminProducts, getAdminOrders, getAdminShops, approveShop } from "api/backend-client"
 import { signout } from "@lib/data/customer"
 
 type AdminView =
@@ -17,7 +17,7 @@ const getBadgeColor = (status: string) => {
   const s = status.toLowerCase()
   if (["active", "approved", "completed", "paid", "admin"].includes(s)) return "green"
   if (["blocked", "disabled", "rejected", "failed", "canceled"].includes(s)) return "red"
-  if (["pending", "review", "manager"].includes(s)) return "purple"
+  if (["pending", "pending_deletion", "review", "manager"].includes(s)) return "purple"
   return "orange"
 }
 
@@ -25,14 +25,6 @@ const formatColumn = (col: string) =>
   col.replace(/([A-Z])/g, " $1").replace(/^./, (l) => l.toUpperCase())
 
 // ── Reusable sub-components ─────────────────────────────────────────
-
-const MetricCard = ({ label, value, detail }: { label: string; value: string; detail: string }) => (
-  <div className="rounded-rounded border border-ui-border-base bg-white p-5">
-    <p className="text-small-regular text-ui-fg-subtle">{label}</p>
-    <p className="mt-3 text-xl-semi text-ui-fg-base">{value}</p>
-    <p className="mt-1 text-small-regular text-ui-fg-muted">{detail}</p>
-  </div>
-)
 
 const TableView = ({ title, description, rows, actions, query, compact }: {
   title: string; description: string; rows: Row[]; actions?: React.ReactNode; query: string; compact?: boolean
@@ -93,22 +85,20 @@ const AdminPanel = () => {
   const [query, setQuery] = useState("")
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [dashboard, setDashboard] = useState<Record<string, unknown> | null>(null)
   const [users, setUsers] = useState<Row[]>([])
   const [adminProducts, setAdminProducts] = useState<Row[]>([])
   const [adminOrders, setAdminOrders] = useState<Row[]>([])
+  const [adminShops, setAdminShops] = useState<Row[]>([])
+  const rawShopsRef = useRef<Record<string, unknown>[]>([])
 
   const fetchData = async () => {
     setLoading(true)
     setError(null)
     try {
-      const [dashResp, usersResp, productsResp, ordersResp] = await Promise.all([
-        getAdminPanel().catch(() => null),
+      const [usersResp, shopsResp] = await Promise.all([
         getAdminUsers().catch(() => null),
-        getAdminProducts().catch(() => null),
-        getAdminOrders().catch(() => null),
+        getAdminShops().catch(() => null),
       ])
-      setDashboard(dashResp as Record<string, unknown> | null)
 
       if (usersResp) setUsers(usersResp.users.map((u: Record<string, unknown>) => ({
         name: `${u.first_name || ""} ${u.last_name || ""}`.trim() || (u.user_name as string),
@@ -117,22 +107,16 @@ const AdminPanel = () => {
         status: u.status as string,
       })))
 
-      if (productsResp) setAdminProducts(productsResp.products.map((p: Record<string, unknown>) => ({
-        product: p.name as string,
-        category: p.category as string,
-        price: `CNY ${Number(p.price).toFixed(2)}`,
-        stock: p.available_item_count as number,
-        variants: p.variants as number,
-      })))
-
-      if (ordersResp) setAdminOrders(ordersResp.orders.map((o: Record<string, unknown>) => ({
-        order: o.order_number as string,
-        items: o.items_count as number,
-        payment: o.payment_status as string,
-        total: `CNY ${Number(o.total).toFixed(2)}`,
-        status: o.status as string,
-        date: (o.date as string)?.slice(0, 10) || "—",
-      })))
+      if (shopsResp) {
+        rawShopsRef.current = shopsResp.shops as Record<string, unknown>[]
+        setAdminShops(rawShopsRef.current.map((s) => ({
+          name: s.name as string,
+          slug: s.slug as string,
+          owner: (s.owner_email as string) || "—",
+          status: s.status as string,
+          category: (s.category as string) || "—",
+        })))
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load data.")
     } finally {
@@ -143,15 +127,48 @@ const AdminPanel = () => {
   // Fetch on mount
   useEffect(() => { fetchData() }, [])
 
-  const stats = dashboard?.stats as Record<string, number> | undefined
-  const metrics = stats ? [
-    { label: "Products", value: String(stats.products), detail: "Platform catalog" },
-    { label: "Categories", value: String(stats.categories), detail: "Product categories" },
-    { label: "Orders", value: String(stats.orders), detail: "All orders" },
-    { label: "Users", value: String(stats.total_users), detail: `${stats.customers} customers, ${stats.managers} managers, ${stats.admins} admins` },
-  ] : []
+  const fetchAdminShops = async () => {
+    try {
+      const resp = await getAdminShops()
+      rawShopsRef.current = resp.shops as Record<string, unknown>[]
+      setAdminShops(rawShopsRef.current.map((s) => ({
+        name: s.name as string,
+        slug: s.slug as string,
+        owner: (s.owner_email as string) || "—",
+        status: s.status as string,
+        category: (s.category as string) || "—",
+      })))
+    } catch { /* ignore */ }
+  }
 
-  const navItems: AdminView[] = ["Dashboard", "Users", "Shops", "Categories", "Products", "Orders", "Reports", "Settings"]
+  const handleApprove = async (shopId: string, status: "active" | "rejected") => {
+    try {
+      await approveShop(shopId, status)
+      fetchAdminShops()
+    } catch { /* ignore */ }
+  }
+
+  useEffect(() => {
+    if (activeView === "Products" && adminProducts.length === 0) {
+      getAdminProducts().then((resp) => {
+        if (resp) setAdminProducts(resp.products.map((p: Record<string, unknown>) => ({
+          product: p.name as string, category: p.category as string,
+          price: `CNY ${Number(p.price).toFixed(2)}`, stock: p.available_item_count as number, variants: p.variants as number,
+        })))
+      }).catch(() => {})
+    }
+    if (activeView === "Orders" && adminOrders.length === 0) {
+      getAdminOrders().then((resp) => {
+        if (resp) setAdminOrders(resp.orders.map((o: Record<string, unknown>) => ({
+          order: o.order_number as string, items: o.items_count as number, payment: o.payment_status as string,
+          total: `CNY ${Number(o.total).toFixed(2)}`, status: o.status as string,
+          date: (o.date as string)?.slice(0, 10) || "—",
+        })))
+      }).catch(() => {})
+    }
+  }, [activeView, adminProducts.length, adminOrders.length])
+
+  const navItems: AdminView[] = ["Dashboard", "Users", "Shops"]
 
   if (error) {
     return (
@@ -167,14 +184,14 @@ const AdminPanel = () => {
 
   return (
     <div className="min-h-screen bg-ui-bg-base text-ui-fg-base">
-      <header className="sticky top-0 z-40 border-b border-ui-border-base bg-white">
+      <header className="sticky top-0 z-40 border-b border-ui-border-base bg-gray-200">
         <div className="content-container flex h-16 items-center justify-between txt-xsmall-plus text-ui-fg-subtle">
           <div className="flex items-center gap-x-4">
             <span className="text-ui-fg-base">ADMIN PANEL</span>
             <span className="hidden text-ui-fg-muted small:inline">Platform operations</span>
           </div>
           <div className="flex items-center gap-x-3">
-            <a className="hidden hover:text-ui-fg-base small:block" href="/">Store</a>
+            <a className="hidden hover:text-ui-fg-base small:block" href="/hall">Hall</a>
             <Button variant="secondary" className="h-9" onClick={() => signout()}>Sign out</Button>
           </div>
         </div>
@@ -202,7 +219,7 @@ const AdminPanel = () => {
                 {activeView === "Dashboard" ? "Platform overview" : `${activeView} management`}
               </h1>
               <p className="mt-2 max-w-2xl text-small-regular text-ui-fg-subtle">
-                {activeView === "Dashboard" ? "Review shops, maintain platform categories, and monitor operational activity." : `Manage platform ${activeView.toLowerCase()}.`}
+                {activeView === "Dashboard" ? "Review shop applications, manage shops, and monitor platform users." : `Manage platform ${activeView.toLowerCase()}.`}
               </p>
             </div>
             {activeView !== "Dashboard" && (
@@ -217,12 +234,78 @@ const AdminPanel = () => {
           ) : (
             <>
               {activeView === "Dashboard" && (
-                <>
-                  <section className="grid grid-cols-1 gap-4 small:grid-cols-2 medium:grid-cols-4">
-                    {metrics.map((m) => <MetricCard key={m.label} {...m} />)}
-                  </section>
-                  <TableView title="Recent orders" description="Latest platform orders." rows={adminOrders.slice(0, 5)} query="" compact />
-                </>
+                <div className="flex flex-col gap-y-6">
+                  {/* Pending shop approvals */}
+                  {rawShopsRef.current.filter((s) => s.status === "pending" || s.status === "pending_deletion").length > 0 && (
+                    <div className="rounded-rounded border border-amber-300 bg-amber-50 p-5">
+                      <h3 className="text-base-semi text-amber-800">
+                        Pending shop actions ({rawShopsRef.current.filter((s) => s.status === "pending" || s.status === "pending_deletion").length})
+                      </h3>
+                      <div className="mt-3 flex flex-col gap-3">
+                        {rawShopsRef.current.filter((s) => s.status === "pending" || s.status === "pending_deletion").map((shop, i) => (
+                          <div key={i} className="flex items-center justify-between border-b border-amber-200 pb-3 last:border-b-0 last:pb-0">
+                            <div>
+                              <p className="text-base-regular font-medium">{shop.name as string}</p>
+                              <p className="text-small-regular text-ui-fg-muted">
+                                {shop.status === "pending_deletion" ? "Delete request — " : ""}
+                                Owner: {shop.owner_email as string || "—"} | Category: {shop.category as string || "—"}
+                              </p>
+                            </div>
+                            <div className="flex gap-2">
+                              {shop.status === "pending_deletion" ? (
+                                <>
+                                  <Button variant="secondary" className="h-8 text-small-regular text-rose-600" onClick={() => handleApprove(shop.id as string, "deleted")}>Confirm delete</Button>
+                                  <Button variant="secondary" className="h-8 text-small-regular" onClick={() => handleApprove(shop.id as string, "active")}>Reject</Button>
+                                </>
+                              ) : (
+                                <>
+                                  <Button variant="secondary" className="h-8 text-small-regular text-green-600" onClick={() => handleApprove(shop.id as string, "active")}>Approve</Button>
+                                  <Button variant="secondary" className="h-8 text-small-regular text-rose-600" onClick={() => handleApprove(shop.id as string, "rejected")}>Reject</Button>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* All shops */}
+                  <TableView title="All shops" description={`${adminShops.length} shops on the platform.`} rows={adminShops} query="" />
+
+                  {/* Users by role in 3 columns */}
+                  <div className="rounded-rounded border border-ui-border-base bg-white p-5">
+                    <h2 className="text-base-semi">Platform users</h2>
+                    <p className="mt-1 text-small-regular text-ui-fg-subtle">{users.length} registered accounts grouped by role.</p>
+                    <div className="mt-4 grid grid-cols-1 gap-4 medium:grid-cols-3">
+                      {(["customer", "manager", "admin"] as const).map((role) => {
+                        const roleUsers = users.filter((u) => u.role === role)
+                        return (
+                          <div key={role} className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-4">
+                            <h3 className="text-small-semi capitalize text-ui-fg-base flex items-center gap-2">
+                              {role}s <Badge color={getBadgeColor(role)}>{roleUsers.length}</Badge>
+                            </h3>
+                            <div className="mt-3 flex flex-col gap-1">
+                              {roleUsers.length === 0 ? (
+                                <p className="text-small-regular text-ui-fg-muted">None</p>
+                              ) : (
+                                roleUsers.map((u, i) => (
+                                  <div key={i} className="flex items-center justify-between py-1 border-b border-ui-border-base last:border-b-0">
+                                    <div>
+                                      <p className="text-small-regular font-medium">{u.name}</p>
+                                      <p className="text-xs text-ui-fg-muted">{u.email}</p>
+                                    </div>
+                                    <Badge color={getBadgeColor(String(u.status))}>{String(u.status)}</Badge>
+                                  </div>
+                                ))
+                              )}
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </div>
               )}
               {activeView === "Users" && (
                 <TableView title="Platform users" description="All registered accounts." rows={users} query={query} />
@@ -234,9 +317,37 @@ const AdminPanel = () => {
                 <TableView title="Platform orders" description="All orders across the platform." rows={adminOrders} query={query} />
               )}
               {activeView === "Shops" && (
-                <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-12 text-center">
-                  <h2 className="text-base-semi">Shop management</h2>
-                  <p className="mt-2 text-small-regular text-ui-fg-subtle">Shop approval and management will be available when the shop model is fully integrated.</p>
+                <div className="flex flex-col gap-y-6">
+                  <TableView
+                    title="Shop management"
+                    description="Review and approve shops. Only approved shops appear in the marketplace."
+                    rows={adminShops}
+                    query={query}
+                    actions={undefined}
+                  />
+                  {adminShops.filter((s) => s.status === "pending").length > 0 && (
+                    <div className="rounded-rounded border border-ui-border-base bg-white p-5">
+                      <h3 className="text-base-semi mb-4">
+                        Pending approval ({adminShops.filter((s) => s.status === "pending").length})
+                      </h3>
+                      <div className="flex flex-col gap-3">
+                        {rawShopsRef.current.filter((s) => s.status === "pending").map((shop, i) => (
+                          <div key={i} className="flex items-center justify-between border-b border-ui-border-base pb-3 last:border-b-0 last:pb-0">
+                            <div>
+                              <p className="text-base-regular font-medium">{shop.name as string}</p>
+                              <p className="text-small-regular text-ui-fg-muted">
+                                Owner: {shop.owner_email as string || "—"} | Category: {shop.category as string || "—"}
+                              </p>
+                            </div>
+                            <div className="flex gap-2">
+                              <Button variant="secondary" className="h-8 text-small-regular text-green-600" onClick={() => handleApprove(shop.id as string, "active")}>Approve</Button>
+                              <Button variant="secondary" className="h-8 text-small-regular text-rose-600" onClick={() => handleApprove(shop.id as string, "rejected")}>Reject</Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
               {activeView === "Categories" && (

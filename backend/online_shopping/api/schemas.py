@@ -28,7 +28,15 @@ class ProductBase(BaseModel):
 
 
 class ProductCreate(ProductBase):
-    pass
+    shop_id: str | None = None
+
+
+class ProductUpdate(BaseModel):
+    name: str | None = None
+    description: str | None = None
+    price: float | None = None
+    available_item_count: int | None = None
+    category: CategoryOut | None = None
 
 
 class ImageOut(BaseModel):
@@ -141,11 +149,13 @@ class PhoneOut(BaseModel):
 
 
 class AddressOut(BaseModel):
+    id: str | None = None
     street: str
     city: str
     state: str
     postal_code: str
     country: str
+    is_default_shipping: bool = False
 
 
 class AccountOut(BaseModel):
@@ -156,6 +166,7 @@ class AccountOut(BaseModel):
     email: str
     phone: PhoneOut
     addresses: list[AddressOut] = []
+    role: str = "customer"
 
 
 class LoginPayload(BaseModel):
@@ -170,6 +181,7 @@ class RegisterPayload(BaseModel):
     last_name: str = ""
     phone_country_code: str = ""
     phone_number: str = ""
+    role: str = "customer"
     street: str = ""
     city: str = ""
     state: str = ""

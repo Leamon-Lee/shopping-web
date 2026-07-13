@@ -190,6 +190,53 @@ export async function getCustomerPanel(): Promise<Record<string, unknown>> {
   return clientFetch<Record<string, unknown>>("/customer")
 }
 
+export async function createProduct(payload: {
+  name: string; description: string; price: number; available_item_count: number
+  category: { name: string; description: string }; shop_id?: string
+}): Promise<Record<string, unknown>> {
+  return clientFetch("/shop", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  })
+}
+
+export async function getManagerShops(): Promise<{ shops: Record<string, unknown>[] }> {
+  return clientFetch("/manager/shops")
+}
+
+export async function createManagerShop(payload: { name: string; description?: string; category?: string }): Promise<Record<string, unknown>> {
+  return clientFetch("/manager/shops", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  })
+}
+
+export async function getAdminShops(): Promise<{ shops: Record<string, unknown>[] }> {
+  return clientFetch("/admin/shops")
+}
+
+export async function updateProduct(productIdentity: string, payload: Record<string, unknown>): Promise<Record<string, unknown>> {
+  return clientFetch(`/shop/${encodeURIComponent(productIdentity)}`, {
+    method: "PUT",
+    body: JSON.stringify(payload),
+  })
+}
+
+export async function deleteProduct(productIdentity: string): Promise<void> {
+  await clientFetch(`/shop/${encodeURIComponent(productIdentity)}`, { method: "DELETE" })
+}
+
+export async function requestDeleteShop(shopId: string): Promise<Record<string, unknown>> {
+  return clientFetch(`/manager/shops/${shopId}`, { method: "DELETE" })
+}
+
+export async function approveShop(shopId: string, status: "active" | "rejected" | "deleted"): Promise<Record<string, unknown>> {
+  return clientFetch(`/admin/shops/${shopId}/approval`, {
+    method: "PATCH",
+    body: JSON.stringify({ status }),
+  })
+}
+
 // ── Auth ────────────────────────────────────────────────────────────
 
 export async function loginRequest(payload: { email: string; password: string }): Promise<TokenResponse> {

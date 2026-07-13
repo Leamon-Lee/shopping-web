@@ -96,7 +96,13 @@ def add_cart_item(payload: CartItemCreate) -> CartItemOut | None:
         existing_item.quantity += payload.quantity
         return existing_item
 
-    item = CartItemOut(quantity=payload.quantity, price=product.price, product=product)
+    item = CartItemOut(
+        quantity=payload.quantity,
+        price=product.price,
+        product=product,
+        product_title=product.title or product.name,
+        product_handle=product.handle or product.slug or "",
+    )
     _cart_items.append(item)
     return item
 
