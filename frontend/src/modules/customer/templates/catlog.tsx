@@ -12,6 +12,7 @@ import {
   formatBackendMoney,
 } from "../../../lib/backend-native"
 import { productHref } from "../../../lib/marketplace-routes"
+import { signout } from "@lib/data/customer"
 
 const CATEGORY_PREVIEW_COUNT = 5
 
@@ -67,12 +68,21 @@ const CatlogTemplate = ({
               Cart
             </LocalizedClientLink>
             {currentUser ? (
-              <LocalizedClientLink
-                href={customerBasePath ?? "/customer"}
-                className="hover:text-ui-fg-base"
-              >
-                Account
-              </LocalizedClientLink>
+              <>
+                <LocalizedClientLink
+                  href={customerBasePath ?? "/customer"}
+                  className="hover:text-ui-fg-base"
+                >
+                  Account
+                </LocalizedClientLink>
+                <button
+                  type="button"
+                  className="hover:text-ui-fg-base"
+                  onClick={() => signout()}
+                >
+                  Log out
+                </button>
+              </>
             ) : (
               <LocalizedClientLink
                 href="/auth/login"

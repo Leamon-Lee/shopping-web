@@ -5,6 +5,7 @@ import Spinner from "@modules/common/icons/spinner"
 import Input from "@modules/common/components/input"
 import { useEffect, useMemo, useState } from "react"
 import { getManagerPanel, getManagerProducts, getManagerOrders } from "api/backend-client"
+import { signout } from "@lib/data/customer"
 
 type ManagerView =
   | "Dashboard" | "My Shops" | "Products" | "Orders"
@@ -173,7 +174,7 @@ const ManagerPanel = () => {
           </div>
           <div className="flex items-center gap-x-3">
             <a className="hidden hover:text-ui-fg-base small:block" href="/">Customer View</a>
-            <Button variant="secondary" className="h-9" onClick={() => { document.cookie = "shopping_token=; Max-Age=0"; window.location.href = "/auth/login" }}>Sign out</Button>
+            <Button variant="secondary" className="h-9" onClick={() => signout()}>Sign out</Button>
           </div>
         </div>
       </header>

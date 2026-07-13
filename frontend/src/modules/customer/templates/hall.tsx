@@ -19,6 +19,7 @@ import {
   formatBackendMoney,
 } from "../../../lib/backend-native"
 import { productHref } from "../../../lib/marketplace-routes"
+import { signout } from "@lib/data/customer"
 
 const BATCH_SIZE = 30
 const SEARCH_DEBOUNCE_MS = 300
@@ -295,12 +296,21 @@ const HallTemplate = ({
               Cart
             </LocalizedClientLink>
             {currentUser ? (
-              <LocalizedClientLink
-                href={customerBasePath ?? "/customer"}
-                className="hover:text-ui-fg-base"
-              >
-                Account
-              </LocalizedClientLink>
+              <>
+                <LocalizedClientLink
+                  href={customerBasePath ?? "/customer"}
+                  className="hover:text-ui-fg-base"
+                >
+                  Account
+                </LocalizedClientLink>
+                <button
+                  type="button"
+                  className="hover:text-ui-fg-base"
+                  onClick={() => signout()}
+                >
+                  Log out
+                </button>
+              </>
             ) : (
               <LocalizedClientLink
                 href="/auth/login"

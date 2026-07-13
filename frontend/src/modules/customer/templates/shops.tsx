@@ -13,6 +13,7 @@ import {
   formatBackendMoney,
 } from "../../../lib/backend-native"
 import { productHref, shopHref } from "../../../lib/marketplace-routes"
+import { signout } from "@lib/data/customer"
 
 const SHOP_PREVIEW_COUNT = 6
 
@@ -62,12 +63,21 @@ const ShopsTemplate = ({
               Cart
             </LocalizedClientLink>
             {currentUser ? (
-              <LocalizedClientLink
-                href={customerBasePath ?? "/customer"}
-                className="hover:text-ui-fg-base"
-              >
-                Account
-              </LocalizedClientLink>
+              <>
+                <LocalizedClientLink
+                  href={customerBasePath ?? "/customer"}
+                  className="hover:text-ui-fg-base"
+                >
+                  Account
+                </LocalizedClientLink>
+                <button
+                  type="button"
+                  className="hover:text-ui-fg-base"
+                  onClick={() => signout()}
+                >
+                  Log out
+                </button>
+              </>
             ) : (
               <LocalizedClientLink
                 href="/auth/login"

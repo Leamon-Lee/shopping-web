@@ -6,6 +6,7 @@ import Input from "@modules/common/components/input"
 import { useEffect, useMemo, useState } from "react"
 import type { CartItem, Order, Product, ShoppingCart } from "types/backend"
 import { getCart, listOrders, listProducts } from "api/backend-client"
+import { signout } from "@lib/data/customer"
 
 // ── Types ────────────────────────────────────────────────────────────
 
@@ -238,6 +239,13 @@ const CustomerPanel = () => {
             <a className="hover:text-ui-fg-base" href="/hall">Customer View</a>
             <a className="hidden hover:text-ui-fg-base small:block" href="/manager">Manager View</a>
             <a className="hidden hover:text-ui-fg-base small:block" href="/admin">Admin View</a>
+            <button
+              type="button"
+              className="hover:text-ui-fg-base"
+              onClick={() => signout()}
+            >
+              Log out
+            </button>
           </div>
         </div>
       </header>
@@ -258,6 +266,13 @@ const CustomerPanel = () => {
                 {item}
               </button>
             ))}
+            <button
+              type="button"
+              onClick={() => signout()}
+              className="whitespace-nowrap rounded-md px-3 py-2 text-left text-small-regular text-ui-fg-subtle hover:bg-ui-bg-subtle hover:text-ui-fg-base small:w-full"
+            >
+              Log out
+            </button>
           </nav>
         </aside>
 

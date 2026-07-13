@@ -1,6 +1,7 @@
 "use server"
 
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 import type { Account, TokenResponse } from "types/backend"
 
 const BACKEND_URL =
@@ -133,6 +134,7 @@ export async function signout() {
     name: TOKEN_COOKIE,
     path: "/",
   })
+  redirect("/")
 }
 
 // ── Authenticated actions ────────────────────────────────────────────
