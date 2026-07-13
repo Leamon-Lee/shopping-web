@@ -19,3 +19,6 @@ from online_shopping.models.review import Review  # noqa: E402, F401
 from online_shopping.models.shipment import Shipment  # noqa: E402, F401
 from online_shopping.models.shop import Shop, ShopProduct  # noqa: E402, F401
 from online_shopping.models.wishlist import WishlistItem  # noqa: E402, F401
+from online_shopping.models.user_behavior_event import UserBehaviorEvent  # noqa: E402, F401
+from online_shopping.models.recommendation_cache import RecommendationCache  # noqa: E402, F401
+from online_shopping.models.recommendation_result import RecommendationResult, ItemSimilarity, PopularProduct  # noqa: E402, F401

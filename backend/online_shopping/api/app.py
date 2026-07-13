@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from online_shopping.api.routers import accounts, cart, health, marketplace, orders, panels, payments, products, regions
+from online_shopping.api.routers import accounts, cart, events, health, marketplace, orders, panels, payments, products, recommendations, regions
 
 from contextlib import asynccontextmanager
 from online_shopping.database import engine
@@ -44,6 +44,8 @@ def create_app() -> FastAPI:
     app.include_router(orders.router, prefix="/orders", tags=["orders"])
     app.include_router(payments.router, prefix="/payments", tags=["payments"])
     app.include_router(panels.router, tags=["panels"])
+    app.include_router(events.router, prefix="/events", tags=["events"])
+    app.include_router(recommendations.router, prefix="/recommendations", tags=["recommendations"])
     return app
 
 
