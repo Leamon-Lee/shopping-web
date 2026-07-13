@@ -34,27 +34,42 @@ async function getAuthHeaders(): Promise<Record<string, string>> {
 
 async function backendFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const headers = await getAuthHeaders()
-  const response = await fetch(`${BACKEND_URL}${path}`, {
-    ...init,
-    headers: {
-      ...headers,
-      ...(init?.headers ?? {}),
-    },
-    cache: "no-store",
-  })
+  const url = `${BACKEND_URL}${path}`
+  console.log('[backendFetch] Requesting:', url)   // 打印请求 URL
 
-  if (!response.ok) {
-    let detail = ""
-    try {
-      const body = await response.json()
-      detail = typeof body.detail === "string" ? body.detail : JSON.stringify(body.detail)
-    } catch {
-      // ignore parse errors
+  try {
+    const response = await fetch(url, {
+      ...init,
+      headers: {
+        ...headers,
+        ...(init?.headers ?? {}),
+      },
+      // 临时注释掉 cache: "no-store"，排除缓存策略干扰
+      // cache: "no-store",
+    })
+
+    if (!response.ok) {
+      let detail = ""
+      try {
+        const body = await response.json()
+        detail = typeof body.detail === "string" ? body.detail : JSON.stringify(body.detail)
+      } catch {
+        // ignore parse errors
+      }
+      throw new Error(detail || `Backend request failed: ${response.status} ${path}`)
     }
-    throw new Error(detail || `Backend request failed: ${response.status} ${path}`)
-  }
 
-  return response.json() as Promise<T>
+    return response.json() as Promise<T>
+  } catch (error) {
+    // 详细打印错误信息，包括 cause（底层网络错误）
+    console.error('❌ backendFetch failed for URL:', url)
+    console.error('Error object:', error)
+    if (error.cause) {
+      console.error('Error cause:', error.cause)
+    }
+    // 重新抛出，让上层处理
+    throw error
+  }
 }
 
 // ── Regions ──────────────────────────────────────────────────────────
