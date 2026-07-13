@@ -6,7 +6,7 @@ import re
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from online_shopping.api.schemas import CategoryOut, ProductCreate, ProductOut
+from online_shopping.api.schemas import CategoryOut, ProductCreate, ProductOut, ProductUpdate
 from online_shopping.models.category import ProductCategory
 from online_shopping.models.product import Product
 from online_shopping.models.product_variant import ProductVariant
@@ -50,7 +50,7 @@ class CatalogService:
         category_name = payload.category.name
         product_hash = generate_product_hash(payload.name, category_name)
 
-        existing = await self.repo.find_product(product_hash)
+        existing = await self.repo.find_product(payload.name)
         if existing is not None:
             from fastapi import HTTPException, status
             raise HTTPException(
@@ -88,6 +88,13 @@ class CatalogService:
         created = await self.repo.find_product(product_hash)
         assert created is not None
         return created
+
+    async def update_product(self, product: Product, payload: ProductUpdate) -> Product:
+        updates = payload.model_dump(exclude_none=True)
+        return await self.repo.update_product(product, updates)
+
+    async def delete_product(self, product: Product) -> None:
+        await self.repo.delete_product(product)
 
     # ── Search ────────────────────────────────────────────────────
 

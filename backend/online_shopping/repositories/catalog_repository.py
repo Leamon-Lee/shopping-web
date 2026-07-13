@@ -141,6 +141,32 @@ class CatalogRepository:
         result = await self.db.execute(select(ProductCategory).order_by(ProductCategory.name))
         return list(result.scalars().all())
 
+    async def update_product(self, product: Product, updates: dict) -> Product:
+        if "name" in updates and updates["name"] is not None:
+            product.name = updates["name"]
+        if "description" in updates and updates["description"] is not None:
+            product.description = updates["description"]
+        if "price" in updates and updates["price"] is not None:
+            product.price = updates["price"]
+        if "available_item_count" in updates and updates["available_item_count"] is not None:
+            product.available_item_count = updates["available_item_count"]
+        if "category" in updates and updates["category"] is not None:
+            cat = updates["category"]
+            cat_name = cat.get("name") if isinstance(cat, dict) else cat.name
+            result = await self.db.execute(
+                select(ProductCategory).where(ProductCategory.name == cat_name)
+            )
+            existing = result.scalars().first()
+            if existing:
+                product.category_id = existing.id
+        await self.db.commit()
+        await self.db.refresh(product)
+        return product
+
+    async def delete_product(self, product: Product) -> None:
+        await self.db.delete(product)
+        await self.db.commit()
+
     async def find_product(self, identity: str) -> Product | None:
         result = await self.db.execute(
             select(Product)
@@ -154,6 +180,7 @@ class CatalogRepository:
                     Product.name.ilike(identity),
                     Product.slug == identity,
                     Product.product_hash == identity,
+                    cast(Product.id, String) == identity,
                 )
             )
         )
@@ -186,3 +213,25 @@ class CatalogRepository:
         self.db.add(image)
         await self.db.flush()
         return image
+
+    async def create_default_variant(self, product: Product) -> ProductVariant:
+        """Create a default variant for a product that has none."""
+        import uuid as _uuid
+        short_id = str(product.id)[:8]
+        slug_base = (product.slug or short_id)[:50]
+        uid_suffix = str(_uuid.uuid4())[:6]
+        variant_id_str = f"variant_{slug_base}_{uid_suffix}"[:100]
+        sku = f"SKU-{short_id}-{uid_suffix}".upper()[:64]
+        variant = ProductVariant(
+            product_id=product.id,
+            variant_id_str=variant_id_str,
+            name="Default Variant",
+            sku=sku,
+            price=product.price,
+            inventory_count=product.available_item_count,
+        )
+        self.db.add(variant)
+        await self.db.flush()
+        await self.db.refresh(variant)
+        await self.db.refresh(product, ["variants"])
+        return variant

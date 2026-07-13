@@ -74,6 +74,7 @@ export interface Account {
   email: string
   phone: Phone
   addresses: Address[]
+  role?: string
 }
 
 // ── Auth ─────────────────────────────────────────────────────────────
@@ -88,6 +89,7 @@ export interface RegisterPayload {
   password: string
   first_name?: string
   last_name?: string
+  role?: string
   phone_country_code?: string
   phone_number?: string
   street?: string
@@ -176,6 +178,7 @@ export interface ProductCreate {
   price: number
   available_item_count: number
   category: Category
+  shop_id?: string
 }
 
 // ── Cart ─────────────────────────────────────────────────────────────

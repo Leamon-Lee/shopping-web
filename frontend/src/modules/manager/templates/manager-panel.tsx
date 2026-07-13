@@ -3,8 +3,8 @@
 import { Badge, Button, Table } from "@medusajs/ui"
 import Spinner from "@modules/common/icons/spinner"
 import Input from "@modules/common/components/input"
-import { useEffect, useMemo, useState } from "react"
-import { getManagerPanel, getManagerProducts, getManagerOrders } from "api/backend-client"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { getManagerPanel, getManagerProducts, getManagerOrders, getManagerShops, createManagerShop, createProduct, updateProduct, deleteProduct, requestDeleteShop } from "api/backend-client"
 import { signout } from "@lib/data/customer"
 
 type ManagerView =
@@ -103,6 +103,21 @@ const ManagerPanel = () => {
   const [dashboard, setDashboard] = useState<Record<string, unknown> | null>(null)
   const [managerProducts, setManagerProducts] = useState<Row[]>([])
   const [managerOrders, setManagerOrders] = useState<Row[]>([])
+  const [managerShops, setManagerShops] = useState<Row[]>([])
+  const [showCreateShop, setShowCreateShop] = useState(false)
+  const [shopForm, setShopForm] = useState({ name: "", description: "", category: "" })
+  const [shopLoading, setShopLoading] = useState(false)
+  const rawManagerShopsRef = useRef<Record<string, unknown>[]>([])
+  const [productForm, setProductForm] = useState({ name: "", description: "", price: 0, stock: 0, categoryName: "", shopId: "" })
+  const [productLoading, setProductLoading] = useState(false)
+  const [editingProduct, setEditingProduct] = useState<Record<string, unknown> | null>(null)
+  const [editForm, setEditForm] = useState({ name: "", description: "", price: 0, stock: 0, categoryName: "" })
+  const [imageFiles, setImageFiles] = useState<FileList | null>(null)
+  const [showCreateModal, setShowCreateModal] = useState(false)
+  const [editMode, setEditMode] = useState(false)
+  const [shopFilter, setShopFilter] = useState("all")
+  const [createError, setCreateError] = useState("")
+  const [editFileNames, setEditFileNames] = useState<Record<number, string>>({})
 
   const fetchData = async () => {
     setLoading(true)
@@ -115,14 +130,7 @@ const ManagerPanel = () => {
       ])
       setDashboard(dashResp as Record<string, unknown> | null)
 
-      if (prodsResp) setManagerProducts((prodsResp as { products: Row[] }).products.map((p: Record<string, unknown>) => ({
-        product: p.name as string,
-        category: p.category as string,
-        sku: (p.slug as string)?.toUpperCase().slice(0, 20) || "—",
-        price: `CNY ${Number(p.price).toFixed(2)}`,
-        stock: p.available_item_count as number,
-        status: (p.available_item_count as number) === 0 ? "Hidden" : (p.available_item_count as number) <= 10 ? "Low stock" : "Listed",
-      })))
+      if (prodsResp) mapProducts((prodsResp as { products: any[] }).products)
 
       if (ordsResp) setManagerOrders((ordsResp as { orders: Row[] }).orders.map((o: Record<string, unknown>) => ({
         order: o.order_number as string,
@@ -141,6 +149,133 @@ const ManagerPanel = () => {
 
   useEffect(() => { fetchData() }, [])
 
+  const fetchShops = async () => {
+    setShopLoading(true)
+    try {
+      const resp = await getManagerShops()
+      const shops = resp.shops as Record<string, unknown>[]
+      rawManagerShopsRef.current = shops
+      setManagerShops(shops.map((s) => ({
+        name: s.name as string,
+        slug: s.slug as string,
+        status: s.status as string,
+        category: (s.category as string) || "—",
+      })))
+    } catch { /* ignore */ }
+    finally { setShopLoading(false) }
+  }
+
+  const handleCreateShop = async () => {
+    if (!shopForm.name.trim()) return
+    try {
+      await createManagerShop({ name: shopForm.name, description: shopForm.description, category: shopForm.category || undefined })
+      setShopForm({ name: "", description: "", category: "" })
+      setShowCreateShop(false)
+      fetchShops()
+    } catch { /* ignore */ }
+  }
+
+  useEffect(() => { fetchShops() }, [])
+
+  const mapProducts = (ps: any[]) => setManagerProducts(ps.map((p: Record<string, unknown>) => ({
+    id: p.id as string,
+    product: p.name as string,
+    category: p.category as string,
+    sku: (p.slug as string)?.toUpperCase().slice(0, 20) || "—",
+    price: `CNY ${Number(p.price).toFixed(2)}`,
+    stock: p.available_item_count as number,
+    status: (p.available_item_count as number) === 0 ? "Hidden" : (p.available_item_count as number) <= 10 ? "Low stock" : "Listed",
+    shop_ids: (p.shop_ids as string[]) || [],
+  })))
+
+  const refreshProducts = async () => {
+    const prodsResp = await getManagerProducts()
+    if (prodsResp) mapProducts((prodsResp as { products: any[] }).products)
+  }
+
+  const filteredProducts = useMemo(() =>
+    shopFilter === "all" ? managerProducts :
+    managerProducts.filter((p) => (p.shop_ids as string[])?.includes(shopFilter))
+  , [managerProducts, shopFilter])
+
+  const handleCreateProduct = async () => {
+    if (!productForm.name.trim() || !productForm.price) return
+    setProductLoading(true)
+    setCreateError("")
+    try {
+      const result = await createProduct({
+        name: productForm.name,
+        description: productForm.description,
+        price: productForm.price,
+        available_item_count: productForm.stock,
+        category: { name: productForm.categoryName || "Uncategorized", description: "" },
+        shop_id: productForm.shopId || undefined,
+      })
+      // Upload images if selected
+      if (imageFiles && imageFiles.length > 0) {
+        const prodId = (result as any).id || (result as any).slug
+        if (prodId) {
+          const formData = new FormData()
+          for (let i = 0; i < imageFiles.length; i++) formData.append("files", imageFiles[i])
+          await fetch(`/api/backend/shop/${encodeURIComponent(String(prodId))}/images`, { method: "POST", body: formData, credentials: "include" })
+        }
+      }
+      setProductForm({ name: "", description: "", price: 0, stock: 0, categoryName: "", shopId: "" })
+      setImageFiles(null)
+      setShowCreateModal(false)
+      refreshProducts()
+    } catch (e) {
+      setCreateError(e instanceof Error ? e.message : "Failed to create product.")
+    }
+    finally { setProductLoading(false) }
+  }
+
+  const startEdit = (p: Record<string, unknown>) => {
+    setEditingProduct(p)
+    setEditForm({
+      name: (p.product as string) || "",
+      description: (p.description as string) || "",
+      price: parsePrice(p.price as string),
+      stock: p.stock as number,
+      categoryName: (p.category as string) || "",
+    })
+  }
+
+  const handleUpdateProduct = async () => {
+    if (!editingProduct) return
+    try {
+      const id = (editingProduct.id as string) || (editingProduct.sku as string)
+      await updateProduct(String(id), {
+        name: editForm.name,
+        description: editForm.description,
+        price: editForm.price,
+        available_item_count: editForm.stock,
+        category: { name: editForm.categoryName || "Uncategorized", description: "" },
+      })
+      setEditingProduct(null)
+      refreshProducts()
+    } catch { /* ignore */ }
+  }
+
+  const handleDeleteProduct = async (id: string) => {
+    if (!confirm("Delete this product?")) return
+    try {
+      await deleteProduct(id)
+      refreshProducts()
+      alert("Product deleted.")
+    } catch { alert("Failed to delete product.") }
+  }
+
+  const handleDeleteShop = async (shopId: string) => {
+    if (!confirm("Request deletion of this shop? Admin approval required.")) return
+    try {
+      await requestDeleteShop(shopId)
+      fetchShops()
+    } catch { /* ignore */ }
+  }
+
+  const parsePrice = (val: string) => Number(val.replace("CNY ", "")) || 0
+
   const stats = dashboard?.stats as Record<string, number> | undefined
   const lowStock = (dashboard?.low_stock as string[]) || []
   const metrics = stats ? [
@@ -150,7 +285,7 @@ const ManagerPanel = () => {
     { label: "Low stock alerts", value: String(stats.low_stock_products), detail: lowStock.slice(0, 3).join(", ") || "None" },
   ] : []
 
-  const navItems: ManagerView[] = ["Dashboard", "My Shops", "Products", "Orders", "Shipments", "Income", "Reports", "Profile"]
+  const navItems: ManagerView[] = ["Dashboard", "My Shops", "Products", "Orders"]
 
   if (error) {
     return (
@@ -166,14 +301,14 @@ const ManagerPanel = () => {
 
   return (
     <div className="min-h-screen bg-ui-bg-base text-ui-fg-base">
-      <header className="sticky top-0 z-40 border-b border-ui-border-base bg-white">
+      <header className="sticky top-0 z-40 border-b border-ui-border-base bg-gray-200">
         <div className="content-container flex h-16 items-center justify-between txt-xsmall-plus text-ui-fg-subtle">
           <div className="flex items-center gap-x-4">
             <span className="text-ui-fg-base">MANAGER PANEL</span>
             <span className="hidden text-ui-fg-muted small:inline">Shop operations</span>
           </div>
           <div className="flex items-center gap-x-3">
-            <a className="hidden hover:text-ui-fg-base small:block" href="/">Customer View</a>
+            <a className="hidden hover:text-ui-fg-base small:block" href="/hall">Hall</a>
             <Button variant="secondary" className="h-9" onClick={() => signout()}>Sign out</Button>
           </div>
         </div>
@@ -234,21 +369,194 @@ const ManagerPanel = () => {
                 </>
               )}
               {activeView === "Products" && (
-                <TableView title="Products" description="All products in your catalog." rows={managerProducts} query={query} actions={<Button variant="secondary">Create product</Button>} />
-              )}
-              {activeView === "Orders" && (
-                <TableView title="Orders" description="Orders for your shops." rows={managerOrders} query={query} actions={<Button variant="secondary">Process selected</Button>} />
-              )}
-              {activeView === "My Shops" && (
-                <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-12 text-center">
-                  <h2 className="text-base-semi">My Shops</h2>
-                  <p className="mt-2 text-small-regular text-ui-fg-subtle">Shop management will be available when the shop-owner relation is added to the database.</p>
+                <div className="flex flex-col gap-y-6">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <div className="w-48">
+                      <select
+                        className="h-10 w-full rounded-rounded border border-ui-border-base bg-ui-bg-field px-3 text-small-regular"
+                        value={shopFilter}
+                        onChange={(e) => setShopFilter(e.target.value)}
+                      >
+                        <option value="all">All shops</option>
+                        {rawManagerShopsRef.current.map((s) => (
+                          <option key={s.id as string} value={s.id as string}>{s.name as string}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="flex-1" />
+                    <Button variant="secondary" onClick={() => { setShowCreateModal(true); setEditMode(false) }}>Create product</Button>
+                    <Button variant={editMode ? "secondary" : "secondary"} onClick={() => setEditMode(!editMode)}>
+                      {editMode ? "Done editing" : "Edit products"}
+                    </Button>
+                  </div>
+                  {editMode ? (
+                    filteredProducts.length > 0 && (
+                      <div className="rounded-rounded border border-ui-border-base bg-white p-3">
+                        <h2 className="text-base-semi p-3 pb-0">Edit products</h2>
+                        <div className="flex flex-col gap-1 max-h-[60vh] overflow-y-auto p-3">
+                          {filteredProducts.map((p, i) => {
+                            const prodId = String(p.id || p.sku)
+                            const uploadImage = async (files: FileList | null) => {
+                              if (!files || files.length === 0) return
+                              const fd = new FormData()
+                              for (let j = 0; j < files.length; j++) fd.append("files", files[j])
+                              await fetch(`/api/backend/shop/${encodeURIComponent(prodId)}/images`, { method: "POST", body: fd, credentials: "include" })
+                              refreshProducts()
+                            }
+                            return (
+                            <div key={i} className="flex flex-col gap-2 border-b border-ui-border-base py-2 last:border-b-0">
+                              <div className="flex items-center justify-between">
+                                <div className="flex-1 min-w-0 grid grid-cols-1 small:grid-cols-4 gap-2">
+                                  <input className="h-8 rounded border px-2 text-xs" defaultValue={String(p.product)} onChange={(e) => { p.product = e.target.value }} />
+                                  <input className="h-8 rounded border px-2 text-xs" defaultValue={String(p.price)} onChange={(e) => { p.price = e.target.value }} />
+                                  <input className="h-8 rounded border px-2 text-xs" type="number" defaultValue={String(p.stock)} onChange={(e) => { p.stock = Number(e.target.value) }} />
+                                  <input className="h-8 rounded border px-2 text-xs" defaultValue={String(p.category)} onChange={(e) => { p.category = e.target.value }} />
+                                </div>
+                                <div className="flex gap-1 shrink-0 ml-2">
+                                  <Button variant="secondary" className="h-7 text-xs px-2" onClick={async () => {
+                                    try {
+                                      await updateProduct(prodId, {
+                                        name: String(p.product), price: parsePrice(String(p.price)),
+                                        available_item_count: Number(p.stock),
+                                        category: { name: String(p.category), description: "" },
+                                      })
+                                      refreshProducts()
+                                      setEditMode(false)
+                                      alert("Product saved successfully.")
+                                    } catch {
+                                      alert("Failed to save product.")
+                                    }
+                                  }}>Save</Button>
+                                  <Button variant="secondary" className="h-7 text-xs px-2 text-rose-600" onClick={() => handleDeleteProduct(prodId)}>Delete</Button>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <input
+                                  type="file" multiple accept="image/*"
+                                  id={`img-${i}`} className="hidden"
+                                  onChange={(e) => {
+                                    if (e.target.files && e.target.files.length > 0) {
+                                      setEditFileNames(prev => ({ ...prev, [i]: Array.from(e.target.files!).map(f => f.name).join(", ") }))
+                                    }
+                                    uploadImage(e.target.files)
+                                  }}
+                                />
+                                <label htmlFor={`img-${i}`} className="inline-flex h-7 items-center rounded-md border border-ui-border-base bg-ui-bg-subtle px-3 text-xs cursor-pointer hover:bg-ui-bg-base">
+                                  Choose files
+                                </label>
+                                <span className="text-xs text-ui-fg-muted truncate max-w-[160px]">{editFileNames[i] || "No file chosen"}</span>
+                              </div>
+                            </div>
+                          )})}
+                        </div>
+                      </div>
+                    )
+                  ) : (
+                    <TableView
+                      title="Products"
+                      description="All products in your catalog."
+                      rows={filteredProducts}
+                      query={query}
+                    />
+                  )}
+
+                  {showCreateModal && (
+                    <div className="fixed inset-0 z-[200] flex items-center justify-center">
+                      <div className="fixed inset-0 bg-black/50" onClick={() => setShowCreateModal(false)} />
+                      <div className="relative bg-white rounded-lg shadow-xl p-6 max-w-lg w-full mx-4 flex flex-col gap-y-3 max-h-[90vh] overflow-y-auto">
+                        <h3 className="text-base-semi">New Product</h3>
+                        <div className="grid grid-cols-1 gap-3 small:grid-cols-2">
+                          <Input label="Product name" name="prod-name" value={productForm.name} onChange={(e) => setProductForm({ ...productForm, name: e.target.value })} />
+                          <Input label="Price (CNY)" name="prod-price" type="number" value={String(productForm.price)} onChange={(e) => setProductForm({ ...productForm, price: Number(e.target.value) || 0 })} />
+                          <Input label="Stock" name="prod-stock" type="number" value={String(productForm.stock)} onChange={(e) => setProductForm({ ...productForm, stock: Number(e.target.value) || 0 })} />
+                          <Input label="Category name" name="prod-cat" value={productForm.categoryName} onChange={(e) => setProductForm({ ...productForm, categoryName: e.target.value })} />
+                        </div>
+                        <Input label="Description" name="prod-desc" value={productForm.description} onChange={(e) => setProductForm({ ...productForm, description: e.target.value })} />
+                        <div className="flex flex-col gap-y-1">
+                          <label className="txt-medium text-ui-fg-base">Images</label>
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="file" multiple accept="image/*"
+                              id="create-product-images" className="hidden"
+                              onChange={(e) => setImageFiles(e.target.files)}
+                            />
+                            <label htmlFor="create-product-images" className="inline-flex h-10 items-center rounded-md border border-ui-border-base bg-ui-bg-subtle px-4 text-small-regular cursor-pointer hover:bg-ui-bg-base">
+                              Choose files
+                            </label>
+                            <span className="text-small-regular text-ui-fg-muted">
+                              {imageFiles && imageFiles.length > 0
+                                ? `${imageFiles.length} file(s) selected`
+                                : "No file chosen"}
+                            </span>
+                          </div>
+                        </div>
+                        {rawManagerShopsRef.current.filter((s) => s.status === "active").length > 0 ? (
+                          <div className="flex flex-col gap-y-1">
+                            <label className="txt-medium text-ui-fg-base">Shop</label>
+                            <select
+                              className="h-10 rounded-rounded border border-ui-border-base bg-ui-bg-field px-3 text-small-regular"
+                              value={productForm.shopId}
+                              onChange={(e) => setProductForm({ ...productForm, shopId: e.target.value })}
+                            >
+                              <option value="">No shop (unlisted)</option>
+                              {rawManagerShopsRef.current.filter((s) => s.status === "active").map((shop) => (
+                                <option key={shop.id as string} value={shop.id as string}>{shop.name as string}</option>
+                              ))}
+                            </select>
+                          </div>
+                        ) : (
+                          <p className="text-small-regular text-ui-fg-muted">You need an approved shop before you can upload products. Create one in My Shops.</p>
+                        )}
+                        {createError && <p className="text-rose-500 text-small-regular">{createError}</p>}
+                        <div className="flex gap-2 justify-end mt-2">
+                          <Button variant="secondary" onClick={() => { setShowCreateModal(false); setCreateError("") }}>Cancel</Button>
+                          <Button variant="secondary" onClick={handleCreateProduct} disabled={!productForm.name.trim() || !productForm.price} isLoading={productLoading}>Create product</Button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
-              {activeView === "Shipments" && (
-                <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-12 text-center">
-                  <h2 className="text-base-semi">Shipments</h2>
-                  <p className="mt-2 text-small-regular text-ui-fg-subtle">Shipment tracking will be available when the shipment model is fully integrated.</p>
+              {activeView === "Orders" && (
+                <TableView title="Orders" description="Orders for your shops." rows={managerOrders} query={query} />
+              )}
+              {activeView === "My Shops" && (
+                <div className="flex flex-col gap-y-6">
+                  <TableView
+                    title="My Shops"
+                    description="Shops you own. New shops require admin approval before appearing in the marketplace."
+                    rows={managerShops}
+                    query={query}
+                    actions={
+                      <Button variant="secondary" onClick={() => setShowCreateShop(!showCreateShop)}>
+                        {showCreateShop ? "Cancel" : "Create shop"}
+                      </Button>
+                    }
+                  />
+                  {managerShops.length > 0 && (
+                    <div className="rounded-rounded border border-ui-border-base bg-white p-3">
+                      <div className="flex flex-col gap-1 max-h-80 overflow-y-auto">
+                        {rawManagerShopsRef.current.map((s, i) => (
+                          <div key={i} className="flex items-center justify-between border-b border-ui-border-base py-2 last:border-b-0">
+                            <div>
+                              <p className="text-small-regular font-medium">{s.name as string}</p>
+                              <p className="text-xs text-ui-fg-muted">{s.category as string || "—"} | Status: {s.status as string}</p>
+                            </div>
+                            <Button variant="secondary" className="h-7 text-xs px-2 text-rose-600" onClick={() => handleDeleteShop(s.id as string)}>Delete</Button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {showCreateShop && (
+                    <div className="rounded-rounded border border-ui-border-base bg-white p-5 flex flex-col gap-y-3">
+                      <h3 className="text-base-semi">New Shop</h3>
+                      <Input label="Shop name" name="shop-name" value={shopForm.name} onChange={(e) => setShopForm({ ...shopForm, name: e.target.value })} />
+                      <Input label="Description" name="shop-desc" value={shopForm.description} onChange={(e) => setShopForm({ ...shopForm, description: e.target.value })} />
+                      <Input label="Category (optional)" name="shop-cat" value={shopForm.category} onChange={(e) => setShopForm({ ...shopForm, category: e.target.value })} />
+                      <Button variant="secondary" onClick={handleCreateShop} disabled={!shopForm.name.trim()}>Submit for approval</Button>
+                    </div>
+                  )}
                 </div>
               )}
               {activeView === "Income" && (

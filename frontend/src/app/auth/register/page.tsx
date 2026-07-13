@@ -47,6 +47,18 @@ export default function RegisterPage() {
             <Input label="Email" name="email" type="email" autoComplete="email" required />
             <Input label="Password" name="password" type="password" autoComplete="new-password" required minLength={8} />
             <Input label="Phone" name="phone" type="tel" autoComplete="tel" />
+            <div className="flex flex-col gap-y-1">
+              <label className="txt-medium text-ui-fg-base">Role</label>
+              <select
+                name="role"
+                defaultValue="customer"
+                className="h-10 rounded-rounded border border-ui-border-base bg-ui-bg-field px-3 text-small-regular"
+              >
+                <option value="customer">Customer</option>
+                <option value="manager">Manager</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
             <Button type="submit" className="mt-2 h-10 w-full" disabled={loading}>
               {loading ? "Creating account..." : "Create account"}
             </Button>

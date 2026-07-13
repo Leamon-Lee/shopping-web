@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense } from "react"
+import { Suspense, useId, useRef } from "react"
 import { Button } from "@medusajs/ui"
 import Input from "@modules/common/components/input"
 import { login } from "@lib/data/customer"
@@ -11,8 +11,17 @@ function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get("redirect") || "/hall"
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const formRef = useRef<HTMLFormElement>(null)
+  const formKey = useId()
+
+  const resetForm = () => {
+    setEmail("")
+    setPassword("")
+  }
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -26,6 +35,7 @@ function LoginForm() {
       setError(result.error)
       setLoading(false)
     } else {
+      resetForm()
       router.push(searchParams.has("redirect") ? redirect : result?.redirectTo ?? redirect)
       router.refresh()
     }
@@ -42,9 +52,46 @@ function LoginForm() {
               Enter your email and password to continue.
             </p>
           </div>
-          <form className="flex flex-col gap-y-4" onSubmit={handleSubmit}>
-            <Input label="Email" name="email" type="email" autoComplete="email" required />
-            <Input label="Password" name="password" type="password" autoComplete="current-password" required />
+          <form
+            key={formKey}
+            ref={formRef}
+            className="flex flex-col gap-y-4"
+            onSubmit={handleSubmit}
+          >
+            <input
+              type="text"
+              name="username"
+              autoComplete="username"
+              style={{ display: "none" }}
+              tabIndex={-1}
+              readOnly
+            />
+            <input
+              type="password"
+              name="current-password"
+              autoComplete="current-password"
+              style={{ display: "none" }}
+              tabIndex={-1}
+              readOnly
+            />
+            <Input
+              label="Email"
+              name="email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="new-email"
+              required
+            />
+            <Input
+              label="Password"
+              name="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="new-password"
+              required
+            />
             <Button type="submit" className="mt-2 h-10 w-full" disabled={loading}>
               {loading ? "Signing in..." : "Sign in"}
             </Button>

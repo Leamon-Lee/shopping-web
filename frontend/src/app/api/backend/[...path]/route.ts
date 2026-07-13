@@ -13,14 +13,27 @@ async function proxyBackendRequest(
 
   const headers = new Headers(request.headers)
   headers.set("host", target.host)
+  // Convert httpOnly cookie to Authorization header for backend auth
+  const tokenCookie = request.cookies.get("shopping_token")
+  if (tokenCookie?.value) {
+    headers.set("Authorization", `Bearer ${tokenCookie.value}`)
+  }
+
+  let body: BodyInit | undefined
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    const contentType = request.headers.get("content-type") || ""
+    body = contentType.includes("multipart/form-data")
+      ? await request.arrayBuffer()
+      : await request.text()
+    // Strip original length/encoding headers so fetch sets correct values for the body
+    headers.delete("content-length")
+    headers.delete("transfer-encoding")
+  }
 
   const response = await fetch(target, {
     method: request.method,
     headers,
-    body:
-      request.method === "GET" || request.method === "HEAD"
-        ? undefined
-        : await request.text(),
+    body,
     cache: "no-store",
   })
 

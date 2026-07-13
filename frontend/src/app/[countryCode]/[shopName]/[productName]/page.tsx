@@ -1,9 +1,11 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { Badge, Button } from "@medusajs/ui"
+import { Badge } from "@medusajs/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import ProductChoicePanel from "@modules/products/components/product-choice-panel"
 import ProductImageCarousel from "@modules/products/components/product-image-carousel"
+import AddToCartForm from "@modules/products/components/add-to-cart-form"
+import ReviewSection from "@modules/products/components/review-section"
 
 import { addCartItem, listProducts } from "../../../../api/backend"
 import { retrieveCustomer } from "@lib/data/customer"
@@ -28,7 +30,7 @@ type Props = {
 export const dynamic = "force-dynamic"
 
 async function findRouteProduct(shopName: string, productName: string) {
-  const products = await listProducts(shopName).catch(() => listProducts())
+  const products = await listProducts()
   return products.find((product) => productMatchesRoute(product, productName))
 }
 
@@ -49,7 +51,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 }
 
 export default async function UsernameProductPage(props: Props) {
-  const { countryCode, shopName, productName } = await props.params
+  const { countryCode: _countryCode, shopName, productName } = await props.params
   const [currentUser, product] = await Promise.all([
     retrieveCustomer(),
     findRouteProduct(shopName, productName),
@@ -59,23 +61,23 @@ export default async function UsernameProductPage(props: Props) {
     notFound()
   }
 
-  const username = encodeURIComponent(currentUser?.user_name ?? countryCode)
-  const hallPath = currentUser ? `/customer/${username}/hall` : "/hall"
-  const shopsPath = `/${username}/shops`
-  const catlogPath = `/${username}/catlog`
-  const shopPath = `/${username}/${shopName}`
+  const hallPath = "/hall"
+  const shopsPath = "/shops"
+  const catlogPath = "/catlog"
+  const shopPath = `/shop?shop=${encodeURIComponent(product.shop?.shop_name ?? shopName)}`
 
   async function addProductToCart() {
     "use server"
+    const identity = product?.variants?.[0]?.id || backendProductName(product!)
     await addCartItem({
-      product_name: backendProductName(product!),
+      product_name: identity,
       quantity: 1,
     })
   }
 
   return (
     <main className="min-h-screen bg-ui-bg-base text-ui-fg-base">
-      <header className="sticky inset-x-0 top-0 z-50 border-b border-ui-border-base bg-white">
+      <header className="sticky inset-x-0 top-0 z-50 border-b border-ui-border-base bg-gray-200">
         <div className="content-container flex h-16 items-center justify-between text-small-regular text-ui-fg-subtle">
           <LocalizedClientLink href={hallPath} className="text-ui-fg-base">
             SHOPPING HALL
@@ -97,7 +99,7 @@ export default async function UsernameProductPage(props: Props) {
             </LocalizedClientLink>
             {currentUser ? (
               <LocalizedClientLink
-                href={`/customer/${username}`}
+                href="/account"
                 className="hover:text-ui-fg-base"
               >
                 Account
@@ -160,19 +162,13 @@ export default async function UsernameProductPage(props: Props) {
             product={product}
             fallbackSizes={extractSizeChoices(unwrapBackendValue(product.description))}
           />
-          <form action={addProductToCart}>
-            <Button
-              type="submit"
-              variant="primary"
-              className="h-10 w-full"
-              disabled={backendProductAvailableCount(product) < 1}
-              data-testid="add-product-button"
-            >
-              Add to cart
-            </Button>
-          </form>
+          <AddToCartForm
+            addAction={addProductToCart}
+            disabled={backendProductAvailableCount(product) < 1}
+          />
         </div>
       </section>
+      <ReviewSection productIdentity={product.id || backendProductName(product)} />
     </main>
   )
 }

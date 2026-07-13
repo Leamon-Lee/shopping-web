@@ -1,3 +1,5 @@
+import io
+
 from minio import Minio
 
 from online_shopping.config import settings
@@ -27,7 +29,7 @@ def upload_product_image(product_hash: str, file_name: str, data: bytes, content
     client.put_object(
         bucket_name=settings.minio_bucket_products,
         object_name=object_path,
-        data=data,
+        data=io.BytesIO(data),
         length=len(data),
         content_type=content_type,
     )

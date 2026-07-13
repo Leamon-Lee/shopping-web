@@ -44,8 +44,7 @@ async function backendFetch<T>(path: string, init?: RequestInit): Promise<T> {
         ...headers,
         ...(init?.headers ?? {}),
       },
-      // 临时注释掉 cache: "no-store"，排除缓存策略干扰
-      // cache: "no-store",
+      cache: "no-store",
     })
 
     if (!response.ok) {
@@ -131,6 +130,7 @@ export async function createProduct(payload: {
   price: number
   available_item_count: number
   category: { name: string; description: string }
+  shop_id?: string
 }): Promise<Product> {
   return backendFetch<Product>("/shop", {
     method: "POST",

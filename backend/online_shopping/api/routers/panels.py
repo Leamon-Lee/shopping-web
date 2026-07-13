@@ -25,7 +25,7 @@ class ShopCreateRequest(BaseModel):
 
 
 class ShopApprovalRequest(BaseModel):
-    status: str = Field(pattern="^(active|rejected)$")
+    status: str = Field(pattern="^(active|rejected|deleted)$")
 
 
 # ── Admin endpoints (require admin role) ──────────────────────────
@@ -228,13 +228,36 @@ async def admin_approve_shop(
     current_user: Account = Depends(require_admin),
     db: AsyncSession = Depends(get_db),
 ) -> dict:
-    """Approve or reject a shop."""
-    shop = await ShopRepository(db).get_by_id(shop_id)
+    """Approve, reject, or delete a shop."""
+    repo = ShopRepository(db)
+    shop = await repo.get_by_id(shop_id)
     if shop is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Shop not found.")
-    await ShopRepository(db).update_status(shop, payload.status)
+    if payload.status == "deleted":
+        await repo.delete(shop)
+        await db.commit()
+        return {"id": str(shop_id), "name": shop.name, "status": "deleted"}
+    await repo.update_status(shop, payload.status)
     await db.commit()
     return {"id": str(shop.id), "name": shop.name, "status": shop.status}
+
+
+@router.delete("/manager/shops/{shop_id}")
+async def manager_request_delete_shop(
+    shop_id: UUID,
+    current_user: Account = Depends(require_manager),
+    db: AsyncSession = Depends(get_db),
+) -> dict:
+    """Request deletion of a shop (pending admin approval)."""
+    repo = ShopRepository(db)
+    shop = await repo.get_by_id(shop_id)
+    if shop is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Shop not found.")
+    if shop.owner_id != current_user.id and current_user.role != "admin":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="You do not own this shop.")
+    await repo.update_status(shop, "pending_deletion")
+    await db.commit()
+    return {"id": str(shop.id), "name": shop.name, "status": "pending_deletion"}
 
 
 # ── Shipment endpoints (manager) ────────────────────────────────────

@@ -1,6 +1,5 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { Button } from "@medusajs/ui"
 
 import { addCartItem, listProducts } from "../../../../api/backend"
 import {
@@ -13,6 +12,8 @@ import {
   unwrapBackendValue,
 } from "../../../../lib/backend-native"
 import Thumbnail from "@modules/products/components/thumbnail"
+import AddToCartForm from "@modules/products/components/add-to-cart-form"
+import ReviewSection from "@modules/products/components/review-section"
 
 type Props = {
   params: Promise<{ handle: string }>
@@ -48,13 +49,15 @@ export default async function ProductPage(props: Props) {
 
   async function addProductToCart() {
     "use server"
+    const identity = product?.variants?.[0]?.id || backendProductName(product!)
     await addCartItem({
-      product_name: backendProductName(product!),
+      product_name: identity,
       quantity: 1,
     })
   }
 
   return (
+    <>
     <div
       className="content-container flex flex-col small:flex-row small:items-start small:gap-x-8 large:gap-x-12 py-6 relative"
       data-testid="product-container"
@@ -84,18 +87,15 @@ export default async function ProductPage(props: Props) {
         <p className="txt-small text-ui-fg-muted">
           {backendProductAvailableCount(product)} available
         </p>
-        <form action={addProductToCart}>
-          <Button
-            type="submit"
-            variant="primary"
-            className="w-full h-10"
-            disabled={backendProductAvailableCount(product) < 1}
-            data-testid="add-product-button"
-          >
-            Add to cart
-          </Button>
-        </form>
+        <AddToCartForm
+          addAction={addProductToCart}
+          disabled={backendProductAvailableCount(product) < 1}
+        />
       </div>
     </div>
+    <div className="content-container py-6">
+      <ReviewSection productIdentity={product.id || product.slug || backendProductSlug(product)} />
+    </div>
+    </>
   )
 }

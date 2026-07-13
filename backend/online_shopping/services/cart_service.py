@@ -62,5 +62,7 @@ class CartService:
         if product is None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found.")
         if not product.variants:
-            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Product has no purchasable variant.")
+            # Auto-create a default variant for products that lack one
+            default_variant = await self.catalog.create_default_variant(product)
+            return default_variant
         return product.variants[0]
