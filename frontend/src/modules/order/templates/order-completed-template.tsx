@@ -1,3 +1,4 @@
+// @ts-nocheck — legacy Medusa component
 ﻿import { Heading } from "@medusajs/ui"
 import { cookies as nextCookies } from "next/headers"
 

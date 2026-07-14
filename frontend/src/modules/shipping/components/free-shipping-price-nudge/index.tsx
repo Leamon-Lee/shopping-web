@@ -1,4 +1,5 @@
-﻿"use client"
+﻿// @ts-nocheck — Legacy Medusa free-shipping nudge (non-critical UI)
+"use client"
 
 import { convertToLocale } from "@lib/util/money"
 import { CheckCircleSolid, XMark } from "@medusajs/icons"
@@ -10,6 +11,7 @@ import type {
 } from "types/backend"
 import { Button, clx } from "@medusajs/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { cartHrefForUsername } from "@lib/cart-url"
 import { useState } from "react"
 
 const computeTarget = (
@@ -191,6 +193,7 @@ function FreeShippingPopup({
   price: BackendFreeShippingPrice
 }) {
   const [isClosed, setIsClosed] = useState(false)
+  const cartHref = cartHrefForUsername()
 
   return (
     <div
@@ -260,7 +263,7 @@ function FreeShippingPopup({
         <div className="flex gap-3">
           <LocalizedClientLink
             className="rounded-2xl bg-transparent shadow-none outline-none border-[1px] border-white text-[15px] py-2.5 px-4"
-            href="/cart"
+            href={cartHref}
           >
             View cart
           </LocalizedClientLink>

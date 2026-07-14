@@ -12,6 +12,7 @@ import {
   formatBackendMoney,
 } from "../../../lib/backend-native"
 import { productHref } from "../../../lib/marketplace-routes"
+import { cartHrefForUsername } from "../../../lib/cart-url"
 
 const CATEGORY_PREVIEW_COUNT = 5
 
@@ -31,16 +32,18 @@ const CatlogTemplate = ({
   currentUser?: Account | null
   activeCatlogPath?: string
 }) => {
-  const customerBasePath = currentUser
-    ? `/customer/${encodeURIComponent(currentUser.user_name)}`
+  const usernamePath = currentUser
+    ? encodeURIComponent(currentUser.user_name)
     : null
-  const hallPath = customerBasePath ? `${customerBasePath}/hall` : "/hall"
+  const customerBasePath = usernamePath ? `/customer/${usernamePath}` : null
+  const hallPath = usernamePath ? `/${usernamePath}/hall` : "/hall"
   const shopsPath = currentUser
-    ? `/${encodeURIComponent(currentUser.user_name)}/shops`
+    ? `/${usernamePath}/shops`
     : "/shops"
   const catlogPath = currentUser
-    ? `/${encodeURIComponent(currentUser.user_name)}/catlog`
+    ? `/${usernamePath}/catlog`
     : "/catlog"
+  const cartPath = cartHrefForUsername(currentUser?.user_name)
   const groups = buildCategoryGroups(data)
   const featuredGroups = groups.slice(0, 6)
 
@@ -63,7 +66,7 @@ const CatlogTemplate = ({
             </LocalizedClientLink>
           </nav>
           <div className="flex items-center gap-x-4">
-            <LocalizedClientLink href="/cart" className="hover:text-ui-fg-base">
+            <LocalizedClientLink href={cartPath} className="hover:text-ui-fg-base">
               Cart
             </LocalizedClientLink>
             {currentUser ? (

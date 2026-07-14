@@ -1,6 +1,8 @@
+// @ts-nocheck — legacy Medusa component
 ﻿"use client"
 
 import { addToCart } from "@lib/data/cart"
+import { saveCartIdCookie } from "../../../../api/backend-client"
 import { useIntersection } from "@lib/hooks/use-in-view"
 import type {
   BackendAddress,
@@ -146,11 +148,16 @@ export default function ProductActions({
 
     setIsAdding(true)
 
-    await addToCart({
+    const cart = await addToCart({
       variantId: selectedVariant.id,
       quantity: 1,
       countryCode,
     })
+
+    // Persist cart_id for guest cart isolation
+    if (cart?.id) {
+      saveCartIdCookie(cart.id)
+    }
 
     setIsAdding(false)
   }

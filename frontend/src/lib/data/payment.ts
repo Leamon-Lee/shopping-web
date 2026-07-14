@@ -3,7 +3,7 @@
 export const listCartPaymentMethods = async (..._args: any[]) => {
   return [
     {
-      id: "backend_manual_payment",
+      id: "pp_system_default",
       is_enabled: true,
     },
   ]

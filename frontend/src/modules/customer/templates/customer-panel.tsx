@@ -1,370 +1,352 @@
 "use client"
 
-import { Badge, Button, Table } from "@medusajs/ui"
-import Spinner from "@modules/common/icons/spinner"
+import { Badge, Button } from "@medusajs/ui"
 import Input from "@modules/common/components/input"
-import { useEffect, useMemo, useState } from "react"
-import type { CartItem, Order, Product, ShoppingCart } from "types/backend"
-import { getCart, listOrders, listProducts } from "api/backend-client"
+import { useMemo, useState } from "react"
+import type { Order, Product, ShoppingCart } from "types/backend"
+import RecommendedProducts from "@modules/products/components/recommended-products"
 
-// ── Types ────────────────────────────────────────────────────────────
+type CustomerPanelProps = {
+  username?: string
+  cart: ShoppingCart | null
+  orders: Order[]
+  products: Product[]
+}
 
-type CustomerView =
-  | "Dashboard" | "Cart" | "Orders" | "Order Detail"
-  | "Wishlist" | "Preferences" | "Reviews"
-  | "Addresses" | "Payment Methods" | "Notifications"
+type View = "home" | "orders" | "cart" | "wishlist" | "profile"
 
-type Row = Record<string, string | number>
+const money = (value?: number | null) => `CN¥${(value ?? 0).toFixed(2)}`
 
-// ── Helpers ──────────────────────────────────────────────────────────
+const itemTitle = (item: any) =>
+  item.product_title || item.product?.title || item.product?.name || "Product"
 
-const getBadgeColor = (status: string) => {
-  if (["Paid", "In transit", "In stock", "Published", "Default", "Completed", "Read", "completed", "shipped"].includes(status)) return "green"
-  if (["Unavailable", "Refund", "Blocked", "failed", "canceled"].includes(status)) return "red"
-  if (["Low stock", "Needs check", "pending"].includes(status)) return "purple"
+const itemImage = (item: any) =>
+  item.thumbnail ||
+  item.product?.thumbnail ||
+  item.product?.images?.[0]?.url ||
+  item.product?.images?.[0]?.image_url ||
+  "/images/placeholder.png"
+
+const productImage = (product: any) =>
+  product.thumbnail ||
+  product.images?.[0]?.url ||
+  product.images?.[0]?.image_url ||
+  "/images/placeholder.png"
+
+const orderTotal = (order: any) =>
+  order.payment?.amount ?? order.total ?? order.subtotal ?? 0
+
+const orderStatus = (order: any) =>
+  order.shipments?.[0]?.status || order.fulfillment_status || order.status || "processing"
+
+const statusColor = (status: string) => {
+  const value = status.toLowerCase()
+  if (["complete", "completed", "delivered", "shipped", "paid"].includes(value)) return "green"
+  if (["canceled", "failed", "refunded"].includes(value)) return "red"
+  if (["pending", "processing"].includes(value)) return "purple"
   return "orange"
 }
 
-const formatColumn = (column: string) =>
-  column.replace(/([A-Z])/g, " $1").replace(/^./, (letter) => letter.toUpperCase())
+const StatButton = ({
+  label,
+  value,
+  onClick,
+}: {
+  label: string
+  value: string
+  onClick: () => void
+}) => (
+  <button
+    className="flex h-20 flex-col items-center justify-center border border-ui-border-base bg-white text-center hover:bg-ui-bg-subtle"
+    onClick={onClick}
+    type="button"
+  >
+    <span className="text-xl-semi text-ui-fg-base">{value}</span>
+    <span className="mt-1 text-small-regular text-ui-fg-subtle">{label}</span>
+  </button>
+)
 
-const getViewTitle = (view: CustomerView) => {
-  const titles: Record<CustomerView, string> = {
-    Dashboard: "Customer dashboard", Cart: "Shopping cart",
-    Orders: "My orders", "Order Detail": "Order detail",
-    Wishlist: "Wishlist", Preferences: "Preference center",
-    Reviews: "Product reviews", Addresses: "Saved addresses",
-    "Payment Methods": "Payment methods", Notifications: "Notifications",
-  }
-  return titles[view]
-}
-
-const getViewDescription = (view: CustomerView) => {
-  const descriptions: Record<CustomerView, string> = {
-    Dashboard: "View cart, active orders, completed orders, wishlist, reviews, addresses, payment methods, and recommended items.",
-    Cart: "Manage cart items before checkout, including quantity, product variants, stock status, and shop grouping.",
-    Orders: "Track payment, shipment, order status, refunds, reviews, and order-level actions.",
-    "Order Detail": "Review order summary, shop info, items, payment info, shipment info, order log, and customer actions.",
-    Wishlist: "Save products for later and use wishlist data to improve recommendations.",
-    Preferences: "Choose favourite categories, shops, price ranges, brand preferences, and personalisation settings.",
-    Reviews: "Write pending reviews and manage published reviews for purchased products.",
-    Addresses: "Manage shipping addresses and choose a default address for checkout.",
-    "Payment Methods": "Manage credit card and electronic bank transfer style payment methods.",
-    Notifications: "Read order, shipment, payment, recommendation, shop, and product updates.",
-  }
-  return descriptions[view]
-}
-
-// ── Components ───────────────────────────────────────────────────────
-
-const MetricCard = ({ label, value, detail }: { label: string; value: string; detail: string }) => (
-  <div className="rounded-rounded border border-ui-border-base bg-white p-5">
-    <p className="text-small-regular text-ui-fg-subtle">{label}</p>
-    <p className="mt-3 text-xl-semi text-ui-fg-base">{value}</p>
-    <p className="mt-1 text-small-regular text-ui-fg-muted">{detail}</p>
+const SectionTitle = ({
+  title,
+  action,
+}: {
+  title: string
+  action?: React.ReactNode
+}) => (
+  <div className="flex items-center justify-between border-b border-ui-border-base pb-3">
+    <h2 className="text-base-semi text-ui-fg-base">{title}</h2>
+    {action}
   </div>
 )
 
-const InfoPanel = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div className="rounded-rounded border border-ui-border-base bg-white p-5">
-    <h2 className="text-base-semi">{title}</h2>
-    <div className="mt-4 flex flex-col gap-y-3 text-small-regular text-ui-fg-subtle">{children}</div>
-  </div>
-)
+const CartPreview = ({ cart }: { cart: ShoppingCart | null }) => {
+  const items = cart?.items ?? []
 
-const TableView = ({ title, description, rows, actions, query, compact }: {
-  title: string; description: string; rows: Row[]; actions?: React.ReactNode
-  query: string; compact?: boolean
-}) => {
-  const filteredRows = useMemo(() => {
-    const normalized = query.trim().toLowerCase()
-    if (!normalized) return rows
-    return rows.filter((row) =>
-      Object.values(row).some((value) => String(value).toLowerCase().includes(normalized))
-    )
-  }, [query, rows])
-  const columns = Object.keys(rows[0] || {})
   return (
-    <div className="rounded-rounded border border-ui-border-base bg-white">
-      <div className="flex flex-col justify-between gap-4 border-b border-ui-border-base p-5 small:flex-row small:items-center">
-        <div>
-          <h2 className="text-base-semi">{title}</h2>
-          <p className="mt-1 text-small-regular text-ui-fg-subtle">{description}</p>
+    <section className="flex flex-col gap-4">
+      <SectionTitle
+        title="Shopping Cart"
+        action={
+          <a className="text-small-regular text-ui-fg-interactive" href="/shop">
+            Shop more
+          </a>
+        }
+      />
+      {items.length ? (
+        <div className="grid grid-cols-1 gap-3 medium:grid-cols-2">
+          {items.slice(0, 4).map((item: any) => (
+            <a
+              className="grid grid-cols-[72px_1fr] gap-3 border border-ui-border-base bg-white p-3 hover:bg-ui-bg-subtle"
+              href={`/shop/${item.product_handle || item.product?.handle || ""}`}
+              key={item.id}
+            >
+              <img
+                alt={itemTitle(item)}
+                className="h-[72px] w-[72px] object-cover"
+                src={itemImage(item)}
+              />
+              <div className="min-w-0">
+                <p className="truncate text-small-semi text-ui-fg-base">{itemTitle(item)}</p>
+                <p className="mt-1 text-small-regular text-ui-fg-subtle">
+                  Qty {item.quantity}
+                </p>
+                <p className="mt-2 text-small-semi text-ui-fg-base">
+                  {money(item.total ?? item.unit_price ?? item.price)}
+                </p>
+              </div>
+            </a>
+          ))}
         </div>
-        {actions}
-      </div>
-      {rows.length > 0 ? (
-        <div className="overflow-x-auto">
-          <Table>
-            <Table.Header className="border-t-0">
-              <Table.Row className="text-ui-fg-subtle txt-medium-plus">
-                {columns.map((column, index) => (
-                  <Table.HeaderCell key={column} className={index > 1 && compact ? "hidden small:table-cell" : ""}>
-                    {formatColumn(column)}
-                  </Table.HeaderCell>
-                ))}
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {filteredRows.map((row, rowIndex) => (
-                <Table.Row key={`${title}-${rowIndex}`}>
-                  {columns.map((column, columnIndex) => {
-                    const value = row[column]
-                    const isStatus = ["status", "payment", "shipment", "stock"].includes(column)
-                    return (
-                      <Table.Cell key={column} className={
-                        columnIndex > 1 && compact ? "hidden small:table-cell" : columnIndex > 0 ? "text-ui-fg-subtle" : ""
-                      }>
-                        {isStatus ? <Badge color={getBadgeColor(String(value))}>{String(value)}</Badge> : String(value)}
-                      </Table.Cell>
-                    )
-                  })}
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
-        </div>
-      ) : null}
-      {filteredRows.length === 0 && (
-        <div className="border-t border-ui-border-base p-6 text-small-regular text-ui-fg-subtle">
-          {rows.length === 0 ? "No data available yet." : "No records match this search."}
+      ) : (
+        <div className="border border-ui-border-base bg-white p-8 text-center text-small-regular text-ui-fg-subtle">
+          Your cart is empty.
         </div>
       )}
-    </div>
+      <div className="flex items-center justify-between border border-ui-border-base bg-white p-4">
+        <span className="text-small-regular text-ui-fg-subtle">
+          {cart?.total_quantity ?? 0} items
+        </span>
+        <span className="text-base-semi text-ui-fg-base">{money(cart?.subtotal)}</span>
+      </div>
+    </section>
   )
 }
 
-// ── Main Panel ───────────────────────────────────────────────────────
-
-const CustomerPanel = () => {
-  const [activeView, setActiveView] = useState<CustomerView>("Dashboard")
-  const [query, setQuery] = useState("")
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [cart, setCart] = useState<ShoppingCart | null>(null)
-  const [orders, setOrders] = useState<Order[]>([])
-  const [products, setProducts] = useState<Product[]>([])
-
-  const fetchData = async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const [cartData, ordersData, productsData] = await Promise.all([
-        getCart().catch(() => null),
-        listOrders().catch(() => []),
-        listProducts().catch(() => []),
-      ])
-      setCart(cartData)
-      setOrders(ordersData)
-      setProducts(productsData)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load data.")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  const handleViewChange = (view: CustomerView) => {
-    setActiveView(view)
-    setQuery("")
-  }
-
-  const navItems: CustomerView[] = [
-    "Dashboard", "Cart", "Orders", "Order Detail",
-    "Wishlist", "Preferences", "Reviews",
-    "Addresses", "Payment Methods", "Notifications",
-  ]
-
-  // ── Derived data ─────────────────────────────────────────────────
-
-  const cartRows: Row[] = (cart?.items ?? []).map((item) => ({
-    product: item.product_title,
-    variant: item.variant?.name ?? "Default",
-    shop: (item.product as any)?.shop?.shop_name ?? "—",
-    quantity: item.quantity,
-    price: `CNY ${item.unit_price?.toFixed(2) ?? "—"}`,
-    stock: (item.variant?.inventory_count ?? 0) > 0 ? "In stock" : "Unavailable",
-    subtotal: `CNY ${item.total?.toFixed(2) ?? "—"}`,
-  }))
-
-  const orderRows: Row[] = orders.map((order) => ({
-    order: order.order_number,
-    items: order.items.length,
-    payment: order.payment?.status ?? "pending",
-    shipment: order.shipments?.[0]?.status ?? "Not started",
-    total: `CNY ${order.payment?.amount?.toFixed(2) ?? "—"}`,
-    date: order.order_date?.slice(0, 10) ?? "—",
-    status: order.status,
-  }))
-
-  const metrics = [
-    { label: "Cart items", value: String(cart?.total_quantity ?? 0), detail: "From API" },
-    { label: "Active orders", value: String(orders.filter(o => o.status !== "complete" && o.status !== "canceled").length), detail: `${orders.filter(o => o.status === "shipped").length} shipments in transit` },
-    { label: "Completed orders", value: String(orders.filter(o => o.status === "complete").length), detail: "Lifetime" },
-    { label: "Wishlist items", value: "0", detail: "Coming soon" },
-    { label: "Products available", value: String(products.length), detail: "Across all shops" },
-    { label: "Saved addresses", value: "—", detail: "Sign in to view" },
-    { label: "Payment methods", value: "—", detail: "Sign in to view" },
-    { label: "Cart subtotal", value: `CNY ${cart?.subtotal?.toFixed(2) ?? "0.00"}`, detail: `${cart?.items.length ?? 0} items` },
-  ]
-
-  // ── Render ──────────────────────────────────────────────────────
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-ui-bg-base flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-rose-500 text-base-semi">Failed to load data</p>
-          <p className="mt-2 text-small-regular text-ui-fg-subtle">{error}</p>
-          <Button variant="secondary" className="mt-4" onClick={fetchData}>Retry</Button>
-        </div>
-      </div>
+const OrdersView = ({ orders, query }: { orders: Order[]; query: string }) => {
+  const filteredOrders = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return orders
+    return orders.filter((order: any) =>
+      [order.order_number, order.status, order.email]
+        .filter(Boolean)
+        .some((value) => String(value).toLowerCase().includes(q))
     )
-  }
+  }, [orders, query])
+
+  return (
+    <section className="flex flex-col gap-4">
+      <SectionTitle title="Orders" />
+      <div className="flex flex-wrap gap-2">
+        {["All", "To Pay", "To Ship", "To Receive", "To Review", "Refunds"].map((label) => (
+          <button
+            className="h-9 border border-ui-border-base bg-white px-3 text-small-regular text-ui-fg-subtle hover:bg-ui-bg-subtle hover:text-ui-fg-base"
+            key={label}
+            type="button"
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      {filteredOrders.length ? (
+        <div className="flex flex-col gap-3">
+          {filteredOrders.map((order: any) => (
+            <a
+              className="border border-ui-border-base bg-white p-4 hover:bg-ui-bg-subtle"
+              href={`/account/orders/details/${order.order_number}`}
+              key={order.id || order.order_number}
+            >
+              <div className="flex flex-col justify-between gap-3 small:flex-row small:items-center">
+                <div>
+                  <p className="text-small-semi text-ui-fg-base">
+                    {order.order_number || "Order"}
+                  </p>
+                  <p className="mt-1 text-small-regular text-ui-fg-subtle">
+                    {(order.order_date || order.created_at || "").slice(0, 10) || "Recent order"}
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Badge color={statusColor(orderStatus(order))}>{orderStatus(order)}</Badge>
+                  <span className="text-small-semi text-ui-fg-base">{money(orderTotal(order))}</span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div className="border border-ui-border-base bg-white p-8 text-center text-small-regular text-ui-fg-subtle">
+          No orders yet.
+        </div>
+      )}
+    </section>
+  )
+}
+
+const ProductGrid = ({ products }: { products: Product[] }) => (
+  <section className="flex flex-col gap-4">
+    <SectionTitle title="Recommended For You" />
+    <div className="grid grid-cols-2 gap-3 medium:grid-cols-4">
+      {products.slice(0, 8).map((product: any) => (
+        <a
+          className="border border-ui-border-base bg-white hover:bg-ui-bg-subtle"
+          href={`/shop/${product.handle || product.slug || product.name}`}
+          key={product.id || product.name}
+        >
+          <img
+            alt={product.title || product.name}
+            className="aspect-square w-full object-cover"
+            src={productImage(product)}
+          />
+          <div className="p-3">
+            <p className="line-clamp-2 min-h-[40px] text-small-regular text-ui-fg-base">
+              {product.title || product.name}
+            </p>
+            <p className="mt-2 text-small-semi text-ui-fg-base">{money(product.price)}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+)
+
+const PlaceholderView = ({ title }: { title: string }) => (
+  <section className="border border-ui-border-base bg-white p-8">
+    <h2 className="text-base-semi text-ui-fg-base">{title}</h2>
+    <div className="mt-6 grid grid-cols-1 gap-3 small:grid-cols-3">
+      {["Personal info", "Shipping addresses", "Account security"].map((label) => (
+        <button
+          className="h-16 border border-ui-border-base bg-ui-bg-base text-small-regular text-ui-fg-subtle hover:bg-ui-bg-subtle"
+          key={label}
+          type="button"
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  </section>
+)
+
+const CustomerPanel = ({ username, cart, orders, products }: CustomerPanelProps) => {
+  const [activeView, setActiveView] = useState<View>("home")
+  const [query, setQuery] = useState("")
+
+  const pendingPayment = orders.filter((order: any) =>
+    ["pending", "requires_payment"].includes(String(order.payment?.status || order.status).toLowerCase())
+  ).length
+  const toReceive = orders.filter((order: any) =>
+    ["shipped", "in_transit"].includes(String(orderStatus(order)).toLowerCase())
+  ).length
+  const toReview = orders.filter((order: any) =>
+    ["complete", "completed", "delivered"].includes(String(orderStatus(order)).toLowerCase())
+  ).length
+
+  const navItems: Array<{ id: View; label: string }> = [
+    { id: "home", label: "Home" },
+    { id: "orders", label: "Orders" },
+    { id: "cart", label: "Cart" },
+    { id: "wishlist", label: "Wishlist" },
+    { id: "profile", label: "Profile" },
+  ]
 
   return (
     <div className="min-h-screen bg-ui-bg-base text-ui-fg-base">
-      <header className="sticky top-0 z-40 border-b border-ui-border-base bg-white">
-        <div className="content-container flex h-16 items-center justify-between txt-xsmall-plus text-ui-fg-subtle">
-          <div className="flex items-center gap-x-4">
-            <span className="text-ui-fg-base">CUSTOMER PANEL</span>
-            <span className="hidden text-ui-fg-muted small:inline">Shopping account</span>
+      <header className="border-b border-ui-border-base bg-white">
+        <div className="content-container flex min-h-[96px] flex-col justify-center gap-4 py-5 small:flex-row small:items-center small:justify-between">
+          <div>
+            <p className="text-small-regular text-ui-fg-subtle">My Account</p>
+            <h1 className="mt-1 text-2xl-semi text-ui-fg-base">
+              {username ? decodeURIComponent(username) : "Welcome back"}
+            </h1>
           </div>
-          <div className="flex items-center gap-x-4">
-            <a className="hover:text-ui-fg-base" href="/hall">Customer View</a>
-            <a className="hidden hover:text-ui-fg-base small:block" href="/manager">Manager View</a>
-            <a className="hidden hover:text-ui-fg-base small:block" href="/admin">Admin View</a>
+          <div className="flex flex-wrap gap-2">
+            <a className="border border-ui-border-base bg-white px-4 py-2 text-small-regular hover:bg-ui-bg-subtle" href="/hall">
+              Hall
+            </a>
+            <a className="border border-ui-border-base bg-white px-4 py-2 text-small-regular hover:bg-ui-bg-subtle" href="/shop">
+              Shop
+            </a>
+            <a className="border border-ui-border-base bg-white px-4 py-2 text-small-regular hover:bg-ui-bg-subtle" href={username ? `/${username}/cart` : "/guest/cart"}>
+              Cart
+            </a>
           </div>
         </div>
       </header>
 
-      <div className="content-container grid grid-cols-1 gap-8 py-8 small:grid-cols-[240px_1fr]">
-        <aside className="small:sticky small:top-24 small:self-start">
-          <nav className="flex flex-row gap-2 overflow-x-auto border-b border-ui-border-base pb-4 small:flex-col small:overflow-visible small:border-b-0 small:pb-0">
+      <div className="content-container grid grid-cols-1 gap-8 py-8 small:grid-cols-[220px_minmax(0,1fr)]">
+        <aside className="small:sticky small:top-6 small:self-start">
+          <nav className="grid grid-cols-5 gap-2 small:grid-cols-1">
             {navItems.map((item) => (
               <button
-                key={item}
-                onClick={() => handleViewChange(item)}
                 className={
-                  activeView === item
-                    ? "whitespace-nowrap rounded-md bg-ui-bg-subtle px-3 py-2 text-left text-small-semi text-ui-fg-base small:w-full"
-                    : "whitespace-nowrap rounded-md px-3 py-2 text-left text-small-regular text-ui-fg-subtle hover:bg-ui-bg-subtle hover:text-ui-fg-base small:w-full"
+                  activeView === item.id
+                    ? "h-11 border border-ui-fg-base bg-ui-fg-base px-3 text-small-semi text-ui-bg-base small:text-left"
+                    : "h-11 border border-ui-border-base bg-white px-3 text-small-regular text-ui-fg-subtle hover:bg-ui-bg-subtle hover:text-ui-fg-base small:text-left"
                 }
+                key={item.id}
+                onClick={() => setActiveView(item.id)}
+                type="button"
               >
-                {item}
+                {item.label}
               </button>
             ))}
           </nav>
         </aside>
 
-        <main className="flex min-w-0 flex-col gap-y-8">
-          <ViewHeader activeView={activeView} query={query} setQuery={setQuery} />
-          {loading ? (
-            <div className="flex items-center justify-center py-20">
-              <Spinner />
-            </div>
-          ) : (
-            <CustomerViewContent activeView={activeView} query={query} cartRows={cartRows} orderRows={orderRows} metrics={metrics} />
+        <main className="flex min-w-0 flex-col gap-8">
+          {activeView === "home" && (
+            <>
+              <section className="grid grid-cols-2 gap-3 medium:grid-cols-4">
+                <StatButton label="To Pay" onClick={() => setActiveView("orders")} value={String(pendingPayment)} />
+                <StatButton label="To Receive" onClick={() => setActiveView("orders")} value={String(toReceive)} />
+                <StatButton label="To Review" onClick={() => setActiveView("orders")} value={String(toReview)} />
+                <StatButton label="Cart Items" onClick={() => setActiveView("cart")} value={String(cart?.total_quantity ?? 0)} />
+              </section>
+              <section className="grid grid-cols-1 gap-8 large:grid-cols-[minmax(0,1fr)_360px]">
+                <OrdersView orders={orders.slice(0, 3)} query="" />
+                <CartPreview cart={cart} />
+              </section>
+              <RecommendedProducts
+                endpoint={`/recommendations/users/${encodeURIComponent(username || "guest")}`}
+                title="Recommended For You"
+                compact
+              />
+            </>
           )}
+
+          {activeView === "orders" && (
+            <>
+              <div className="w-full small:w-80">
+                <Input
+                  label="Search orders"
+                  name="order-search"
+                  onChange={(event) => setQuery(event.target.value)}
+                  value={query}
+                />
+              </div>
+              <OrdersView orders={orders} query={query} />
+            </>
+          )}
+
+          {activeView === "cart" && <CartPreview cart={cart} />}
+          {activeView === "wishlist" && (
+            <RecommendedProducts
+              endpoint={`/recommendations/users/${encodeURIComponent(username || "guest")}`}
+              title="Recommended For You"
+              compact
+            />
+          )}
+          {activeView === "profile" && <PlaceholderView title="Profile" />}
         </main>
       </div>
-    </div>
-  )
-}
-
-// ── View Header ──────────────────────────────────────────────────────
-
-const ViewHeader = ({ activeView, query, setQuery }: {
-  activeView: CustomerView; query: string; setQuery: (v: string) => void
-}) => (
-  <section className="flex flex-col justify-between gap-4 border-b border-ui-border-base pb-8 small:flex-row small:items-end">
-    <div>
-      <p className="txt-xsmall-plus uppercase text-ui-fg-muted">{activeView}</p>
-      <h1 className="mt-2 text-2xl-semi text-ui-fg-base">{getViewTitle(activeView)}</h1>
-      <p className="mt-2 max-w-2xl text-small-regular text-ui-fg-subtle">{getViewDescription(activeView)}</p>
-    </div>
-    {["Dashboard", "Preferences", "Order Detail"].includes(activeView) ? (
-      <Button variant="secondary" className="h-10 w-full small:w-auto">
-        {activeView === "Dashboard" ? "Continue shopping" : activeView === "Preferences" ? "Save preferences" : "Track shipment"}
-      </Button>
-    ) : (
-      <div className="w-full small:w-72">
-        <Input label={`Search ${activeView.toLowerCase()}`} name="customer-search" value={query} onChange={(e) => setQuery(e.target.value)} />
-      </div>
-    )}
-  </section>
-)
-
-// ── View Content ─────────────────────────────────────────────────────
-
-const CustomerViewContent = ({ activeView, query, cartRows, orderRows, metrics }: {
-  activeView: CustomerView; query: string; cartRows: Row[]; orderRows: Row[]; metrics: { label: string; value: string; detail: string }[]
-}) => {
-  if (activeView === "Dashboard") {
-    return (
-      <>
-        <section className="grid grid-cols-1 gap-4 small:grid-cols-2 medium:grid-cols-4">
-          {metrics.map((m) => <MetricCard key={m.label} {...m} />)}
-        </section>
-        <section className="grid grid-cols-1 gap-6 medium:grid-cols-[1fr_320px]">
-          <TableView title="Active orders" description="Recent customer orders with payment and shipment status." rows={orderRows} query="" compact />
-          <InfoPanel title="Quick actions">
-            <p>Continue shopping</p><p>View cart</p><p>Track orders</p><p>Manage preferences</p><p>Write reviews</p>
-          </InfoPanel>
-        </section>
-      </>
-    )
-  }
-
-  if (activeView === "Cart") {
-    return (
-      <div className="flex flex-col gap-6">
-        <TableView title="Shopping cart" description="Review product variants, quantity, price, stock status, subtotal, and shop before checkout." rows={cartRows} query={query} actions={<Button>Checkout</Button>} />
-        <div className="flex flex-col justify-between gap-4 rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-5 small:flex-row small:items-center">
-          <p className="text-small-regular text-ui-fg-subtle">Cart data loaded from the backend API.</p>
-          <Button variant="secondary" className="h-10">Continue shopping</Button>
-        </div>
-      </div>
-    )
-  }
-
-  if (activeView === "Orders") {
-    return (
-      <div className="flex flex-col gap-6">
-        <div className="flex flex-wrap gap-2">
-          {["All", "Pay now", "Unshipped", "Shipped", "Completed", "Refund"].map((f) => (
-            <Button key={f} variant="secondary" className="h-9">{f}</Button>
-          ))}
-        </div>
-        <TableView title="My orders" description="Pay, track shipment, confirm received, write reviews, or request refunds." rows={orderRows} query={query} actions={<Button variant="secondary">Track selected order</Button>} />
-      </div>
-    )
-  }
-
-  if (activeView === "Order Detail") {
-    return (
-      <div className="grid grid-cols-1 gap-6 medium:grid-cols-[1fr_340px]">
-        <InfoPanel title="Order detail">
-          <p>Select an order from the Orders view to see details.</p>
-          <p>Order summary, items, payment info, and shipment info will appear here.</p>
-        </InfoPanel>
-        <InfoPanel title="Customer actions">
-          <p>Track shipment</p><p>Request refund</p><p>Contact shop</p>
-        </InfoPanel>
-      </div>
-    )
-  }
-
-  // Placeholder views for features not yet backed by API
-  return (
-    <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-12 text-center">
-      <h2 className="text-base-semi">{getViewTitle(activeView)}</h2>
-      <p className="mt-2 text-small-regular text-ui-fg-subtle">{getViewDescription(activeView)}</p>
-      <p className="mt-4 text-small-regular text-ui-fg-muted">This view will be connected to the backend in a future update.</p>
     </div>
   )
 }

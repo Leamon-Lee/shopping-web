@@ -1,13 +1,18 @@
 import CustomerPanel from "@modules/customer/templates/customer-panel"
-import { getCustomerPanel } from "../../api/backend"
+import { getCart, listOrders, listProducts } from "../../api/backend"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Customer Panel",
-  description: "Customer dashboard and shopping tools.",
+  title: "My Account",
+  description: "Customer account center.",
 }
 
 export default async function CustomerPage() {
-  await getCustomerPanel()
-  return <CustomerPanel />
+  const [cart, orders, products] = await Promise.all([
+    getCart().catch(() => null),
+    listOrders().catch(() => []),
+    listProducts(undefined, undefined, 8).catch(() => []),
+  ])
+
+  return <CustomerPanel cart={cart} orders={orders} products={products} />
 }

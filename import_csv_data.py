@@ -9,8 +9,11 @@ Reads CSV files from docker/postgres/dataset/ and:
 import asyncio
 import csv
 import io
+import mimetypes
 import os
 import sys
+import urllib.parse
+import urllib.request
 import uuid
 from pathlib import Path
 
@@ -24,6 +27,7 @@ from online_shopping.storage import build_image_path, get_minio_client
 DATASET_DIR = Path(__file__).parent / "docker" / "postgres" / "dataset"
 IMAGES_DIR = DATASET_DIR / "imgs"
 SEED_MANAGER_PREFIX = "seed_mgr_"
+REMOTE_IMAGE_TIMEOUT_SECONDS = 20
 
 
 BRAND_LABELS = {
@@ -44,6 +48,84 @@ def brand_label(brand: str) -> str:
 
 def seed_uuid(kind: str, brand: str) -> uuid.UUID:
     return uuid.uuid5(uuid.NAMESPACE_DNS, f"shopping-web-seed-{kind}-{brand}")
+
+
+def image_extension_from_url(url: str, content_type: str | None = None) -> str:
+    parsed_path = urllib.parse.urlparse(url).path
+    suffix = Path(parsed_path).suffix.lower()
+    if suffix in {".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"}:
+        return suffix
+    guessed = mimetypes.guess_extension((content_type or "").split(";")[0].strip())
+    if guessed in {".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"}:
+        return guessed
+    return ".jpg"
+
+
+def public_minio_url(object_name: str) -> str:
+    return (
+        f"{settings.public_minio_base_url.rstrip('/')}/"
+        f"{settings.minio_bucket_products}/{object_name}"
+    )
+
+
+def upload_bytes_to_minio(product_hash: str, file_name: str, data: bytes, content_type: str) -> str:
+    object_name = build_image_path(product_hash, file_name)
+    get_minio_client().put_object(
+        bucket_name=settings.minio_bucket_products,
+        object_name=object_name,
+        data=io.BytesIO(data),
+        length=len(data),
+        content_type=content_type,
+    )
+    return public_minio_url(object_name)
+
+
+def mirror_remote_image_to_minio(row: dict, product_hash: str) -> str:
+    source_url = row["image_url"]
+    request = urllib.request.Request(
+        source_url,
+        headers={
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/126.0 Safari/537.36"
+            )
+        },
+    )
+    with urllib.request.urlopen(request, timeout=REMOTE_IMAGE_TIMEOUT_SECONDS) as response:
+        data = response.read()
+        content_type = response.headers.get("Content-Type", "image/jpeg").split(";")[0]
+
+    suffix = image_extension_from_url(source_url, content_type)
+    file_name = f"{row['id']}{suffix}"
+    return upload_bytes_to_minio(product_hash, file_name, data, content_type or "image/jpeg")
+
+
+def upload_local_image_to_minio(row: dict, product_hash: str) -> str:
+    image_url = row["image_url"]
+    if image_url.startswith("imgs/"):
+        image_path = IMAGES_DIR / os.path.basename(image_url)
+    else:
+        image_path = Path(image_url)
+
+    data = image_path.read_bytes()
+    suffix = image_path.suffix.lower()
+    content_type = (
+        "image/svg+xml" if suffix == ".svg"
+        else "image/jpeg" if suffix in {".jpg", ".jpeg"}
+        else "image/png" if suffix == ".png"
+        else "application/octet-stream"
+    )
+    return upload_bytes_to_minio(product_hash, image_path.name, data, content_type)
+
+
+def materialize_image_url(row: dict, product_hash: str) -> str:
+    image_url = row.get("image_url", "")
+    if not image_url:
+        raise ValueError("image_url is empty")
+    if image_url.startswith(("http://", "https://")):
+        return mirror_remote_image_to_minio(row, product_hash)
+    return upload_local_image_to_minio(row, product_hash)
 
 
 async def clear_existing():
@@ -197,18 +279,13 @@ async def import_all():
 
         # Step 3: Insert images
         img_count = 0
+        imaged_product_ids: set[str] = set()
         for row in all_images:
             if row["product_id"] not in successful_product_ids:
                 continue
             try:
-                image_url = row["image_url"]
-                if image_url and not image_url.startswith("http"):
-                    image_name = os.path.basename(image_url)
-                    product_hash = product_hash_map.get(row["product_id"], row["product_id"])
-                    image_url = (
-                        f"{settings.public_minio_base_url.rstrip('/')}/"
-                        f"{settings.minio_bucket_products}/{build_image_path(product_hash, image_name)}"
-                    )
+                product_hash = product_hash_map.get(row["product_id"], row["product_id"])
+                image_url = materialize_image_url(row, product_hash)
                 await db.execute(
                     text("INSERT INTO product_images (id, product_id, image_url, rank) "
                          "VALUES (:id, :pid, :url, :rank)"),
@@ -216,10 +293,25 @@ async def import_all():
                      "url": image_url, "rank": int(row["rank"])},
                 )
                 await db.commit()
+                imaged_product_ids.add(row["product_id"])
                 img_count += 1
+                if img_count % 50 == 0:
+                    print(f"  MinIO+DB images: {img_count} linked...")
             except Exception as e:
                 await db.rollback()
+                print(f"  Image skipped for product {row.get('product_id')}: {e}")
         print(f"Inserted {img_count} images.")
+
+        missing_image_ids = successful_product_ids - imaged_product_ids
+        if missing_image_ids:
+            for product_id in missing_image_ids:
+                await db.execute(
+                    text("DELETE FROM products WHERE id = :id"),
+                    {"id": uuid.UUID(product_id)},
+                )
+            await db.commit()
+            print(f"Removed {len(missing_image_ids)} products without MinIO-linked images.")
+        successful_product_ids = imaged_product_ids
 
         # Step 4: Insert variants
         var_count = 0
@@ -341,61 +433,7 @@ async def import_all():
         await db.commit()
         print(f"Inserted {shop_count} shops and {shop_product_count} shop-product links.")
 
-    # Step 6: Upload local images to MinIO
-    await upload_to_minio(all_images, successful_product_ids, product_hash_map)
     print("\nImport complete!")
-
-
-async def upload_to_minio(all_images, successful_ids, hash_map):
-    client = get_minio_client()
-    bucket = "shopping-products"
-    uploaded = 0
-
-    for row in all_images:
-        if row["product_id"] not in successful_ids:
-            continue
-        img_url = row.get("image_url", "")
-        if not img_url:
-            continue
-        if img_url.startswith("http"):
-            continue  # Skip remote CDN URLs (Nike)
-
-        if img_url.startswith("imgs/"):
-            img_path = IMAGES_DIR / os.path.basename(img_url)
-        else:
-            img_path = Path(img_url)
-
-        if not img_path.exists():
-            continue
-
-        try:
-            product_hash = hash_map.get(row["product_id"], row["product_id"])
-            data = img_path.read_bytes()
-            suffix = img_path.suffix.lower()
-            content_type = (
-                "image/svg+xml" if suffix == ".svg"
-                else "image/jpeg" if suffix in {".jpg", ".jpeg"}
-                else "image/png"
-            )
-            object_name = f"products/{product_hash}/{img_path.name}"
-
-            client.put_object(
-                bucket_name=bucket,
-                object_name=object_name,
-                data=io.BytesIO(data),
-                length=len(data),
-                content_type=content_type,
-            )
-            uploaded += 1
-            if uploaded % 50 == 0:
-                print(f"  MinIO: uploaded {uploaded} images...")
-        except Exception as e:
-            print(f"  MinIO error for {img_path.name}: {e}")
-
-    if uploaded > 0:
-        print(f"MinIO: uploaded {uploaded} images to '{bucket}'.")
-    else:
-        print("MinIO: no local images to upload (Nike images are CDN-hosted).")
 
 
 def main():

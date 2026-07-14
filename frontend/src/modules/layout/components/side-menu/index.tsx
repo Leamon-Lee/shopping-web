@@ -6,6 +6,7 @@ import { Text, clx, useToggleState } from "@medusajs/ui"
 import { Fragment } from "react"
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { cartHrefForUsername } from "@lib/cart-url"
 import CountrySelect from "../country-select"
 import LanguageSelect from "../language-select"
 import type {
@@ -35,7 +36,7 @@ const SideMenuItems = {
   Home: "/",
   Shop: "/shop",
   Account: "/account",
-  Cart: "/cart",
+  Cart: cartHrefForUsername(),
 }
 
 type SideMenuProps = {
@@ -146,7 +147,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                         />
                       </div>
                       <Text className="flex justify-between txt-compact-small">
-                        (c) {new Date().getFullYear()} Shopping Web. All rights reserved.
+                        (c) {new Date().getFullYear()} All rights reserved.
                       </Text>
                     </div>
                   </div>

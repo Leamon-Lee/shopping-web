@@ -1,45 +1,33 @@
-import { Metadata } from "next"
-
-import { deleteCartItem, getCart, placeOrder } from "../../../api/backend"
+import { deleteCartItem } from "api/backend"
 import {
   backendLineTotal,
   backendProductName,
   formatBackendMoney,
   unwrapBackendValue,
-} from "../../../lib/backend-native"
+} from "@lib/backend-native"
 import EmptyCartMessage from "@modules/cart/components/empty-cart-message"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import RecommendedProducts from "@modules/products/components/recommended-products"
 import { Button } from "@medusajs/ui"
+import type { ShoppingCart } from "types/backend"
 
-export const metadata: Metadata = {
-  title: "Cart",
-  description: "View your cart",
-}
-
-export default async function Cart() {
-  const cart = await getCart()
-  const items = cart.items
+export default function BackendCartPage({
+  cart,
+  ownerUsername,
+}: {
+  cart: ShoppingCart | null
+  ownerUsername?: string
+}) {
+  const items = cart?.items ?? []
   const subtotal =
-    cart.subtotal ?? items.reduce((sum, item) => sum + backendLineTotal(item), 0)
-
-  async function removeItem(formData: FormData) {
-    "use server"
-    const productName = String(formData.get("product_name") || "")
-    if (productName) {
-      await deleteCartItem(productName)
-    }
-  }
-
-  async function submitOrder() {
-    "use server"
-    await placeOrder()
-  }
+    cart?.subtotal ?? items.reduce((sum, item) => sum + backendLineTotal(item), 0)
 
   return (
     <div className="py-12">
       <div className="content-container" data-testid="cart-container">
         {items.length ? (
-          <div className="grid grid-cols-1 small:grid-cols-[1fr_360px] gap-x-40">
-            <div className="flex flex-col bg-white py-6 gap-y-6">
+          <div className="grid grid-cols-1 small:grid-cols-[minmax(0,1fr)_320px] gap-12">
+            <div className="flex min-w-0 flex-col bg-white py-6 gap-y-6">
               <div>
                 <div className="pb-3 flex items-center">
                   <h1 className="text-[2rem] leading-[2.75rem]">Cart</h1>
@@ -49,10 +37,10 @@ export default async function Cart() {
                     const productName = backendProductName(item.product)
                     return (
                       <li
-                        className="flex items-center justify-between border-b border-ui-border-base py-4"
+                        className="flex flex-col gap-3 border-b border-ui-border-base py-4 small:flex-row small:items-center small:justify-between"
                         key={productName}
                       >
-                        <div>
+                        <div className="min-w-0">
                           <p className="text-base-regular text-ui-fg-base">
                             {productName}
                           </p>
@@ -60,12 +48,15 @@ export default async function Cart() {
                             Qty {unwrapBackendValue(item.quantity)}
                           </p>
                         </div>
-                        <div className="flex items-center gap-4">
+                        <div className="flex shrink-0 items-center gap-4 small:justify-end">
                           <p className="text-base-regular text-ui-fg-subtle">
                             {formatBackendMoney(backendLineTotal(item))}
                           </p>
                           <form action={removeItem}>
                             <input type="hidden" name="product_name" value={productName} />
+                            {ownerUsername ? (
+                              <input type="hidden" name="owner_username" value={ownerUsername} />
+                            ) : null}
                             <button className="text-small-regular text-ui-fg-muted hover:text-ui-fg-base">
                               Remove
                             </button>
@@ -77,18 +68,18 @@ export default async function Cart() {
                 </ul>
               </div>
             </div>
-            <div className="relative">
-              <div className="flex flex-col gap-y-4 sticky top-12 bg-white py-6">
+            <div className="relative min-w-0">
+              <div className="flex flex-col gap-y-4 sticky top-20 bg-white py-6">
                 <h2 className="text-[2rem] leading-[2.75rem]">Summary</h2>
                 <div className="flex items-center justify-between text-base-regular">
                   <span>Subtotal</span>
                   <span>{formatBackendMoney(subtotal)}</span>
                 </div>
-                <form action={submitOrder}>
-                  <Button type="submit" className="w-full h-10">
-                    Complete order
+                <LocalizedClientLink href="/checkout">
+                  <Button className="w-full min-w-0 h-10">
+                    Proceed to checkout
                   </Button>
-                </form>
+                </LocalizedClientLink>
               </div>
             </div>
           </div>
@@ -96,6 +87,18 @@ export default async function Cart() {
           <EmptyCartMessage />
         )}
       </div>
+      <div className="mt-12">
+        <RecommendedProducts endpoint="/recommendations/cart" title="You May Also Like" cartId={cart?.id} />
+      </div>
     </div>
   )
+}
+
+async function removeItem(formData: FormData) {
+  "use server"
+  const productName = String(formData.get("product_name") || "")
+  const owner = String(formData.get("owner_username") || "")
+  if (productName) {
+    await deleteCartItem(productName, owner || undefined)
+  }
 }

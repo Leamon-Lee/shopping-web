@@ -2,9 +2,13 @@
 
 import {
   addCartItem,
+  createCartPaymentSession,
   deleteCartItem,
   getCart,
+  getCartShippingOptions,
   placeOrder as placeBackendOrder,
+  setCartAddresses as setBackendAddresses,
+  setCartShippingMethod as setBackendShippingMethod,
   updateCartItem,
 } from "../../api/backend"
 
@@ -61,17 +65,66 @@ export async function deleteLineItem(productNameOrLineId: string) {
   return deleteCartItem(productNameOrLineId)
 }
 
-export async function placeOrder(..._args: any[]) {
+// ── Checkout operations ─────────────────────────────────────────────
+
+export async function setAddresses(
+  _prevState: unknown,
+  formData: FormData
+): Promise<string | null> {
+  const payload: Record<string, unknown> = {}
+  formData.forEach((value, key) => {
+    payload[key] = value
+  })
+
+  try {
+    await setBackendAddresses(payload)
+    return null
+  } catch (e: unknown) {
+    return e instanceof Error ? e.message : "Failed to save address."
+  }
+}
+
+export async function setShippingMethod({
+  cartId,
+  shippingMethodId,
+}: {
+  cartId: string
+  shippingMethodId: string
+}) {
+  try {
+    return await setBackendShippingMethod(shippingMethodId)
+  } catch (e: unknown) {
+    throw e instanceof Error ? e : new Error("Failed to set shipping method.")
+  }
+}
+
+export async function initiatePaymentSession(
+  cart: any,
+  data: { provider_id: string }
+) {
+  try {
+    return await createCartPaymentSession(data.provider_id)
+  } catch (e: unknown) {
+    throw e instanceof Error ? e : new Error("Failed to create payment session.")
+  }
+}
+
+export async function listCartOptions() {
+  try {
+    const options = await getCartShippingOptions()
+    return { shipping_options: options }
+  } catch {
+    return { shipping_options: [] }
+  }
+}
+
+export async function placeOrder(): Promise<{ type: string; order: any }> {
   const order = await placeBackendOrder()
   return { type: "order", order }
 }
 
-export async function setShippingMethod(..._args: any[]) {
-  return getCart().catch(() => null)
-}
-export async function initiatePaymentSession(..._args: any[]) {
-  return getCart().catch(() => null)
-}
+// ── Stubs for legacy compatibility ──────────────────────────────────
+
 export async function applyPromotions(..._args: any[]) {
   return getCart().catch(() => null)
 }
@@ -87,13 +140,6 @@ export async function removeGiftCard(..._args: any[]) {
 export async function submitPromotionForm(..._args: any[]) {
   return null
 }
-export async function setAddresses(..._args: any[]): Promise<string | null> {
-  await getCart().catch(() => null)
-  return null
-}
 export async function updateRegion(..._args: any[]) {
   return getCart().catch(() => null)
-}
-export async function listCartOptions(..._args: any[]) {
-  return { shipping_options: [] }
 }

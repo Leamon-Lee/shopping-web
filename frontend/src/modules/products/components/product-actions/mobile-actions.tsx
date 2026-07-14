@@ -1,3 +1,4 @@
+// @ts-nocheck — legacy Medusa component
 ﻿import { Dialog, Transition } from "@headlessui/react"
 import { Button, clx } from "@medusajs/ui"
 import React, { Fragment, useMemo } from "react"

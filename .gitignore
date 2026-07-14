@@ -10,3 +10,6 @@ backend/logs/
 frontend/logs/
 *-run.log
 *-run.err.log
+*.err.log
+*.out.log
+tmp/

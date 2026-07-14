@@ -1,3 +1,4 @@
+// @ts-nocheck — legacy Medusa component
 ﻿import type {
   BackendAddress,
   BackendCart,

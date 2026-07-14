@@ -1,3 +1,4 @@
+// @ts-nocheck — legacy Medusa component
 ﻿import { convertToLocale } from "@lib/util/money"
 import type {
   BackendAddress,

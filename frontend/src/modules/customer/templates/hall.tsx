@@ -6,7 +6,7 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import { useIntersection } from "@lib/hooks/use-in-view"
 import { useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { getHallProducts } from "../../../api/backend-client"
+import { getCart, getHallProducts, saveCartIdCookie } from "../../../api/backend-client"
 import type {
   Account,
   BackendHallPayload,
@@ -18,7 +18,10 @@ import {
   backendProductPrice,
   formatBackendMoney,
 } from "../../../lib/backend-native"
+import { trackSearch } from "@lib/data/events"
 import { productHref } from "../../../lib/marketplace-routes"
+import { cartHrefForUsername } from "../../../lib/cart-url"
+import RecommendedProducts from "@modules/products/components/recommended-products"
 
 const BATCH_SIZE = 30
 const SEARCH_DEBOUNCE_MS = 300
@@ -86,16 +89,18 @@ const HallTemplate = ({
   const categories = Array.isArray(data?.categories) ? data.categories : []
   const initialShopSlug = searchParams.get("shop") ?? "all"
   const initialCategorySlug = searchParams.get("category") ?? "all"
-  const customerBasePath = currentUser
-    ? `/customer/${encodeURIComponent(currentUser.user_name)}`
+  const usernamePath = currentUser
+    ? encodeURIComponent(currentUser.user_name)
     : null
-  const hallPath = customerBasePath ? `${customerBasePath}/hall` : "/hall"
+  const customerBasePath = usernamePath ? `/customer/${usernamePath}` : null
+  const hallPath = usernamePath ? `/${usernamePath}/hall` : "/hall"
   const shopsPath = currentUser
-    ? `/${encodeURIComponent(currentUser.user_name)}/shops`
+    ? `/${usernamePath}/shops`
     : "/shops"
   const catlogPath = currentUser
-    ? `/${encodeURIComponent(currentUser.user_name)}/catlog`
+    ? `/${usernamePath}/catlog`
     : "/catlog"
+  const cartPath = cartHrefForUsername(currentUser?.user_name)
   const initialProducts = useMemo(
     () => {
       if (Array.isArray(serverInitialProducts) && serverInitialProducts.length) {
@@ -128,9 +133,26 @@ const HallTemplate = ({
   const loadingRef = useRef(false)
   const isVisible = useIntersection(sentinelRef, "900px")
 
+  // Initialize cart and persist cart_id for guest isolation
+  useEffect(() => {
+    getCart()
+      .then((cart) => {
+        if (cart?.id) {
+          saveCartIdCookie(cart.id)
+        }
+      })
+      .catch(() => {
+        // Cart may not be available yet — that's fine
+      })
+  }, [])
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      setDebouncedQuery(query.trim())
+      const trimmed = query.trim()
+      setDebouncedQuery(trimmed)
+      if (trimmed) {
+        trackSearch(trimmed)
+      }
     }, SEARCH_DEBOUNCE_MS)
 
     return () => clearTimeout(timer)
@@ -291,7 +313,7 @@ const HallTemplate = ({
             </LocalizedClientLink>
           </nav>
           <div className="flex items-center gap-x-4">
-            <LocalizedClientLink href="/cart" className="hover:text-ui-fg-base">
+            <LocalizedClientLink href={cartPath} className="hover:text-ui-fg-base">
               Cart
             </LocalizedClientLink>
             {currentUser ? (
@@ -376,6 +398,13 @@ const HallTemplate = ({
             />
           </div>
         </section>
+
+        <RecommendedProducts
+          endpoint="/recommendations/home"
+          title="Recommended For You"
+          currentUser={currentUser}
+          className="mb-8"
+        />
 
         <section id="products" className="py-8">
           <div className="mb-6 flex flex-col gap-2 small:flex-row small:items-end small:justify-between">

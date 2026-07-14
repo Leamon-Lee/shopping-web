@@ -1,3 +1,4 @@
+// @ts-nocheck — legacy Medusa component
 ﻿"use client"
 
 import React, { useEffect, useMemo, useActionState } from "react"

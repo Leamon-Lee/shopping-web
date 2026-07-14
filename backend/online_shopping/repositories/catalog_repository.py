@@ -22,6 +22,7 @@ class CatalogRepository:
                 selectinload(Product.images),
                 selectinload(Product.variants),
             )
+            .where(Product.status == "active")
             .order_by(Product.created_at.desc())
         )
         if shop:
@@ -57,6 +58,7 @@ class CatalogRepository:
                 selectinload(Product.images),
                 selectinload(Product.variants),
             )
+            .where(Product.status == "active")
             .order_by(Product.created_at.desc())
         )
 
@@ -150,11 +152,12 @@ class CatalogRepository:
                 selectinload(Product.variants),
             )
             .where(
+                Product.status == "active",
                 or_(
                     Product.name.ilike(identity),
                     Product.slug == identity,
                     Product.product_hash == identity,
-                )
+                ),
             )
         )
         return result.scalars().first()

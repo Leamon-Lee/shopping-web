@@ -93,14 +93,31 @@ def cart_to_out(cart: ShoppingCart) -> ShoppingCartOut:
     items = [cart_item_to_out(item) for item in cart.items]
     subtotal = round(sum((item.total or 0) for item in items), 2)
     total_quantity = sum(item.quantity for item in items)
+
+    shipping_methods = []
+    if cart.shipping_method:
+        shipping_methods = [cart.shipping_method]
+
+    payment_collection = None
+    if cart.payment_session:
+        payment_collection = {
+            "id": f"paycol_{cart.id}",
+            "payment_sessions": [cart.payment_session],
+        }
+
     return ShoppingCartOut(
         id=str(cart.id),
+        email=cart.email,
         items=items,
         total_quantity=total_quantity,
         subtotal=subtotal,
         total=subtotal,
         currency_code=cart.currency_code,
         region={"id": cart.region_id or "reg_cny", "currency_code": cart.currency_code},
+        shipping_address=cart.shipping_address,
+        billing_address=cart.billing_address,
+        shipping_methods=shipping_methods,
+        payment_collection=payment_collection,
     )
 
 
@@ -132,11 +149,42 @@ def order_to_out(order: Order) -> OrderOut:
         p = order.payments[0]
         payment = PaymentOut(status=PaymentStatus(p.status), amount=float(p.amount), currency=p.currency)
 
+    subtotal = round(sum((item.total or 0) for item in items), 2)
+
+    shipments = []
+    if order.shipments:
+        for s in order.shipments:
+            shipments.append({
+                "status": s.status,
+                "shipment_date": s.shipped_at.isoformat() if s.shipped_at else None,
+                "estimated_arrival": s.estimated_arrival.isoformat() if s.estimated_arrival else None,
+                "shipment_method": s.carrier,
+            })
+
+    # Attach shop info to each item
+    for idx, item in enumerate(items):
+        if idx < len(order.items):
+            oi = order.items[idx]
+            if oi.shop_name:
+                item.product.shop = {
+                    "shop_id": str(oi.shop_id) if oi.shop_id else None,
+                    "shop_name": oi.shop_name,
+                }
+
     return OrderOut(
+        id=str(order.id),
         order_number=order.order_number,
         status=OrderStatus(order.status),
         order_date=order.order_date.isoformat() if order.order_date else None,
+        email=order.email,
         items=items,
         payment=payment,
-        shipments=[],
+        shipments=shipments,
+        shipping_address=order.shipping_address,
+        billing_address=order.billing_address,
+        shipping_method=order.shipping_method,
+        subtotal=subtotal,
+        total=subtotal,
+        currency_code="cny",
+        access_token=order.order_access_token,
     )

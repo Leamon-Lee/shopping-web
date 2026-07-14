@@ -13,6 +13,7 @@ import {
   formatBackendMoney,
 } from "../../../lib/backend-native"
 import { productHref, shopHref } from "../../../lib/marketplace-routes"
+import { cartHrefForUsername } from "../../../lib/cart-url"
 
 const SHOP_PREVIEW_COUNT = 6
 
@@ -25,16 +26,18 @@ const ShopsTemplate = ({
   currentUser?: Account | null
   activeShopPath?: string
 }) => {
-  const customerBasePath = currentUser
-    ? `/customer/${encodeURIComponent(currentUser.user_name)}`
+  const usernamePath = currentUser
+    ? encodeURIComponent(currentUser.user_name)
     : null
-  const hallPath = customerBasePath ? `${customerBasePath}/hall` : "/hall"
+  const customerBasePath = usernamePath ? `/customer/${usernamePath}` : null
+  const hallPath = usernamePath ? `/${usernamePath}/hall` : "/hall"
   const shopsPath = currentUser
-    ? `/${encodeURIComponent(currentUser.user_name)}/shops`
+    ? `/${usernamePath}/shops`
     : "/shops"
   const catlogPath = currentUser
-    ? `/${encodeURIComponent(currentUser.user_name)}/catlog`
+    ? `/${usernamePath}/catlog`
     : "/catlog"
+  const cartPath = cartHrefForUsername(currentUser?.user_name)
   const shopProducts = new Map(
     data.sections.map((section) => [section.shop.slug, section.products])
   )
@@ -58,7 +61,7 @@ const ShopsTemplate = ({
             </LocalizedClientLink>
           </nav>
           <div className="flex items-center gap-x-4">
-            <LocalizedClientLink href="/cart" className="hover:text-ui-fg-base">
+            <LocalizedClientLink href={cartPath} className="hover:text-ui-fg-base">
               Cart
             </LocalizedClientLink>
             {currentUser ? (

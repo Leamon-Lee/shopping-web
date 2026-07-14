@@ -27,6 +27,7 @@ class Product(Base):
     description: Mapped[str] = mapped_column(Text, nullable=False, default="")
     price: Mapped[float] = mapped_column(Numeric(12, 2), nullable=False)
     available_item_count: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")  # active, hidden, rejected
     metadata_json: Mapped[dict | None] = mapped_column(JSONB, default={})
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())

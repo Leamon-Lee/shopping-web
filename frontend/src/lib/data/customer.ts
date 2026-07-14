@@ -14,7 +14,7 @@ export type AuthActionResult = {
 }
 
 function customerHallPath(userName: string) {
-  return `/customer/${encodeURIComponent(userName)}/hall`
+  return `/${encodeURIComponent(userName)}/hall`
 }
 
 async function backendFetch<T>(path: string, init?: RequestInit): Promise<T> {
@@ -141,7 +141,13 @@ export async function retrieveCustomer(): Promise<Account | null> {
   const token = await getToken()
   if (!token) return null
   try {
-    return await backendFetch<Account>("/accounts/me")
+    const account = await backendFetch<Account>("/accounts/me")
+    // Spread top-level name fields for checkout component compatibility
+    if (account) {
+      account.first_name = account.name?.first_name || ""
+      account.last_name = account.name?.last_name || ""
+    }
+    return account
   } catch {
     return null
   }

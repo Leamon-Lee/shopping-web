@@ -87,14 +87,18 @@ class CartItemOut(BaseModel):
 
 class ShoppingCartOut(BaseModel):
     id: str | None = None
+    email: str | None = None
     items: list[CartItemOut]
     total_quantity: int
     subtotal: float
     total: float | None = None
     currency_code: str = "cny"
     region: dict = Field(default_factory=lambda: {"id": "reg_cny", "currency_code": "cny"})
-    promotions: list[dict] = Field(default_factory=list)
+    shipping_address: dict | None = None
+    billing_address: dict | None = None
     shipping_methods: list[dict] = Field(default_factory=list)
+    payment_collection: dict | None = None
+    promotions: list[dict] = Field(default_factory=list)
 
 
 class PaymentCreate(BaseModel):
@@ -122,12 +126,21 @@ class OrderCreate(BaseModel):
 
 
 class OrderOut(BaseModel):
+    id: str | None = None
     order_number: str
     status: OrderStatus = OrderStatus.CREATED
     order_date: str | None = None
+    email: str | None = None
     items: list[CartItemOut]
     payment: PaymentOut | None = None
     shipments: list[ShipmentOut] = Field(default_factory=list)
+    shipping_address: dict | None = None
+    billing_address: dict | None = None
+    shipping_method: dict | None = None
+    subtotal: float | None = None
+    total: float | None = None
+    currency_code: str = "cny"
+    access_token: str | None = None
 
 
 class NameOut(BaseModel):
@@ -211,3 +224,46 @@ class AccountUpdate(BaseModel):
 class AccountRole(BaseModel):
     """Role claim embedded in JWT for frontend authorization."""
     role: str = "customer"  # "customer", "manager", or "admin"
+
+
+# ── Checkout schemas ───────────────────────────────────────────────
+
+
+class CartAddressPayload(BaseModel):
+    """Address payload for cart shipping/billing address update."""
+    first_name: str = ""
+    last_name: str = ""
+    address_1: str = ""
+    address_2: str = ""
+    company: str = ""
+    postal_code: str = ""
+    city: str = ""
+    country_code: str = ""
+    province: str = ""
+    phone: str = ""
+    email: str = ""
+
+
+class CartEmailPayload(BaseModel):
+    """Email update for cart."""
+    email: str = Field(min_length=1)
+
+
+class CartShippingMethodPayload(BaseModel):
+    """Shipping method selection for cart."""
+    shipping_method_id: str = Field(min_length=1)
+
+
+class CartPaymentSessionPayload(BaseModel):
+    """Create a payment session for the cart."""
+    provider_id: str = "pp_system_default"
+
+
+class DemoPaymentPayload(BaseModel):
+    """Demo payment processing payload."""
+    order_id: str | None = None
+    cart_id: str | None = None
+    card_number: str = Field(min_length=16, max_length=19)
+    amount: float = Field(gt=0, default=0.0)
+    currency: str = Field(default="CNY", min_length=3, max_length=3)
+    access_token: str | None = None

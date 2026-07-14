@@ -15,6 +15,7 @@ const BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8001"
 
 const TOKEN_COOKIE = "shopping_token"
+const CART_ID_COOKIE = "shopping_cart_id"
 
 async function getAuthHeaders(): Promise<Record<string, string>> {
   const headers: Record<string, string> = {
@@ -25,6 +26,11 @@ async function getAuthHeaders(): Promise<Record<string, string>> {
     const token = cookieStore.get(TOKEN_COOKIE)?.value
     if (token) {
       headers["Authorization"] = `Bearer ${token}`
+    }
+    // Send cart_id for guest cart isolation
+    const cartId = cookieStore.get(CART_ID_COOKIE)?.value
+    if (cartId) {
+      headers["X-Cart-Id"] = cartId
     }
   } catch {
     // cookies() throws outside of server context — skip auth
@@ -133,6 +139,14 @@ export async function getCart(): Promise<ShoppingCart> {
   return backendFetch<ShoppingCart>("/cart")
 }
 
+export async function getCartForUsername(username: string): Promise<ShoppingCart> {
+  return backendFetch<ShoppingCart>("/cart", {
+    headers: {
+      "X-Cart-Owner": decodeURIComponent(username),
+    },
+  })
+}
+
 export async function addCartItem(payload: {
   product_name: string
   quantity: number
@@ -156,11 +170,51 @@ export async function updateCartItem(
   )
 }
 
-export async function deleteCartItem(productName: string): Promise<ShoppingCart> {
+export async function deleteCartItem(
+  productName: string,
+  username?: string
+): Promise<ShoppingCart> {
+  const headers = username
+    ? { "X-Cart-Owner": decodeURIComponent(username) }
+    : undefined
   return backendFetch<ShoppingCart>(
     `/cart/items/${encodeURIComponent(productName)}`,
-    { method: "DELETE" }
+    { method: "DELETE", headers }
   )
+}
+
+// ── Checkout ─────────────────────────────────────────────────────────
+
+export async function setCartAddresses(payload: Record<string, unknown>): Promise<ShoppingCart> {
+  return backendFetch<ShoppingCart>("/cart/addresses", {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  })
+}
+
+export async function setCartEmail(email: string): Promise<ShoppingCart> {
+  return backendFetch<ShoppingCart>("/cart/email", {
+    method: "PATCH",
+    body: JSON.stringify({ email }),
+  })
+}
+
+export async function getCartShippingOptions(): Promise<Record<string, unknown>[]> {
+  return backendFetch<Record<string, unknown>[]>("/cart/shipping-options")
+}
+
+export async function setCartShippingMethod(shippingMethodId: string): Promise<ShoppingCart> {
+  return backendFetch<ShoppingCart>("/cart/shipping-method", {
+    method: "PATCH",
+    body: JSON.stringify({ shipping_method_id: shippingMethodId }),
+  })
+}
+
+export async function createCartPaymentSession(providerId?: string): Promise<ShoppingCart> {
+  return backendFetch<ShoppingCart>("/cart/payment-session", {
+    method: "POST",
+    body: JSON.stringify({ provider_id: providerId || "pp_system_default" }),
+  })
 }
 
 // ── Orders ───────────────────────────────────────────────────────────
@@ -182,6 +236,21 @@ export async function listOrders(): Promise<Order[]> {
 
 export async function getOrder(orderNumber: string): Promise<Order> {
   return backendFetch<Order>(`/orders/${encodeURIComponent(orderNumber)}`)
+}
+
+// ── Payment ──────────────────────────────────────────────────────────
+
+export async function processPayment(payload: {
+  order_id: string
+  card_number: string
+  amount: number
+  currency?: string
+  access_token?: string
+}): Promise<Record<string, unknown>> {
+  return backendFetch<Record<string, unknown>>("/payments/process", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  })
 }
 
 // ── Auth ─────────────────────────────────────────────────────────────

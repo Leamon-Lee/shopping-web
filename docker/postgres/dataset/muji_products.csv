@@ -1,26 +1,1737 @@
 id,product_hash,category_id,name,slug,description,price,available_item_count,metadata_json
-a0078312-2d7d-b380-3c81-1e6d0f155633,07572d14506f1541c1b64485a4abba0c7f5c67d6d9b410e153604b3390c0ef27,b99967b3-f0ef-25b2-9827-cd5c92f7e1a3,Women's Organic Cotton T-Shirt,muji-womens-organic-cotton-t-shirt,Soft organic cotton crew neck t-shirt.,1980,29,{}
-4cf1975b-58a7-2792-1ff8-d06ccea325dd,a49abe306d552c592c45355f5722468ea87c2cb8a28a950e14cb08f2fd10d54c,b99967b3-f0ef-25b2-9827-cd5c92f7e1a3,Men's Linen Shirt,muji-mens-linen-shirt,Breathable linen button-down shirt.,3980,70,{}
-f0b55e06-7c73-83f6-1e0d-20a18dfbfc63,1d37f35ecd993bc510c3e69f000c5fc485ca3d6b2cd3ca0385b24fc6bbd449ee,b99967b3-f0ef-25b2-9827-cd5c92f7e1a3,Striped French Sleeve Top,muji-striped-french-sleeve-top,Comfortable striped top with short sleeves.,2980,133,{}
-9e4b68df-9a20-ca87-14a9-adb692aa315a,5defae3da2a5b89826711513416008d005d5842d59a049df6919cf24f324e84b,b99967b3-f0ef-25b2-9827-cd5c92f7e1a3,Wide Fit Chino Pants,muji-wide-fit-chino-pants,Relaxed-fit chino pants in organic cotton.,4980,49,{}
-c4b83d25-7e21-91ed-7b7b-aed7b7bd30a7,4f8fa690b11534fae8ece01cebf6d49d314c546ebf71e7ce44a557be4223fa67,b99967b3-f0ef-25b2-9827-cd5c92f7e1a3,Cotton Blend Cardigan,muji-cotton-blend-cardigan,Lightweight cardigan for layering.,5980,128,{}
-0fafb9bd-7905-3a21-4a66-d6260c1c096a,53d3323d6fdfe2cb44b12c8266ecd158d704712f48280c4c47a85247ee963af9,b07fadac-b6d0-f2fd-8cbf-d98fc59c5b29,Stainless Steel Kettle,muji-stainless-steel-kettle,Simple and functional electric kettle.,3980,105,{}
-41c180d0-9ca5-9dcc-7d53-8d2f6db60ef8,6a83683df5a14de642f3274f38a5309e622b2d797f9c5b7b1bd7025a26608ca0,b07fadac-b6d0-f2fd-8cbf-d98fc59c5b29,PP Storage Box Set,muji-pp-storage-box-set,Stackable polypropylene storage boxes.,1280,130,{}
-38c332af-44d4-000c-2ff2-9d6db0a65c7e,87f3654704b9c3e979636ae52fecd77dca48d4d083a82b5c3e5c013bddf297e7,b07fadac-b6d0-f2fd-8cbf-d98fc59c5b29,Cotton Bath Towel,muji-cotton-bath-towel,Soft and absorbent organic cotton towel.,1980,132,{}
-a41a999a-d898-c6d8-0ae1-d5d377ccee86,a2d2968f3b40052d302c8d211141c54c48400df4f39fbd2ff554b21e8f91d718,b07fadac-b6d0-f2fd-8cbf-d98fc59c5b29,Aroma Diffuser,muji-aroma-diffuser,Ultrasonic aroma diffuser for essential oils.,6980,89,{}
-81ac898d-cab6-fa01-d25c-93c3494f4eda,dd924e9f0a0ea75dbc66a97be7ce6201c7f078a8635d3a257d1a3e3c24a431ff,b07fadac-b6d0-f2fd-8cbf-d98fc59c5b29,Beechwood Cutlery Set,muji-beechwood-cutlery-set,Natural beechwood cutlery set of 5.,2480,71,{}
-b1d89802-11de-b1fd-0359-c9f1c0695814,45813611d1ae137a5c3780c4cd65418c7ef6716283725b9d87a4ab67c0f0adea,1252f99a-17aa-245e-71db-d4e0f6ba7ebc,Curry Sauce (Mild),muji-curry-sauce-mild,Japanese-style mild curry sauce pouch.,580,122,{}
-278d781f-e7cf-36a2-d5d5-dfd6b546131d,4952763a38dcf7720f9ea556bc1c21a7cf6957591bf5090328dab8c84ab30b7a,1252f99a-17aa-245e-71db-d4e0f6ba7ebc,Green Tea Bags (30pk),muji-green-tea-bags-30pk,Premium Japanese green tea bags.,480,71,{}
-81889d1d-2439-ca0d-e44b-e08bbefd9d78,d59a85930ef8e71580a81a3fa09d7f1f19ae339bc2a24f0ad758664ac66b96e8,1252f99a-17aa-245e-71db-d4e0f6ba7ebc,Dried Mango Slices,muji-dried-mango-slices,Naturally sweet dried mango without added sugar.,380,77,{}
-f0605520-8806-5fb7-93d0-7ee93d90ec3d,f5de807f3a2ff02d80bf016682a08304393d32bedb48804a9c2d2271becf7066,1252f99a-17aa-245e-71db-d4e0f6ba7ebc,Instant Miso Soup Pack,muji-instant-miso-soup-pack,Assorted instant miso soup sachets.,420,191,{}
-0c88029c-249b-4eaa-d499-b24fffbe9299,26bcb0bfd52db5a0e6911fdad0b9c71dee2898694733a422f8981ab47786635c,1252f99a-17aa-245e-71db-d4e0f6ba7ebc,Basil Pesto Sauce,muji-basil-pesto-sauce,Fresh basil pesto made with olive oil.,680,86,{}
-0f5b4314-2e0e-e4e7-fc3f-140d922879d3,1245e65ef979097b1aac2b7bbbca040dac3b540dc18601e63c941404161f0c97,5b0fe14d-a38d-cb8f-bcea-c81aee94ed66,Oak Dining Table,muji-oak-dining-table,"Solid oak dining table, seats 4.",49800,119,{}
-c2f78846-6c32-b31a-39c1-8ff907fe30b5,a3bfec067f5116b9f4648331f15d9c665275323a293dda84cf37f39cb003bdee,5b0fe14d-a38d-cb8f-bcea-c81aee94ed66,Beechwood Stool,muji-beechwood-stool,"Simple beechwood stool, stackable.",12900,155,{}
-af53ae84-6203-74d0-b5b6-7dc010be3a9e,87467569bdd2b612b590d73ffbc8590e6c31fd3eabdabe411b4e6780436500a5,5b0fe14d-a38d-cb8f-bcea-c81aee94ed66,Steel Shelving Unit,muji-steel-shelving-unit,Adjustable steel shelving for storage.,8900,27,{}
-11e51907-8152-999b-3bcd-4173b5aa1595,d2ba2b6357aa00cf17c7e1f0bc0672f9756fad1f7ca189707928ad8018529da5,5b0fe14d-a38d-cb8f-bcea-c81aee94ed66,Cotton Bean Bag,muji-cotton-bean-bag,Comfortable cotton canvas bean bag chair.,15800,21,{}
-821373ba-03d0-5c99-235f-7260a7b91b85,d413ebb3c2a2c8fc6ed0a93172817fc412206fcc5b81b25f6cbbaa55719ca7dc,5b0fe14d-a38d-cb8f-bcea-c81aee94ed66,Wall-mounted Shelf,muji-wall-mounted-shelf,Minimal wall-mounted oak shelf.,4980,149,{}
-dd99f91a-e82b-cc91-9d39-074ac9a86ca7,43a891702f13fc726011bd59f3b2f83477a2c25fbfd9106bfadc9d4e16e35a19,7a2236fb-2749-eec0-fc08-9ce3d2ee1c9d,Gel Ink Pen Set (0.5mm),muji-gel-ink-pen-set-05mm,Smooth gel ink pens in 6 colors.,680,13,{}
-884439ca-1878-9399-b20e-cc8995fadc48,51f7a4d3f1ed535cb57d70ebc3a0d4a2a48da459ef2a2d21c7119dc6c991f5a8,7a2236fb-2749-eec0-fc08-9ce3d2ee1c9d,PP Notebook A5,muji-pp-notebook-a5,Polypropylene cover notebook with ruled pages.,380,116,{}
-89793526-9d86-0812-dc1f-2b8027ad9693,2dadf160fb715e72480c09e91c7ba5bebe613c271d4a8b1b28ea38297d3c42e2,7a2236fb-2749-eec0-fc08-9ce3d2ee1c9d,Aluminum Ruler 15cm,muji-aluminum-ruler-15cm,Precision-etched aluminum ruler.,280,183,{}
-3673e329-1b2a-a9f6-c586-867ed0540b91,c418c6c55c13d8cb762a07692cd16e738d8fc5aac9af1e5d9438b3d0d7752b99,7a2236fb-2749-eec0-fc08-9ce3d2ee1c9d,Kraft Paper Notebook B5,muji-kraft-paper-notebook-b5,Recycled kraft paper cover notebook.,580,39,{}
-338980a8-1115-f299-0f1a-37ff939d02e1,d0b07f7d73f0ffb4fb33e6c026ef73f0ea430886c6a055a9af51b4a6921f7279,7a2236fb-2749-eec0-fc08-9ce3d2ee1c9d,Highlighter Set (5 colors),muji-highlighter-set-5-colors,Double-ended highlighters in pastel colors.,480,115,{}
+52afdceb-2534-3938-6a99-6c60bdca09c7,0ef9003b4717069e78cb9533bfe9260c93387616fa7122788f58dc040f918ad2,e24d5c40-3574-ad2d-0e49-2941e73894ba,Candy Yuzu And Kinkan,muji-candy-yuzu-and-kinkan,"A sweet, citrus-flavored snack made with yuzu and kumquat.
+*Made in a facility that processes eggs, milk, peanuts, shellfish and wheat.
+ ",2.9,109,"{""brand"": ""MUJI""}"
+ed657467-abd4-afff-fa56-7b54a67aee71,a46892d13d4302e00857ca29262bd64ba685b8d57e2013c02befec0997aa56b8,49c637b2-9472-b72b-d61d-2e7746ddd16e,Nylon Makeup Box - Large,muji-nylon-makeup-box---large,"Perfect storage and organizer for your make up tools and skin care items. You can also use them in combination with our Polypropylene Makeup Boxes for additional organization.
+Includes a detachable brush holder and a handle so you can travel with convenience.
+",39.9,26,"{""brand"": ""MUJI""}"
+b3841b4b-9d08-1657-864d-4fabf5f3b2a9,9e3b08d91c3b9aebd9a4bd4119ac0eb6d12a6cb88a0e8757d9da0cdeb7ba94b0,3cb03559-21a9-2fd5-77fc-163de5c2b186,Styrene Divider - Small,muji-styrene-divider---small,"This styrene 3-partition rack has a sturdy, stable construction that makes organizing and retrieving books, magazines, and documents easy and stress-free. Great for use on a bookshelf or desk, it can be used horizontally or vertically to fit your needs.",7.9,32,"{""brand"": ""MUJI""}"
+cb8b9235-18ae-c101-cf0e-8c4471827eb5,ddff2a0c9f37c619ab050e0848316fc363a91324b51c9e21857a4709f4a378a1,19417ae8-ee9f-68ac-13ca-22ffcffc072a,Stainless Steel Wired Rack,muji-stainless-steel-wired-rack,"A wire rack for bathroom storage that drains well and does not rust easily. Neatly stores bottles or small items within a stainless steel frame design featuring thoughtful spacing so that residue can easily be rinsed off.
+*Other products pictured are not included.
+ 
+ ",15.9,109,"{""brand"": ""MUJI""}"
+7fc822fe-9a30-bd1c-cd7a-6fa9fe15971c,b08fb5e58588e6e1d277c0e3b7cb25a830ad3024adb6cc39413f33570afb5af8,e24d5c40-3574-ad2d-0e49-2941e73894ba,Japanese Style Carrot Umami Dressing,muji-japanese-style-carrot-umami-dressing,"Rich carrot flavor and sweetness meets gentle tang and savory depth.
+Made with real carrots, smooth apple cider vinegar, sweet Mirin, and savory soy sauce, this Japanese-style dressing brings a balanced and flavorful twist to your meals.",9.9,101,"{""brand"": ""MUJI""}"
+c20589ce-3558-6fda-ca38-e0ceb52f91af,3698609d70f2292c9449977dc8d225c4f6ef659fd8b4304c2dc9a93febf566ea,a8414430-b8eb-1c9d-d897-af586cf5cfbf,Panama Fedora Hat,muji-panama-fedora-hat,"This Panama fedora hat is perfect for sunny days, with a wide brim that gives you extra sun protection. Individually made by hand-knitting durable toquilla straw, giving it a natural texture that is breathable in hot weather and provides air circulation for your head. A hidden strap on the inside allows for size adjustment.",69.9,15,"{""brand"": ""MUJI""}"
+2fa3f4f8-11b1-747c-c538-8161b68cab5e,635037667d8e68bd6156ec7761b3ad90b0e1096d319b99c1f3905a59c32a4fd3,80254623-3283-49a9-f114-c8ff78ee3c37,Waffle Weave Blanket - Single,muji-waffle-weave-blanket---single,"Made with a soft and fluffy waffle texture, this cotton blanket features a moderate thickness and a smooth feel. Recommended as summer bedding or for relaxing in the living room. When not in use, draping it over the back of a sofa adds a stylish accent to your room's decor.",59.9,121,"{""brand"": ""MUJI""}"
+641fd4f8-b640-7bce-1e13-d7a252b15a62,edf44d5e9bf9fd118f700aaec171501d54ad05f5cbd74e87ff80d79705f907e5,c5d45832-85d8-b0a2-95a1-bc9f6a11f666,Women's Kapok Blend Denim Jumper Dress,muji-womens-kapok-blend-denim-jumper-dress,"The perfect versatile dress for layering over a t-shirt or blouse. It has a casual design that suits a variety of styles depending on what it is paired with. The side opens with a zipper so it is quick and easy to put on, and there is a slit on the back for comfortable movement. 
+Made with a blend of organic cotton and kapok, an environmentally friendly plant grown without pesticides. By using a fabric that mixes kapok with cotton, it is softer and lighter than conventional 100% cotton.
+[What is",59.99,28,"{""brand"": ""MUJI""}"
+3433813e-1ec8-4e54-3515-4cb361248742,76fac88b7bc39bfc5d59df13ac30f14feac1e9efacff12c002ac7e4bb2fbac22,a4381e6b-90a6-63fd-6675-ba1e37ee4459,B6 Vertical Monthly/Weekly Planner From Aug. 2026 - Mon. Start,muji-b6-vertical-monthlyweekly-planner-from-aug-2026---mon-start,"This Monthly-Weekly Vertical Planner is made with high quality paper. Perfect for organizing your day, specifically by the hour. The vinyl cover protects it from accidental spills and stains. It includes a pocket you can slide cards or folded paper into.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2027)
+Yearly overview for 2027
+Monthly calendar (beginning in August 2026)
+Weekly vertical hourly schedule (8am to 10pm)
+Lined pages for notes
+
+",12.9,49,"{""brand"": ""MUJI""}"
+803f91c5-56bd-7120-d572-72414843c02c,b2e6c0fbd89b841bd3f162a337b39ef5293ede2170e4fe33159d2c590ce1e4e8,a4381e6b-90a6-63fd-6675-ba1e37ee4459,A5 Vertical Monthly/Weekly Planner From Aug. 2026 - Mon. Start,muji-a5-vertical-monthlyweekly-planner-from-aug-2026---mon-start,"This Monthly-Weekly Vertical Planner is made with high quality paper. Perfect for organizing your day, specifically by the hour. The vinyl cover protects it from accidental spills and stains. It includes a pocket you can slide cards or folded paper into.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in August 2026)
+Weekly vertical hourly schedule (8am to 10pm)
+Lined pages for notes
+
+",14.9,50,"{""brand"": ""MUJI""}"
+30094bb3-5817-f9f3-c689-3cf89650fb6f,d6373221bfd58c26d624a6eba6573da1afb200998c6cff2e292787103ab94b08,a4381e6b-90a6-63fd-6675-ba1e37ee4459,B6 No Holiday Monthly/Weekly Planner From Aug. 2026 - Mon. Start,muji-b6-no-holiday-monthlyweekly-planner-from-aug-2026---mon-start,"This Monthly-Weekly Planner features horizontal weekly spreads on its left-sided pages, and a space on the right for notetaking or extending your weekly activities. The weekly spreads include markers to divide your day into thirds or separate your tasks by topics. The right-hand pages can also be used for habit tracking, mini daily journal entries, or doodling.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in A",12.9,21,"{""brand"": ""MUJI""}"
+4ebc4b7c-8eed-7ac6-5e07-35a37ff1fc8e,6c23b735eeb90131ca9c22ad2a3cf88978d5baba4471b4df787dbb2486333287,a4381e6b-90a6-63fd-6675-ba1e37ee4459,A5 No Holiday Monthly/Weekly Planner From Aug. 2026 - Mon. Start,muji-a5-no-holiday-monthlyweekly-planner-from-aug-2026---mon-start,"This Monthly-Weekly Planner features horizontal weekly spreads on its left-sided pages, and a space on the right for notetaking or extending your weekly activities. The weekly spreads include markers to divide your day into thirds or separate your tasks by topics. The right-hand pages can also be used for habit tracking, mini daily journal entries, or doodling.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in A",14.9,63,"{""brand"": ""MUJI""}"
+1fc953d0-d959-a610-d560-d89c1d9141cc,16595fbdef42bbecc8e5b7c73d29f557530ae4a03f77b00993abe12d22f40d76,a4381e6b-90a6-63fd-6675-ba1e37ee4459,A6 Dark Gray Monthly/Weekly Planner From Aug. 2026 - Mon. Start,muji-a6-dark-gray-monthlyweekly-planner-from-aug-2026---mon-start,"This Monthly-Weekly Planner features horizontal weekly spreads on its left-sided pages, and a space on the right for notetaking or extending your weekly activities. The weekly spreads include markers to divide your day into thirds or separate your tasks by topics. The right-hand pages can also be used for habit tracking, mini daily journal entries, or doodling.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in A",11.9,37,"{""brand"": ""MUJI""}"
+2bf9165b-19dd-fc9d-4452-951d1bd25627,6c8ec62b34bfa08301a838019818eb7498aa220211f61d3065cfdacdfa086da2,a4381e6b-90a6-63fd-6675-ba1e37ee4459,B6 Dark Gray Monthly/Weekly Planner From Aug. 2026 - Mon. Start,muji-b6-dark-gray-monthlyweekly-planner-from-aug-2026---mon-start,"This Monthly-Weekly Planner features horizontal weekly spreads on its left-sided pages, and a space on the right for notetaking or extending your weekly activities. The weekly spreads include markers to divide your day into thirds or separate your tasks by topics. The right-hand pages can also be used for habit tracking, mini daily journal entries, or doodling.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in A",12.9,57,"{""brand"": ""MUJI""}"
+cc16f4ad-86d2-6227-9cac-87574b94a61e,c5dd64e57dc122a1fc0f0a362f84c3813d049b66c03a22bcf62fde76d7006bb4,a4381e6b-90a6-63fd-6675-ba1e37ee4459,A5 Dark Gray Monthly/Weekly Planner From Aug. 2026 - Mon. Start,muji-a5-dark-gray-monthlyweekly-planner-from-aug-2026---mon-start,"This Monthly-Weekly Planner features horizontal weekly spreads on its left-sided pages, and a space on the right for notetaking or extending your weekly activities. The weekly spreads include markers to divide your day into thirds or separate your tasks by topics. The right-hand pages can also be used for habit tracking, mini daily journal entries, or doodling.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in A",14.9,25,"{""brand"": ""MUJI""}"
+96061578-c970-56ad-a4f9-e2a634f331f9,fc02079009b105e35a747514fc06e4b0eab009cc96044f6590d020edba9a17b5,a4381e6b-90a6-63fd-6675-ba1e37ee4459,B5 Dark Gray Monthly/Weekly Planner From Aug. 2026 - Mon. Start,muji-b5-dark-gray-monthlyweekly-planner-from-aug-2026---mon-start,"This Monthly-Weekly Planner features horizontal weekly spreads on its left-sided pages, and a space on the right for notetaking or extending your weekly activities. The weekly spreads include markers to divide your day into thirds or separate your tasks by topics. The right-hand pages can also be used for habit tracking, mini daily journal entries, or doodling.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in A",15.9,90,"{""brand"": ""MUJI""}"
+693be460-df11-3ecf-2314-ce67a07e3d99,a548d7feb24b58e7a262f99185fbeff2b6ee5c0f641667b911339e6db661c10e,a4381e6b-90a6-63fd-6675-ba1e37ee4459,A6 White Gray Monthly/Weekly Planner From Aug. 2026 - Mon. Start,muji-a6-white-gray-monthlyweekly-planner-from-aug-2026---mon-start,"This Monthly-Weekly Planner features horizontal weekly spreads on its left-sided pages, and a space on the right for notetaking or extending your weekly activities. The weekly spreads include markers to divide your day into thirds or separate your tasks by topics. The right-hand pages can also be used for habit tracking, mini daily journal entries, or doodling.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in A",11.9,147,"{""brand"": ""MUJI""}"
+dd005691-fbc2-7a51-e206-c55bd55ca212,d095b144e28684c4cb677898286db0e01766a2efc0a173daa63246fe998c0237,a4381e6b-90a6-63fd-6675-ba1e37ee4459,B6 White Gray Monthly/Weekly Planner From Aug. 2026 - Mon. Start,muji-b6-white-gray-monthlyweekly-planner-from-aug-2026---mon-start,"This Monthly-Weekly Planner features horizontal weekly spreads on its left-sided pages, and a space on the right for notetaking or extending your weekly activities. The weekly spreads include markers to divide your day into thirds or separate your tasks by topics. The right-hand pages can also be used for habit tracking, mini daily journal entries, or doodling.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in A",12.9,65,"{""brand"": ""MUJI""}"
+3d0b0310-b503-4fc6-aa46-771b491799e2,aec5a317e112d28b1775fdf9781f0a31a127e6d5d4cd7742b3921fcf606bd4bf,a4381e6b-90a6-63fd-6675-ba1e37ee4459,A5 White Gray Monthly/Weekly Planner From Aug. 2026 - Mon. Start,muji-a5-white-gray-monthlyweekly-planner-from-aug-2026---mon-start,"This Monthly-Weekly Planner features horizontal weekly spreads on its left-sided pages, and a space on the right for notetaking or extending your weekly activities. The weekly spreads include markers to divide your day into thirds or separate your tasks by topics. The right-hand pages can also be used for habit tracking, mini daily journal entries, or doodling.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in A",14.9,53,"{""brand"": ""MUJI""}"
+8f59c1f9-fc30-0245-0c9f-63ff8e0cd5fc,687b9df5ee61a353069b3cd79ef46cc2488476d66c3693b7dd08682a2d00cbbf,19417ae8-ee9f-68ac-13ca-22ffcffc072a,Toilet Brush With Case,muji-toilet-brush-with-case,"A minimalistic toilet brush with a rectangular case can be stored in the corner of the bathroom. It is cut out on one side with a lip to let it dry before putting it back in the case. This prevents having as much bacteria, moisture, and odor buildup.  ⚠ Warning: Cancer - https://www.p65warnings.ca.gov/ ",7.9,130,"{""brand"": ""MUJI""}"
+937133a0-15e5-4ea3-2746-5cf58e7131ac,87d0ea6cc28392a15932d6e0a22a9c0049f60b04ae224e38c5e44b2a2cefea2f,a4381e6b-90a6-63fd-6675-ba1e37ee4459,B5 White Gray Monthly/Weekly Planner From Aug. 2026 - Mon. Start,muji-b5-white-gray-monthlyweekly-planner-from-aug-2026---mon-start,"This Monthly-Weekly Planner features horizontal weekly spreads on its left-sided pages, and a space on the right for notetaking or extending your weekly activities. The weekly spreads include markers to divide your day into thirds or separate your tasks by topics. The right-hand pages can also be used for habit tracking, mini daily journal entries, or doodling.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in A",15.9,40,"{""brand"": ""MUJI""}"
+dadc095b-5c10-b643-f281-da5205b737f4,0c812e8b4db4d7ad159550760bde632ece873f01b29a5de2c921a8ebcb4d4e6c,a4381e6b-90a6-63fd-6675-ba1e37ee4459,A6 Monthly Planner From Aug. 2026 - Sun. Start,muji-a6-monthly-planner-from-aug-2026---sun-start,"This monthly planner starts on Sunday and includes 2-page monthly spreads with lined pages for notes. Comes with a vinyl cover to protect against light spills and debris.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in August 2026)
+Extra lined pages for notes
+Covers include pockets for storing business cards or folded paper
+
+
+
+
+
+
+
+
+",6.9,143,"{""brand"": ""MUJI""}"
+189c6479-3533-82a9-ffb8-3f81cce3552b,6b86c3901abde12794935369adfed845e7a182f042576aa249627754070a273d,a4381e6b-90a6-63fd-6675-ba1e37ee4459,B6 Monthly Planner From Aug. 2026 - Sun. Start,muji-b6-monthly-planner-from-aug-2026---sun-start,"This monthly planner starts on Sunday and includes 2-page monthly spreads with lined pages for notes. Comes with a vinyl cover to protect against light spills and debris.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in August 2026)
+Extra lined pages for notes
+Covers include pockets for storing business cards or folded paper
+
+
+
+
+
+
+",7.9,69,"{""brand"": ""MUJI""}"
+46232b36-58f7-0fb5-22b7-f20f90cc7c3b,ced64472712649ff97f109bb186e59ed4d7d110003cd6fc288d8180160cf2bfc,a4381e6b-90a6-63fd-6675-ba1e37ee4459,A5 Monthly Planner From Aug. 2026 - Sun. Start,muji-a5-monthly-planner-from-aug-2026---sun-start,"This monthly planner starts on Sunday and includes 2-page monthly spreads with lined pages for notes. Comes with a vinyl cover to protect against light spills and debris.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in August 2026)
+Extra lined pages for notes
+Covers include pockets for storing business cards or folded paper
+
+
+
+
+",8.9,117,"{""brand"": ""MUJI""}"
+2e777c93-b957-0f53-23c1-0104134ac3c8,60d7cf807cc71bb97dafcac90d1fe7a3d314de3c906de7e126eac463a48e14c0,a4381e6b-90a6-63fd-6675-ba1e37ee4459,B5 Monthly Planner From Aug. 2026 - Sun. Start,muji-b5-monthly-planner-from-aug-2026---sun-start,"This monthly planner starts on Sunday and includes 2-page monthly spreads with lined pages for notes. Comes with a vinyl cover to protect against light spills and debris.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in August 2026)
+Extra lined pages for notes
+Covers include pockets for storing business cards or folded paper
+
+
+",9.9,25,"{""brand"": ""MUJI""}"
+a413453b-904e-a853-3e18-1d13ccebb0b6,5d08b39030d31a584351aefedc94bbb1a75f1a918fdae30619f68b199724a164,a4381e6b-90a6-63fd-6675-ba1e37ee4459,A6 Monthly Planner From Aug. 2026 - Mon. Start,muji-a6-monthly-planner-from-aug-2026---mon-start,"This monthly planner starts on Monday and includes 2-page monthly spreads with lined pages for notes. Comes with a vinyl cover to protect against light spills and debris.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in August 2026)
+Extra lined pages for notes
+Covers include pockets for storing business cards or folded paper
+
+
+
+
+
+
+
+
+",6.9,94,"{""brand"": ""MUJI""}"
+cd5a189f-db39-4bca-49c3-09e9d0b4249e,ef72fb8a7ba5b1a702757f19aa997201cb25209a30681e5a075dd20cce5fcb9f,a4381e6b-90a6-63fd-6675-ba1e37ee4459,B6 Monthly Planner From Aug. 2026 - Mon. Start,muji-b6-monthly-planner-from-aug-2026---mon-start,"This monthly planner starts on Monday and includes 2-page monthly spreads with lined pages for notes. Comes with a vinyl cover to protect against light spills and debris.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in August 2026)
+Extra lined pages for notes
+Covers include pockets for storing business cards or folded paper
+
+
+
+
+
+
+",7.9,18,"{""brand"": ""MUJI""}"
+810a56c2-46a5-d4ad-df75-6aff29766339,49fd5a5e2d29e7198234489bcbb5ad5de409c5f519eb957d48549cf371676aa2,a4381e6b-90a6-63fd-6675-ba1e37ee4459,A5 Monthly Planner From Aug. 2026 - Mon. Start,muji-a5-monthly-planner-from-aug-2026---mon-start,"This monthly planner starts on Monday and includes 2-page monthly spreads with lined pages for notes. Comes with a vinyl cover to protect against light spills and debris.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in August 2026)
+Extra lined pages for notes
+Covers include pockets for storing business cards or folded paper
+
+
+
+
+",8.9,138,"{""brand"": ""MUJI""}"
+fbbd4ac7-ed59-7663-8649-7599983a8128,c0eb3d7313dbbf9d4c35fa01870f112ec3e9a966c549946213b15e9fb36fce2e,a4381e6b-90a6-63fd-6675-ba1e37ee4459,B5 Monthly Planner From Aug. 2026 - Mon. Start,muji-b5-monthly-planner-from-aug-2026---mon-start,"This monthly planner starts on Monday and includes 2-page monthly spreads with lined pages for notes. Comes with a vinyl cover to protect against light spills and debris.
+Pages include (in the following order):
+
+Monthly calendar overview (2026-2028)
+Yearly overview for 2027
+Monthly calendar (beginning in August 2026)
+Extra lined pages for notes
+Covers include pockets for storing business cards or folded paper
+
+
+",9.9,44,"{""brand"": ""MUJI""}"
+c74de403-8ae7-8284-9843-ff759cfdd8e9,d219a6c2c0a8dbb0e615c98b2bc5aa83a10ec971572fbefc93978dab6f6083de,a4381e6b-90a6-63fd-6675-ba1e37ee4459,B5 Monthly Planner From Dec. 2025,muji-b5-monthly-planner-from-dec-2025,"This monthly planner starts on Monday and includes 2-page monthly spreads with lined pages for notes. Comes with a vinyl cover to protect against light spills and debris.
+Pages include (in the following order):
+
+Monthly calendar overview (2025-2027)
+Yearly overview for 2026
+Monthly calendar (beginning in December 2025)
+Extra lined pages for notes
+Covers include pockets for storing business cards or folded paper
+
+
+",6.99,34,"{""brand"": ""MUJI""}"
+28b5a587-b6f1-4ac6-6693-da4b5fa72c77,c7982c315f847da35ed296a889fa7637c84dfd20c0fc05b31a0c9e1efc277965,852be0d3-8bcb-080e-cb2e-6a04b2939e7c,Polypropylene Organizer Box 3 (W6.7 x D10 x H2”),muji-polypropylene-organizer-box-3-w67-x-d10-x-h2,"A convenient organizer box for kitchen drawers or desk space to hold cutlery, small kitchen accessories or office supplies. The different types are unified to fit well together.",2.9,58,"{""brand"": ""MUJI""}"
+c01f447c-7467-42e3-c005-211e2d88674b,e72e00128703e79c660ff9f643b5ab32260c55dbb473725f3f9282f79d2c9a38,d72a40bf-678e-5d37-bd39-3c885afbc0b1,Wooden Letter Tray,muji-wooden-letter-tray,"Organizing tray for A4 prints. Convenient for organizing and sorting postcards, envelopes, circulars, etc. The trays cannot be fixed in place, so please be careful when stacking them and make sure they are stacked stably before use. Please only stack up to 3 units. ",34.9,66,"{""brand"": ""MUJI""}"
+db918355-fabd-f007-1a80-22468b79703a,8128c36e948a81a6d148350cfafd00bb92b54289eae248fc35119473baf3a630,291353a7-802c-b895-54bc-9396da2b2c7c,"Stackable Bamboo Box Lid - Half (W10.2 x D7.3 x H1"")",muji-stackable-bamboo-box-lid---half-w102-x-d73-x-h1,"These lids are for our storage boxes that are made using fast growing bamboo, a natural and sustainable material with low environmental impact. The lids can also be used as bamboo trays.
+These boxes are designed to make them easy to stack, while also being perfectly sized for MUJI storage furniture.
+⚠ Warning: Cancer - https://www.p65warnings.ca.gov/
+",12.9,68,"{""brand"": ""MUJI""}"
+236f0bc7-a6e7-e27b-7ce0-7fb77897458f,9ff9d474c9461385dd14c896c0f6a0c5bca28acf4bf65283718829b395b3cddf,291353a7-802c-b895-54bc-9396da2b2c7c,"Stackable Bamboo Box - Small (W14.6 x D10.2 x H3.3"")",muji-stackable-bamboo-box---small-w146-x-d102-x-h33,"These storage boxes are made using fast growing bamboo, a natural and sustainable material with low environmental impact.
+These boxes are designed to make them easy to stack, while also being perfectly sized for MUJI storage furniture.
+⚠ Warning: Cancer - https://www.p65warnings.ca.gov/
+",29.9,141,"{""brand"": ""MUJI""}"
+c994344c-6d05-9dbb-e6c1-719367a84ea7,b1ca28a8f0b10c1f6f85d4ae946dd87768f1746feb5413eeec908bb9adf859b2,291353a7-802c-b895-54bc-9396da2b2c7c,Stackable Bamboo Box - Half - Medium W26 x D18.5 x H16.5 cm,muji-stackable-bamboo-box---half---medium-w26-x-d185-x-h165-cm,"These storage boxes are made using fast growing bamboo, a natural and sustainable material with low environmental impact.
+These boxes are designed to make them easy to stack, while also being perfectly sized for MUJI storage furniture.
+",29.9,50,"{""brand"": ""MUJI""}"
+a373b138-5d6c-1866-daad-fb26bf5fe242,f50dcf34c013e6dd271a8fd2f0420ffa872c053bc9987c8a81527154f336c796,291353a7-802c-b895-54bc-9396da2b2c7c,"Stackable Bamboo Box Lid (W14.6 x D10.2 x H1"")",muji-stackable-bamboo-box-lid-w146-x-d102-x-h1,"These lids are for our storage boxes that are made using fast growing bamboo, a natural and sustainable material with low environmental impact. The lids can also be used as bamboo trays.
+These boxes are designed to make them easy to stack, while also being perfectly sized for MUJI storage furniture.
+⚠ Warning: Cancer - https://www.p65warnings.ca.gov/
+",14.9,32,"{""brand"": ""MUJI""}"
+cd519542-49c2-4e1d-7b9e-5548e0ba0742,930e642c0644fc3ce869fa8c689e2f82ef7184847a09a873142207f9608d0fff,6bf20b58-0015-465a-e4d7-f3bb8f423d02,Everyday Tableware Bowl Medium - Blue Stripe,muji-everyday-tableware-bowl-medium---blue-stripe,"A porcelain bowl dish that is deep and stable. Great for soup and noodle dishes such as udon and ramen, as well as serving salads and fruits. 
+Our new Everyday Tableware series features lightweight, microwave and dishwasher-safe tableware. The pieces are designed for everyday convenience, while also elevating the presentation of the dish. Available in a variety of sizes, colors and shapes so you can enjoy them in any combination. This collection is the perfect addition to bring elegance to your ",6.9,59,"{""brand"": ""MUJI""}"
+470bb068-af5d-45b0-ceb1-210b39f5b99a,676bba829a53360b891d80016d578737dd7e9d0b958253a9b31ebc49d9af3c05,ebfd3a1d-e97a-24f5-e2d6-7aa03e65bf1f,"Polypropylene Storage Box Wide - Deep (W19.9 x D14.6 x H12.4"")",muji-polypropylene-storage-box-wide---deep-w199-x-d146-x-h124,"A storage box made of polypropylene, designed to perfectly fit file boxes and other storage items without gaps in between. It's perfect for organizing items, whether you use it in the kitchen, bathroom, or office. The translucent material allows you to quickly see its contents for convenience. Use with inner trays or smaller storage boxes (sold separately) to make effective use of the space inside.
+Lids are sold separately.",16.9,63,"{""brand"": ""MUJI""}"
+bf53aa97-b4bb-b760-dbd7-20e0d364e522,8205a9c6eb9832d1a2b5820c047e8cd58f4e974e24114f506485985dcffd3f1b,e24d5c40-3574-ad2d-0e49-2941e73894ba,Yuzu Cocktail Syrup 12.3 fl oz,muji-yuzu-cocktail-syrup-123-fl-oz,"Crafted with carefully selected Yuzu Juice, this superb cocktail syrup has an aroma and sour taste that you will love. Yuzu’s pleasant scent, refreshing acidity, and slight bitterness pair perfectly with any spirit to create a surprisingly delicious cocktail and refresher.
+*This product is non-alcoholic. It is a fruit syrup used to mix with alcohol beverages.",16.9,144,"{""brand"": ""MUJI""}"
+6f6dceb4-a7ae-2c60-1da9-e136b7fd2d65,98029115df7dec5f3df9b50d847e66b311ef4c21486c0f370a0bdca728e50b18,95ce936e-6109-8164-f951-fc99e2ea0063,Fragrance Candle - Cedar,muji-fragrance-candle---cedar,"
+
+
+
+
+
+
+
+
+
+
+
+
+
+Immerse yourself in the soft and luxurious scent of cedar with a blend of earthy, woody scent of nature. Perfect for creating a warm, inviting atmosphere that feels both clean and comforting.  
+This elegant candle comes in a dark brown frosted glass jar to create a warm, cozy vibe in any space.
+
+
+
+
+
+
+
+
+
+
+
+
+
+",6.9,18,"{""brand"": ""MUJI""}"
+9bf1cae7-417b-0fe9-c66a-3d6a970db562,cfb9c1e02c0405c289ebc54a13742f9656ae609de70fa5fe240e8b89b4c4e3b9,8eda25ac-321d-37e4-c5f4-7dba78a05f9b,Women's Stretch Jersey 1/10 Length Leggings,muji-womens-stretch-jersey-110-length-leggings,"Made with organic cotton, these jersey leggings are stretchy with a soft feel. The perfect length to wear as undershorts underneath skirts and dresses. 
+
+Item Size Chart
+
+
+
+Size
+Waist
+Hip
+Front Rise
+Inseam
+Thigh 
+Hem Width
+
+
+XS
+50.0cm (19.7"")
+60.0cm (23.6"")
+20.0cm (7.9"")
+6.0cm (2.4"")
+19.8cm (7.8"")
+19.5cm (7.7"")
+
+
+S
+54.0cm (21.3"")
+64.0cm (25.2"")
+20.5cm (8.1"")
+6.5cm (2.6"")
+20.8cm (8.2"")
+20.0cm (7.9"")
+
+
+M
+58.0cm (22.8"")
+68.0cm (26.8"")
+21.4cm (8.4"")
+6.5cm (2.6"")
+21.8cm (8.6"")
+21.0cm (8.3"")
+
+
+L
+63.0c",14.9,45,"{""brand"": ""MUJI""}"
+e6236da9-2238-df63-5f08-ca165a7101f5,0eb3d8b3040a9958cc758d7f19ebee09f5bca1d682de26d8e6f79c392b1df934,8eda25ac-321d-37e4-c5f4-7dba78a05f9b,Women's Breathable Cotton French Sleeve T-Shirt with Sweat Pad,muji-womens-breathable-cotton-french-sleeve-t-shirt-with-sweat-pad,"Breathable, smooth, and cool to the touch. Sweat pads under the arms will help keep you dry throughout the day.
+
+The moisture-wicking and quick-drying properties of cotton material are enhanced by a unique knitting method, making the innerwear more comfortable to wear.
+Unlike synthetic materials, cotton does not absorb oil on the skin excessively, so you can feel comfortable wearing the innerwear throughout the year.
+Features with a side seamless design to bring extra wearing comfort. To prevent",14.9,60,"{""brand"": ""MUJI""}"
+4d15bcbd-029e-76d8-9da7-73a6f778dec2,19d922492aff9c7d6280537ca63324028557347948b334e50e9ad2d1583bd865,56286183-6552-ccf6-e02a-48f4a6c4803a,Women's Ribbed Tank Top,muji-womens-ribbed-tank-top,"A tank top with a varied rib widths for an expressive texture. Made with organic cotton.
+
+
+Item Size Chart
+
+
+
+Size
+Chest Width
+Shoulder Width
+Hem Width
+Length
+Torso Width
+
+
+XS
+34.5cm (13.6"")
+29.5cm (11.6"")
+34.5cm (13.6"")
+54.0cm (21.3"")
+33.0cm (13.0"")
+
+
+S
+37.0cm (14.6"")
+30.5cm (12.0"")
+37.0cm (14.6"")
+56.0cm (22.0"")
+35.5cm (14.0"")
+
+
+M
+39.5cm (15.6"")
+31.5cm (12.4"")
+39.5cm (15.6"")
+58.0cm (22.8"")
+38.0cm (15.0"")
+
+
+L
+42.0cm (16.5"")
+32.5cm (12.8"")
+42.0cm (16.5"")
+60.0cm (23.6"")
+40.5cm (15.9"")
+
+
+XL
+45.0cm ",9.99,59,"{""brand"": ""MUJI""}"
+ab4b6422-cf83-546f-241f-a2f00c45a23b,b696f8c7d169c4acd15bdc381efb85463bd7099aecde7fc1bcf2c9bd2294465f,8631bdc2-b813-7d83-ceee-b86239b1efd2,(Transfer to Portland) Labo Unisex Easy-Clean Short Sleeve Pullover Shirt,muji-transfer-to-portland-labo-unisex-easy-clean-short-sleeve-pullover-shirt,"Easy-to-wash material treated to repel oil and mud. The fabric is also designed to resist static. 
+Style it with Labo Unisex Easy-Clean Cargo Pants.
+
+
+Item Size Chart
+
+
+
+Size
+Chest Circumference
+Shoulder Width
+Hem Circumference
+Sleeve Length
+Length
+
+
+XS
+116.0cm (45.7"")
+57.0cm (22.4"")
+118.0cm (46.5"")
+24.5cm (9.6"")
+71.0cm (28.0"")
+
+
+S
+122.0cm (48.0"")
+60.0cm (23.6"")
+124.0cm (48.8"")
+25.0cm (9.8"")
+73.5cm (28.9"")
+
+
+M
+128.0cm (50.4"")
+63.0cm (24.8"")
+130.0cm (51.2"")
+25.5cm (10.0"")
+76.0cm (29.9"")
+
+
+L
+134.0",29.99,141,"{""brand"": ""MUJI""}"
+170a458f-0fc7-2f27-83ca-36c39bc4b843,9a4066af74e5285cceb85f1cb1b5ac839bc2f4c27221ab66c64731e07aad78fe,5dcf703f-7ba4-efc4-f49c-45e516891304,Men's UV Protection Quick Dry Zip Up Hoody,muji-mens-uv-protection-quick-dry-zip-up-hoody,"Quick-drying hoody using a stretchy and soft material for a comfortable finish. Suitable for both casual or activewear. Blocks over 90% of UV rays. This product is available in men's size, but it is also ideal for women who prefer a more relaxed, wider fit.Item Size Chart 
+
+Size
+Chest Width
+Hem Width
+Length
+Neck to Sleeve
+
+
+XS
+51.0cm (20.1"")
+49.0cm (19.3"")
+68.0cm (26.8"")
+86.0cm (33.9"")
+
+
+S
+53.5cm (21.1"")
+51.5cm (20.3"")
+70.0cm (27.6"")
+88.0cm (34.6"")
+
+
+M
+56.0cm (22.0"")
+54.0cm (21.3"")
+72.0cm (28.3""",29.99,96,"{""brand"": ""MUJI""}"
+92095543-09a0-18ef-1eed-ecdab26f61f8,f652bc9e4c22e39b4d1c162c2f3ce7df8227516fe915a4b9d09b9725c5ea10f8,8bac9fb8-2084-7e4d-0b0c-6f97d43f20de,Men's UV Protection Quick Dry Sweatpants,muji-mens-uv-protection-quick-dry-sweatpants,"Quick-drying sweatpants using medium-weight material for a comfortable finish. Suitable for both casual or activewear. Blocks over 90% of UV rays.Item Size Chart
+
+Size
+Waist
+Hip
+Thigh Width
+Inseam
+Rise
+Hem (Foot) Width
+
+
+XS
+72.0cm (28.3"")
+102.0cm (40.2"")
+32.0cm (12.6"")
+70.0cm (27.6"")
+28.0cm (11.0"")
+15.0cm (5.9"")
+
+
+S
+76.0cm (29.9"")
+106.0cm (41.7"")
+33.5cm (13.2"")
+72.0cm (28.3"")
+28.0cm (11.0"")
+15.5cm (6.1"")
+
+
+M
+80.0cm (31.5"")
+110.0cm (43.3"")
+35.0cm (13.8"")
+74.0cm (29.1"")
+29.0cm (11.4"")
+15.5cm (6.1""",29.99,120,"{""brand"": ""MUJI""}"
+93bafde5-c47e-ebcd-224a-fedae5f81c90,931ede3713611e44f4f0498105dbcfba74a6b94e5783fa6a9f2b98986ea00b3f,5dcf703f-7ba4-efc4-f49c-45e516891304,Men's Washed Jersey Crew Neck Long Sleeve T-Shirt,muji-mens-washed-jersey-crew-neck-long-sleeve-t-shirt,"This Men's Washed Jersey Crew Neck Long Sleeve T-Shirt is a durable and comfortable addition to any wardrobe. It is made from organic cotton and designed with a comfortable neck, making it ideal for everyday wear. Item Size Chart 
+
+Size
+Chest Width
+Shoulder Width
+Hem Width
+Sleeve Length
+Length
+
+
+XS
+48.0cm (18.9"")
+43.0cm (16.9"")
+47.0cm (18.5"")
+61.5cm (24.2"")
+67.0cm (26.4"")
+
+
+S
+50.5cm (19.9"")
+44.5cm (17.5"")
+49.5cm (19.5"")
+62.8cm (24.7"")
+69.0cm (27.2"")
+
+
+M
+53.0cm (20.9"")
+46.0cm (18.1"")
+52.0cm (20.5",19.99,112,"{""brand"": ""MUJI""}"
+bb3a202d-9056-e3ab-06fc-fe90c8a0deb0,bd2c5ed980f6f1f30f68e8064b3ca4e58ae6b051dec82ab1906e9c74d4561cde,8bac9fb8-2084-7e4d-0b0c-6f97d43f20de,Men's UV Protection Track Pants,muji-mens-uv-protection-track-pants,"Track pants made using medium-weight material for a comfortable finish. Suitable for both casual or activewear. Blocks over 90% of UV rays.Item Size Chart 
+
+Size
+Waist
+Hip
+Thigh
+Inseam
+Rise
+Hem Width
+
+
+XS
+68.0cm (26.8"")
+104.0cm (40.9"")
+32.8cm (12.9"")
+70.0cm (27.6"")
+39.5cm (15.6"")
+19.0cm (7.5"")
+
+
+S
+72.0cm (28.3"")
+108.0cm (42.5"")
+34.3cm (13.5"")
+71.0cm (28.0"")
+30.5cm (12.0"")
+20.0cm (7.9"")
+
+
+M
+76.0cm (29.9"")
+112.0cm (44.1"")
+35.8cm (14.1"")
+71.0cm (28.0"")
+31.5cm (12.4"")
+20.0cm (7.9"")
+
+
+L
+82.0cm (32.3""",29.99,106,"{""brand"": ""MUJI""}"
+4c02d414-02e2-6b56-2e74-864cab361b7b,d8879bdba77747f6397d8ee2e38b877acf08e0746be812d6c79b6c86a4c7ab32,8631bdc2-b813-7d83-ceee-b86239b1efd2,Labo Unisex Easy-Clean Quick Dry Crew Neck Long Sleeve T-Shirt,muji-labo-unisex-easy-clean-quick-dry-crew-neck-long-sleeve-t-shirt,"Easy-to-wash material treated to repel oil and mud. The fabric is also designed to resist static. 
+Style it with Labo Unisex Easy-Clean Cargo Pants.
+
+
+Item Size Chart
+
+
+
+Size
+Chest Width
+Shoulder Width
+Hem Width
+Sleeve Length
+Length
+
+
+XS
+54.0cm (21.3"")
+56.0cm (22.0"")
+54.0cm (21.3"")
+52.0cm (20.5"")
+70.0cm (27.6"")
+
+
+S
+57.0cm (22.4"")
+59.0cm (23.2"")
+57.0cm (22.4"")
+53.0cm (20.9"")
+72.0cm (28.3"")
+
+
+M
+60.0cm (23.6"")
+62.0cm (24.4"")
+60.0cm (23.6"")
+54.0cm (21.3"")
+74.0cm (29.1"")
+
+
+L
+63.0cm (24.8"")
+65.0cm (25",24.99,97,"{""brand"": ""MUJI""}"
+b110688e-27a2-fe0a-c4e9-e0779d6db08f,1e276e6a7c526a716d9f01487ffd1996db18cb6fa90498a429229fad1e229b31,56286183-6552-ccf6-e02a-48f4a6c4803a,Women's Jersey Boat Neck 3/4 Sleeve T-Shirt,muji-womens-jersey-boat-neck-34-sleeve-t-shirt,"Made with a cotton blend that's soft on skin and moderately thick. Item Size Chart 
+
+Size
+Chest Width
+Shoulder Width
+Hem Width
+Sleeve Length
+Length
+
+
+XS
+49.0cm (19.3"")
+47.5cm (18.7"")
+49.0cm (19.3"")
+40.8cm (16.1"")
+60.0cm (23.6"")
+
+
+S
+51.5cm (20.3"")
+50.0cm (19.7"")
+51.5cm (20.3"")
+41.0cm (16.1"")
+62.0cm (24.4"")
+
+
+M
+54.0cm (21.3"")
+52.5cm (20.7"")
+54.0cm (21.3"")
+41.2cm (16.2"")
+64.0cm (25.2"")
+
+
+L
+56.5cm (22.2"")
+55.0cm (21.7"")
+56.5cm (22.2"")
+41.5cm (16.3"")
+66.0cm (26.0"")
+
+
+XL
+59.5cm (23.4"")
+58.0cm (22.8"")
+",9.99,103,"{""brand"": ""MUJI""}"
+0dc8d0d4-e069-4c46-37c3-04c5a196c0ca,879439d19d3147fce9f5b61cb180f9b0e125de9bc11882b3dd603f6847e70543,b1686334-dc9d-7191-542a-1e392eb23f04,Men's Cotton Jersey Boxer Briefs,muji-mens-cotton-jersey-boxer-briefs,"These Men's Cotton Jersey Boxer Briefs provide a comfortable fit and breathability with their organic cotton material and rubber waist. The soft, flexible fabric gives maximum mobility for any activity.Item Size Chart 
+
+Size
+Waist
+Hip
+Hem (Leg) Width
+
+
+
+
+XS
+
+59.0cm (23.2"")
+68.0cm (26.8"")
+20.0cm (7.9"")
+
+
+
+S
+
+64.0cm (25.2"")
+73.0cm (28.7"")
+21.0cm (8.3"")
+
+
+
+M
+
+69.0cm (27.2"")
+78.0cm (30.7"")
+22.0cm (8.7"")
+
+
+
+L
+
+77.0cm (30.3"")
+86.0cm (33.9"")
+23.0cm (9.1"")
+
+
+
+XL
+
+85.0cm (33.5"")
+94.0cm (37.0"")
+24.0cm (9.",9.9,88,"{""brand"": ""MUJI""}"
+8cb39249-4ae1-723c-6504-78ac401566fd,c704d50862d4e3f3dbd15b426c7cd8f9cef7a8fcadefb4fac2d31b72eb499635,56286183-6552-ccf6-e02a-48f4a6c4803a,Women's Interlock Crew Neck Long Sleeve T-Shirt,muji-womens-interlock-crew-neck-long-sleeve-t-shirt,"A soft surface t-shirt with moderate thickness made using organic cotton. Item Size Chart (BBC1022S)﻿
+
+Size
+Length
+Shoulder Width
+Hem Width
+Sleeve Length
+Chest Width
+
+
+
+
+XS
+
+60.0cm (23.6"")
+41.0cm (16.1"")
+46.0cm (18.1"")
+53.5cm (21.1"")
+46.0cm (18.1"")
+
+
+
+S
+
+62.0cm (24.4"")
+42.0cm (16.5"")
+48.0cm (18.9"")
+55.0cm (21.7"")
+48.0cm (18.9"")
+
+
+
+M
+
+64.0cm (25.2"")
+43.0cm (16.9"")
+50.0cm (19.7"")
+56.5cm (22.2"")
+50.0cm (19.7"")
+
+
+
+L
+
+66.0cm (26.0"")
+44.0cm (17.3"")
+53.0cm (20.9"")
+57.5cm (22.6"")
+53.0cm (20.9"")
+
+
+
+XL
+
+6",14.99,35,"{""brand"": ""MUJI""}"
+f4b9be65-ea3d-ae8a-fce6-67c4830c72c5,a174323787c60678963baeac1e6a92b4ec6c0fc20db3b19d6f4a2234687e2226,0bc61390-fe38-0ff8-4b11-0369cbe31c03,Women's Stretch French Terry Pants,muji-womens-stretch-french-terry-pants,"Super soft and comfy oversized pullover made with stretch French terry material using organic cotton. Product DetailsStyle Code: FDG5322SMaterials: 84% Cotton, 14% Polyester, 2% SpandexCountry of Origin: VietnamAdditional Information:
+Color transfer of dark-colored products may occur during use due to friction and when handling while wet. Wash separately.
+Due to the nature of this material, scuffing and pilling may occur through frictions caused through use and washing/dry-cleaning. In these cas",19.99,88,"{""brand"": ""MUJI""}"
+d955a0c2-0864-aae3-70ae-1ce09797a350,0901912fdee3bf98984ce60ee462237f4621d431c220a5a82861fa04483719d7,2ec54c0b-69b2-22d3-7245-41b76fc3ba77,"Wooden Hanger (W15.7"")",muji-wooden-hanger-w157,"Made of natural beech wood, this clothing hanger is designed with a subtle curve to mimic the natural shape of shoulders. It helps to maintain the shape of clothes and prevents unnatural stretching of the shoulders and collar. The wood is sturdy enough to hang heavier items without slipping, making it perfect for coats and luxury items.
+⚠ Warning: Reproductive Harm - www.P65Warnings.ca.gov
+",19.9,88,"{""brand"": ""MUJI""}"
+55d3a209-6e8b-4f3e-6d17-4bdf8bf4e1d2,92a76cd3b7367885f308a98c85ce97da8bb47e35635ac1fa8d3d6dc2115008bc,d72a40bf-678e-5d37-bd39-3c885afbc0b1,Wooden Tool Box,muji-wooden-tool-box,"It is convenient to organize and carry tools and stationery. The four partitions are movable, allowing both vertical and horizontal storage.",26.9,117,"{""brand"": ""MUJI""}"
+0b16ecda-0f30-6ddf-97ed-eaee3ec89791,fca8450931357254cb9db38961d4afcb80075a6debd27efa5285f4d57906bc31,d72a40bf-678e-5d37-bd39-3c885afbc0b1,Wooden Storage 6 Drawers,muji-wooden-storage-6-drawers,"The surface is finished with oak to fit in with the interior environment. The drawers are interchangeable so that they can be used vertically or horizontally. When placed horizontally, the standard capacity for stacking is 3 units. ",39.9,140,"{""brand"": ""MUJI""}"
+51a9670f-f720-ccc3-8c8a-102fbead5756,bfbd5841df5359cd97adf66bace8610c2287e90c4206681091c10eeeda584948,567286f5-3650-346f-1053-e65b72ea6106,Smooth Gel Ink Ballpoint Knock Pen 0.3 mm - Green,muji-smooth-gel-ink-ballpoint-knock-pen-03-mm---green,"This gel ink pen has a quick-drying, water-based ink that creates a smooth universal writing or sketching experience whether you're left or right-handed, and prevents bleed-through on paper.
+The ink comes in variety of vibrant colors with a 0.3 mm tip. The fine tip allows for precise note taking or sketching. It also has a built-in mechanism to prevent ink from drying out or flowing incorrectly. The pen has a clip for easy storage in a pocket, lanyard, or closed notebook, making it perfect for o",2.4,106,"{""brand"": ""MUJI""}"
+c0514b2a-c1cf-f5f3-f08c-fa59a1bcb01d,0709b7eba36d7d5289abafaa60f5c17288306ac7170e6b901b5d60ce55c956b5,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Plain Weave Cotton Shoulder Strap Apron - S-M,muji-plain-weave-cotton-shoulder-strap-apron---s-m,"An easy-to-wear, lightweight cotton waist apron. It comes with 2 large gusseted pockets for storage, placed on the side to the back so that it is easy to bend and stretch even if there is something in the pockets when crouching.
+
+",39.9,45,"{""brand"": ""MUJI""}"
+95ec74bb-879c-3a3c-4be6-9f96ba5c0f70,01bb0c897036d487e476611c9821261e09471bcc4d11dc219e409563fbf34540,501a7ab3-91c9-86c2-310e-9f9e75e2c114,Women's 4-Way Stretch Chino Wide Straight Pants (L 32inch / 80cm),muji-womens-4-way-stretch-chino-wide-straight-pants-l-32inch-80cm,"4-way stretch fabric for comfort. Made with organic cotton.
+
+Item Size Chart
+
+
+  
+
+
+Size
+Waist
+Hip
+Thigh Width
+Inseam
+Front Rise
+Hem (Foot) Width
+
+
+XS
+65.0cm (25.6"")
+90.0cm (35.4"")
+29.0cm (11.4"")
+80.0cm (31.5"")
+27.5cm (10.8"")
+23.5cm (9.3"")
+
+
+S
+70.0cm (27.6"")
+95.0cm (37.4"")
+30.5cm (12.0"")
+80.0cm (31.5"")
+28.0cm (11.0"")
+24.5cm (9.6"")
+
+
+M
+75.0cm (29.5"")
+100.0cm (39.4"")
+32.0cm (12.6"")
+80.0cm (31.5"")
+28.5cm (11.2"")
+25.5cm (10.0"")
+
+
+L
+80.0cm (31.5"")
+105.0cm (41.3"")
+33.5cm (13.2"")
+80.0cm (31.5"")
+29.0cm ",49.9,99,"{""brand"": ""MUJI""}"
+30d62d86-48c9-4773-a4ef-b4abc686995c,519dba7b908c0dff40be4cfc93acb3f9923d816d6cee852c63133a1bf1431c10,8bac9fb8-2084-7e4d-0b0c-6f97d43f20de,"Men's Slub Yarn Chino Regular Pants (L30"")",muji-mens-slub-yarn-chino-regular-pants-l30,"Straight-leg chino pants with a regular length of 30"" are made from durable and supple chino fabric.
+ 
+Item Size Chart
+
+
+
+Size
+Waist
+Hip
+Thigh Width
+Hem (Foot) Width
+Inseam
+Rise
+
+
+XS
+80.0cm (31.5"")
+110.4cm (43.5"")
+36.4cm (14.3"")
+21.0cm (8.3"")
+76.0cm (29.9"")
+32.0cm (12.6"")
+
+
+S
+83.0cm (32.7"")
+113.4cm (44.6"")
+37.5cm (14.8"")
+21.5cm (8.5"")
+76.0cm (29.9"")
+33.0cm (13.0"")
+
+
+M
+86.0cm (33.9"")
+116.4cm (45.8"")
+38.6cm (15.2"")
+22.0cm (8.7"")
+
+76.0cm (29.9"")
+
+33.0cm (13.0"")
+
+
+L
+92.0cm (36.2"")
+122.4cm (48.2"")
+40",34.99,16,"{""brand"": ""MUJI""}"
+ebca665a-0f98-4266-f8f7-c3f2f8afddcd,2826fd0f0333ee0eea0c74b30d3f12f2fb268ea9414af07d5752d9c70d673e94,f1c61b56-28bc-a6c7-35d6-f94c02d7594c,Earthenware Clay Pot Rice Cooker 0.3 Qt,muji-earthenware-clay-pot-rice-cooker-03-qt,"This beautiful clay pot is made of high-quality fire clay with a black amber glaze. The traditional Japanese donabe is perfect for cooking delicious clay pot rice with a crispy bottom crust over a gas flame. It can also be used for making udon, hot pot, stews, and steamed dishes. 
+Fire clay is dense with excellent ventilation and heat retention, allowing this pot to distribute heat evenly and moderately. The thick lid is designed to increase pressure inside the cooker, fitting below the top edge",59.9,101,"{""brand"": ""MUJI""}"
+e01073cf-1dce-88db-d881-5d8b2cf8e69d,d2b46016e8024a6b00b7a597095378d15f12cae421276f14805cd2c5f0c9ba6a,501a7ab3-91c9-86c2-310e-9f9e75e2c114,Cotton Voile Gathered Skirt,muji-cotton-voile-gathered-skirt,"Soft and lightweight, this maxi skirt is made with organic cotton voile. The skirt is constructed with fine gathers, creating a voluminous appearance with a neat silhouette. It is designed with an elastic waistband that can be adjusted with the inner drawstring for a comfortable fit.
+Cotton voile is airy, breathable, and thin enough that it can be worn comfortably in warmer weather.
+ 
+Item Size Chart
+
+   
+
+
+Size
+Waist
+Hip
+Length
+Hem Width
+
+
+XS
+25.2"" (64.0 cm)
+79.6"" (202.1 cm)
+33.9"" (86.0 cm)
+88.",49.99,111,"{""brand"": ""MUJI""}"
+7b030f64-27d5-3c95-e7b0-11016a32d07f,0a94e759d3b8b957604418f470f35c6202e750e609fa3b874650819c43794b96,3db1f039-9b60-ba75-64aa-1ec90a18f231,"Colored Notepad - Grid (W2.5 x L4.4"")",muji-colored-notepad---grid-w25-x-l44,"This light orange memo pad is easy to hold in one hand, making it convenient for taking notes and managing tasks. It contains 160 sheets, featuring 0.31"" grid lines. ",2.9,73,"{""brand"": ""MUJI""}"
+84a1fd17-b4fc-2329-6a41-dac50c2f5143,44d94d3f397c59a32e34b559d0f9a4284ebe5048c5f0331549c1b0a0175067be,2ea239ed-7bef-f98d-6c28-a447c5ca65b7,Mechanical Pencil Leads 2mm,muji-mechanical-pencil-leads-2mm,Mechanical Pencil Lead 2mm refill for our Wooden Mechanical Pencil 2mm.,1.9,135,"{""brand"": ""MUJI""}"
+73186c98-460e-af4c-a601-f87a33e86022,13f32a003cbeb050d1cc174ed6f660bf6c77cefcdff1c6c8a232773a9ebcb1b8,d72a40bf-678e-5d37-bd39-3c885afbc0b1,Wooden Stand File Box,muji-wooden-stand-file-box,"Discover the perfect storage solution with our Wooden Stand File Box. This file box adds a touch of warmth to your workspace while keeping your documents organized.
+",24.9,149,"{""brand"": ""MUJI""}"
+08b6beb1-b489-729d-330b-a9a5d4aa1ea0,ae0bb27ff4a98f56618cc9df379612adcc2512f78654fe93f237bc1a4096383a,a4381e6b-90a6-63fd-6675-ba1e37ee4459,Plain Notebook A6,muji-plain-notebook-a6,"Take your creativity anywhere with this compact A6 plain notebook. Featuring completely unlined pages in a portable size, it is designed to be used from any direction, allowing for unrestricted sketching or free-form journaling on the move. Since it is undated, you can begin documenting your day or capturing inspiration whenever it strikes. The pages are crafted from at least 55% recycled paper, offering a natural texture with unique characteristic dark spots. Its blank, pocket-friendly layout i",1.9,22,"{""brand"": ""MUJI""}"
+03040b76-78ca-0577-4910-4dd4a5fe753b,25ef89179944a9837ae5f4f739cbf19af4e2a009324e4b217c358a44b7366b3e,307bb084-d2c7-375e-c0b8-10327cda549e,Cosmetic Pencil Sharpener,muji-cosmetic-pencil-sharpener,"Cosmetic pencil sharpener designed for lip liner, eyebrow, and eyeliner. It can also be used as a cap.
+",3.9,19,"{""brand"": ""MUJI""}"
+0c583b38-1019-e348-159d-f772fca5519e,bcc1c9d35f8b8b179808f961386721594d9897886f36689a7d1dec33bb93661d,3ede25d9-1c2d-d9b4-6b2b-20ebca83d035,A5 Budget Book Loose Leaf Papers Refill,muji-a5-budget-book-loose-leaf-papers-refill,"Stay organized with our A5 Budget Book Loose Leaf Papers Refill. These convenient sheets are designed specifically for budget planning and expense tracking, these refills help you maintain your financial records with ease.
+Each refill pack comes with 30 sheets for A5 binders.",1.5,65,"{""brand"": ""MUJI""}"
+b0aad21b-0587-ee50-7397-a93d5ea7f030,390ae9bb0188d63ef0d5ecc2da1638936b964b2135452a71b51e4f56b1899dd5,de74aebf-dce8-7c61-c6c0-dfe4a7d2bfd3,Open-Flat Lined Notebook A6 Black,muji-open-flat-lined-notebook-a6-black,"Experience the ease of writing with this A6 open-flat lined notebook. This notebook is designed to lay perfectly flat, providing a seamless surface for your thoughts from margin to margin. The high-quality paper offers a smooth writing feel while the minimalist black cover ensures a professional look for any setting. With 80 pages of smooth lined paper, it is compact enough to carry with you daily, ensuring you always have a reliable space for a steady stream of ideas.
+",5.9,90,"{""brand"": ""MUJI""}"
+116f7d79-7a11-955f-a604-48d4ab54ac3a,68779f4136069a05cdcd38508c9909fa1b93e743d62ad8bda5e6260153f9facc,c5d45832-85d8-b0a2-95a1-bc9f6a11f666,Women's Cool Touch Shirt Dress,muji-womens-cool-touch-shirt-dress,"This dress is made with 100% organic cotton that feels cool to the touch and is sweat-resistant, so you can feel comfortable and dry in the heat or during leisurely stroll. It comes with a belt for an elegant dress look, or can be worn unbuttoned as a long cardigan for a more casual style.
+[What is Cool Touch?]
+We use a unique cotton or polyester yarn shape to increase thermal conductivity so the fabric can quickly absorb heat and diffuse sweat, creating a cold contact feel.
+The knitting process",39.99,141,"{""brand"": ""MUJI""}"
+12d44598-f336-a061-e9cc-b2e78b685a77,3a947a72d8a22673212b9e6b10b1f8ee4a64867f1652bc5c1c446fa217dabe71,3db1f039-9b60-ba75-64aa-1ec90a18f231,Transparent Sticky Note,muji-transparent-sticky-note,Sticky note made from translucent paper that can be peeled off. Pencil and oil based pen are recommended to be used with Transparent Sticky Note. ,3.9,38,"{""brand"": ""MUJI""}"
+71cb939b-e37a-9cc4-feed-1b92306e3117,bab167afc979127f3ad255e4963904b54ba8c12b123d9dc0dc0470d3c2f4dac9,e24d5c40-3574-ad2d-0e49-2941e73894ba,White Chocolate with Strawberry Filling,muji-white-chocolate-with-strawberry-filling,"Smooth white chocolate meets a bright strawberry filling in this indulgent little bar. Each square delivers a gentle contrast between the richness of the chocolate and the natural tartness of the strawberry, making it easy to savor piece by piece.
+
+
+
+",9.9,26,"{""brand"": ""MUJI""}"
+0bb4911d-a0e8-06fb-10ef-dfd683990fc9,953735bd7b6dcc3e9cfef2665e447cd45690bdc659da791a0771551972609793,3ede25d9-1c2d-d9b4-6b2b-20ebca83d035,A5 Loose Leaf Papers Refill - Card Pockets,muji-a5-loose-leaf-papers-refill---card-pockets,"Customize your binder or notebook with this insert for holding cards. The large pocket is convenient for storing receipts and postcards, while the 3 small pockets on the reverse side are great for holding business cards. Only for A5 Size with 20 holes, contains 1 sheet.
+Use along with our Binders!",1.9,82,"{""brand"": ""MUJI""}"
+98fdb04d-ed0d-7939-07ce-8994adc627c0,ea16296e42b51816fc71c589e78e4340295725ae63597c49e339e1901d36ff12,e24d5c40-3574-ad2d-0e49-2941e73894ba,Milk Chocolate with Salted Butter Caramel Filling,muji-milk-chocolate-with-salted-butter-caramel-filling,"Made in France with Belgian milk chocolate and a richly crafted salted butter caramel filling, this is chocolate done with real intention. The caramel features Isigny butter from Normandy, one of France's most celebrated dairy regions, balanced with Guérande salt for a finish that's gently savory and deeply satisfying. Smooth, indulgent, and impossible to stop at just one piece.
+
+
+
+",9.9,146,"{""brand"": ""MUJI""}"
+502cac0e-dda8-2868-8cf8-d78abae207db,0148ef21238ae1bb825ee894151c43e1deca8b9eeac928601d865f163e22d270,567286f5-3650-346f-1053-e65b72ea6106,Smooth Oil Ink Ballpoint Pen 0.7 mm - Blue,muji-smooth-oil-ink-ballpoint-pen-07-mm---blue,"This sleek ballpoint pen provides an ultra-smooth writing experience, with quick drying oil-based ink for uninterrupted writing. The bottom of the pen has a grip that extends all the way to the tip for comfortable use without slipping.
+Choose from three ball sizes for our Smooth Oil Ink Ballpoint Pens, with interchangeable compatible refills allowing free combination of single-color, four-color, and three-color plus mechanical pencil options.
+⚠ Warning: Cancer and Reproductive Harm - www.P65Warn",2.4,124,"{""brand"": ""MUJI""}"
+0ffb20f6-c9b4-2b79-4563-23dd30d9449a,646b1d5ad590a7f859e3d82db1f63180f4b03ac48b97d9c525be512f54ba22b1,e24d5c40-3574-ad2d-0e49-2941e73894ba,Brown Sugar Candy,muji-brown-sugar-candy,"A simple, moderately sweet hard candy made from brown sugar with a deep caramelized color and flavor. Individually packaged so you can easily share and take some with you on the go.",4.9,91,"{""brand"": ""MUJI""}"
+bef40df1-f09d-974a-98fb-b104b5f2ca34,ff0b5b3c32924543be05dfee6aa639405ea0fd751a062903519789ca3751c929,e24d5c40-3574-ad2d-0e49-2941e73894ba,Banpeiyu Candy,muji-banpeiyu-candy,"Enjoy banpeiyu candy, a sweet, pomelo-flavored hard candy. The taste is refreshing and perfectly balances the subtle tartness and pleasant sweetness of Kumamoto banpeiyu. Individually wrapped so you can share with friends and bring a few with you while on-the-go.",4.9,72,"{""brand"": ""MUJI""}"
+b1a22fc8-80d4-cf78-5aca-37b181edcb2f,9c1cc5a129e367d3c003b47fb8b0aa8195a2eb707619493d33051b35f4e296b2,6bf20b58-0015-465a-e4d7-f3bb8f423d02,Soda Glass Deep Bowl - Small,muji-soda-glass-deep-bowl---small,"A transparent bowl made from soda glass. It's wavy surface texture is reminiscent of hand blown glass.
+",5.9,26,"{""brand"": ""MUJI""}"
+64a68872-a838-6e4a-34df-42fde43e9bd0,e06123b07694db6beca8cbb3f1c865590332baec33b166c184f6449d9467b65d,e24d5c40-3574-ad2d-0e49-2941e73894ba,Ginger Candy,muji-ginger-candy,"Savor the warm, spicy kick of ginger in every piece of this simple candy. Refreshing treat made with real ginger juice and sugar that's easy to enjoy anytime.",4.9,55,"{""brand"": ""MUJI""}"
+52b5609a-2047-e494-b0d0-b68e37cfe087,614cce75ca4b7b04e9d7bf4a47711491f8ec8d34a2f1209ba12904e5901e0fda,e24d5c40-3574-ad2d-0e49-2941e73894ba,Egg Bolo,muji-egg-bolo,"Experience the traditional flavor of Japan with Egg Bolo!  These bite-sized biscuits are known for their delightful texture and subtle taste.
+Crafted from egg yolks, this delightful treat offers a crunchy and easily dissolvable snack, perfect for satisfying your craving.",4.9,116,"{""brand"": ""MUJI""}"
+a8b1fa5a-4a2e-a9e9-527a-a3d09d880aa0,3086d5770996f4e11c71584e5d96b424b9c36db6529ea0c13b85818ff48b5558,e24d5c40-3574-ad2d-0e49-2941e73894ba,Mandarin Orange Flavored Candy,muji-mandarin-orange-flavored-candy,"Large chewy candies infused with mandarin orange juice are filled with a core of kneaded, air-infused candy. They are finished with a dusting of granulated sugar for a sweet, refreshing treat that's great as a quick pick-me-up.",2.9,35,"{""brand"": ""MUJI""}"
+45ce8aa1-979f-d19a-818d-50e9fab46330,7a5162a5cd7124024e198631fadec42c4d2ebbe17f30c2aca5cca6cdcf3964db,e24d5c40-3574-ad2d-0e49-2941e73894ba,Matcha Candy,muji-matcha-candy,Enjoy a delightful matcha candy that brings together the taste of green tea with a touch of sweetness. A perfect little pick-me-up for any moment.,4.9,120,"{""brand"": ""MUJI""}"
+fd206bc3-4ca0-2145-5658-379ee50bdeeb,a1626b30c1f8dbf5aef219e13ed483e95d02887ed3392c2c39a3a21d92b2220c,e24d5c40-3574-ad2d-0e49-2941e73894ba,Caramel Popcorn,muji-caramel-popcorn,"Light, crunchy, and coated in rich caramel—our Caramel Popcorn is the perfect balance of sweet and satisfying. Each bag contains a mix of crunchy and fluffy kernels for a pleasant blend of different textures, enhanced by the gentle sweetness and savory aroma of caramel. A delightful snack for movie nights or anytime cravings hits.",7.9,70,"{""brand"": ""MUJI""}"
+988f8e30-7293-c812-227c-d65c2216d543,ed1e860004728d56854acd2ee92ee0a0947a50f36d4b6ea8ea6d9d7b8958b961,e24d5c40-3574-ad2d-0e49-2941e73894ba,Salted Crispy Rice Chips,muji-salted-crispy-rice-chips,"These chips have a crispy texture, achieved by baking them in the oven before frying. They are made with rice produced in Japan.
+Freshly cooked rice is loosened, shaped, sliced one by one, and baked in the oven. After drying for several days, it is deep-fried at the end to give it a crispy texture. Simply seasoned with salt so that you can enjoy the unique sweetness and flavor of the rice.",3.9,24,"{""brand"": ""MUJI""}"
+c64ae726-33a8-ad82-1abf-0ce5019a0cb7,6243b494c8923b8fddc3541ec3a48ae384e6474cca4ace52f798dfa74813ef39,e24d5c40-3574-ad2d-0e49-2941e73894ba,Chocolate Coated Wheat Puffs,muji-chocolate-coated-wheat-puffs,"Delicate wheat puffs crafted with care to capture a light, airy texture and fragrant aroma. We blend two types of wheat puffs and coat them gradually to achieve the perfect balance. Finished with a gentle chocolate coating that brings subtle sweetness without overwhelming the delicate grain flavors.",3.9,105,"{""brand"": ""MUJI""}"
+0b84e371-5e9c-c7a3-625f-caa18ea0e6cf,273bd6b16dd69673b7aeba22612e79f086218215e9bba42394c8249214e70982,56286183-6552-ccf6-e02a-48f4a6c4803a,Women's Washed Linen Shirt,muji-womens-washed-linen-shirt,"A timeless collared shirt made from airy and cooling French linen. It features a gentle, worn texture that enhances its fit and comfort with each use. Linen is breathable and dries quickly, making it the perfect option for summer.
+French linen is from the Normandy region of France where the climate and soil are ideal for growing high-quality flax plants. This creates stronger linen threads and results in longer lasting clothing.
+
+
+
+Item Size Chart 
+
+   
+
+
+Size
+Chest Circumference
+Shoulder Width
+",54.9,110,"{""brand"": ""MUJI""}"
+4d9d3b34-69fd-5d6b-d683-080758fb743f,48866cd996b7c0f8d3523974a5358e9e272a45325da85b427e165f0d4f423ad5,e24d5c40-3574-ad2d-0e49-2941e73894ba,BENI BITES Sweet Potato Energy Bar - Miso Protein Brownie,muji-beni-bites-sweet-potato-energy-bar---miso-protein-brownie,"Made with Japanese sweet potato, this energy bar is naturally sweet, nutritious, and perfect to fuel your day. With 0.4 oz (10 g) of plant-based protein per bar, it is an easy way to get a bit of extra protein in your day while enjoying a deliciously sweet treat.
+Plant-based energy bars made with high-quality ""Beni Haruka"" sweet potatoes from southern Kyushu. The sweet potatoes are roasted for a long time over the lava of Sakurajima, the symbol of Kagoshima, carefully dried, and then finished in",5.9,40,"{""brand"": ""MUJI""}"
+4b098351-9dbc-7e47-0004-9b55a807c3ca,b06bdb45708e41bdcaf3ead170548b1ca5927e19ccd66d44f933563d7d371d40,f35c0392-067c-285f-31ef-322df5dc744b,"Cotton Linen Bath Mat (W17.7 x L27.6"")",muji-cotton-linen-bath-mat-w177-x-l276,"Made with a blend of crisp linen and soft cotton to create a bath mat with a natural feel and firm texture.
+",19.9,94,"{""brand"": ""MUJI""}"
+f1c68ad1-a9aa-0071-b6f2-23ee6995c9ed,bddd16b5b726e0d02c43f5c2412fce5bbb6e091b34ea7962308d82edec5f38cb,3cb03559-21a9-2fd5-77fc-163de5c2b186,Refill Cartridge for Correction Tape,muji-refill-cartridge-for-correction-tape,Cartridge refill for the Correction Tape dispenser.  ,2.9,86,"{""brand"": ""MUJI""}"
+264e929a-4b62-2865-a35b-261d7ae2ab23,21c2a1b39b4a176419f0487ce3a1717fe5c4a3079562dbff12966dbfe2554aed,f1c61b56-28bc-a6c7-35d6-f94c02d7594c,Earthenware Clay Pot Rice Cooker 0.6 Qt,muji-earthenware-clay-pot-rice-cooker-06-qt,"This beautiful clay pot is made of high-quality fire clay with a black amber glaze. The traditional Japanese donabe is perfect for cooking delicious clay pot rice with a crispy bottom crust over a gas flame. It can also be used for making udon, hot pot, stews, and steamed dishes. 
+Fire clay is dense with excellent ventilation and heat retention, allowing this pot to distribute heat evenly and moderately. The thick lid is designed to increase pressure inside the cooker, fitting below the top edge",69.9,101,"{""brand"": ""MUJI""}"
+070d4e56-af1d-e8b5-2d68-6936a715d4f0,beacf6c772d0aaa79897289d43289410d4f5861eec5ad0e23ed78b68e3441657,567286f5-3650-346f-1053-e65b72ea6106,Oil Ink Triangle 3 Color Ballpoint Pen,muji-oil-ink-triangle-3-color-ballpoint-pen,"A triangle shaped ballpoint pen allowing users to have a better grip. This pen comes with Black, Red and Blue ink options in 0.7 mm (0.03"") size.
+⚠ Warning: Cancer - https://www.p65warnings.ca.gov/",5.9,121,"{""brand"": ""MUJI""}"
+68e68f5d-e870-1386-8d58-030a7a825d14,6712cd433724c33c506bcfb0efee7ba57c3831f3ef8bc073410bc45dcf2d2fea,079aa4a9-6b99-d845-bf8c-1bf6710df4e6,Polypropylene Dust Bin with Lid - Mini - 0.23 gal,muji-polypropylene-dust-bin-with-lid---mini---023-gal,This is a trash can of a size that can be used around a sink or desk. The lid opens 270 degrees so that it does not get in the way when not in use.⚠ Warning: Cancer - https://www.p65warnings.ca.gov/ ,5.9,39,"{""brand"": ""MUJI""}"
+605b5d56-6889-71c6-d6c2-d1d1bffbeab2,6e2ec6dee9927fa762765a451b643e8bc64407889a04d28998bf2aa491c2a33f,56286183-6552-ccf6-e02a-48f4a6c4803a,Women's Double Knitted Half Zip Sweatshirt,muji-womens-double-knitted-half-zip-sweatshirt,"This sweatshirt fits just right, with a relaxed silhouette that isn't too oversized. Its simple design is easy to mix and match with other garments. You can zip it up or keep it open for different styling options. It is great for layering, or wearing on its own. 
+Made with a blend of organic cotton and recycled polyester. It is knitted in a double layered structure that keeps it airy and lightweight, with just the right amount of thickness for comfort. The material is smooth and glossy, giving i",29.99,132,"{""brand"": ""MUJI""}"
+2c97a6eb-b22b-ece3-8e46-60169113b48b,05d78891b79678a9f102cbdf052c2d9c7552ef4f3c98572ea267edae458ad659,8eda25ac-321d-37e4-c5f4-7dba78a05f9b,Women's Complete Seamless Boyshorts,muji-womens-complete-seamless-boyshorts,"Designed with a seamless construction, using adhesive instead of stitching for a smooth finish that won't show through clothing. Its stretchy material moves with you, ensuring comfort all day long.
+
+Item Size Chart
+
+
+
+
+
+
+
+
+
+
+  
+
+
+Size
+Waist
+Hip
+Rise
+Hem (Leg) Width
+
+
+XS
+17.4"" (44.3 cm)
+26.0"" (66.1 cm)
+10.3"" (26.1 cm)
+6.5"" (16.4 cm)
+
+
+S
+18.7"" (47.5 cm)
+27.6"" (70.0 cm)
+10.7"" (27.2 cm)
+6.8"" (17.2 cm)
+
+
+M
+20.0"" (50.7 cm)
+29.1"" (74.0 cm)
+11.1"" (28.1 cm)
+7.3"" (18.5 cm)
+
+
+L
+21.2"" (53.9 cm)
+30.7"" (77.9 ",19.9,45,"{""brand"": ""MUJI""}"
+4d4e8385-3b15-5ca2-c474-46922ac653c1,c72238bef745ad6d942ecf9653e9a07923fc6c0d39f3f628af3d54c47e2b90e5,3db1f039-9b60-ba75-64aa-1ec90a18f231,"Colored Notepad - Dot Grid (W2.5 x L4.4"")",muji-colored-notepad---dot-grid-w25-x-l44,"This light green memo pad is easy to hold in one hand, making it convenient for taking notes and managing tasks. It contains 160 sheets, featuring 0.27"" dotted grid. ",2.9,132,"{""brand"": ""MUJI""}"
+a1d63717-053f-453d-0cb3-ed2d19831266,0d7103facac574e367bed3f1a1b2704a9e00c6e7b9d72aac3be1df7c3136b679,e24d5c40-3574-ad2d-0e49-2941e73894ba,Matcha Guimauve Marshmallow,muji-matcha-guimauve-marshmallow,"A guimauve is the French art of the mallow, elevated well beyond the everyday. Made in France to a traditional recipe, these soft, pillowy treats are whipped from egg whites and sugar for an exceptionally light texture, with a matcha green tea flavor woven throughout. A little indulgence worth savoring.",5.9,110,"{""brand"": ""MUJI""}"
+42dab3ff-bb83-7b57-cd4e-9c7e7e7beeaf,91506ac5d9f4e273af2a205bcb67343435b783787a016ff07bcaca0fdc9907d4,3cb03559-21a9-2fd5-77fc-163de5c2b186,Origami Paper,muji-origami-paper,"Origami is the Japanese art of paper folding. With 27 deep, vibrant colors and 80 sheets, this Origami Paper is great for crafting endless amounts of creations, perfect for decorations and gifts to your loved ones.",1.9,107,"{""brand"": ""MUJI""}"
+b6661835-cd35-e8bd-2ae3-76ced60675a9,d8684295d037be3ee78fd85e2c88fdfa1c511095b7afe8176e196911b70a068c,de74aebf-dce8-7c61-c6c0-dfe4a7d2bfd3,B5 Wirebound Notebook Plain Beige,muji-b5-wirebound-notebook-plain-beige,"A double ring notebook that can be folded back 360 degrees. It can be used from either up, down, left or right.
+
+",4.5,133,"{""brand"": ""MUJI""}"
+282b62ca-08f1-d816-5175-5863a567a888,456c5cc2d338eb38dfd6ddf110c92d8a327327ddab6cbb2dbf5f787528ca969a,a4381e6b-90a6-63fd-6675-ba1e37ee4459,Recycled Paper Weekly Planner,muji-recycled-paper-weekly-planner,This planner allows you to freely write the date so you can start using it anytime.,1.9,97,"{""brand"": ""MUJI""}"
+d5f9bc12-95e5-1f5d-2aeb-51c03e64c013,1f1a5d0e5104d52eb567daa0b41da6f48dcd90bba61451d089703b8af69a3cda,e24d5c40-3574-ad2d-0e49-2941e73894ba,Dark Chocolate with Raspberry and Passion Fruit Filling,muji-dark-chocolate-with-raspberry-and-passion-fruit-filling,"Lightly sweet dark chocolate with at least 57% cocoa encloses a dual filling of raspberry and passion fruit, each made with real fruit purée and juice concentrate. Dehydrated raspberry-based pieces scattered across the top add texture and an extra burst of fruit flavour. The bright, refreshing tartness of the fillings draws out the natural depth of the chocolate beautifully.
+
+
+
+",9.9,59,"{""brand"": ""MUJI""}"
+468866ce-c4c9-db8b-9fb5-5f2b699aa2f8,2cd3150efa3ee6324861999a3effc9dc3008480992d5b2acdaf5c5d8b2fb505c,95ce936e-6109-8164-f951-fc99e2ea0063,Fragrance Candle - Clary Sage,muji-fragrance-candle---clary-sage,"
+
+
+
+
+
+
+
+
+
+
+
+
+
+Immerse yourself in the soft and luxurious scent of clary sage with a blend of earthy and floral scents with tea-like undertones. Perfect for creating a warm, inviting atmosphere that feels both relaxing and comforting.  
+This elegant candle comes in a brown glass jar to create a warm, cozy vibe in any space. The lid of the jar also works as tray for the candle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+",7.9,70,"{""brand"": ""MUJI""}"
+95835a81-68f6-f363-9c12-f5749d680ad0,7f32ad026b0a5a6ec83071a7765753b368031ce4e30deee9a33edbef0650c760,dfcecffe-c565-663b-f2a8-915378a78ef8,Cotton Cool Touch Quilted Pad - Queen,muji-cotton-cool-touch-quilted-pad---queen,"This cotton mattress pad for queen sized beds is soft and comfortable. Its cool touch fabric provides a refreshing sensation, perfect for summer use. It's also completely machine washable, ensuring a clean surface even if you sweat during sleep.",59.9,53,"{""brand"": ""MUJI""}"
+02d71fa5-9355-08e1-a2ef-a58443fa1117,e1f250906881436f4616e7faeb566b1ab7328f309ed6427c93ab72d242116ba3,a8414430-b8eb-1c9d-d897-af586cf5cfbf,Breathable Foldable Cap,muji-breathable-foldable-cap,"A lightweight cap made from a smooth material that is cooling and breathable, making it a great option for outdoor activities such as hiking or gardening. Its brim is soft enough that you can fold or roll it up compactly when not in use.
+",24.99,63,"{""brand"": ""MUJI""}"
+163bb17f-f248-08fc-6d90-653c0da30111,058dbcefe71a2ff12811ce3a02a4623545fd46789cb84e6ee1b20ab4a5875bba,a17d06c8-ae0f-9b09-3171-a99bb71a3770,Body Wash Towel with Case,muji-body-wash-towel-with-case,A soft body wash towel that comes with a case. Perfect for traveling. ,6.9,40,"{""brand"": ""MUJI""}"
+45cc3d99-4e23-cebd-45f9-745ea766e8fa,c890a01a6c0beacd8347f23b9162edc2e4d2d49970218bfb5c0eaa288eae1be4,de74aebf-dce8-7c61-c6c0-dfe4a7d2bfd3,High Quality Paper Open-Flat Lined Notebook,muji-high-quality-paper-open-flat-lined-notebook,Notebook made of high-quality horizontal-lined paper that opens flat to make writing easier.,6.9,131,"{""brand"": ""MUJI""}"
+ffd8f1ee-feb9-c67a-8f3b-840809dadfb7,aa247df6e7fffceed95cc14cc7122c50626a6895f9d9ac7fcaff3d0f2c0c13b4,07506d3b-cea0-e132-8e2d-79969aa765ad,Caster for Polypropylene Storage (4 Piece Set),muji-caster-for-polypropylene-storage-4-piece-set,Wheel attachments that are compatible with a variety of MUJI's Polypropylene products. Comes as a set of 4 pieces.,4.9,17,"{""brand"": ""MUJI""}"
+30289035-daeb-2891-271f-a50dc5f4020c,ac0bd9dafbdb5f80386d97f6677389aec348bd461bdb062fd73c615507597865,e24d5c40-3574-ad2d-0e49-2941e73894ba,Matcha Spread,muji-matcha-spread,"Who wouldn't like to try Matcha?
+Made from delicious and sweet white beans, rich and creamy butter, and two different kinds of Matcha, this spread is a perfect starter of your day!
+Besides enjoying it on toast in the morning, serve it as a topping for ice cream or in a sundae for your relaxing tea time at home.
+Our Matcha Spread is a popular product in Japan under the well-known and respected brand Kuze Fuku & Co. This brand has been rising in popularity in Japan since its launch in 2013, and fe",9.9,26,"{""brand"": ""MUJI""}"
+3b19b08f-6fba-f99c-ab34-b256860a5df5,7c7e6bff2f52f8e9b0723e52298cb9503267f589e1144729e1ffada62f8c910d,079aa4a9-6b99-d845-bf8c-1bf6710df4e6,Portable Lens Wipes,muji-portable-lens-wipes,"Keep your glasses clean and clear with these convenient dry disposable wipes that are perfect for on-the-go. Their non-abrasive and anti-static composition removes residue and smudges without any damage to the lens. These wipes can also be used to clean more than just glasses, such as laptop and phone screens.
+",2.9,73,"{""brand"": ""MUJI""}"
+30336106-851c-7029-2638-8aba338ab921,979d728468701bd2ac60aaa0ef33c66fc2f20471227534158040a302ae16b30e,0bc61390-fe38-0ff8-4b11-0369cbe31c03,Side Seamless Double Gauze Trunks,muji-side-seamless-double-gauze-trunks,"The soft silhouette of these women's trunks provides a comfortable fit without feeling too tight. Made from double-layered organic cotton gauze that is soft, lightweight, and absorbs sweat and moisture from your skin. Our design eliminates side seams to prevent irritation when wearing. The gusset also removes seams from the crotch area for comfort, so these trunks can be worn as standalone underwear or casual loungewear shorts at home.
+Our organic cotton is grown from non-genetically modified se",16.99,118,"{""brand"": ""MUJI""}"
+a9698d0d-e330-9e97-5482-aba4f0fc7581,fbdcdeeac573287d6a5fc0dec62d7544c258d12de747fd781ead36a1982027d9,b047a050-3123-ecef-0e6e-7a0190ba053b,"Soft Polyethylene Case Half Size - Medium W10 x D7.1 x H6.3""",muji-soft-polyethylene-case-half-size---medium-w10-x-d71-x-h63,"A stackable storage box with handles, made with polyethylene material that is soft enough for children to use easily and safely. It has excellent cold and water resistance and can be effortlessly wiped clean with a soft, damp cloth. Can be used in the refrigerator as an organization system. 
+",7.9,125,"{""brand"": ""MUJI""}"
+f62d0708-9727-944d-7143-f16e90fb2862,c7c6a039e8842d8a57ed2d10c16f34c911e82ce27d1701da7c5a7ed0ea4611ea,307bb084-d2c7-375e-c0b8-10327cda549e,Portable Eyelash Curler,muji-portable-eyelash-curler," This eyelash curler is designed to be compact and easily stored in small purses, travel kits, or pouches. It's perfect for on-the-go use and traveling, making it a must-have in your beauty routine. Plus, it's incredibly easy to use, giving you a naturally curved look effortlessly.
+ 
+[How to Use]
+Pull up the lever on the back side of the main body to use. Use before applying mascara or false eyelashes. Clamp the eyelashes lightly with the eyelash curler and press down about three times from the ",6.9,24,"{""brand"": ""MUJI""}"
+0830e06c-08cd-6181-8d28-09cc7fff18ed,5b4dcc2e476ef19080adf4aa921a444f43f9205f87c82b9fb4b5939c625a0a71,8f657175-3da9-cbc3-c2fc-642d55959364,Sensitive Moisturizing Milk - Deep Moisture 1.7 fl oz,muji-sensitive-moisturizing-milk---deep-moisture-17-fl-oz,"Made with naturally derived ingredients, our Sensitive skincare series is hypoallergenic and gentle on delicate skin that is prone to irritation. This new formula contains three types of plant extracts as moisturizing ingredients, as well as ceramides and five types of amino acids, which are often lacking in sensitive skin, to leave your skin healthy and moisturized.
+Deep Moisture has a rich texture and provides intense hydration and protection. Recommended for use during dry seasons or for thos",5.9,17,"{""brand"": ""MUJI""}"
+1cfa36da-274a-18fe-6aa1-9b3c122c66e7,87f8810128e19dc59b9c1b914fa6c5b070068e20a7fa4482500e76ba335a7927,3ede25d9-1c2d-d9b4-6b2b-20ebca83d035,Loose-Leaf Lined Paper 6 mm - B5,muji-loose-leaf-lined-paper-6-mm---b5,"Bleed-resistant loose-leaf lined paper perfect for note-taking and journaling.
+",3.9,86,"{""brand"": ""MUJI""}"
+52c6fcf5-0ee3-192f-f379-315830b44424,1c07edc1c478d9fc39551778fc6206a6d4b0af2413e8cea7c2c5f6b123e0d58f,5dcf703f-7ba4-efc4-f49c-45e516891304,Men's Jersey Crewneck T-Shirt,muji-mens-jersey-crewneck-t-shirt,"A classic long-sleeve t-shirt that is soft on the skin and moderately thick.  
+
+
+Item Size Chart
+
+
+  
+
+
+Size
+Chest Width
+Shoulder Width
+Hem Width
+Sleeve Length
+Length
+
+
+XS
+20.5"" (52.0 cm)
+18.5"" (47.0 cm)
+20.1"" (51.0 cm)
+23.4"" (59.5 cm)
+27.4"" (69.5 cm)
+
+
+S
+21.5"" (54.5 cm)
+19.1"" (48.5 cm)
+21.1"" (53.5 cm)
+23.9"" (60.8 cm)
+28.1"" (71.5 cm)
+
+
+M
+22.4"" (57.0 cm)
+19.7"" (50.0 cm)
+22.0"" (56.0 cm)
+24.4"" (62.0 cm)
+28.9"" (73.5 cm)
+
+
+L
+24.0"" (61.0 cm)
+20.5"" (52.0 cm)
+23.6"" (60.0 cm)
+24.8"" (63.0 cm)
+29.7"" (75.5 ",9.99,58,"{""brand"": ""MUJI""}"
+14988829-b827-2223-eee1-078d1ad38fce,f384324eb44371cbc89c581e4c58112c6015fc652189fbfb6f33fe1a36bc922a,c75192b4-1317-077b-4268-681d25b86795,Room Spray - Forest,muji-room-spray---forest,"Discover the calming power of forest scents with this room spray. Its earthy, woody, and herbal aroma creates a peaceful atmosphere that supports relaxation and well-being.
+Perfect for refreshing indoor spaces, fabrics, bedding, shoes, and accessories. Spray from 7.9-11.8"" away to bring nature's soothing benefits into your everyday moments. Test in an inconspicuous area before full application to ensure no adverse reactions.",14.9,22,"{""brand"": ""MUJI""}"
+f67835c9-62f2-f175-3078-351f79b4557c,330b09234f730c04aa8cea9064a9fbaeb7d73a7e7004a0c9e1e0f5e197f200c8,e24d5c40-3574-ad2d-0e49-2941e73894ba,Korean Style Spicy Sesame Sauce,muji-korean-style-spicy-sesame-sauce,"A blend of gochujang, a staple of Korean BBQ, and tasty sesame. This sweet and salty sauce with a punch of garlic and ginger and the richness of sesame is perfect for BBQ as well as for fried chicken and other meat dishes! Use it also as a dipping sauce for noodles or as a sauce for stir-fry dishes. Mix it with mayonnaise and try using it as a dip for vegetables and nuggets! INGREDIENTS: Water, Cane Sugar, Chili Paste [rice, corn syrup, red pepper powder, salt, soybeans, alcohol, wheat extract, ",9.9,59,"{""brand"": ""MUJI""}"
+2869e8bd-668a-2ea1-9c38-0aabf1a2a922,bce983863cd58f92a5c910a9e673e2800a4fb1c2c740046a3339719efcd7e141,19ef58e3-27c1-7221-4886-6990f788e61d,"Polypropylene Drawer - Deep (W7.1 x D15.7 x H12"")",muji-polypropylene-drawer---deep-w71-x-d157-x-h12,"This polypropylene drawer can be used by itself, or attached as an additional drawer to our Polypropylene Stockers with Casters. Adding extra storage for your needs.
+Great to fit tight areas in the bathroom, bedroom, pantry, and even in the kitchen. It can be used to store undergarments or socks in the closet, cleaning supplies, or office supplies to keep your desk less cluttered.User Guide (PDF: 2.02MB)",17.9,121,"{""brand"": ""MUJI""}"
+a54130dd-88b7-59d8-f58a-c15eb8f8fb17,40ae5089ebfce9a7f5f8fc236faaa5fd33d6c3c8c0a93ca38f58e248a4628257,19ef58e3-27c1-7221-4886-6990f788e61d,"Polypropylene Wide Storage Case White Gray - Shallow (W14.6 x D10.2 x H4.7"")",muji-polypropylene-wide-storage-case-white-gray---shallow-w146-x-d102-x-h47,"Made with a sturdy white-gray polypropylene material for a clean design that fits into any interior. It is a convenient size for organizing small items and can be stacked even if they are turned back and forth.
+",19.9,53,"{""brand"": ""MUJI""}"
+4c494c33-1017-da94-c1d5-e90a468e6cd3,03ed4cf81a43bd83310427b48e285fd5145cbca9d3f83042870a300711f3fd97,e24d5c40-3574-ad2d-0e49-2941e73894ba,BENI BITES Sweet Potato Energy Bar - Original,muji-beni-bites-sweet-potato-energy-bar---original,"Made with Japanese sweet potato as the only ingredient, this energy bar is naturally sweet, nutritious, and perfect to fuel your day.
+Plant-based energy bars made with high-quality ""Beni Haruka"" sweet potatoes from southern Kyushu. The sweet potatoes are roasted for a long time over the lava of Sakurajima, the symbol of Kagoshima, carefully dried, and then finished into bars using a unique method that locks in the sweetness and nutrients.
+BENI BITES, featuring the naturally sweet and smooth text",5.9,15,"{""brand"": ""MUJI""}"
+47d181e1-39ac-a922-1ae3-262d092231f4,4c38f9cf8abf1f3f8806dfc3ca326fef5bdac0e9cd1df30062727b8636029e29,19ef58e3-27c1-7221-4886-6990f788e61d,"Polypropylene Drawer (W7.1 x D15.7 x H8.3"")",muji-polypropylene-drawer-w71-x-d157-x-h83,"This polypropylene drawer can be used by itself, or attached as an additional drawer to our Polypropylene Stockers with Casters. Adding extra storage for your needs.
+Great to fit tight areas in the bathroom, bedroom, pantry, and even in the kitchen. It can be used to store undergarments or socks in the closet, cleaning supplies, or office supplies to keep your desk less cluttered.User Guide (PDF: 2.02MB)",14.9,23,"{""brand"": ""MUJI""}"
+24124655-0af9-d91b-b48f-4720b635d532,5fc48235ca8a0c1c87e42544f4067630dd9f1ee49fa5a7436f806a1dd05e518f,5b0b86a4-dce1-333d-eab2-307dff442bcf,Less Tiring Sneakers Charcoal Gray,muji-less-tiring-sneakers-charcoal-gray,"Comfortable and casual canvas sneakers with a cushioned insole for all-day support. The fabric is treated with a water repellent finish making these shoes suitable for rainy days.
+Good to know: Our sneakers are made for unisex with a wider width. Thus, we suggest going half size down when you purchase our sneakers. If you usually wear US Women's 8, you can size down to US Women's 7.5.
+
+Size Chart
+
+
+
+Size
+US Sizing
+Foot Length (Outer Dimensions)
+Foot Circumference (Inside Dimensions)
+Weight (Both",24.99,139,"{""brand"": ""MUJI""}"
+6dcc25af-f0ad-6561-b3e8-ebc591952467,7d2670ef61186e406e2b76cca9fabe49962e03c3cb5bd6f0523846d27edca191,291353a7-802c-b895-54bc-9396da2b2c7c,"Stackable Bamboo Box - Medium (W14.6 x D10.2 x H6.5"")",muji-stackable-bamboo-box---medium-w146-x-d102-x-h65,"These storage boxes are made using fast growing bamboo, a natural and sustainable material with low environmental impact.
+These boxes are designed to make them easy to stack, while also being perfectly sized for MUJI storage furniture.
+⚠ Warning: Cancer - https://www.p65warnings.ca.gov/
+",34.9,130,"{""brand"": ""MUJI""}"
+5454c6ea-9ac0-05c7-6764-308b6cba8f13,ec2ae782f2a7fa581f42544d81a0816af17886cc4043d3bf4ce5b2dc8bfec5e6,19417ae8-ee9f-68ac-13ca-22ffcffc072a,Refill Brush for Toilet,muji-refill-brush-for-toilet,"A single toilet brush which can be used as a replacement for MUJI's Toilet Brush with Case set. It is cut out on one side with a lip to let it dry before putting back in the case which reduces bacteria, moisture, and odor buildup. The brush is angled so that it is easier to clean narrow spaces.
+ 
+⚠ Warning: Cancer - https://www.p65warnings.ca.gov/ 
+",2.9,91,"{""brand"": ""MUJI""}"
+ab7ffb24-10a9-4c75-20aa-b2e426c5659a,de8d61af1173af8738505e3e3472bcb8075cf955312b07fbdf09d6c33ab33785,8e195eb3-f4b0-d049-2090-e26064653ffb,4-Pocket Refill for A5 Wide Organizer,muji-4-pocket-refill-for-a5-wide-organizer,"Ideal for collectors, these transparent 4 pocket sheets perfectly accommodate acrylic stands and keychains. 
+Constructed from resilient PVC material, they shield your valuables from potential damage while maintaining visibility. The thoughtful addition of a protective flap ensures your cherished items remain securely contained within your A5 wide organizer.",3.9,134,"{""brand"": ""MUJI""}"
+94c9f8e3-f87a-5284-4e9b-685e853d6f43,357dbf3fbaac4a99d0f9921faeb48062dc23f9fb77ca540bc1cf44ae9f7fd1cf,852be0d3-8bcb-080e-cb2e-6a04b2939e7c,Polypropylene Organizer Box 1 (W3.3 x D3.3 x H2”),muji-polypropylene-organizer-box-1-w33-x-d33-x-h2,"A convenient organizer box for kitchen drawers or desk space to hold cutlery, small kitchen accessories or office supplies. The different types are unified to fit well together.",1.9,34,"{""brand"": ""MUJI""}"
+2f7bdf9d-b245-06f4-08cc-b5fe598628d9,3a15cf382f817caceec26d64fa4e1bca2dc7a7d3dd24310ca0832d345ae3b389,8e195eb3-f4b0-d049-2090-e26064653ffb,B5 Polypropylene Binder - 26 Ring,muji-b5-polypropylene-binder---26-ring,"This Polypropylene Binder has a 26-ring capacity and can hold up to 130 sheets of loose-leaf paper or 50 sheets of refill pockets. Its durable polypropylene construction makes it perfect for everyday use, giving you a reliable partner for your organizational needs.",5.9,26,"{""brand"": ""MUJI""}"
+fe773357-8409-97ca-c0f9-32484aa44ddf,108af954e10acf58a105414ead90bd46b250b84fd0eb2f89b8f18c43791ab75d,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Cork Coasters (5 Pack),muji-cork-coasters-5-pack,"Set of 5 cork coasters. It is finished without paint, making use of the natural cork texture.",3.9,146,"{""brand"": ""MUJI""}"
+e4c90b02-eea3-cf70-a762-448c0c3603c3,5367bfee66f89db6bf3b37a99b1cf1932bcf74b1f02673bb72e697390f28f903,8f657175-3da9-cbc3-c2fc-642d55959364,Booster Essence Lotion 1.7 fl oz,muji-booster-essence-lotion-17-fl-oz,"This booster essence lotion regulates the skin's moisture barrier and softens the skin to make it easier for the rest of your skincare products to be absorbed. This formula is suitable for use on sensitive skin and can be combined with our various skincare lines. 
+It has a lighter texture than our Booster Serum, and is recommended for those who prefer a refreshing feel with quick absorption. Great for oily and combination skin, offering a lighter consistency during the sweaty summer season.
+Made",6.9,54,"{""brand"": ""MUJI""}"
+e56821e9-9c4b-1b2d-b056-cb445b5cca00,2d0a48b7e4ee32a607723f876bc75ef06cb3c949b6c1fe346036194c7908d7ca,8f657175-3da9-cbc3-c2fc-642d55959364,Sensitive Toning Water - Light Moisture 10.1 fl oz,muji-sensitive-toning-water---light-moisture-101-fl-oz,"Made with naturally derived ingredients, our Sensitive skincare series is hypoallergenic and gentle on delicate skin that is prone to irritation. This new formula contains three types of plant extracts as moisturizing ingredients, as well as ceramides and five types of amino acids, which are often lacking in sensitive skin, to leave your skin healthy and moisturized.
+Light Moisture has a lightweight texture and provides refreshing, soothing hydration to the skin. Recommended for those with oily ",12.9,140,"{""brand"": ""MUJI""}"
+5a724fa2-e608-e176-dbd6-9c23358ff40b,031a5632d22c94a789b8aac3414a78e91ab24aa05e345f3440f51bd4f126bffc,a4381e6b-90a6-63fd-6675-ba1e37ee4459,Weekly Undated Notebook Planner A6,muji-weekly-undated-notebook-planner-a6,"Manage your week with precision using this compact A6 weekly planner. This free-style schedule book features an undated weekly view, giving you the flexibility to write in your own dates and start your planning journey whenever you choose.  The pages are made from at least 55% recycled paper, offering a natural feel and unique character with small variations in the paper surface. Its portable A6 size ensures that your weekly goals and tasks are always with you, providing a dedicated space for or",1.9,32,"{""brand"": ""MUJI""}"
+24570ab1-2d7a-f254-e96d-9265a3d2b6fc,6ee7ec7188bf2cde290afba7c507538bce30f22735d888bdc564b2affbdb535f,ebfd3a1d-e97a-24f5-e2d6-7aa03e65bf1f,Heavy Duty Polypropylene Shallow Storage Box - Extra Large (42.3 Qt),muji-heavy-duty-polypropylene-shallow-storage-box---extra-large-423-qt,"A sturdy and durable shallow storage box that can be used both indoors and outdoors. The shape of the lid is designed so that it does not slip even when stacked and is easy to use as a table or stool.
+Convenient for storing small every day items such as dishes, cutlery, small goods, etc. or long term storage for seasonal items in the closet or garage. 
+The lid can be locked by using the handles as a latch, so dust and small insects are less likely to get in. Easy to hold handles makes the storag",37.9,79,"{""brand"": ""MUJI""}"
+4ba4690e-9cd2-724e-f6ee-f272278a76a9,9a1efe462f90d020a49d273ba91cef6beac52fb5b1bc521d523a9b682525a387,6bf20b58-0015-465a-e4d7-f3bb8f423d02,White Porcelain Dish - Extra Large,muji-white-porcelain-dish---extra-large,"Made using high-quality Amakusa pottery stone that is crushed and kneaded by hand. It is finished naturally without paint so that you can enjoy the natural slightly bluish white porcelain.
+",21.9,72,"{""brand"": ""MUJI""}"
+71ab1763-da1e-c891-8a92-08f474bf5c58,d5fae6a294409733e70527638cacae184ceb4bb855847c41688a54538b0b0e57,7a21dde8-01f7-4eee-058c-52a373d5ef2d,Men's Sweatpants,muji-mens-sweatpants,"Relax in these comfortable sweatpants, with a soft and fluffy brushed inner lining that feels good on the skin. Lightweight and comfy to wear all day. Made with organic cotton.
+ 
+
+Item Size Chart
+
+   
+
+
+Size
+Waist
+Hip
+Inseam
+Front Rise
+Hem Width
+
+
+XS
+28.3"" (72.0 cm)
+41.3"" (105.0 cm)
+28.9"" (73.5 cm)
+10.2"" (26.0 cm)
+4.1"" (10.5 cm)
+
+
+S
+30.3"" (77.0 cm)
+43.3"" (110.0 cm)
+29.5"" (75.0 cm)
+10.6"" (27.0 cm)
+4.5"" (11.5 cm)
+
+
+M
+32.3"" (82.0 cm)
+45.3"" (115.0 cm)
+30.1"" (76.5 cm)
+11.0"" (28.0 cm)
+4.9"" (12.5 cm)
+
+",19.9,109,"{""brand"": ""MUJI""}"
+1ca388eb-1f88-ead8-80ad-8cad7962c185,d638bc8776ee50e0f43e850861e1e0fff7431e93e7ec1aa66c61f1e509f9f674,de74aebf-dce8-7c61-c6c0-dfe4a7d2bfd3,Japanese Pocket Notebook with Bookmark,muji-japanese-pocket-notebook-with-bookmark,A simple notebook made with the same bookbinding technique as a paperback novel. It also features a red thread bookmark to keep your place.,2.5,69,"{""brand"": ""MUJI""}"
+073ae889-5748-5803-8b89-75ce5a922b1d,7772b37debabba744de52c245f37bd51596a5021ed0abf61c3d3a89a9d520063,6bf20b58-0015-465a-e4d7-f3bb8f423d02,Tempered Bodega Glass,muji-tempered-bodega-glass,"A simple glass made of tempered glass that is easy to carry or hold. You can use it as container when preparing ingredients, use to serve sauce or dessert, or simply using it as a glass. You can easily store in your cabinets and stack them up after use.",4.9,44,"{""brand"": ""MUJI""}"
+f92740c8-d6aa-bfe6-a692-da0e4d822fde,32f5509163a2f4fc3a9c4c10129b7b4ef77a70d4dbd62559b6f95424d063dfd2,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Silicone Ice Tray Cube Type,muji-silicone-ice-tray-cube-type,"Ice tray made of silicone, making it easy to take out the ice. The small surface area of an ice ball prevents it from melting quickly, so you can enjoy a cold drink for a longer time. Makes 15 ice cubes at a time.",9.9,102,"{""brand"": ""MUJI""}"
+6444bd2f-20e1-85ff-2509-d79fbfb212f7,0bee4e6e50ac4270e85b39c98f0c618b57397e4d7a55592f7ca2219e3ff1a29b,8bff8656-bdc0-6517-a8bf-bed31ae0378c,Passport Case with Pocket,muji-passport-case-with-pocket,"This zippered passport case is convenient for keeping all of your essential travel documents in one place. The case is made with a six-hole punch design that allows you to customize the inserts that you need. Comes with 3 EVA clear pouch refills.
+⚠ Warning: Cancer and Reproductive Harm - www.P65Warnings.ca.gov",11.99,142,"{""brand"": ""MUJI""}"
+eff315e7-eff6-f766-fe2c-f79fb2898b73,5d5c86f2808d498434b5ba2f110297596d53437b962b30e1709eddf2b0bb9059,307bb084-d2c7-375e-c0b8-10327cda549e,3D Makeup Sponge,muji-3d-makeup-sponge,This all-in-one makeup sponge is designed in a water drop shape with a beveled edge for precise application.,4.9,122,"{""brand"": ""MUJI""}"
+986967af-8947-665b-5d63-1b34902f3137,30f0e5efde09a91085bd7e8b122a59ef05e1d1bff9b60fa8e0cc6ae763576409,852be0d3-8bcb-080e-cb2e-6a04b2939e7c,Polypropylene Organizer Box 2 (W3.3 x D10 x H2”),muji-polypropylene-organizer-box-2-w33-x-d10-x-h2,"A convenient organizer box for kitchen drawers or desk space to hold cutlery, small kitchen accessories or office supplies. The different types are unified to fit well together.",2.9,133,"{""brand"": ""MUJI""}"
+df185f25-9338-c5f3-cc96-dd1401432010,bf4580599c0a4b14e4032861821bb8f598f3977a996391208df1aaaa1b9741d6,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Plain Weave Cotton Shoulder Strap Apron - Dark Gray,muji-plain-weave-cotton-shoulder-strap-apron---dark-gray,A dark gray cotton apron featuring a shoulder strap that is easy to wear over the head. It comes with 2 large pockets from the side to the back so that it is easy to bend and stretch even if there is something in the pockets when crouching.,29.9,95,"{""brand"": ""MUJI""}"
+edddad4e-d532-69af-2249-4f957da1b49d,bd42459ee9cc4d2e5733ead1966b65badc000d971c810389f4c44f939c5f1ad2,ab4e0384-cfa6-7299-276e-4c6e15e85c3a,Polypropylene Card Case,muji-polypropylene-card-case,A minimalist design for holding business and personal cards. Two different ways of opening the two compartment card case. ,2.9,126,"{""brand"": ""MUJI""}"
+2d5876ad-78f5-be43-242f-02cafa036506,1a669f4ef1b0fc9d795561afadb8e9af2c36a079423219eb5daf17b931d78f6a,3cb03559-21a9-2fd5-77fc-163de5c2b186,Polypropylene Cable Case with Stand,muji-polypropylene-cable-case-with-stand,"A case made from polypropylene made to hold cables. The center turns for easy cable organization. The bottom panel slides out to be used as a phone stand and can be adjusted to 3 different angles.
+Suitable for cables up to 0.1"" diameter x 3.3 ft length (3.5 mm x 1 m).",2.9,84,"{""brand"": ""MUJI""}"
+5d30cd78-d096-c62f-e40c-dbb5ce801f5d,82b0224b30261748f422afbffbec058cb744db7902ebafba3fed9cadeccc5b45,567286f5-3650-346f-1053-e65b72ea6106,Polycarbonate Fountain Pen and Refill Set,muji-polycarbonate-fountain-pen-and-refill-set,"*This item is only available for shipping from Spring to Early Fall due to the possibility of the ink cartridge exploding in cold temperatures. 
+Ideal for those new to fountain pens, this set gives you everything a beginner needs for their writing journey. It includes a lightweight, durable polycarbonate fountain pen paired with two black ink refills, all packaged in a protective storage case for easy keeping and portability.
+The bottom of the pen features a special design for easy ink replenish",16.9,124,"{""brand"": ""MUJI""}"
+f00eab39-7aa4-376c-965a-c9eb509aca91,5859e96ef68abc038e202b41649521ef7673717a5c932a663bdd96a2a7a7d6e9,567286f5-3650-346f-1053-e65b72ea6106,Fountain Pen Ink Cartridge Refills - Blue Black (5 Pack),muji-fountain-pen-ink-cartridge-refills---blue-black-5-pack,Refills for our fountain pen. Contains 5 refills of navy ink cartridges.,4.9,85,"{""brand"": ""MUJI""}"
+9035dbb2-e0ed-8ef2-6c62-b331dc50ea81,afff29a87003afbcc9531498d544118f92c75d88f80497ff2c51168721243ec7,3cb03559-21a9-2fd5-77fc-163de5c2b186,Stainless Steel Pen Tray,muji-stainless-steel-pen-tray,"A stainless steel pen tray which has excellent durability and is easy to maintain.
+⚠ Warning: Cancer and Reproductive Harm - www.P65Warnings.ca.gov.",6.9,135,"{""brand"": ""MUJI""}"
+92ecee9e-4a7c-3c95-5980-735009d2005e,1f8074c706b04bb2a9929de6c9c29381668ab63df21f6e29e71e3ec62bf61cd9,a72fd20b-9940-4633-5b3b-4d0313673275,Nylon Pen Case - Red,muji-nylon-pen-case---red,"A pen case made of light and durable nylon fabric, with inner pockets that allow for large-capacity, organized storage. It has a convenient double-ended zipper, and its top opening design makes it easy to access items.",7.9,53,"{""brand"": ""MUJI""}"
+8bef3a53-f3f2-e237-56f4-b4ea798e9139,7dcaabe30abcbcc482a0deaac00e7680368de25d0f533b8ecfb66400af793bc8,a72fd20b-9940-4633-5b3b-4d0313673275,Polyester Pen Case Large,muji-polyester-pen-case-large,A smooth polyester case with an interior mesh pocket.,9.9,114,"{""brand"": ""MUJI""}"
+b0017812-0f6b-1bac-95a2-8fe4520b6eb3,27e21165f449d1cc5db1c4d29816d88b5ea215bed4a80d016b86ed8c7b553ab0,852be0d3-8bcb-080e-cb2e-6a04b2939e7c,Stainless Steel Kitchen Cutting Board Stand,muji-stainless-steel-kitchen-cutting-board-stand,"Compactly organizes dishes, cutting boards, and other items. It is also easy to use for bottles and pot lids. Rust-resistant 18-8 stainless steel is used.",14.9,129,"{""brand"": ""MUJI""}"
+0e69af6f-0fe3-5f6b-7a45-2031068daa93,b0aab4f035c8f339d60212ca33ef1abc50f38f35ebc473f6e8997f48a2d9ad85,3cb03559-21a9-2fd5-77fc-163de5c2b186,Stainless Steel Scissors,muji-stainless-steel-scissors,"Simple, sharp scissors with a white handle and blade sheath. ",2.9,117,"{""brand"": ""MUJI""}"
+7e6f9228-e01e-b9e8-3080-9a3ea05187c8,80b9f47ba712c25e35174b2a1c35312c63402d48bf7e10414ed3c0ad8f06483c,3ede25d9-1c2d-d9b4-6b2b-20ebca83d035,B5 Loose Leaf Grid Paper Notebook Type 5mm,muji-b5-loose-leaf-grid-paper-notebook-type-5mm,"A B5 grid notebook that contains graph paper that can be removed easily. Can be placed in MUJI binders.
+
+ ",2.9,31,"{""brand"": ""MUJI""}"
+a3fc963b-d3f4-271a-c6b1-8715326f2b32,d97e495aa0bf723342c479a9fccd955f5621795b57ff0b3e405891af6ee4e2ec,ab4e0384-cfa6-7299-276e-4c6e15e85c3a,Aluminum Card Holder Lock Type - Large,muji-aluminum-card-holder-lock-type---large,"Lightweight, sturdy aluminum items for storing up to 45 business cards.⚠ WARNING: Cancer - https://www.p65warnings.ca.gov/",6.9,135,"{""brand"": ""MUJI""}"
+b32b4aaf-3eb7-4503-a6ac-22bf6e681639,05317a126b08a2f49ceda007b35827954d60d5d1d6747bd8964361559fd603f6,8f657175-3da9-cbc3-c2fc-642d55959364,Sensitive Toning Water - Light Moisture 1.7 fl oz,muji-sensitive-toning-water---light-moisture-17-fl-oz,"Made with naturally derived ingredients, our Sensitive skincare series is hypoallergenic and gentle on delicate skin that is prone to irritation. This new formula contains three types of plant extracts as moisturizing ingredients, as well as ceramides and five types of amino acids, which are often lacking in sensitive skin, to leave your skin healthy and moisturized.
+Light Moisture has a lightweight texture and provides refreshing, soothing hydration to the skin. Recommended for those with oily ",5.9,56,"{""brand"": ""MUJI""}"
+28f29375-db7a-d4b4-06ba-3247b9314e34,31102dac295e3ab6bf25012fbf7515d17a91a05d3b1aea2310abe59f969b49f5,de74aebf-dce8-7c61-c6c0-dfe4a7d2bfd3,"Planted Tree Paper Colored Cover Notebook - 0.2"" (5 Pack)",muji-planted-tree-paper-colored-cover-notebook---02-5-pack,"Five good quality notebooks with color coded spines and covers to help you keep track of their function. Each of these B5 notebooks has 36 sheets with 0.2"" (6 mm) line spacing and are thin, but can withstand highlighters and pens without bleeding through. 
+This item is part of the MUJI Afforestation effort, allowing communities to choose and benefit from the trees they cultivate directly.
+Browse our Notebooks Collection and Binders Collection for more options!
+",5.9,33,"{""brand"": ""MUJI""}"
+e92e0dce-fd8c-7e97-edeb-828af990ba72,b2f3391039920108225295a8eec9b0fe0eb5119ccc1e79579bae967d2315665d,8e195eb3-f4b0-d049-2090-e26064653ffb,EVA Binder Case with Zipper B5 26 Holes,muji-eva-binder-case-with-zipper-b5-26-holes,"Store stickers, small or folded notes, writing tools, and other small stationery in this EVA Binder Case. Includes a zipper slider and holes to insert into your binder, so you can keep your belongings secure and all in one place. Made to be translucent for easy viewing and available in 3 sizes to meet your needs.",2.9,97,"{""brand"": ""MUJI""}"
+b4ee13c2-2506-ed15-e020-f0614b4dfe38,cd3cf5c525b4e6a3e31afe9d441133e25ac93b1f952a1e5e2c254a56142cd544,3cb03559-21a9-2fd5-77fc-163de5c2b186,Rubber Tie-Down Strap (3 Pack),muji-rubber-tie-down-strap-3-pack,"These durable rubber tie-down straps can be used to organize cords or keep bags closed. The self-locking fastener is adjustable and keeps the straps in place.
+Comes in a pack of 3 colors: orange, light gray, and dark gray.
+They can be fastened in two different ways depending on the purpose:
+
+For bag closures: After threading the bag opening through the product, tighten and secure with the buckle.
+
+ For bundling cables: Wrap the product around the cable, cross both ends of the tie and pull tight,",3.9,52,"{""brand"": ""MUJI""}"
+5874a10a-d115-2e72-b2fd-87d7a077fd47,7d2cd6c881cc8e5e29e966c7968bc458546f63a4a11ed6dca927c151e563b9ec,567286f5-3650-346f-1053-e65b72ea6106,Aluminum Fountain Pen Set,muji-aluminum-fountain-pen-set,"This set includes a aluminum fountain pen and cartridge. Designed with a clip, the pen can be conveniently attached to a pocket, lanyard, or closed notebook, perfect for use while traveling. It also comes with a protective storage case to keep it secure.
+Comes with 2 black ink cartridges.",28.9,82,"{""brand"": ""MUJI""}"
+d0be1dfc-b6a5-9ad3-de1d-fe5e31477e91,09410fcdfa8957f5650f4a4abe7429538b879329602f35d19e6a61b507ae11e1,8bff8656-bdc0-6517-a8bf-bed31ae0378c,Wrinkled Nylon Wide-Opening Pouch - Small,muji-wrinkled-nylon-wide-opening-pouch---small,"A compact zippered travel pouch made from sturdy nylon fabric with a distinctive wrinkled texture. It is palm-sized and perfect for organizing small items or cosmetics like medicine and lipstick. The wide-opening zipper is designed to completely open up the pouch, allowing you to see all of its contents quickly and clearly.",9.9,97,"{""brand"": ""MUJI""}"
+f9096c41-9661-0f4f-47bf-ea97ba8a7fb9,7d16f471f33c223d3393d8970fdcef99db3ea2fbf4a0a01d934a1fd766c929dc,401bfceb-4b49-252a-1817-73e2ab45f6d1,Adjustable Handle Hard Shell Suitcase 36L | Carry-On,muji-adjustable-handle-hard-shell-suitcase-36l-carry-on,"Our best-selling luggage gets an eco-friendly upgrade and a sleek new appearance with a flatter, matte texture.
+Featuring a wheel stopper button on the back that locks two of the wheels in place, preventing the luggage from rolling away on inclines or transit. The wheels swivel 360° so you can effortlessly switch from pushing or pulling this suitcase without any hassle. It adopts a twin-wheel caster which runs quietly and smoothly. 
+Partially made with recycled plastic bottles, the upgraded mate",159.99,52,"{""brand"": ""MUJI""}"
+9df422ce-a1fd-7fc7-f747-ea09887c8922,53e4f5eb8ba0bb953498f07ca1b2175508090ecaadc87f033db4468380d59654,3cb03559-21a9-2fd5-77fc-163de5c2b186,Pencil Sharpener,muji-pencil-sharpener,A small lightweight portable pencil sharpener. ,1.9,40,"{""brand"": ""MUJI""}"
+e01c3894-ff36-c6d2-987b-a977fd3c3662,611fbcb4f225c8b5a27fe359d9d233580b5b53d31ee53d5404bce526498f423a,8f657175-3da9-cbc3-c2fc-642d55959364,Sensitive Moisturizing Cream 1.8 oz,muji-sensitive-moisturizing-cream-18-oz,"This moisturizing cream locks in moisture and keeps skin healthy. Use it at the end of your skincare routine, after applying lotion, emulsion, serum, etc.
+Made with naturally derived ingredients, our Sensitive skincare series is hypoallergenic and gentle on delicate skin that is prone to irritation. This new formula contains three types of plant extracts as moisturizing ingredients, as well as ceramides and five types of amino acids, which are often lacking in sensitive skin, to leave your skin ",16.9,72,"{""brand"": ""MUJI""}"
+be8c48a5-b917-774b-ba5b-507647de5917,26f560b78e577f236e4ed8600ad5a597e54eba0c67319c62b7120ab0ba03a18f,079aa4a9-6b99-d845-bf8c-1bf6710df4e6,Cleaning System Carpet Cleaner,muji-cleaning-system-carpet-cleaner,"Our lint rollers are tough and able to easily remove lint from carpets, rugs, and clothing. Conveniently free-standing type for storage. Can be stored from either side of the cover.
+At MUJI, we believe that daily cleaning is the essence of a simple, pleasant life. Our modular MUJI Cleaning Tools are designed for convenience and efficiency with easily interchangeable attachment heads and poles, making it an essential tool in your home. 
+
+⚠ Warning: Cancer - https://www.p65warnings.ca.gov/",8.9,122,"{""brand"": ""MUJI""}"
+62831c44-6872-340c-6903-8d79130073b1,309aea4487b734ec92f0e02d03914e7db7f7632f9b2877e7d2cbd163354f653a,4e5b53c9-c118-61bb-833c-a7dc7141fad9,Oscillating Circulator Fan,muji-oscillating-circulator-fan,"An oscillating fan that improves air circulation and ventilation efficiency in your home, helping you feel more comfortable and refreshed. It can be used all year round combined with air conditioning or heating to direct airflow in the room.
+The fan conveniently memorizes the set angle and air volume level, and automatically returns to the front when it is turned off.
+You can also use it to enjoy the scent of essential oils by adding 2-3 drops to the aroma pad, located in the center cap on the f",89.9,42,"{""brand"": ""MUJI""}"
+8ff7ef48-89d6-4d42-293c-7688eb297749,04014656be02e82f54dc3efb894c1324528d5dc72b3ad68996545a7fcef4454d,079aa4a9-6b99-d845-bf8c-1bf6710df4e6,Carpet Cleaner Refill,muji-carpet-cleaner-refill,"Our lint rollers are tough, able to easily remove lint from carpet, rugs, and clothing. Comes as 1 roll, containing 90 sheets, perforated for convenience.",1.9,122,"{""brand"": ""MUJI""}"
+ae15482c-9b6f-60c4-adc1-d6825aa211b8,e94c53b6ab63be25d51cbc81820b90bb20202d49651e221b815a17992371ad32,a4381e6b-90a6-63fd-6675-ba1e37ee4459,A6 Monthly/Daily Planner Undated,muji-a6-monthlydaily-planner-undated,"Capture your daily and monthly goals in one compact location with this portable A6 undated planner. This comprehensive schedule book features 12 months of horizontal, Monday-start monthly spreads followed by 366 daily boxes, allowing for a full year of flexible recording. With two undated daily sections per page, you have the freedom to manage your time or log memories at your own pace without the pressure of pre-printed dates. The high quality inner pages are protected by a durable, transparent",5.9,16,"{""brand"": ""MUJI""}"
+3652688b-baa1-1e79-2266-fb3f08ccf3b1,2291e14163941eadf3ed97fd8a99f6f9d76a57e8f9d322a29fc62eb24c42bf60,e66fb044-0887-19e6-6ec6-65692293c047,EVA Clear Case - Small,muji-eva-clear-case---small,"An easy-to-carry case for your everyday and travel needs. Perfect for holding cosmetics, stationery, tickets, and other small items. Available in a variety of sizes.",1.9,136,"{""brand"": ""MUJI""}"
+03bde14b-ab4e-efc0-b362-1febd1682a2c,049919baceb451a89d4a35cc8f7107447ed1f7aefe03b84ef03047c7d42337f3,95ce936e-6109-8164-f951-fc99e2ea0063,Fragrance Candle - Vetiver,muji-fragrance-candle---vetiver,"
+
+
+
+
+
+
+
+
+
+
+
+
+
+Immerse yourself in the soft, luxurious scent of vetiver with a blend of earthy, woody, smoky and subtle nutty undertones. Perfect for creating a warm, inviting atmosphere that feels both clean and comforting.  
+This elegant candle comes in a dark brown frosted glass jar to create a warm, cozy vibe in any space.
+
+
+
+
+
+
+
+
+
+
+
+
+
+",6.9,23,"{""brand"": ""MUJI""}"
+b02990b5-748b-7491-804e-027cf2e6b0df,8e53935de93839dbde5a71f208867e1b3a4f9c14fbbed360820b400ada617007,59069196-4589-a9fa-5f49-ccbcf8535e32,Polyester Linen Soft Box Clothes Case - Large,muji-polyester-linen-soft-box-clothes-case---large,"A large rectangular cloth storage case with a coated inner surface to protect your items. It zips closed to store your items in areas otherwise too dusty, and the included handle means you can access it easily even when it is stored up high.",28.9,84,"{""brand"": ""MUJI""}"
+842b30b8-beb5-47ea-fcb7-10ae44d441be,d42e9daa5cefbcc26de436e8745a11b845dbb3880e0859853526e027b82ad914,e6b4d5a3-e41b-88b9-7023-a2f024f7ca66,Nylon Mesh Vertical Document Case - Black,muji-nylon-mesh-vertical-document-case---black,"Designed to fit A4 documents and clear files, this case is crafted from a lightweight yet sturdy material for easy document organization and transport. Its vertical shape allows quick access within backpacks, and its transparent design lets you quickly identify contents, perfect for carrying handouts and notebooks. Additionally, the outer pocket offers extra space for papers and labeling, helping keep everything neatly in place.",7.9,32,"{""brand"": ""MUJI""}"
+ae84f228-4b61-97df-d527-28a79ac16f0a,760df0528e22fd9e31046f0a6dde9670f37a5c05ff14dc424cfcc46c49fba88c,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Urethane Foam 3-Layer Sponge (3 Pack) Gray,muji-urethane-foam-3-layer-sponge-3-pack-gray,"A sponge made with non-woven fabric and 2 different urethane foaming layers. Each layer produces different size foam. Large bubbles maintain cleanliness due to good drainage, and fine bubbles maintain good foaming and ease of washing. The shape is perfect for getting into the corners of lunch boxes and narrow glasses.
+Built with a three-layer structure, each with a different function:
+Upper Layer - Nylon non-woven fabric captures dirt firmly.Middle Layer - High-density urethane part creates fine",4.9,127,"{""brand"": ""MUJI""}"
+5b8639b7-6206-9ead-7573-ef043cd34e71,ecb8a4df025b6fb8ff585811c689343e1d470cb0279e78ab4b0fb28d8804e7a7,5828a997-0384-4964-c62c-9e49765e0e8a,Polypropylene Fine Bristled Toothbrush (4 Color Set),muji-polypropylene-fine-bristled-toothbrush-4-color-set,"A pack of 4 toothbrushes with soft, uneven pointed bristles to effectively clean the gaps between your teeth and gums, gently removing teeth tartar. Easily identify your toothbrush with this set of 4 in different colors - clear, blue, gray, and pink. Perfect for families!
+ 
+⚠ Warning: Cancer - https://www.p65warnings.ca.gov/ 
+ ",9.9,86,"{""brand"": ""MUJI""}"
+8b1b0794-cbde-2e59-966a-9cf21ff5dbe0,b3da45a23507bef9d0cb9bb2d58855f3fe9f62963110f3027cbc08ded9feae9a,2ec54c0b-69b2-22d3-7245-41b76fc3ba77,Steel Drying Rack,muji-steel-drying-rack,"Effortlessly expand the hanging and drying capacity in your home with our Steel Drying Rack. Crafted from powder-coated steel in a sleek white finish, this compact and rust-resistant rack offers a whopping ~4.5 feet of additional hanging space. And when not in use, simply fold it away for easy storage.
+",65.9,67,"{""brand"": ""MUJI""}"
+e7248d14-dd62-0571-7af6-8b50e0ce509a,eeebf08b5b9c175f0d6435fad861d7d462cad65c3aae9e719c9117f613323ae1,079aa4a9-6b99-d845-bf8c-1bf6710df4e6,Refill Sheets for Floor Mop (Wet),muji-refill-sheets-for-floor-mop-wet,"A wet sheet using a liquid that is made alkaline by electrolyzing water. Suitable for removing acidic stains such as hand stains and oil stains. Since it does not use any chemicals, it can be used safely even at homes with small children and pets.
+At MUJI, we believe that daily cleaning is the essence of a simple, pleasant life. Our modular MUJI Cleaning Tools are designed for convenience and efficiency with easily interchangeable attachment heads and poles, making it an essential tool in your h",1.9,138,"{""brand"": ""MUJI""}"
+17eb2b61-6a64-8e83-e5bd-35f7a8c3d173,d46161a20bfde22dd887bb1d251b10192879957a00344d4828823021393e3383,49c637b2-9472-b72b-d61d-2e7746ddd16e,"Recycled Polypropylene Makeup Box (W5.9 x D8.7 x H6.7"")",muji-recycled-polypropylene-makeup-box-w59-x-d87-x-h67,"A makeup box made from partially recycled polypropylene that is sturdy and easy to clean. The translucent material makes it easy to quickly see the contents inside, without adding too much visual clutter.
+Its stackable design saves space and allows you to mix and match with the other box sizes. Use side-by-side, stacked, or one at a time to suit your cosmetic and organizational needs. Pair it with the matching lid to keep your items clean and dust-free.
+Discover the full range of sizes and lids ",5.9,17,"{""brand"": ""MUJI""}"
+59a9e706-777e-2e89-d289-1ffe40e6bd83,19eb4abf476cd8744f910bd973f6d39a167356045db3190a1cb58e65441891df,17780b40-d780-8979-859f-a059d41c3fdd,Acrylic Stand Case for Earrings & Necklace (Double Sided),muji-acrylic-stand-case-for-earrings-necklace-double-sided,"A transparent case with 4 hook tiers that make it ideal for hanging necklaces and earrings. There is also room at the bottom to place a Velour Partition for Rings (sold separately) for even more optimized storage. 
+ 
+Due to package limitations, the maximum order quantity of purchase is 3pcs.",29.9,40,"{""brand"": ""MUJI""}"
+2c373d12-9717-9936-528c-2b7a6fad940b,b895c4fa88f0dfc0eaece3cfa53198c5e15fcb3c5ee786af9977334257e5fa32,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Stainless Steel Peeler,muji-stainless-steel-peeler,"A simple vegetable peeler with metal nibs on the side to remove unwanted bruises or spots.
+ ",7.9,77,"{""brand"": ""MUJI""}"
+7f3348bd-227f-13da-3643-7f9b3ec97be1,c6cfc624cc958dda084558461076b364cbb9cb0886f06357d780097554e52de9,de74aebf-dce8-7c61-c6c0-dfe4a7d2bfd3,Wirebound Dotted Notebook,muji-wirebound-dotted-notebook,A double ring notebook with dot grid paper. Comes with an elastic band to hold the notebook in place. ,5.5,50,"{""brand"": ""MUJI""}"
+6c46d76e-e7ca-ed60-a212-bfd3062f79ec,c25dda7ddcce7e79b71199b159229ba273029ec78cc57d4c2a2ff0e15db0657e,70a18b1c-76ad-aba1-d8db-8abf7641b346,Easy-to-Carry Water Bottle With Scale - White (16.9 fl oz),muji-easy-to-carry-water-bottle-with-scale---white-169-fl-oz,"This sleek white 16.9 fl oz water bottle is your ideal companion for light travel and daily errands. The transparent body includes a helpful scale to measure your drinks, paired with a functional inner lid to hold back ice. To ensure the best mouthfeel, the neck design features reduced screw threads. Lightweight and sustainable, it is constructed from corn-derived biomass plastic, offering a practical way to carry your favorite beverages everywhere.
+To ensure a leak-free experience, please store",5.9,35,"{""brand"": ""MUJI""}"
+53ff2fdf-77f2-36c3-fd6b-8a66383c0410,9d9ed1f43c647be3cb6ce5eb2067f21a9ed42617ae658d8056e9b51d23d3dcb3,567286f5-3650-346f-1053-e65b72ea6106,Smooth Oil Ink 4-Color Ballpoint Pen 0.7 mm,muji-smooth-oil-ink-4-color-ballpoint-pen-07-mm,"This convenient multicolor ballpoint pen provides an ultra-smooth writing experience, with quick drying oil-based ink for uninterrupted writing. Easily swap to red, blue, black or green ink with a quick press. The bottom of the pen has a grip that extends all the way to the tip for comfortable use without slipping.
+Choose from three ball sizes for our Smooth Oil Ink Ballpoint Pens, with interchangeable compatible refills allowing free combination of single-color, four-color, and three-color plus",5.9,139,"{""brand"": ""MUJI""}"
+6f088bca-91c1-1f10-156b-d20a316a0e53,47063c2f0b68eb3093c91a3aaba33093352d41616d46011db38cc5463f3080a7,de74aebf-dce8-7c61-c6c0-dfe4a7d2bfd3,A5 Double Ring Lined Notebook with Strap,muji-a5-double-ring-lined-notebook-with-strap,"A lined notebook with high quality recycled paper that does not bleed through easily, and a sturdy paperboard cover. The double rings allow you to fully open the notebook and write from any direction, and the strap keeps the notebook closed for on-the-go usage.
+",8.5,125,"{""brand"": ""MUJI""}"
+709e4edf-628b-40a6-ce5c-6c5bba6492b9,4bf2ad6de8b6cff210064570a2b89bac3f017eed35dee20ee1face212b9825e6,ecb22813-3097-3865-7c30-92ed43550c90,Polyethylene Petite Bottle With Flip-Top Cap,muji-polyethylene-petite-bottle-with-flip-top-cap,A compact travel-sized spray bottle to bring your skincare products with you on your adventures. ⚠ Warning: Cancer - https://www.p65warnings.ca.gov/,1.9,91,"{""brand"": ""MUJI""}"
+d71acc0a-dccc-1a68-5666-ad5b83dae993,ca311cc93a6da268929e349e7f160a1ceb330378527835a36cef64422ee49ced,d0119b09-6fd5-97de-201e-b2a944b3190d,Porcelain Incense Holder,muji-porcelain-incense-holder,"A small, round incense stand made of white porcelain to hold incense cones and sticks upright while burning. Use it in conjunction with a container to catch burned ashes (sold separately).
+There are 2 ways to use this holder:
+
+Incense Sticks: place the rugged surface facing down and put the incense stick into the hole.
+Incense Cones: place the rugged surface facing up and put the incense on top.
+",2.9,102,"{""brand"": ""MUJI""}"
+ff82cfac-7135-17fa-0aab-c04aa77680e3,2a06389ec5ce8854f6876bf9dee97b48df0b73a7c0c78280b91b9a80acd20e7d,726ee990-f345-fa55-99e7-113519822baa,Men's Stretch Brushed Jacket,muji-mens-stretch-brushed-jacket,"A shirt jacket made using yarn produced from recycled plastic bottles. Features a soft, brushed fabric. Pair it with Men's Stretch Brushed Pants.
+ 
+
+Item Size Chart
+
+
+
+Size
+Length
+Shoulder Width
+Chest Circumference
+Waist Circumference
+Sleeve Length
+Hem Circumference
+
+
+XS
+72.0cm (28.3"")
+42.4cm (16.7"")
+101.0cm (39.8"")
+89.0cm (35.0"")
+62.1cm (24.4"")
+102.0cm (40.2"")
+
+
+S
+74.0cm (29.1"")
+43.9cm (17.3"")
+106.0cm (41.7"")
+94.0cm (37.0"")
+63.3cm (24.9"")
+107.0cm (42.1"")
+
+
+M
+76.0cm (29.9"")
+45.4cm (17.9"")
+111.0c",69.99,19,"{""brand"": ""MUJI""}"
+87a0d468-67af-c8dd-a314-7cfa53b53e9f,84283722e3d4d3b3223fa89abadcb5f550484541821e7910929b3b385cbaa343,5dcf703f-7ba4-efc4-f49c-45e516891304,Men's Hemp Blend Short Sleeve Shirt,muji-mens-hemp-blend-short-sleeve-shirt,"A classic short-sleeve shirt made using a hemp blend that doesn't crease after washing.[What is Hemp]
+Hemp is a natural fiber that can be cultivated with minimal environmental impact. It needs little to no irrigation and uses less fertilizer than other crops.
+Getting more attention as a new alternative to linen and cotton, hemp, which has been used in Japan for the thongs of geta for a long time, has excellent breathability and quick-drying properties. 
+ Item Size Chart
+
+Size
+Chest Circumference",29.99,116,"{""brand"": ""MUJI""}"
+c2f8593e-f346-b0d5-6318-e49a0f44dc29,abd7f3d7217d702c14e471fd31609a2334b6dc9701c6f0862d06807caaff0cc4,501a7ab3-91c9-86c2-310e-9f9e75e2c114,Women's High Twisted Veil Gathered Skirt,muji-womens-high-twisted-veil-gathered-skirt,"Breeze through summer with our High Twisted Veil Gathered Skirt. Made with high-twist yarn for a soft texture. Its airy fit allows for freer movement, allowing for all-day comfort and effortless style. Includes a non-see-through lining for worry-free wear.
+Item Size Chart
+
+
+  
+
+
+Size
+Waist
+Skirt Length
+Hip
+Hem Circumference
+
+
+XS
+24.8"" (63.0 cm)
+32.7"" (83.0 cm)
+77.4"" (196.5 cm)
+83.1"" (211.0 cm)
+
+
+S
+26.8"" (68.0 cm)
+33.1"" (84.0 cm)
+79.3"" (201.5 cm)
+85.0"" (216.0 cm)
+
+
+M
+28.7"" (73.0 cm)
+33.9"" (86.0 c",49.99,80,"{""brand"": ""MUJI""}"
+d01d95ad-ee4f-8a27-a423-4a96ec7c7625,8ebdd568109de078dc8f15469b9fb7dc20d34e8ef0aea3d3a6e8f8df45a5b614,501a7ab3-91c9-86c2-310e-9f9e75e2c114,Women's Denim Wide Baggy Pants,muji-womens-denim-wide-baggy-pants,"Comfortable baggy denim pants. Made with organic cotton.
+Inseam/Length: 28 inch / 72 cm
+
+Item Size Chart
+
+
+
+Size
+Waist
+Hip
+Thigh Width
+Hem (Foot) Width
+Front Rise
+Inseam
+
+
+23
+67.5cm (26.6"")
+89.5cm (35.2"")
+29.3cm (11.5"")
+25.8cm (10.2"")
+26.5cm (10.4"")
+75.0cm (29.5"")
+
+
+24
+70.0cm (27.6"")
+92.0cm (36.2"")
+30.0cm (11.8"")
+26.2cm (10.3"")
+27.0cm (10.6"")
+75.0cm (29.5"")
+
+
+25
+72.5cm (28.5"")
+94.5cm (37.2"")
+30.8cm (12.1"")
+26.6cm (10.5"")
+27.5cm (10.8"")
+75.0cm (29.5"")
+
+
+26
+75.0cm (29.5"")
+97.0cm (38.2"")
+31.5cm (12",24.99,89,"{""brand"": ""MUJI""}"
+696e8524-7f27-1329-eac2-8e732843661f,71ed4324ca2c20412c0fe85da301d4764df8f71dfda6a30f7b91966d243eabb1,1e9dfe1c-e356-ee18-1d54-a6aaafb43eeb,"M8 Wooden Legs for Bed & Sofa - Brown (4.7"")",muji-m8-wooden-legs-for-bed-sofa---brown-47,"A set of 4 M8 screw-type wooden legs, compatible with select wooden bed frames and sofas.
+Compatible with our Pocket Coil Mattress Bed and Urethane Pocket Coil Sofas (2.5 Seater and 3 Seater).
+User Guide (PDF: 2.95 MB)",50.0,97,"{""brand"": ""MUJI""}"
+4abda587-0382-feed-6e13-882afcb9bf4b,084f059ce3a1a94a12afa2aab915c68e75c044097ed7acd23be05c3de2a50e64,1e9dfe1c-e356-ee18-1d54-a6aaafb43eeb,"M8 Wooden Legs for Bed & Sofa - Brown (7.9"")",muji-m8-wooden-legs-for-bed-sofa---brown-79,"A set of 4 M8 screw-type wooden legs, compatible with select wooden bed frames and sofas.
+Compatible with our Pocket Coil Mattress Bed and Urethane Pocket Coil Sofas (2.5 Seater and 3 Seater).
+User Guide (PDF: 2.95 MB)",50.0,133,"{""brand"": ""MUJI""}"
+3e3b16e6-4fdb-83b5-fb85-d01bfcbaa8c7,4d173839d99c78a250141be01591e34d9926f78b1a9e123809a186bd62e4f5f5,1e9dfe1c-e356-ee18-1d54-a6aaafb43eeb,"M8 Wooden Legs for Bed & Sofa - Brown (10.2"")",muji-m8-wooden-legs-for-bed-sofa---brown-102,"A set of 4 M8 screw-type wooden legs, compatible with select wooden bed frames and sofas. They are 10.2 inches from the floor, allowing extra storage space underneath the bed or sofa.
+Compatible with our Pocket Coil Mattress Bed and Urethane Pocket Coil Sofas (2.5 Seater and 3 Seater).
+User Guide (PDF: 2.95 MB)
+",50.0,121,"{""brand"": ""MUJI""}"
+d0bad36b-28a3-8daa-38b0-ae5c72c42c42,51f996d78bf1ca8a28fe04d559c23354c336af37d26aca05ecd549821d85b1b3,1e9dfe1c-e356-ee18-1d54-a6aaafb43eeb,Living Dining Sofa Chair Connecting Plate,muji-living-dining-sofa-chair-connecting-plate,A connecting plate for living dining sofa chairs. Use this to combine two sofa chairs together!User Guide (PDF: 2.08 MB),15.0,118,"{""brand"": ""MUJI""}"
+10b07a50-4687-7206-8647-808405b70e7c,45dec7611b586ad04136f19f4058781c021352b37d6b22b277b4d51b3e0b0bc2,1e9dfe1c-e356-ee18-1d54-a6aaafb43eeb,Living Dining Sofa Chair Arm - Oak,muji-living-dining-sofa-chair-arm---oak,"A set of armrests made from oak for living dining sofa chair. 
+⚠ Warning: Cancer - https://www.p65warnings.ca.gov/",40.0,32,"{""brand"": ""MUJI""}"
+98b32c3b-be52-115a-74b7-27a13228aed5,ec12f650eec512de28fa5966eeb9061879eb695bf9b9de680efe1ab714b7e89f,1e9dfe1c-e356-ee18-1d54-a6aaafb43eeb,Living Dining Sofa Chair Arm - Walnut,muji-living-dining-sofa-chair-arm---walnut,"A set of armrests made from walnut for living dining sofa chairs. 
+⚠ Warning: Cancer - https://www.p65warnings.ca.gov/",40.0,142,"{""brand"": ""MUJI""}"
+9e1a505d-0205-261e-9d48-70096b3f0cc7,bbc7657559155c9c0d46a3854e12b061d1beeab8db65f9fe089e77afda1bf5df,1e9dfe1c-e356-ee18-1d54-a6aaafb43eeb,Working Chair - Light Gray,muji-working-chair---light-gray,"Create a calm and productive workspace with this minimalist working chair in a versatile light gray finish. Designed for effortless setup, it features a completely tool-free assembly that requires no screws or screwdrivers, so you can have it fully put together in just a few minutes. Built for long-lasting reliability, the durable steel frame provides excellent structural strength that resists warping over time. The seat is thoughtfully contoured to fit the natural curves of the human body, offe",150.0,52,"{""brand"": ""MUJI""}"
+7fa5690c-d5d6-7072-59ae-f87b2d2656c1,ec5932c7969f0471ea9ea2d45dc2e884aee1c3c8c116ea97d44acf6c4247e800,1e9dfe1c-e356-ee18-1d54-a6aaafb43eeb,Working Chair - Dark Gray,muji-working-chair---dark-gray,"Create a calm and productive workspace with this minimalist working chair in a sophisticated dark gray finish. Designed for effortless setup, it features a completely tool-free assembly that requires no screws or screwdrivers, so you can have it fully put together in just a few minutes. Built for long-lasting reliability, the durable steel frame provides excellent structural strength that resists warping over time. The seat is thoughtfully contoured to fit the natural curves of the human body, o",150.0,136,"{""brand"": ""MUJI""}"
+878cd72f-4c95-e007-3188-fad46788023c,f1a1bf2bff004507d109a716248a81cd6db3671f1197648f1bce4d6db7329547,567286f5-3650-346f-1053-e65b72ea6106,Refill for Smooth Gel Ink Ballpoint Pen 0.3mm - Pink,muji-refill-for-smooth-gel-ink-ballpoint-pen-03mm---pink,"This 0.3 mm Gel Ink Ballpoint Pen refill fits in our knock type and cap type ballpoint pens. Pair this refill with the Knock Type Body for a customized writing experience. 
+⚠ Warning: Cancer and Reproductive Harm - www.P65Warnings.ca.gov",1.5,124,"{""brand"": ""MUJI""}"
+53eeefdd-f921-5a27-be2c-fa443c841463,7d671ec40353243b10a2522f13bcf09fa816e80cd0cbb76991a93c3e472bf051,70a18b1c-76ad-aba1-d8db-8abf7641b346,Clear Water Bottle with Straw (18.6 fl oz),muji-clear-water-bottle-with-straw-186-fl-oz,"Stay hydrated on-the go with this portable water bottle with a straw is designed for cold drinks and water, made of lightweight, highly transparent resin material. Easy to use and clean, this bottle is the ideal companion for convenient hydration anywhere you go.
+Its slim size is comfortable to hold, designed with a convenient one-touch, lockable lid that is effortless to open with one hand. It also has a removable silicone sling that can be used as a handle or hung on a backpack for easy travel",24.9,34,"{""brand"": ""MUJI""}"
+cfe2b442-36f1-fd6d-b399-ac8c61d214ed,7cad08f97e8999bb06f4cb71939165cd930aa3c410f0a0f39760c719a6ce38a6,2ec54c0b-69b2-22d3-7245-41b76fc3ba77,"Polypropylene Hanger - 15.7""",muji-polypropylene-hanger---157,"Thoughtfully shaped to follow the natural line of a shoulder, this 15.7"" (40 cm) polypropylene hanger helps your clothing hold its form between wears. The lightweight material makes it easy to handle across a full wardrobe, while the considered profile prevents collars and shoulder seams from stretching or distorting over time. A quiet, functional addition to any closet that does its job without getting in the way.
+",3.9,96,"{""brand"": ""MUJI""}"
+9f4afa33-9bb3-17ee-24ee-fbb64df3f1af,8559f33cf75a9422c13770a0c766d90ecc9adbb8f44d6d962037f2ab8f3032d2,2ec54c0b-69b2-22d3-7245-41b76fc3ba77,"Polypropylene Hanger - 17.7""",muji-polypropylene-hanger---177,"Thoughtfully shaped to follow the natural line of a shoulder, this 17.7"" (45 cm) polypropylene hanger helps your clothing hold its form between wears. The lightweight material makes it easy to handle across a full wardrobe, while the considered profile prevents collars and shoulder seams from stretching or distorting over time. A quiet, functional addition to any closet that does its job without getting in the way.
+",3.9,26,"{""brand"": ""MUJI""}"
+71a32c58-5d35-e1c3-68c2-f14b4eba98c0,d343287d162a29cf4496f860a1bac390c8a840c71cd850bfeef684b1ac0d4fc0,726ee990-f345-fa55-99e7-113519822baa,Men's Lightweight Down Collarless Vest,muji-mens-lightweight-down-collarless-vest,"A lightweight down vest made with recycled nylon fabric and fill power 750 down. Designed to be foldable and easy to carry. Thick and light enough to be layered in the winter.﻿Item Size Chart
+
+Size
+Length
+Shoulder Width
+Chest Circumference
+Waist Circumference
+Hem Circumference
+
+
+XS
+62.0cm (24.4"")
+39.0cm (15.4"")
+98.0cm (38.6"")
+93.0cm (36.6"")
+87.0cm (34.3"")
+
+
+S
+64.0cm (25.2"")
+40.5cm (15.9"")
+103.0cm (40.6"")
+98.0cm (38.6"")
+92.0cm (36.2"")
+
+
+M
+66.0cm (26.0"")
+42.0cm (16.5"")
+108.0cm (42.5"")
+103.0cm (40.",44.99,22,"{""brand"": ""MUJI""}"
+aad470a6-16ef-a6d5-90e5-ffc2aec7467b,16dd172b3a4627e81274caa202781f5ea5991ecb6751eac764ff129dc8636d70,5dcf703f-7ba4-efc4-f49c-45e516891304,Fleece Zip-Up Hoodie,muji-fleece-zip-up-hoodie,"This men's zip-up hoodie is made from a fleece-lined sweatshirt material that is soft and smooth to the touch. Lightweight and wonderfully cozy, this hoodie will keep you comfortable all day long. 
+The body is generously roomy, creating a boxy silhouette that is suitable for a unisex style. It can be worn on its own or under outerwear for versatility. The hood is made of two layers of fabric with a center seam for a three-dimensional design that allows it to stand up easily. 
+ 
+Item Size Chart
+
+",49.9,106,"{""brand"": ""MUJI""}"
+70826273-a889-25ea-623e-0f78ccb6b746,7baef81edefc757e3cd49c02418e415500251bb665b153179b449f330f447a04,5dcf703f-7ba4-efc4-f49c-45e516891304,Fleece Pullover Hoodie,muji-fleece-pullover-hoodie,"This men's pullover hoodie is made from a fleece-lined sweatshirt material that is soft and smooth to the touch. Lightweight and wonderfully cozy, this hoodie will keep you comfortable all day long.
+The body is generously roomy, creating a boxy silhouette that is suitable for a unisex style. It can be worn on its own or under outerwear for versatility. The hood is made of two layers of fabric with a center seam for a three-dimensional design that allows it to stand up easily. 
+ 
+Item Size Chart
+",49.9,132,"{""brand"": ""MUJI""}"
+5d49c488-3691-816b-888f-1c97e5678dee,ff45b02c845bdb39d328b05eeb68a84e098f51f5569c49388fe0aa60355fcaa1,8bac9fb8-2084-7e4d-0b0c-6f97d43f20de,Fleece Wide Sweatpants,muji-fleece-wide-sweatpants,"Relax in these comfortable men's wide sweatpants, with a soft and fluffy brushed fleece inner lining that feels good on the skin. Lightweight and comfy to wear all day.
+ 
+
+Item Size Chart
+
+   
+
+
+Size
+Waist
+Hip
+Inseam
+Front Rise
+Hem Width
+
+
+XS
+27.2"" (69.0 cm)
+43.3"" (110.0 cm)
+29.5"" (75.0 cm)
+11.4"" (29.0 cm)
+5.9"" (15.0 cm)
+
+
+S
+29.1"" (74.0 cm)
+45.3"" (115.0 cm)
+29.9"" (76.0 cm)
+11.8"" (30.0 cm)
+6.1"" (15.5 cm)
+
+
+M
+31.1"" (79.0 cm)
+47.2"" (120.0 cm)
+30.3"" (77.0 cm)
+12.2"" (31.0 cm)
+6.3"" (16.0 cm)
+
+
+L
+34.3""",39.9,110,"{""brand"": ""MUJI""}"
+bfb05775-5456-3882-acf1-d0c5866f9ba5,4847fae0c3b284b3ebc9ee5a1b7c587dbf0b33f3061183a72f09423129140010,726ee990-f345-fa55-99e7-113519822baa,Lightweight Down Collarless Vest,muji-lightweight-down-collarless-vest,"A water repellent men's lightweight down collarless vest made with recycled nylon fabric and fill power 750 down. Designed to be foldable and easy to carry, it is also thick yet light enough to be layered in the winter. Features an anti-static yarn lining.
+ 
+
+Item Size Chart
+
+   
+
+
+Size
+Chest Circumference
+Shoulder Width
+Hem Circumference
+Length
+
+
+XS
+39.4"" (100.0 cm)
+15.4"" (39.0 cm)
+33.9"" (86.0 cm)
+24.8"" (63.0 cm)
+
+
+S
+41.3"" (105.0 cm)
+15.9"" (40.5 cm)
+35.8"" (91.0 cm)
+25.6"" (65.0 cm)
+
+
+M
+43.3"" (11",69.9,83,"{""brand"": ""MUJI""}"
+dbc5c622-6936-b353-b9ec-568c527912e2,046f0e20e4d4a4edc147825999b2a3a56227c3de1937c64f5a8284dff70fe7fc,56286183-6552-ccf6-e02a-48f4a6c4803a,Lyocell Blend Wide Sweater,muji-lyocell-blend-wide-sweater,"This women's wide sweater features a relaxed silhouette with short dolman sleeves to make the most of the smooth texture and drape of the material. The roomy design provides a comfortable fit without feeling restricting. 
+Made from a material using regenerated cellulose fibers, this sweater is soft to the touch and comfortable to wear. The blend of lyocell and organic cotton is thin and supple, with just the right amount of stretchiness. 
+ 
+
+Item Size Chart
+
+   
+
+
+Size
+Chest Width
+Shoulder Width",59.9,111,"{""brand"": ""MUJI""}"
+75999ea4-7b30-c0cc-f0a1-d45fa17cfca7,8044a7387dd8075e41eb7942e92e76a3482e92fbafeb2ae757515f9fa143bcf6,56286183-6552-ccf6-e02a-48f4a6c4803a,Lyocell Blend Wide Cardigan,muji-lyocell-blend-wide-cardigan,"This women's wide cardigan features a relaxed silhouette with 3/4 sleeves to make the most of the smooth texture and drape of the material. The roomy design provides a comfortable fit without feeling restricting. 
+Made from a material using regenerated cellulose fibers, this cardigan is soft to the touch and comfortable to wear. The blend of lyocell and organic cotton is thin and supple, with just the right amount of stretchiness. 
+ 
+
+Item Size Chart
+
+   
+
+
+Size
+Chest Width
+Shoulder Width
+Length",59.9,36,"{""brand"": ""MUJI""}"
+b92d6433-2e54-8421-6ded-b279279c3fba,f9b8f0931aa260123c2d6ebb2c54501dba7c191fa1b7014df1136dcb29d41a59,de74aebf-dce8-7c61-c6c0-dfe4a7d2bfd3,A5 Recycled Paper Notebook Grid,muji-a5-recycled-paper-notebook-grid,"A grid notebook made from smooth, recycled paper. The notebook has been signature bound so that it lies flat for ease of use.",1.9,131,"{""brand"": ""MUJI""}"
+fecd3a7f-50b4-ffc6-1e14-dc46cb6c33c7,8dbadd982eea622bb6dbc3d27502c77ae8d5622cf2e13be3727f062772090ddd,a4381e6b-90a6-63fd-6675-ba1e37ee4459,Monthly Undated Notebook Planner A6,muji-monthly-undated-notebook-planner-a6,"Organize your schedule with ease using this compact A6 monthly planner. This free-style schedule book features an undated monthly view, allowing you to fill in the dates yourself and begin planning at any time of the year. The interior pages are crafted from at least 55% recycled paper, which provides a natural texture and may include small dark spots unique to recycled materials. Its portable size makes it a perfect companion for keeping your monthly goals and appointments within reach while yo",1.9,131,"{""brand"": ""MUJI""}"
+5fe8bf00-8c6b-3ea4-37bf-7c7b357a0b44,c4701aa6e454b052f67d55520c330ffff1d9a1b4cb85573adcfae9aa775117a0,079aa4a9-6b99-d845-bf8c-1bf6710df4e6,Cleaning System TPE Scraper,muji-cleaning-system-tpe-scraper,"Made of flexible material, this scraper fits snugly against the surface to remove dirt and dust without leaving streaks. Designed with one rounded side, it is comfortable and safe to hold in your hand. It can easily be rinsed clean and can be hung to dry before storage.",2.9,104,"{""brand"": ""MUJI""}"
+eea03b61-1ab1-2527-a863-55da450d74de,4eea673b162eea6b2870882d5beeb3b063e4377c9b1279af19bc867353c0baab,d0119b09-6fd5-97de-201e-b2a944b3190d,Aroma Stone,muji-aroma-stone,"An unglazed pottery stone that you can easily enjoy the scent by soaking it in your favorite essential oil directly without using fire or electricity. It is suitable for moderately scenting your surroundings, such as around your desk or bedside. ◎ How to use: Place the main body on the attached special dish and add 5 to 10 drops of essential oil directly to the dented part. The soaked essential oil gradually volatilizes and the scent slowly spreads. If you feel that the scent has weakened, add y",12.9,108,"{""brand"": ""MUJI""}"
+961e0281-698d-eb95-4c99-4f8e81b98004,712f2e46375020aa690bead40f28020aeab829b30ef76bc6a61ba31477d2be49,de74aebf-dce8-7c61-c6c0-dfe4a7d2bfd3,Recycled Paper Bind Plain Notebook,muji-recycled-paper-bind-plain-notebook,"A plain notebook made from smooth, recycled paper. The notebook has been signature bound so that it lies flat for ease of use. ",0.9,67,"{""brand"": ""MUJI""}"
+7404d457-e23d-8801-0386-b739de45a577,e93cb14f067981c7a629e3f362ae6ff7281271f65d8265cf4e60ae7a193f2ba2,de74aebf-dce8-7c61-c6c0-dfe4a7d2bfd3,"Planted Tree Paper Colored Cover Notebook - 0.3"" (5 Pack)",muji-planted-tree-paper-colored-cover-notebook---03-5-pack,"Five good quality notebooks with color coded spines and covers to help you keep track of their function. Each of these B5 notebooks has 36 sheets with 0.28"" (7 mm) line spacing and are thin, but can withstand highlighters and pens without bleeding through. 
+This item is part of the MUJI Afforestation effort, allowing communities to choose and benefit from the trees they cultivate directly.
+Browse our Notebooks Collection and Binders Collection for more options!
+",5.9,102,"{""brand"": ""MUJI""}"
+9fea2367-4938-40ea-83ad-ba503f8f6e95,4457a1da6f341cad9a54013f88b90d5e4a10a8ddc02c53738731aae6ef2d6ee0,8f232b17-e482-00db-4026-cd2247eadd91,Polypropylene Expanding Stand File Box - A4 3 pockets,muji-polypropylene-expanding-stand-file-box---a4-3-pockets,"This self-standing polypropylene file expands and contracts to accommodate whatever you put inside, so your documents, loose papers, and small essentials always have a snug, tidy home. Three pockets make it easy to sort and retrieve what you need without shuffling through a pile, keeping your desk clear and your workflow uninterrupted. When you need to tuck it away, it slides straight into a standard A4 file box, doubling as a divider to keep the box itself organised. A simple, flexible solution",5.9,109,"{""brand"": ""MUJI""}"
+aad5c8ff-8060-b2c0-156f-3608e280c65a,9397323ce3f388391469e4971e8fd807a31b23419ee62d351769e14a91991219,2ea239ed-7bef-f98d-6c28-a447c5ca65b7,Compact Mechanical Pencil 0.5mm,muji-compact-mechanical-pencil-05mm,"A compact version of our mechanical pencil that fits 0.5mm pencil lead. Cute and portable. It's the perfect size to use with an A7-size notebook. The pen has a clip for easy storage in a pocket, lanyard, or closed notebook, making it perfect for on-the-go use.
+⚠ Warning: Cancer - https://www.p65warnings.ca.gov/",2.9,104,"{""brand"": ""MUJI""}"
+e6985586-ae67-7092-881b-0d39d25645c6,544d52b808347d5468c10415413c9f7b15e3cc92f5d5694b7bce6cf938ac4fd0,079aa4a9-6b99-d845-bf8c-1bf6710df4e6,Spot-Cleaning Series Brush,muji-spot-cleaning-series-brush,"A brush for cleaning narrow grooves and other hard-to-reach crevices. The handle is angled for easy cleaning on surfaces.
+
+
+
+",1.9,113,"{""brand"": ""MUJI""}"
+cc493609-26fe-7501-7a70-d9c12a1344f8,9cbd1a066405f563cce2856b58add242a02c7acf76e0a5e13a1796184ade8c5a,e24d5c40-3574-ad2d-0e49-2941e73894ba,Blueberry & Mint Candy,muji-blueberry-mint-candy,"Brighten your day with this delightful blueberry and mint candy. A simple, refreshing treat that gives you that little boost whenever you need one, combining cool mint with a sweet berry flavor.",2.9,124,"{""brand"": ""MUJI""}"
+16592c0a-2070-d135-9f6d-22a3e9ec9eb5,4eda66ec858ed2d947b44fe53fc7a4a5c3467f648f93809f05cba85cfde5300d,2ea239ed-7bef-f98d-6c28-a447c5ca65b7,Wooden Hex Mechanical Pencil with Eraser 0.5mm,muji-wooden-hex-mechanical-pencil-with-eraser-05mm,"The hexagonal shape makes this pencil easier to grip and prevents it from rolling around. In addition, the wooden body is slightly textured to make an attractive and easy to use pencil. This version features no clip for a more clean look.⚠ Warning: Cancer - https://www.p65warnings.ca.gov/",5.9,150,"{""brand"": ""MUJI""}"
+7de11b1e-d475-cc4f-4d3c-08720e230e4a,366a81c759092c100283b6c567d37ffad81c8ddf28d43411f005275718131a09,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Acacia Foldable Tongs Large,muji-acacia-foldable-tongs-large,"Made of natural lightweight acacia wood, these tongs are great for serving food. Taking advantage of the flexibility of the wood, they can be folded up and stored compactly when turned upside down.
+",6.9,100,"{""brand"": ""MUJI""}"
+feaed6dc-d843-b345-ab73-7c9fd204289d,af2a101002a46c4e6506aeb38f89fc2d1d3ae19ae98598ed95b31259953b6d68,a72fd20b-9940-4633-5b3b-4d0313673275,Polypropylene Glasses and Small Object Case,muji-polypropylene-glasses-and-small-object-case, A case made from polypropylene. Great for holding small objects or pens. ,2.9,38,"{""brand"": ""MUJI""}"
+57a2d191-e637-206a-62ab-db988af18699,52a3ebaf5f63d40b5a72e612920a316d528359988e928f9851fd59304bbd2e66,cb5503d7-03af-4452-32fe-e2e8944fe56b,Cotton Puff,muji-cotton-puff,"This cotton puff is composed of a sturdier outer section and soft cotton batting in the center. This type of puff is designed for high absorbency so it is good for intense care. 
+
+How to use:Apply a generous amount of lotion or toner until the pad is translucent. Lay the pad flat over the middle and ring fingers, using the pinky and index fingers to hold it in place. Gently wipe or massage outward on your face.
+
+
+",5.9,120,"{""brand"": ""MUJI""}"
+b063ed37-a766-52f4-d187-4481d17f0a1c,a61d31e235caddb89cf29f5f81c6025536fad7bf7174cae3797e1e9d36c52c83,a72fd20b-9940-4633-5b3b-4d0313673275,Polypropylene Pen Case - 2 Compartments,muji-polypropylene-pen-case---2-compartments,"A translucent pen case made of polypropylene that is easy to clean. Because you can see the contents from the outside, you can be confident all your items are packed and ready to go while still looking neat. Great for storing pens, pencils and other writing utensils, it features a smaller compartment for an eraser, lead or small items like sticky notes. ",3.9,100,"{""brand"": ""MUJI""}"
+14967e12-c2e8-1254-ae0e-09ed578b2492,f1bdebee3ca1950d2976599c9126c7bd8c361a5b8868c763684edd5ee093f94a,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Silicone Multipurpose Band,muji-silicone-multipurpose-band,"Organize your kitchen and home with these versatile silicone multipurpose bands. Designed as a durable and reusable alternative to single-use ties, these bands are perfect for sealing food bags, bundling charging cables, or securing household tools. Each band features a unique dual-fastening design: use the long center loop like a traditional elastic, or stretch the band to hook the head through the small end loop for a secure, zip-tie style hold. Because they are crafted from high-quality silic",3.9,128,"{""brand"": ""MUJI""}"
+49d92b3b-6737-d453-57fc-2fbcfeeddeaa,482eb134f9de87168e8eae283040ede2dcaa84c2491fcc6902036f72cd71e439,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Stainless Steel Long Measure Spoon - Small,muji-stainless-steel-long-measure-spoon---small,"Small and simple measuring spoon. The long handle lets you scoop all the way down the container without waste. Made from stainless steel for more durable built. A 1/2 line is engraved so that a 1/2 volume can be easily measured.
+",2.9,52,"{""brand"": ""MUJI""}"
+a3e2660c-e2a3-dad7-b3d8-4ba3e56e0b9e,09ac15cd4a6ad8b6bcb8b2192eefcda42e706ddb52feb9996ba0e29c98274f81,e66fb044-0887-19e6-6ec6-65692293c047,TPU Clear Case,muji-tpu-clear-case,Made of TPU material for easy cleaning. Clear case lets you see the contents. ,9.9,83,"{""brand"": ""MUJI""}"
+f6754e3b-1dc3-c5eb-346f-2f86d30e1c92,03784945771879e721c987fa17fae63091b4e80cfd6bda37269c320962b4b9f7,49c637b2-9472-b72b-d61d-2e7746ddd16e,Recycled Polypropylene Cotton Pad and Swab Case with Lid,muji-recycled-polypropylene-cotton-pad-and-swab-case-with-lid,"A makeup box made from partially recycled polypropylene that is sturdy and easy to clean. The translucent material also allows you to quickly see the contents inside, without adding too much visual clutter. The perfect size for neatly storing cotton pads and swabs, as well as cosmetics or other small items.
+Discover more storage option with our Polypropylene Makeup Box series!
+",2.9,72,"{""brand"": ""MUJI""}"
+57c557b0-0174-9fe4-0b38-29ce238a11ff,3a9de9d2ce7cd9ea4e6c34941f48454587fed525ea62bb4c387031a7c9543822,3b8d6ddb-f075-8969-de7f-c35cfc7086e1,Vegetable Tanned Leather Slim Mesh Belt,muji-vegetable-tanned-leather-slim-mesh-belt,Made from leather tanned with vegetable tannins.,39.9,59,"{""brand"": ""MUJI""}"
+91fab601-c660-079d-09c6-2f56cdca8a36,6fe6778339424990067e455b6e12f6b80e0d51a0be2d0a7b07f1ebf81e515955,56286183-6552-ccf6-e02a-48f4a6c4803a,Cotton Jersey Rugby Shirt,muji-cotton-jersey-rugby-shirt,"This women's rugby shirt is made with 2-ply organic cotton jersey material, providing the perfect amount of thickness for comfort and durability. The collar and short placket give this shirt a classic, preppy look that suits any outfit.
+Our organic cotton is grown from non-genetically modified seeds, without the use of chemical fertilizers or pesticides that may have a significant negative impact on the environment and living organisms. This sustainable farming method helps maintain the health o",41.99,133,"{""brand"": ""MUJI""}"
+f752bb20-8b26-e455-838f-aa0a497d086c,9644c9ddddc4e1ac61a7fc50438abbb52892f1259fd42bbb13041085e6fb3173,501a7ab3-91c9-86c2-310e-9f9e75e2c114,Women's Super Stretchy Denim Shorts Dark Navy,muji-womens-super-stretchy-denim-shorts-dark-navy,"Shorts made with very stretchy denim to provide a comfortable and flexible fit. Perfect for the spring and summer weather. Made with organic cotton.
+
+Item Size Chart
+
+
+  
+
+
+Size
+Waist Width
+Hip Width
+Front Rise
+Hem Width
+
+
+XS
+35.5cm (14.0"")
+43.0cm (16.9"")
+25.0cm (9.8"")
+25.0cm (9.8"")
+
+
+S
+38.5cm (15.2"")
+46.0cm (18.1"")
+27.0cm (10.6"")
+27.0cm (10.6"")
+
+
+M
+40.0cm (15.7"")
+49.0cm (19.3"")
+27.0cm (10.6"")
+28.0cm (11.0"")
+
+
+L
+42.0cm (16.5"")
+50.0cm (19.7"")
+28.0cm (11.0"")
+28.5cm (11.2"")
+
+
+XL
+44.5cm (17.5"")
+52.0",24.99,72,"{""brand"": ""MUJI""}"
+50868c42-24c8-235d-f978-b259fcce1927,0a1d31c03949174586c0362a242305d7f6b062d591cf58736dc6c4102757d8bb,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Stainless Steel Cheese Grater,muji-stainless-steel-cheese-grater,"A small, fine-toothed grater best for fresh parmesan cheese, lemon zest or other garnishes in small amounts.
+⚠ Warning: Cancer and Reproductive Harm - www.P65Warnings.ca.gov
+",9.9,85,"{""brand"": ""MUJI""}"
+07d5fe4d-5cd2-cc6e-bd16-8eb4598d3080,d509eb30ef005e20b521f7bb6f0f8236204eb50d3b075823e366888a0955c802,e6abef33-7d0a-50bc-ac14-8a92e64138c0,Yellow Cedar Chopsticks - 5 Pairs,muji-yellow-cedar-chopsticks---5-pairs,Lightweight chopsticks made from yellow cedar wood.,9.9,73,"{""brand"": ""MUJI""}"
+c17941ba-8be9-e504-0162-09379f68339f,31fdb7c9f0f0fe6130b06141461e2e9bac4650a3440ce4a9298e05b70d9a48f5,a72fd20b-9940-4633-5b3b-4d0313673275,Nylon Mesh Vertical/Horizontal Pen Case Thin - Gray,muji-nylon-mesh-verticalhorizontal-pen-case-thin---gray,"A pen case made of light and durable nylon mesh fabric, structured in a way that can open both horizontally or vertically for your convenience. ",7.9,106,"{""brand"": ""MUJI""}"
+8a4a8476-3ac6-97ed-8a10-84b57bec8529,e84f3b7d4d1ccdbe436ebc880bc8dd356bef94774aedacdde4b0998152bbd884,ecb22813-3097-3865-7c30-92ed43550c90,PET Clear Spray Bottle 15ml (0.5 fl Oz),muji-pet-clear-spray-bottle-15ml-05-fl-oz,These compact travel-sized bottles are convenient for dividing lotions and other products into small portions. Made from PET material for durability. ⚠ Warning: Cancer - https://www.p65warnings.ca.gov/,2.9,20,"{""brand"": ""MUJI""}"
+c2a03625-72fe-7c04-55fa-2a46899fb060,ec0e8c0acc9526bc961473c167cd372451a5bb2924758693d4bc49bb186cfa40,8631bdc2-b813-7d83-ceee-b86239b1efd2,Labo Olive Leather Holeless Belt,muji-labo-olive-leather-holeless-belt,"A belt made with leather partially tanned using water and other components left over from the olive oil extraction process, reducing product waste and transforming it into a classic and versatile accessory. It has a sleek appearance and is adjustable without holes so sizing is not restricted.",80.0,50,"{""brand"": ""MUJI""}"
+f8bd0c2c-9774-8b32-ddd4-41da43b04cb2,d207123379436215c3bf88039731090745638e38fc7978bb66704185ac572d81,079aa4a9-6b99-d845-bf8c-1bf6710df4e6,Replaceable Head Telescopic Pole,muji-replaceable-head-telescopic-pole,"This aluminum pole can be used in combination with any head of the MUJI cleaning supplies system. It is telescopic so that can the length be adjusted to suit your needs.
+At MUJI, we believe that daily cleaning is the essence of a simple, pleasant life. Our modular MUJI Cleaning Tools are designed for convenience and efficiency with easily interchangeable attachment heads and poles, making it an essential tool in your home. 
+",7.9,15,"{""brand"": ""MUJI""}"
+f209c4c5-88d9-e4bb-c30b-b956a1a46189,5cdff22cc7d1d31e729d651c3785522f0c8239675fd7c64f2ffe13967481518b,ecb22813-3097-3865-7c30-92ed43550c90,Cream Container - Small,muji-cream-container---small,"A compact travel sized jar to bring your lotion or skincare with you on your adventures. Comes in various convenient sizes to suit your needs.
+",1.9,38,"{""brand"": ""MUJI""}"
+f443431b-699a-b0af-f730-645425e4e6e8,5c23311cd0261b2b90518f86da3b209cd1bf88127b625fe25669b93e202b45a8,3cb03559-21a9-2fd5-77fc-163de5c2b186,Screwdriver Set,muji-screwdriver-set,"A small and convenient screwdriver set that comes with 8 interchangeable tips. 
+⚠ Warning: Cancer - https://www.p65warnings.ca.gov/",9.9,88,"{""brand"": ""MUJI""}"
+29a161c8-d906-d417-e653-189f81444daa,ad57d4790680ea21ecfd5a6ce71646e644938b41870874fa2e699824f116843a,e6abef33-7d0a-50bc-ac14-8a92e64138c0,Stainless Steel Butter Spreader,muji-stainless-steel-butter-spreader,"This stainless steel butter knife has a standard design that suits any type of cuisine. The handle length and curve angle have been carefully designed to make it easy to hold and use. 
+Made from rust-resistant 18-8 stainless steel, the surface has been polished in fine, linear strokes to create a matte hairline finish.",5.9,50,"{""brand"": ""MUJI""}"
+b894faa9-8835-5755-4ec5-2887311b1f29,bb3bd44ba3a91c47ed283cbf266930cbf1a8cc923d78c8b4d94ed9153d4daed7,e6abef33-7d0a-50bc-ac14-8a92e64138c0,Stainless Steel Straight Handle Spoon - Large,muji-stainless-steel-straight-handle-spoon---large,"This stainless steel spoon features a slim, flat handle designed for comfortable and easy use.
+Made from rust-resistant 18-8 stainless steel, the surface has been polished in fine, linear strokes to create a matte hairline finish.
+",4.9,103,"{""brand"": ""MUJI""}"
+a40a7a65-2150-0ea7-af9c-bf447444acb8,46ed89c9aed845cf59aab0e658f9e5015fa3f1b3e3b4096e0b93512ff6fafe14,e6abef33-7d0a-50bc-ac14-8a92e64138c0,Stainless Steel Straight Handle Fork - Large,muji-stainless-steel-straight-handle-fork---large,"This stainless steel fork features a slim, flat handle designed for comfortable and easy use.
+Made from rust-resistant 18-8 stainless steel, the surface has been polished in fine, linear strokes to create a matte hairline finish.
+",4.9,42,"{""brand"": ""MUJI""}"
+6e7ff188-5df2-b77a-ec9e-7203f90238c1,a2bf7073ad60aa8f76daa0d8a831624f6b5ff1d9af5102d21e58de77f1c0cd0f,e6abef33-7d0a-50bc-ac14-8a92e64138c0,Acacia Soup Spoon with Oil Finish,muji-acacia-soup-spoon-with-oil-finish,"A lightweight spoon that easy to use when eating rice porridge and soup. It doesn't conduct heat easily, so it can be used safely when eating hot food without getting burned.
+Crafted from natural acacia wood, renowned for its durability and beautiful grain patterns, this spoon adds a touch of elegance to your kitchen. The surface has a vegetable oil finish that enhances the wood's natural luster and provides a protective layer, ensuring durability and resistance to moisture. 
+To maintain its qua",4.9,42,"{""brand"": ""MUJI""}"
+9dfe7385-fa97-c67e-ccd5-756ed9742e07,bb991b9ff465d04986cb030b92e0348a33d39af357949b41e1b2fb2d08288acc,de74aebf-dce8-7c61-c6c0-dfe4a7d2bfd3,Planted Tree Paper Bleed Proof Lined Notebook 6 mm - B5 (5 Pack),muji-planted-tree-paper-bleed-proof-lined-notebook-6-mm---b5-5-pack,"Five high quality notebooks with color coded spines to help you keep track of their function. Each of these B5 notebooks has 36 sheets that are thin but can withstand highlighters and pens without bleeding through. Each notebook is lined with 0.23"" spacing.
+This item is part of the MUJI Afforestation effort, allowing communities to choose and benefit from the trees they cultivate directly.
+Browse our Notebooks Collection and Binders Collection for more options!
+",4.9,129,"{""brand"": ""MUJI""}"
+d4eb46b4-a800-f41f-b297-ffc4216f377b,b1341c413eb1de2b5eeb50efc6bfb8ad0316aeb05df66e027b5ec48c2693dd12,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Non-Stick Rice Paddle,muji-non-stick-rice-paddle,"Embossed on both sides up to the edge, this rice paddle prevents rice from sticking to it. The underside features a protrusion that props up the paddle to keep it clean, preventing contact with the counter when placed down flat. Featuring an easy-to-grip handle, with an elongated design for easy mixing and a slim width for mess-free serving.
+",4.9,140,"{""brand"": ""MUJI""}"
+5b53a620-ea97-17ec-46ed-d474a11a27b5,cd29666eb1337c4d45ee5fb845c640b08ae350ab4f13660e0d2a0c46a32e08c4,e24d5c40-3574-ad2d-0e49-2941e73894ba,Peanuts Chocolate,muji-peanuts-chocolate,Freshly roasted peanuts enrobed in chocolate and cut into delicious bite-sized clusters.,7.9,61,"{""brand"": ""MUJI""}"
+d7be2987-968c-56c3-dec4-318fbb8aa149,260f7dfb3941681f38073a5ffecf8d495a4a305384a0d7fd7a882c0d2556307e,19417ae8-ee9f-68ac-13ca-22ffcffc072a,Stainless Steel Sponge Rack,muji-stainless-steel-sponge-rack,A sponge rack made from stainless steel. The suction cup design allows you to easily attach this rack to the side of your sink for convenient storage.,9.9,17,"{""brand"": ""MUJI""}"
+248fbded-3ee5-4228-332d-8b4270638dbd,638cf8c1ad0d854e6293183f1563e10b258e5c72cef10bf4e926bcd5bf381a85,ecb22813-3097-3865-7c30-92ed43550c90,Cream Container - Large,muji-cream-container---large,"A compact travel sized jar to bring your lotion or skincare with you on your adventures. Comes in various convenient sizes to suit your needs.
+",2.9,118,"{""brand"": ""MUJI""}"
+2c7e89cc-b55f-43f1-79a9-84fbe37cfa98,e79b52ccc60c22d9ae3e82fe2665ec44df99ede8323e61dcacb801dfe023122a,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Mini Silicone Oven Mitt,muji-mini-silicone-oven-mitt,"A protective mini oven mitt designed to keep your hands safe while handling hot cookware and bakeware in the kitchen. Made of food-grade soft silicone that is comfortable to wear, with anti-slip texture designs for easy gripping. Hanging storage holes save space when not in use.
+Includes one oven mitt only.
+",3.9,81,"{""brand"": ""MUJI""}"
+8bce16f8-b9bc-59c8-6aa1-1c3c2dbd15e0,46dfb10b30db820f35a37f8455fa6c0af8a77fd62f5dd8e564b7e40d5d469947,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Stainless Steel Strainer - Medium,muji-stainless-steel-strainer---medium,Lightweight and easy to use. Can be stacked with our stainless steel bowls. Rust resistant 18-8 Stainless steel used.,20.9,130,"{""brand"": ""MUJI""}"
+0a3a3f80-c05b-3a7f-c26e-c40908070587,e623b3981a3465b965caa05d63a3b670c2fe35236ca01c39db32163db4b83a57,cb5503d7-03af-4452-32fe-e2e8944fe56b,Cut Cotton,muji-cut-cotton,"Our cut cotton is made of 100% cotton, pressed into shape and extremely soft to the touch. It's designed to be less absorbent so that you can get the benefits of using a cotton pad with your skincare without a lot of product being lost. Perfect for daily situations.
+
+How to use:Apply a generous amount of lotion or toner until the pad is translucent, as not using enough may cause pilling. Lay the pad flat over the middle and ring fingers, using the pinky and index fingers to hold it in place. Gen",6.9,16,"{""brand"": ""MUJI""}"
+5a916d6f-d9bc-47cc-c636-4076d3d85846,ebbd2195b032612498b4524374ecade693605ada0fcdd31e8e9a91e3b986a0dc,1c2788fe-48c0-c1c5-ff83-60bfa53ad9d5,Stainless Steel Mixing Bowl - Medium,muji-stainless-steel-mixing-bowl---medium,"The shape of these bowls make it easier to be stacked neatly with each other. Stainless steel used to be rust resistant. There are measurements printed inside the bowl, making it very convenient when baking.
+
+
+",12.9,21,"{""brand"": ""MUJI""}"
+a4ec4bc3-d74a-585b-7f4c-50a702bad55d,981e0c7f812b5b2cffec1a85808a13956b1fff47f4afb6a0600fbbfee8c1df02,3ede25d9-1c2d-d9b4-6b2b-20ebca83d035,Planted Tree Paper Loose Leaf 7mm Lined B5 - 100 sheets,muji-planted-tree-paper-loose-leaf-7mm-lined-b5---100-sheets,"Experience a smooth writing surface with this B5 loose-leaf paper, made from trees specifically cultivated for paper production to support sustainable forest management and environmental protection. Its high-quality texture resists ink bleed-through, delivering a clean finish on both sides of the page. Featuring 26 binder holes, the paper is compatible with a wide range of binders and organizers. The 7 mm lined layout, designed without date columns, allows for flexible use in any orientation. Th",4.9,143,"{""brand"": ""MUJI""}"
+06929f78-a56c-20a5-50bb-eee2bd946625,30da2513f8d69b34e3a3b6275ff339872a00f44993cacee7c1308224123a7247,de74aebf-dce8-7c61-c6c0-dfe4a7d2bfd3,Compact Notebook A7 - Purple,muji-compact-notebook-a7---purple,"Small and portable, this A7 notebook is convenient for note taking and doodling wherever you go, fitting easily into your pocket or bag. It has a loop on the side that perfectly fits our Compact Pens, so you can create a coordinated set in your favorite color. Contains 88 sheets of smooth blank paper. Available in a variety of colors.
+Pens sold separately. Notepad refills will be available starting Fall 2026.",9.9,76,"{""brand"": ""MUJI""}"
+1dd06755-c397-5123-c4c6-413613159c9a,0813f4fbd8926777c3fe3eb1cf298c2f2655ab5df8fed9811be2723a3d64f408,307bb084-d2c7-375e-c0b8-10327cda549e,Foldable Eyebrow Makeup Razor (2 Pack),muji-foldable-eyebrow-makeup-razor-2-pack,"Get the perfect brow shape with the Eyebrow Makeup Razor, foldable and available in a set of 2! Take one on your travels and keep the other for home use. The blade is short for precise shaving that matches your brow's height.",2.9,114,"{""brand"": ""MUJI""}"

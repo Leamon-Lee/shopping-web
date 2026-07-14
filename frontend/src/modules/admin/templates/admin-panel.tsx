@@ -4,7 +4,12 @@ import { Badge, Button, Table } from "@medusajs/ui"
 import Spinner from "@modules/common/icons/spinner"
 import Input from "@modules/common/components/input"
 import { useEffect, useMemo, useState } from "react"
-import { getAdminPanel, getAdminUsers, getAdminProducts, getAdminOrders } from "api/backend-client"
+import {
+  getAdminPanel, getAdminUsers, getAdminProducts, getAdminOrders,
+  getAdminShops, approveShop, updateUserStatus, updateUserRole,
+  updateProductStatus, getAdminCategories, createAdminCategory,
+  updateAdminCategory, deleteAdminCategory,
+} from "api/backend-client"
 
 type AdminView =
   | "Dashboard" | "Users" | "Shops" | "Categories"
@@ -22,8 +27,6 @@ const getBadgeColor = (status: string) => {
 
 const formatColumn = (col: string) =>
   col.replace(/([A-Z])/g, " $1").replace(/^./, (l) => l.toUpperCase())
-
-// ── Reusable sub-components ─────────────────────────────────────────
 
 const MetricCard = ({ label, value, detail }: { label: string; value: string; detail: string }) => (
   <div className="rounded-rounded border border-ui-border-base bg-white p-5">
@@ -93,53 +96,49 @@ const AdminPanel = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [dashboard, setDashboard] = useState<Record<string, unknown> | null>(null)
-  const [users, setUsers] = useState<Row[]>([])
+  const [users, setUsers] = useState<any[]>([])
   const [adminProducts, setAdminProducts] = useState<Row[]>([])
   const [adminOrders, setAdminOrders] = useState<Row[]>([])
+  const [shops, setShops] = useState<any[]>([])
+  const [categories, setCategories] = useState<any[]>([])
+  const [actionMsg, setActionMsg] = useState("")
+
+  // Form state
+  const [newCatName, setNewCatName] = useState("")
+  const [newCatDesc, setNewCatDesc] = useState("")
+  const [editCatId, setEditCatId] = useState("")
+  const [editCatName, setEditCatName] = useState("")
+  const [editCatDesc, setEditCatDesc] = useState("")
 
   const fetchData = async () => {
     setLoading(true)
     setError(null)
     try {
-      const [dashResp, usersResp, productsResp, ordersResp] = await Promise.all([
+      const results = await Promise.all([
         getAdminPanel().catch(() => null),
         getAdminUsers().catch(() => null),
         getAdminProducts().catch(() => null),
         getAdminOrders().catch(() => null),
+        getAdminShops().catch(() => null),
+        getAdminCategories().catch(() => null),
       ])
-      setDashboard(dashResp as Record<string, unknown> | null)
-
-      if (usersResp) setUsers(usersResp.users.map((u: Record<string, unknown>) => ({
-        name: `${u.first_name || ""} ${u.last_name || ""}`.trim() || (u.user_name as string),
-        email: u.email as string,
-        role: u.role as string,
-        status: u.status as string,
+      setDashboard(results[0] as any)
+      if (results[1]) setUsers((results[1] as any).users)
+      if (results[2]) setAdminProducts((results[2] as any).products.map((p: any) => ({
+        product: p.name, category: p.category, price: `CNY ${Number(p.price).toFixed(2)}`,
+        stock: p.available_item_count, status: p.status || "active", id: p.id,
       })))
-
-      if (productsResp) setAdminProducts(productsResp.products.map((p: Record<string, unknown>) => ({
-        product: p.name as string,
-        category: p.category as string,
-        price: `CNY ${Number(p.price).toFixed(2)}`,
-        stock: p.available_item_count as number,
-        variants: p.variants as number,
+      if (results[3]) setAdminOrders((results[3] as any).orders.map((o: any) => ({
+        order: o.order_number, items: o.items_count, payment: o.payment_status,
+        total: `CNY ${Number(o.total).toFixed(2)}`, status: o.status,
       })))
-
-      if (ordersResp) setAdminOrders(ordersResp.orders.map((o: Record<string, unknown>) => ({
-        order: o.order_number as string,
-        items: o.items_count as number,
-        payment: o.payment_status as string,
-        total: `CNY ${Number(o.total).toFixed(2)}`,
-        status: o.status as string,
-        date: (o.date as string)?.slice(0, 10) || "—",
-      })))
+      if (results[4]) setShops((results[4] as any).shops)
+      if (results[5]) setCategories((results[5] as any).categories)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load data.")
-    } finally {
-      setLoading(false)
-    }
+    } finally { setLoading(false) }
   }
 
-  // Fetch on mount
   useEffect(() => { fetchData() }, [])
 
   const stats = dashboard?.stats as Record<string, number> | undefined
@@ -151,6 +150,39 @@ const AdminPanel = () => {
   ] : []
 
   const navItems: AdminView[] = ["Dashboard", "Users", "Shops", "Categories", "Products", "Orders", "Reports", "Settings"]
+
+  // Actions
+  const doApprove = async (shopId: string, status: string) => {
+    setActionMsg(`Updating shop...`)
+    try { await approveShop(shopId, status); fetchData(); setActionMsg(`Shop ${status}`) }
+    catch (e: any) { setActionMsg(`Error: ${e.message}`) }
+  }
+  const doUserStatus = async (userId: string, status: string) => {
+    try { await updateUserStatus(userId, status); fetchData(); setActionMsg(`User ${status}`) }
+    catch (e: any) { setActionMsg(`Error: ${e.message}`) }
+  }
+  const doUserRole = async (userId: string, role: string) => {
+    try { await updateUserRole(userId, role); fetchData(); setActionMsg(`User role -> ${role}`) }
+    catch (e: any) { setActionMsg(`Error: ${e.message}`) }
+  }
+  const doProductStatus = async (productId: string, status: string) => {
+    try { await updateProductStatus(productId, status); fetchData(); setActionMsg(`Product ${status}`) }
+    catch (e: any) { setActionMsg(`Error: ${e.message}`) }
+  }
+  const doCreateCategory = async () => {
+    if (!newCatName) return
+    try { await createAdminCategory({ name: newCatName, description: newCatDesc }); setNewCatName(""); setNewCatDesc(""); fetchData(); setActionMsg("Category created") }
+    catch (e: any) { setActionMsg(`Error: ${e.message}`) }
+  }
+  const doUpdateCategory = async () => {
+    if (!editCatId || !editCatName) return
+    try { await updateAdminCategory(editCatId, { name: editCatName, description: editCatDesc }); fetchData(); setActionMsg("Category updated") }
+    catch (e: any) { setActionMsg(`Error: ${e.message}`) }
+  }
+  const doDeleteCategory = async (catId: string) => {
+    try { await deleteAdminCategory(catId); fetchData(); setActionMsg("Category deleted") }
+    catch (e: any) { setActionMsg(`Error: ${e.message}`) }
+  }
 
   if (error) {
     return (
@@ -193,17 +225,14 @@ const AdminPanel = () => {
         </aside>
 
         <main className="flex flex-col gap-y-8">
-          {/* Header */}
           <section className="flex flex-col justify-between gap-4 border-b border-ui-border-base pb-8 small:flex-row small:items-end">
             <div>
               <p className="txt-xsmall-plus uppercase text-ui-fg-muted">{activeView}</p>
               <h1 className="mt-2 text-2xl-semi text-ui-fg-base">
                 {activeView === "Dashboard" ? "Platform overview" : `${activeView} management`}
               </h1>
-              <p className="mt-2 max-w-2xl text-small-regular text-ui-fg-subtle">
-                {activeView === "Dashboard" ? "Review shops, maintain platform categories, and monitor operational activity." : `Manage platform ${activeView.toLowerCase()}.`}
-              </p>
             </div>
+            {actionMsg && <p className="text-small-regular text-ui-fg-subtle">{actionMsg}</p>}
             {activeView !== "Dashboard" && (
               <div className="w-full small:w-72">
                 <Input label={`Search ${activeView.toLowerCase()}`} name="admin-search" value={query} onChange={(e) => setQuery(e.target.value)} />
@@ -223,27 +252,116 @@ const AdminPanel = () => {
                   <TableView title="Recent orders" description="Latest platform orders." rows={adminOrders.slice(0, 5)} query="" compact />
                 </>
               )}
-              {activeView === "Users" && (
-                <TableView title="Platform users" description="All registered accounts." rows={users} query={query} />
+
+              {activeView === "Users" && users.length > 0 && (
+                <div className="flex flex-col gap-6">
+                  {users.map((u: any) => (
+                    <div key={u.id} className="flex items-center justify-between rounded-rounded border border-ui-border-base bg-white p-4">
+                      <div>
+                        <p className="text-base-regular">{u.first_name} {u.last_name} ({u.user_name})</p>
+                        <p className="text-small-regular text-ui-fg-subtle">{u.email} — <Badge color={getBadgeColor(u.role)}>{u.role}</Badge> <Badge color={getBadgeColor(u.status)}>{u.status}</Badge></p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="secondary" className="h-8 text-small-regular" onClick={() => doUserStatus(u.id, "active")}>Active</Button>
+                        <Button variant="secondary" className="h-8 text-small-regular" onClick={() => doUserStatus(u.id, "blocked")}>Block</Button>
+                        <Button variant="secondary" className="h-8 text-small-regular" onClick={() => doUserRole(u.id, "manager")}>Make Manager</Button>
+                        <Button variant="secondary" className="h-8 text-small-regular" onClick={() => doUserRole(u.id, "admin")}>Make Admin</Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               )}
-              {activeView === "Products" && (
-                <TableView title="Platform products" description="All products across shops." rows={adminProducts} query={query} />
-              )}
-              {activeView === "Orders" && (
-                <TableView title="Platform orders" description="All orders across the platform." rows={adminOrders} query={query} />
-              )}
+
               {activeView === "Shops" && (
-                <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-12 text-center">
-                  <h2 className="text-base-semi">Shop management</h2>
-                  <p className="mt-2 text-small-regular text-ui-fg-subtle">Shop approval and management will be available when the shop model is fully integrated.</p>
+                <div className="flex flex-col gap-4">
+                  {shops.length > 0 ? shops.map((s: any) => (
+                    <div key={s.id} className="flex items-center justify-between rounded-rounded border border-ui-border-base bg-white p-4">
+                      <div>
+                        <p className="text-base-regular">{s.name}</p>
+                        <p className="text-small-regular text-ui-fg-subtle">{s.slug} — owner: {s.owner_email} — <Badge color={getBadgeColor(s.status)}>{s.status}</Badge></p>
+                      </div>
+                      <div className="flex gap-2">
+                        {s.status === "pending" && (
+                          <>
+                            <Button variant="secondary" className="h-8" onClick={() => doApprove(s.id, "active")}>Approve</Button>
+                            <Button variant="secondary" className="h-8" onClick={() => doApprove(s.id, "rejected")}>Reject</Button>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  )) : (
+                    <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-12 text-center">
+                      <p className="text-small-regular text-ui-fg-subtle">No shops registered.</p>
+                    </div>
+                  )}
                 </div>
               )}
+
               {activeView === "Categories" && (
-                <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-12 text-center">
-                  <h2 className="text-base-semi">Category management</h2>
-                  <p className="mt-2 text-small-regular text-ui-fg-subtle">Category CRUD operations will be available when the admin category API is implemented.</p>
+                <div className="flex flex-col gap-6">
+                  <div className="rounded-rounded border border-ui-border-base bg-white p-5">
+                    <h2 className="text-base-semi mb-4">Create category</h2>
+                    <div className="flex flex-col gap-3 small:flex-row small:items-end">
+                      <Input label="Name" name="cat-name" value={newCatName} onChange={(e) => setNewCatName(e.target.value)} />
+                      <Input label="Description" name="cat-desc" value={newCatDesc} onChange={(e) => setNewCatDesc(e.target.value)} />
+                      <Button onClick={doCreateCategory} className="h-10">Create</Button>
+                    </div>
+                  </div>
+                  {categories.length > 0 ? categories.map((c: any) => (
+                    <div key={c.id} className="flex items-center justify-between rounded-rounded border border-ui-border-base bg-white p-4">
+                      <div>
+                        <p className="text-base-regular">{c.name}</p>
+                        <p className="text-small-regular text-ui-fg-subtle">{c.description}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="secondary" className="h-8" onClick={() => { setEditCatId(c.id); setEditCatName(c.name); setEditCatDesc(c.description) }}>Edit</Button>
+                        <Button variant="secondary" className="h-8" onClick={() => doDeleteCategory(c.id)}>Delete</Button>
+                      </div>
+                    </div>
+                  )) : (
+                    <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-12 text-center">
+                      <p className="text-small-regular text-ui-fg-subtle">No categories yet.</p>
+                    </div>
+                  )}
+                  {editCatId && (
+                    <div className="rounded-rounded border border-ui-border-base bg-white p-5">
+                      <h2 className="text-base-semi mb-4">Edit category</h2>
+                      <div className="flex flex-col gap-3 small:flex-row small:items-end">
+                        <Input label="Name" name="edit-cat-name" value={editCatName} onChange={(e) => setEditCatName(e.target.value)} />
+                        <Input label="Description" name="edit-cat-desc" value={editCatDesc} onChange={(e) => setEditCatDesc(e.target.value)} />
+                        <Button onClick={doUpdateCategory} className="h-10">Update</Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
+
+              {activeView === "Products" && (
+                <div className="flex flex-col gap-4">
+                  {adminProducts.length > 0 ? adminProducts.map((p: any) => (
+                    <div key={p.id || p.product} className="flex items-center justify-between rounded-rounded border border-ui-border-base bg-white p-4">
+                      <div>
+                        <p className="text-base-regular">{p.product}</p>
+                        <p className="text-small-regular text-ui-fg-subtle">{p.category} — {p.price} — Stock: {p.stock} — <Badge color={getBadgeColor(p.status)}>{p.status}</Badge></p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="secondary" className="h-8" onClick={() => doProductStatus(p.id, "active")}>Active</Button>
+                        <Button variant="secondary" className="h-8" onClick={() => doProductStatus(p.id, "hidden")}>Hidden</Button>
+                        <Button variant="secondary" className="h-8" onClick={() => doProductStatus(p.id, "rejected")}>Reject</Button>
+                      </div>
+                    </div>
+                  )) : (
+                    <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-12 text-center">
+                      <p className="text-small-regular text-ui-fg-subtle">No products in catalog.</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {activeView === "Orders" && (
+                <TableView title="Platform orders" description="" rows={adminOrders} query={query} />
+              )}
+
               {activeView === "Reports" && (
                 <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-12 text-center">
                   <h2 className="text-base-semi">Reports</h2>

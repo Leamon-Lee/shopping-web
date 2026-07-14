@@ -3,7 +3,7 @@ export function customerLinks(username: string) {
   return [
     { href: `${base}/hall`, label: "Hall" },
     { href: `${base}/profile`, label: "Profile" },
-    { href: `${base}/cart`, label: "Cart" },
+    { href: `${base || "/guest"}/cart`, label: "Cart" },
     { href: `${base}/orders`, label: "Orders" },
     { href: `${base}/payment`, label: "Payment" },
     { href: `${base}/wishlist`, label: "Wishlist" },

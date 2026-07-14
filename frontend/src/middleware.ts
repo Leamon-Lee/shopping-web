@@ -14,7 +14,6 @@ const PUBLIC_PATTERNS = [
   /^\/catlog/,                      // category catalog browsing
   /^\/catalog/,                     // category catalog browsing
   /^\/shop/,                        // legacy shop route
-  /^\/cart/,                        // cart (guest allowed)
   /^\/auth/,                        // auth pages
   /^\/sign-in/,                     // legacy sign-in pages
   /^\/_next/,                       // Next.js internals

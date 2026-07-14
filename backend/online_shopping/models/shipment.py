@@ -23,7 +23,11 @@ class Shipment(Base):
     order_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("orders.id", ondelete="CASCADE"), nullable=False
     )
+    shop_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("shops.id", ondelete="SET NULL"), nullable=True
+    )
     status: Mapped[str] = mapped_column(String(32), nullable=False, default="pending")
+    fulfillment_status: Mapped[str] = mapped_column(String(32), nullable=False, default="pending")
     carrier: Mapped[str | None] = mapped_column(String(100))
     tracking_number: Mapped[str | None] = mapped_column(String(100))
     tracking_url: Mapped[str | None] = mapped_column(String(512))

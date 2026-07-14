@@ -1,9 +1,13 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { Badge, Button } from "@medusajs/ui"
+import { Badge } from "@medusajs/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import ProductChoicePanel from "@modules/products/components/product-choice-panel"
 import ProductImageCarousel from "@modules/products/components/product-image-carousel"
+import ProductPurchasePanel, {
+  type AddToCartState,
+} from "@modules/products/components/product-purchase-panel"
+import RecommendedProducts from "@modules/products/components/recommended-products"
+import ProductViewTracker from "@modules/products/components/track-product-view"
 
 import { addCartItem, listProducts } from "../../../../api/backend"
 import { retrieveCustomer } from "@lib/data/customer"
@@ -16,6 +20,7 @@ import {
   unwrapBackendValue,
 } from "../../../../lib/backend-native"
 import { productMatchesRoute } from "../../../../lib/marketplace-routes"
+import { cartHrefForUsername } from "../../../../lib/cart-url"
 
 type Props = {
   params: Promise<{
@@ -60,17 +65,52 @@ export default async function UsernameProductPage(props: Props) {
   }
 
   const username = encodeURIComponent(currentUser?.user_name ?? countryCode)
-  const hallPath = currentUser ? `/customer/${username}/hall` : "/hall"
+  const hallPath = currentUser ? `/${username}/hall` : "/hall"
   const shopsPath = `/${username}/shops`
   const catlogPath = `/${username}/catlog`
   const shopPath = `/${username}/${shopName}`
+  const cartPath = cartHrefForUsername(currentUser?.user_name ?? countryCode)
 
-  async function addProductToCart() {
+  async function addProductToCart(
+    _prevState: AddToCartState,
+    formData: FormData
+  ): Promise<AddToCartState> {
     "use server"
-    await addCartItem({
-      product_name: backendProductName(product!),
-      quantity: 1,
-    })
+    const quantity = Number(formData.get("quantity") ?? 1)
+
+    if (!Number.isInteger(quantity) || quantity < 1) {
+      return {
+        status: "error",
+        message: "Choose a valid quantity.",
+      }
+    }
+
+    if (quantity > backendProductAvailableCount(product!)) {
+      return {
+        status: "error",
+        message: "That quantity is not available.",
+      }
+    }
+
+    try {
+      const cart = await addCartItem({
+        product_name: backendProductName(product!),
+        quantity,
+      })
+
+      return {
+        status: "success",
+        message: `${quantity} item${quantity > 1 ? "s" : ""} added to cart.`,
+        totalQuantity: cart.total_quantity,
+        cartId: cart.id ?? undefined,
+      }
+    } catch (error) {
+      return {
+        status: "error",
+        message:
+          error instanceof Error ? error.message : "Failed to add item to cart.",
+      }
+    }
   }
 
   return (
@@ -92,7 +132,7 @@ export default async function UsernameProductPage(props: Props) {
             </LocalizedClientLink>
           </nav>
           <div className="flex items-center gap-x-4">
-            <LocalizedClientLink href="/cart" className="hover:text-ui-fg-base">
+            <LocalizedClientLink href={cartPath} className="hover:text-ui-fg-base">
               Cart
             </LocalizedClientLink>
             {currentUser ? (
@@ -156,23 +196,34 @@ export default async function UsernameProductPage(props: Props) {
           <p className="txt-small text-ui-fg-muted">
             {backendProductAvailableCount(product)} available
           </p>
-          <ProductChoicePanel
+          <ProductPurchasePanel
             product={product}
             fallbackSizes={extractSizeChoices(unwrapBackendValue(product.description))}
+            maxQuantity={backendProductAvailableCount(product)}
+            cartHref={cartPath}
+            addAction={addProductToCart}
           />
-          <form action={addProductToCart}>
-            <Button
-              type="submit"
-              variant="primary"
-              className="h-10 w-full"
-              disabled={backendProductAvailableCount(product) < 1}
-              data-testid="add-product-button"
-            >
-              Add to cart
-            </Button>
-          </form>
         </div>
       </section>
+
+      <ProductViewTracker
+        productId={product.id ?? backendProductName(product)}
+        productName={backendProductName(product)}
+        productSlug={product.slug ?? undefined}
+        shopId={product.shop?.shop_id as string | undefined}
+        shopName={product.shop?.shop_name as string | undefined}
+        categoryName={backendCategoryName(product.category)}
+        price={backendProductPrice(product)}
+      />
+
+      <div className="content-container py-8">
+        <RecommendedProducts
+          endpoint={`/recommendations/products/${encodeURIComponent(product.id ?? backendProductName(product))}/similar`}
+          title="Similar Items"
+          currentUser={currentUser}
+          className="mb-8"
+        />
+      </div>
     </main>
   )
 }

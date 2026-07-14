@@ -124,6 +124,7 @@ CREATE TABLE IF NOT EXISTS products (
     description TEXT NOT NULL DEFAULT '',
     price NUMERIC(12, 2) NOT NULL CHECK (price > 0),
     available_item_count INTEGER NOT NULL DEFAULT 0 CHECK (available_item_count >= 0),
+    status VARCHAR(32) NOT NULL DEFAULT 'active',
     metadata_json JSONB NOT NULL DEFAULT '{}'::jsonb,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
@@ -213,6 +214,10 @@ CREATE TABLE IF NOT EXISTS shopping_carts (
     currency_code CHAR(3) NOT NULL DEFAULT 'cny',
     email VARCHAR(255),
     locale VARCHAR(16),
+    shipping_address JSONB,
+    billing_address JSONB,
+    shipping_method JSONB,
+    payment_session JSONB,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
@@ -247,6 +252,11 @@ CREATE TABLE IF NOT EXISTS orders (
     email VARCHAR(255),
     region_id VARCHAR(64),
     currency_code CHAR(3) NOT NULL DEFAULT 'cny',
+    shipping_address JSONB,
+    billing_address JSONB,
+    shipping_method JSONB,
+    cart_id UUID,
+    order_access_token VARCHAR(128),
     order_date TIMESTAMPTZ NOT NULL DEFAULT now(),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
@@ -265,6 +275,8 @@ CREATE TABLE IF NOT EXISTS order_items (
     product_name VARCHAR(160) NOT NULL,
     quantity INTEGER NOT NULL CHECK (quantity > 0),
     price NUMERIC(12, 2) NOT NULL CHECK (price > 0),
+    shop_id UUID REFERENCES shops(id) ON DELETE SET NULL,
+    shop_name VARCHAR(200),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -350,6 +362,7 @@ CREATE INDEX IF NOT EXISTS idx_payment_transactions_payment ON payment_transacti
 CREATE TABLE IF NOT EXISTS shipments (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+    shop_id UUID REFERENCES shops(id) ON DELETE SET NULL,
     shipment_date TIMESTAMPTZ NOT NULL,
     estimated_arrival TIMESTAMPTZ NOT NULL,
     shipment_method VARCHAR(120) NOT NULL,
@@ -408,6 +421,52 @@ CREATE TABLE IF NOT EXISTS product_reviews (
 CREATE INDEX IF NOT EXISTS idx_product_reviews_customer ON product_reviews(customer_id);
 CREATE INDEX IF NOT EXISTS idx_product_reviews_product ON product_reviews(product_id);
 
+-- Recommendation system tables
+CREATE TABLE IF NOT EXISTS user_behavior_events (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    event_type VARCHAR(64) NOT NULL,
+    account_id UUID REFERENCES accounts(id) ON DELETE SET NULL,
+    user_email VARCHAR(255),
+    anonymous_id VARCHAR(128),
+    session_id VARCHAR(128),
+    product_id UUID REFERENCES products(id) ON DELETE SET NULL,
+    product_name VARCHAR(200),
+    product_slug VARCHAR(200),
+    shop_id UUID REFERENCES shops(id) ON DELETE SET NULL,
+    shop_name VARCHAR(200),
+    category_id UUID REFERENCES product_categories(id) ON DELETE SET NULL,
+    category_name VARCHAR(200),
+    query VARCHAR(500),
+    quantity INTEGER,
+    price FLOAT,
+    source_page VARCHAR(500),
+    metadata_json JSONB DEFAULT '{}'::jsonb,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_ube_account ON user_behavior_events(account_id);
+CREATE INDEX IF NOT EXISTS idx_ube_anon ON user_behavior_events(anonymous_id);
+CREATE INDEX IF NOT EXISTS idx_ube_session ON user_behavior_events(session_id);
+CREATE INDEX IF NOT EXISTS idx_ube_type ON user_behavior_events(event_type);
+CREATE INDEX IF NOT EXISTS idx_ube_product ON user_behavior_events(product_id);
+CREATE INDEX IF NOT EXISTS idx_ube_shop ON user_behavior_events(shop_id);
+CREATE INDEX IF NOT EXISTS idx_ube_created ON user_behavior_events(created_at);
+CREATE INDEX IF NOT EXISTS idx_ube_type_product_time ON user_behavior_events(event_type, product_id, created_at);
+
+CREATE TABLE IF NOT EXISTS recommendation_cache (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    product_id UUID REFERENCES products(id) ON DELETE CASCADE,
+    recommended_product_ids JSONB NOT NULL DEFAULT '[]'::jsonb,
+    reason VARCHAR(500),
+    reason_type VARCHAR(32) NOT NULL DEFAULT 'rule_based',
+    score FLOAT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    expires_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_rec_cache_product ON recommendation_cache(product_id);
+CREATE INDEX IF NOT EXISTS idx_rec_cache_type ON recommendation_cache(reason_type);
+
 DO $$
 DECLARE
     table_name text;
@@ -433,7 +492,9 @@ BEGIN
         'electronic_bank_transfers',
         'payments',
         'shipments',
-        'product_reviews'
+        'product_reviews',
+        'user_behavior_events',
+        'recommendation_cache'
     ]
     LOOP
         EXECUTE format('DROP TRIGGER IF EXISTS trg_%I_updated_at ON %I', table_name, table_name);

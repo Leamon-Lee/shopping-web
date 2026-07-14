@@ -36,7 +36,7 @@ function LoginForm() {
       <div className="content-container flex min-h-screen items-center justify-center py-16">
         <div className="flex w-full max-w-sm flex-col">
           <div className="mb-8">
-            <p className="txt-xsmall-plus uppercase text-ui-fg-muted">Shopping Web</p>
+            <p className="txt-xsmall-plus uppercase text-ui-fg-muted">Account</p>
             <h1 className="mt-2 text-xl-semi text-ui-fg-base">Sign in to your account</h1>
             <p className="mt-2 text-small-regular text-ui-fg-subtle">
               Enter your email and password to continue.

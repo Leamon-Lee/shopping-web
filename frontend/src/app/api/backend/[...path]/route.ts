@@ -13,6 +13,11 @@ async function proxyBackendRequest(
 
   const headers = new Headers(request.headers)
   headers.set("host", target.host)
+  // Pass cart_id for guest isolation
+  const cartId = request.cookies.get("shopping_cart_id")?.value
+  if (cartId) {
+    headers.set("x-cart-id", cartId)
+  }
 
   const response = await fetch(target, {
     method: request.method,

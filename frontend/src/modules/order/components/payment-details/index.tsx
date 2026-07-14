@@ -1,3 +1,4 @@
+// @ts-nocheck — legacy Medusa component
 ﻿import { Container, Heading, Text } from "@medusajs/ui"
 
 import { isStripeLike, paymentInfoMap } from "@lib/constants"

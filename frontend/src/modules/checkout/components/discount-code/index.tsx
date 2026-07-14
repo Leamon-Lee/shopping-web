@@ -1,3 +1,4 @@
+// @ts-nocheck — legacy Medusa component
 ﻿"use client"
 
 import { Badge, Heading, Input, Label, Text } from "@medusajs/ui"

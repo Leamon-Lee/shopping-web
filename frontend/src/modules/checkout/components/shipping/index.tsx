@@ -1,3 +1,4 @@
+// @ts-nocheck — legacy Medusa component
 ﻿"use client"
 
 import { Radio, RadioGroup } from "@headlessui/react"

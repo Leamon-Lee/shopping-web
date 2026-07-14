@@ -1,10 +1,10 @@
 import CustomerPanel from "@modules/customer/templates/customer-panel"
-import { getCustomerPanel } from "../../../api/backend"
+import { getCartForUsername, listOrders } from "../../../api/backend"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Customer Panel",
-  description: "Customer dashboard and shopping tools.",
+  title: "My Account",
+  description: "Customer account center.",
 }
 
 export const dynamic = "force-dynamic"
@@ -12,8 +12,18 @@ export const dynamic = "force-dynamic"
 export default async function CustomerPage(props: {
   params: Promise<{ username: string }>
 }) {
-  await props.params
-  await getCustomerPanel()
+  const { username } = await props.params
+  const [cart, orders] = await Promise.all([
+    getCartForUsername(username).catch(() => null),
+    listOrders().catch(() => []),
+  ])
 
-  return <CustomerPanel />
+  return (
+    <CustomerPanel
+      username={username}
+      cart={cart}
+      orders={orders}
+      products={[]}
+    />
+  )
 }

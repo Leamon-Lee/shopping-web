@@ -2,6 +2,7 @@ import { getHall } from "../../api/backend"
 import { retrieveCustomer } from "@lib/data/customer"
 import CatlogTemplate from "@modules/customer/templates/catlog"
 import { Metadata } from "next"
+import { redirect } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "Catlog",
@@ -12,6 +13,10 @@ export const dynamic = "force-dynamic"
 
 export default async function CatlogPage() {
   const [data, currentUser] = await Promise.all([getHall(), retrieveCustomer()])
+
+  if (currentUser) {
+    redirect(`/${encodeURIComponent(currentUser.user_name)}/catlog`)
+  }
 
   return <CatlogTemplate data={data} currentUser={currentUser} />
 }

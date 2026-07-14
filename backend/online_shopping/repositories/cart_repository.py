@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import uuid
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import joinedload
 
 from online_shopping.models.cart import CartItem, ShoppingCart
 from online_shopping.models.product import Product
@@ -13,8 +15,10 @@ class CartRepository:
     def __init__(self, db: AsyncSession):
         self.db = db
 
-    async def get_default_cart(self, email: str | None = None) -> ShoppingCart:
-        cart = await self._load_default_cart(email=email)
+    async def get_default_cart(
+        self, email: str | None = None, cart_id: str | None = None
+    ) -> ShoppingCart:
+        cart = await self._load_default_cart(email=email, cart_id=cart_id)
         if cart is not None:
             return cart
 
@@ -32,24 +36,74 @@ class CartRepository:
         result = await self.db.execute(
             select(ShoppingCart)
             .options(
-                selectinload(ShoppingCart.items)
-                .selectinload(CartItem.variant)
-                .selectinload(ProductVariant.product)
-                .selectinload(Product.category),
-                selectinload(ShoppingCart.items)
-                .selectinload(CartItem.variant)
-                .selectinload(ProductVariant.product)
-                .selectinload(Product.images),
-                selectinload(ShoppingCart.items)
-                .selectinload(CartItem.variant)
-                .selectinload(ProductVariant.product)
-                .selectinload(Product.variants),
+                joinedload(ShoppingCart.items)
+                .joinedload(CartItem.variant)
+                .joinedload(ProductVariant.product)
+                .joinedload(Product.category),
+                joinedload(ShoppingCart.items)
+                .joinedload(CartItem.variant)
+                .joinedload(ProductVariant.product)
+                .joinedload(Product.images),
+                joinedload(ShoppingCart.items)
+                .joinedload(CartItem.variant)
+                .joinedload(ProductVariant.product)
+                .joinedload(Product.variants),
             )
             .where(ShoppingCart.id == cart_id)
+            .execution_options(populate_existing=True)
         )
-        return result.scalars().one()
+        return result.unique().scalars().one()
 
-    async def _load_default_cart(self, email: str | None = None) -> ShoppingCart | None:
+    async def _load_default_cart(
+        self, email: str | None = None, cart_id: str | None = None
+    ) -> ShoppingCart | None:
+        # Logged-in users get exactly one active cart keyed by email. If they
+        # arrive with an anonymous cart_id, attach that cart only when no
+        # account cart exists yet.
+        if email:
+            result = await self.db.execute(
+                select(ShoppingCart)
+                .where(ShoppingCart.email == email)
+                .order_by(ShoppingCart.created_at.desc())
+                .limit(1)
+            )
+            cart = result.scalars().first()
+            if cart is not None:
+                return await self.get_cart(cart.id)
+
+            if cart_id:
+                try:
+                    cid = uuid.UUID(cart_id)
+                except (ValueError, TypeError):
+                    cid = None
+                if cid:
+                    result = await self.db.execute(
+                        select(ShoppingCart).where(ShoppingCart.id == cid)
+                    )
+                    cart = result.scalars().first()
+                    if cart is not None:
+                        cart.email = email
+                        await self.db.flush()
+                        return await self.get_cart(cart.id)
+
+            return None
+
+        # 1) Specific cart_id takes priority (guest isolation)
+        if cart_id:
+            try:
+                cid = uuid.UUID(cart_id)
+            except (ValueError, TypeError):
+                cid = None
+            if cid:
+                result = await self.db.execute(
+                    select(ShoppingCart).where(ShoppingCart.id == cid)
+                )
+                cart = result.scalars().first()
+                if cart is not None:
+                    return await self.get_cart(cart.id)
+                # cart_id not found — fall through to create new one
+
+        # 2) Logged-in user: match by email
         if email:
             result = await self.db.execute(
                 select(ShoppingCart)
@@ -58,12 +112,9 @@ class CartRepository:
                 .limit(1)
             )
         else:
-            result = await self.db.execute(
-                select(ShoppingCart)
-                .where(ShoppingCart.customer_id.is_(None), ShoppingCart.email.is_(None))
-                .order_by(ShoppingCart.created_at.asc())
-                .limit(1)
-            )
+            # 3) Anonymous — NO global shared cart; always create new
+            return None
+
         cart = result.scalars().first()
         if cart is None:
             return None
@@ -110,3 +161,8 @@ class CartRepository:
         for item in list(cart.items):
             await self.db.delete(item)
         await self.db.flush()
+
+    async def save(self, cart: ShoppingCart) -> ShoppingCart:
+        """Persist changes to a cart (address, shipping, etc.)."""
+        await self.db.flush()
+        return await self.get_cart(cart.id)

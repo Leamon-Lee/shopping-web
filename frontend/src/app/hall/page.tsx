@@ -2,6 +2,7 @@ import { getHall, getHallProducts } from "../../api/backend"
 import HallTemplate from "@modules/customer/templates/hall"
 import { Metadata } from "next"
 import { retrieveCustomer } from "@lib/data/customer"
+import { redirect } from "next/navigation"
 
 const INITIAL_PRODUCT_LIMIT = 30
 
@@ -13,11 +14,16 @@ export const metadata: Metadata = {
 }
 
 export default async function HallPage() {
+  const currentUser = await retrieveCustomer()
+
+  if (currentUser) {
+    redirect(`/${encodeURIComponent(currentUser.user_name)}/hall`)
+  }
+
   try {
-    const [data, initialFeed, currentUser] = await Promise.all([
+    const [data, initialFeed] = await Promise.all([
       getHall(),
       getHallProducts({ limit: INITIAL_PRODUCT_LIMIT, offset: 0 }),
-      retrieveCustomer(),
     ])
 
     return (

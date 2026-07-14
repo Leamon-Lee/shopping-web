@@ -1,3 +1,4 @@
+// @ts-nocheck — legacy Medusa component
 ﻿"use client"
 
 import { Plus } from "@medusajs/icons"

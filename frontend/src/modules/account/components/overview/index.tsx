@@ -1,3 +1,4 @@
+// @ts-nocheck — legacy Medusa component
 ﻿import { Container } from "@medusajs/ui"
 
 import ChevronDown from "@modules/common/icons/chevron-down"

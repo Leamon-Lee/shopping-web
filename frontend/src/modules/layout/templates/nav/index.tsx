@@ -1,7 +1,17 @@
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import SideMenu from "@modules/layout/components/side-menu"
+import { getServerCartHref } from "@lib/data/cart-url"
+import { retrieveCart } from "@lib/data/cart"
+import { getCartForUsername } from "api/backend"
 
-export default async function Nav() {
+export default async function Nav({ cartOwner }: { cartOwner?: string }) {
+  const cartHref = await getServerCartHref(cartOwner)
+  const cart =
+    cartOwner && cartOwner !== "cart" && cartOwner !== "guest"
+      ? await getCartForUsername(cartOwner).catch(() => null)
+      : await retrieveCart().catch(() => null)
+  const totalQuantity = cart?.total_quantity ?? 0
+
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
       <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">
@@ -12,16 +22,6 @@ export default async function Nav() {
             </div>
           </div>
 
-          <div className="flex items-center h-full">
-            <LocalizedClientLink
-              href="/"
-              className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
-              data-testid="nav-store-link"
-            >
-              Shopping Web
-            </LocalizedClientLink>
-          </div>
-
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
             <div className="hidden small:flex items-center gap-x-6 h-full">
               <a className="hover:text-ui-fg-base" href="/hall">
@@ -29,15 +29,6 @@ export default async function Nav() {
               </a>
               <a className="hover:text-ui-fg-base" href="/shop">
                 Shop
-              </a>
-              <a className="hover:text-ui-fg-base" href="/sign-in/customer">
-                Customer
-              </a>
-              <a className="hover:text-ui-fg-base" href="/sign-in/manager">
-                Manager
-              </a>
-              <a className="hover:text-ui-fg-base" href="/sign-in/admin">
-                Admin
               </a>
               <LocalizedClientLink
                 className="hover:text-ui-fg-base"
@@ -49,10 +40,10 @@ export default async function Nav() {
             </div>
             <LocalizedClientLink
               className="hover:text-ui-fg-base flex gap-2"
-              href="/cart"
+              href={cartHref}
               data-testid="nav-cart-link"
             >
-              Cart (0)
+              Cart ({totalQuantity})
             </LocalizedClientLink>
           </div>
         </nav>

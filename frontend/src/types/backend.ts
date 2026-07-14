@@ -11,12 +11,11 @@ export type AccountStatus =
 
 export type OrderStatus =
   | "created"
-  | "pending"
-  | "unshipped"
+  | "confirmed"
+  | "processing"
   | "shipped"
-  | "complete"
+  | "completed"
   | "canceled"
-  | "refund_applied"
 
 export type PaymentStatus =
   | "pending"
@@ -55,6 +54,7 @@ export interface Address {
   postal_code: string
   country: string
   is_default_shipping?: boolean
+  is_default_billing?: boolean
   // Legacy compatibility
   address_1?: string
   address_2?: string
@@ -64,6 +64,8 @@ export interface Address {
   phone?: string
   first_name?: string
   last_name?: string
+  // ISO country code
+  iso_2?: string
 }
 
 export interface Account {
@@ -74,6 +76,9 @@ export interface Account {
   email: string
   phone: Phone
   addresses: Address[]
+  // Top-level aliases for checkout component compatibility
+  first_name?: string
+  last_name?: string
 }
 
 // ── Auth ─────────────────────────────────────────────────────────────
@@ -168,6 +173,16 @@ export interface Product {
   created_at?: string
   updated_at?: string
   tags?: Record<string, unknown>[]
+  collection?: { title?: string; id?: string } | null
+  collection_id?: string
+  type?: { value?: string } | null
+  width?: number
+  height?: number
+  weight?: number
+  length?: number
+  material?: string
+  origin_country?: string
+  subtitle?: string
 }
 
 export interface ProductCreate {
@@ -195,20 +210,31 @@ export interface CartItem {
   product_title: string
   product_handle: string
   thumbnail: string | null
-  variant: ProductVariant | null
+  variant: ProductVariant | null | undefined
   created_at: string | null
+  // Legacy Medusa compat
+  title?: string
+  description?: string
+  subtitle?: string
 }
 
 export interface ShoppingCart {
   id: string | null
+  email: string | null
   items: CartItem[]
   total_quantity: number
   subtotal: number
   total: number | null
   currency_code: string
-  region: Record<string, unknown>
+  region: any
+  shipping_address: any
+  billing_address: any
+  shipping_methods: any[]
+  payment_collection: any
   promotions: Record<string, unknown>[]
-  shipping_methods: Record<string, unknown>[]
+  // Legacy Medusa compat
+  item_total?: number
+  gift_cards?: unknown[]
 }
 
 // ── Order ────────────────────────────────────────────────────────────
@@ -236,12 +262,23 @@ export interface OrderCreate {
 }
 
 export interface Order {
+  id: string | null
   order_number: string
   status: OrderStatus
   order_date: string | null
+  email: string | null
   items: CartItem[]
   payment: Payment | null
   shipments: Shipment[]
+  shipping_address: Record<string, unknown> | null
+  billing_address: Record<string, unknown> | null
+  shipping_method: Record<string, unknown> | null
+  subtotal: number | null
+  total: number | null
+  currency_code: string
+  // Legacy compat
+  display_id?: string
+  created_at?: string
 }
 
 // ── Shop / Hall ──────────────────────────────────────────────────────
@@ -284,10 +321,13 @@ export interface PaginatedHallProducts {
 export interface RegionCountry {
   country_code: string
   display_name: string
+  iso_2?: string
+  iso_3?: string
 }
 
 export interface Region {
   region_id: string
+  id?: string
   name: string
   currency_code: string
   countries: RegionCountry[]
@@ -310,8 +350,8 @@ export interface AddressCreate {
 export type Unwrapped<T> = T extends { value: infer V } ? V : T
 
 export function unwrapValue<T>(value: T): Unwrapped<T> {
-  if (value !== null && typeof value === "object" && "value" in (value as object)) {
-    return (value as { value: unknown }).value as Unwrapped<T>
+  if (value !== null && typeof value === "object" && "value" in (value as any)) {
+    return (value as any).value as Unwrapped<T>
   }
   return value as Unwrapped<T>
 }
@@ -319,7 +359,7 @@ export function unwrapValue<T>(value: T): Unwrapped<T> {
 // ── Backward-compatible aliases (for gradual migration) ─────────────
 // Old code imports these; new code should use the primary names above.
 
-export type BackendRecord = Record<string, unknown>
+export type BackendRecord = Record<string, any>
 export type BackendAccountStatus = AccountStatus
 export type BackendOrderStatus = OrderStatus
 export type BackendPaymentStatus = PaymentStatus
@@ -330,9 +370,14 @@ export type BackendAddress = Address & Record<string, unknown>
 export type BackendProductCategory = Category
 export type BackendProductVariant = ProductVariant
 export type BackendProductImage = ProductImage
-export type BackendProductOption = Record<string, unknown> & { values?: Array<{ value?: string }> }
-export type BackendProductListParams = Record<string, unknown>
-export type BackendProduct = Product
+export type BackendProductOption = Record<string, any> & {
+  id?: string
+  title?: string
+  name?: string
+  values?: Array<{ value?: string; label?: string; title?: string; name?: string }>
+}
+export type BackendProductListParams = Record<string, any>
+export type BackendProduct = Product & { options?: any[] }
 export type BackendShopSummary = ShopSummary
 export type BackendHallSection = HallSection
 export type BackendHallPayload = HallPayload
@@ -340,17 +385,40 @@ export type BackendItem = CartItem
 export type BackendCartLineItem = CartItem
 export type BackendOrderLineItem = CartItem
 export type BackendPromotion = Record<string, unknown>
-export type BackendPaymentSession = Record<string, unknown>
-export type BackendPrice = Record<string, unknown> & { price_rules?: Record<string, unknown>[] }
+export type BackendPaymentSession = Record<string, any>
+export type BackendPrice = Record<string, any> & { price_rules?: Record<string, any>[]; value?: any }
 export type BackendFreeShippingPrice = BackendPrice & {
   target_reached: boolean
   target_remaining: number
   remaining_percentage: number
 }
-export type BackendShippingOption = Record<string, unknown> & { rules?: Record<string, unknown>[] }
-export type BackendCollection = Record<string, unknown> & { products?: Product[] }
-export type BackendShoppingCart = ShoppingCart
-export type BackendCart = ShoppingCart
+export type BackendShippingOption = Record<string, any> & {
+  id?: string
+  name?: string
+  amount?: number
+  price_type?: string
+  prices?: Array<{ amount?: number; currency_code?: string }>
+  rules?: Record<string, any>[]
+  service_zone?: { fulfillment_set?: { type?: string; location?: { address?: Record<string, any> } } }
+  insufficient_inventory?: boolean
+}
+export type BackendCollection = Record<string, any> & { products?: Product[] }
+export type BackendShoppingCart = ShoppingCart & {
+  discount_total?: number
+  gift_card_total?: number
+  gift_card_tax_total?: number
+  item_tax_total?: number
+  shipping_tax_total?: number
+  shipping_total?: number
+  tax_total?: number
+  original_total?: number
+  original_item_subtotal?: number
+  original_item_total?: number
+  original_tax_total?: number
+  original_shipping_total?: number
+  item_total?: number
+}
+export type BackendCart = BackendShoppingCart
 export type BackendPayment = Payment
 export type BackendShipmentLog = { status: ShipmentStatus; creation_date: { value: string } }
 export type BackendShipment = {

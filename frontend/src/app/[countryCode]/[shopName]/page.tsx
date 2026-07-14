@@ -12,6 +12,7 @@ import {
   formatBackendMoney,
 } from "../../../lib/backend-native"
 import { productHref } from "../../../lib/marketplace-routes"
+import { cartHrefForUsername } from "../../../lib/cart-url"
 
 type Props = {
   params: Promise<{ countryCode: string; shopName: string }>
@@ -44,9 +45,10 @@ export default async function UsernameShopPage(props: Props) {
   }
 
   const username = encodeURIComponent(currentUser?.user_name ?? countryCode)
-  const hallPath = currentUser ? `/customer/${username}/hall` : "/hall"
+  const hallPath = currentUser ? `/${username}/hall` : "/hall"
   const shopsPath = `/${username}/shops`
   const catlogPath = `/${username}/catlog`
+  const cartPath = cartHrefForUsername(currentUser?.user_name ?? countryCode)
 
   return (
     <main className="min-h-screen bg-ui-bg-base text-ui-fg-base">
@@ -67,7 +69,7 @@ export default async function UsernameShopPage(props: Props) {
             </LocalizedClientLink>
           </nav>
           <div className="flex items-center gap-x-4">
-            <LocalizedClientLink href="/cart" className="hover:text-ui-fg-base">
+            <LocalizedClientLink href={cartPath} className="hover:text-ui-fg-base">
               Cart
             </LocalizedClientLink>
             {currentUser ? (

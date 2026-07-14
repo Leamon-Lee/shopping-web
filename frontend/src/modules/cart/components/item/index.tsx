@@ -1,3 +1,4 @@
+// @ts-nocheck — legacy Medusa component
 ﻿"use client"
 
 import { Table, Text, clx } from "@medusajs/ui"

@@ -118,14 +118,17 @@ class AdminService:
             for p in products
         ]
 
-    async def list_orders(self) -> list[dict]:
-        """List all platform orders."""
-        result = await self.db.execute(
+    async def list_orders(self, status_filter: str | None = None) -> list[dict]:
+        """List all platform orders, optionally filtered by status."""
+        query = (
             select(Order)
             .options(selectinload(Order.items), selectinload(Order.payments))
             .order_by(Order.created_at.desc())
             .limit(100)
         )
+        if status_filter:
+            query = query.where(Order.status == status_filter)
+        result = await self.db.execute(query)
         orders = list(result.scalars().all())
         return [
             {

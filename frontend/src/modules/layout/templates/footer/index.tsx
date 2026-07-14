@@ -1,20 +1,15 @@
 import { Text } from "@medusajs/ui"
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { getServerCartHref } from "@lib/data/cart-url"
 
 export default async function Footer() {
+  const cartHref = await getServerCartHref()
+
   return (
     <footer className="border-t border-ui-border-base w-full">
       <div className="content-container flex flex-col w-full">
         <div className="flex flex-col gap-y-6 xsmall:flex-row items-start justify-between py-40">
-          <div>
-            <LocalizedClientLink
-              href="/"
-              className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
-            >
-              Shopping Web
-            </LocalizedClientLink>
-          </div>
           <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3">
             <div className="flex flex-col gap-y-2">
               <span className="txt-small-plus txt-ui-fg-base">Store</span>
@@ -25,7 +20,7 @@ export default async function Footer() {
                   </LocalizedClientLink>
                 </li>
                 <li>
-                  <LocalizedClientLink className="hover:text-ui-fg-base" href="/cart">
+                  <LocalizedClientLink className="hover:text-ui-fg-base" href={cartHref}>
                     Cart
                   </LocalizedClientLink>
                 </li>
@@ -39,23 +34,13 @@ export default async function Footer() {
                     Account
                   </LocalizedClientLink>
                 </li>
-                <li>
-                  <LocalizedClientLink className="hover:text-ui-fg-base" href="/sign-in/customer">
-                    Customer
-                  </LocalizedClientLink>
-                </li>
-                <li>
-                  <LocalizedClientLink className="hover:text-ui-fg-base" href="/sign-in/manager">
-                    Manager
-                  </LocalizedClientLink>
-                </li>
               </ul>
             </div>
           </div>
         </div>
         <div className="flex w-full mb-16 justify-between text-ui-fg-muted">
           <Text className="txt-compact-small">
-            (c) {new Date().getFullYear()} Shopping Web. All rights reserved.
+            (c) {new Date().getFullYear()} All rights reserved.
           </Text>
         </div>
       </div>
