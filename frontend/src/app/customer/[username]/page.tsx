@@ -1,12 +1,17 @@
 import CustomerPanel from "@modules/customer/templates/customer-panel"
-import { getCart, listOrders, listProducts } from "../../../api/backend"
+import {
+  getCart,
+  getUserPreferenceProfile,
+  listOrders,
+  listProducts,
+} from "../../../api/backend"
 import { retrieveCustomer } from "@lib/data/customer"
 import { cookies } from "next/headers"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Customer Panel",
-  description: "Customer dashboard and shopping tools.",
+  description: "Customer shopping tools.",
 }
 
 export const dynamic = "force-dynamic"
@@ -33,15 +38,17 @@ async function authFetch<T>(path: string, init?: RequestInit): Promise<T> {
 export default async function CustomerPage(props: {
   params: Promise<{ username: string }>
 }) {
-  await props.params
+  const { username } = await props.params
+  const userKey = decodeURIComponent(username)
 
   const customer = await retrieveCustomer()
-  const [cart, orders, products, addresses, paymentMethods] = await Promise.all([
+  const [cart, orders, products, addresses, paymentMethods, preferenceProfile] = await Promise.all([
     getCart().catch(() => null),
     listOrders().catch(() => []),
     listProducts().catch(() => []),
     authFetch<any[]>("/accounts/me/addresses").catch(() => []),
     authFetch<any[]>("/accounts/me/payment-methods").catch(() => []),
+    getUserPreferenceProfile(userKey).catch(() => null),
   ])
   const { reviews = [] } = await authFetch<{ reviews: any[] }>("/accounts/me/reviews").catch(() => ({ reviews: [] }))
   async function deleteReviewAction(id: string) { "use server"; return authFetch<any>(`/accounts/me/reviews/${id}`, { method: "DELETE" }) }
@@ -83,7 +90,8 @@ export default async function CustomerPage(props: {
       completeOrderAction={completeOrderAction} deleteOrderAction={deleteOrderAction}
       addAddressAction={addAddressAction} updateAddressAction={updateAddressAction} deleteAddressAction={deleteAddressAction}
       addPaymentMethodAction={addPaymentMethodAction} deletePaymentMethodAction={deletePaymentMethodAction}
-      reviewsCount={reviews.length} reviews={reviews} deleteReviewAction={deleteReviewAction}
+      preferenceProfile={preferenceProfile}
+      reviews={reviews} deleteReviewAction={deleteReviewAction}
     />
   )
 }

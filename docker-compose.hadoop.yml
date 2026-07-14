@@ -14,7 +14,7 @@ services:
     environment:
       HADOOP_ROLE: master
     ports:
-      - "9000:9000"
+      - "9002:9000"
       - "9870:9870"
       - "8088:8088"
       - "19888:19888"
@@ -83,7 +83,8 @@ services:
 
 networks:
   hadoop:
-    driver: bridge
+    external: true
+    name: hadoop
 
 volumes:
   hadoop_namenode:

@@ -1,283 +1,312 @@
-﻿# Online Shopping System
+# Shopping Web
 
-Ecommerce workspace with a FastAPI backend and a Next.js storefront frontend.
+Docker-first ecommerce demo with a separated FastAPI backend, Next.js frontend, PostgreSQL, MinIO object storage, and a Hadoop/Spark recommendation pipeline.
 
-## Project layout
-
-- `backend/online_shopping/domain/entities`: business entities
-- `backend/online_shopping/domain/value_objects`: validated value objects
-- `backend/online_shopping/domain/enums`: status enums
-- `backend/online_shopping/domain/interfaces`: domain contracts
-- `backend/online_shopping/services`: application services
-- `backend/online_shopping/api`: FastAPI app, schemas, routers, and in-memory API store
-- `frontend`: Next.js storefront
-- `docs/design`: PlantUML design documents
-
-## Run locally
-
-Use two terminals: one for FastAPI and one for Next.js.
-
-### Backend
-
-```powershell
-cd backend
-python -m pip install -r requirements.txt
-$env:PYTHONPATH = "."
-python main.py
-```
-
-The FastAPI app is exposed as `online_shopping.api.app:app` and runs on port `8001`.
-
-API docs: `http://localhost:8001/docs`
-
-### Frontend
-
-Create a local env file from the example:
-
-```powershell
-Copy-Item frontend\.env.local.example frontend\.env.local
-```
-
-Required local values:
+The current recommendation flow is:
 
 ```text
-NEXT_PUBLIC_BACKEND_URL=http://localhost:8001
-NEXT_PUBLIC_BASE_URL=http://localhost:8000
-NEXT_PUBLIC_DEFAULT_REGION=cn
+PostgreSQL events/reviews/products
+  -> JSONL export
+  -> HDFS raw partitions
+  -> Spark recommendation jobs
+  -> HDFS recommendation output
+  -> PostgreSQL recommendation_results
+  -> frontend hall recommendations
 ```
 
-Start the storefront:
+## Requirements
+
+- Docker Desktop
+- Git
+- PowerShell on Windows, or Bash on macOS/Linux/WSL
+- At least 8 GB RAM available to Docker is recommended when running Hadoop and Spark together
+
+No local Python or Node setup is required for the normal path. Backend and frontend both run in Docker containers.
+
+## Clone
 
 ```powershell
-cd frontend
-corepack enable
-corepack yarn install
-corepack yarn dev
+git clone git@github.com:Leamon-Lee/shopping-web.git
+cd shopping-web
 ```
 
-Storefront: `http://localhost:8000/`
+If SSH is not configured:
 
-## Verified Run Flow
-
-Start Docker Desktop first, then run the stack from the repository root.
-
-Start infrastructure services:
-
-```cmd
-docker compose up -d postgres minio minio-init
+```powershell
+git clone https://github.com/Leamon-Lee/shopping-web.git
+cd shopping-web
 ```
 
-Import CSV catalog data into PostgreSQL and MinIO:
+## Quick Start: Storefront + Backend
 
-```cmd
-docker compose --profile seed run --rm seed
-```
+Start PostgreSQL, MinIO, backend, and frontend:
 
-Expected seed summary:
-
-```text
-CSV loaded: 41 categories, 302 products, 135 images, 850 variants
-Inserted 301 products
-Import complete!
-```
-
-Start the backend and frontend:
-
-```cmd
+```powershell
 docker compose up -d
+```
+
+Import the seed catalog into PostgreSQL and upload product images/data into MinIO:
+
+```powershell
+docker compose --profile seed run --rm seed
 ```
 
 Open:
 
-- Storefront home: `http://localhost:8000/`
-- Shop: `http://localhost:8000/shop`
-- Cart: `http://localhost:8000/cart`
-- Admin panel: `http://localhost:8000/admin`
-- Manager panel: `http://localhost:8000/manager`
-- Customer panel: `http://localhost:8000/customer`
-- Backend docs: `http://localhost:8001/docs`
-- Backend health: `http://localhost:8001/health`
-- MinIO console: `http://localhost:9001`
+- Frontend: http://localhost:8000
+- Backend API docs: http://localhost:8001/docs
+- Backend health: http://localhost:8001/health
+- MinIO console: http://localhost:9001
 
-Verify the backend is using imported database data:
+Default local services:
+
+| Service | URL / Port |
+| --- | --- |
+| Frontend | http://localhost:8000 |
+| Backend | http://localhost:8001 |
+| PostgreSQL | localhost:5432 |
+| MinIO S3 | http://localhost:9000 |
+| MinIO console | http://localhost:9001 |
+
+Useful checks:
 
 ```powershell
+Invoke-RestMethod http://localhost:8001/health
 (Invoke-RestMethod http://localhost:8001/products).Count
+Invoke-RestMethod http://localhost:8001/hall
 ```
 
-The verified run returned `301`. The same import also creates active seed shops
-from the CSV brand sources and links products through `shop_products`.
+## Frontend And Backend Are Split
 
-```powershell
-$hall = Invoke-RestMethod http://localhost:8001/hall
-$hall.shops.name -join ", "
-$hall.products.Count
-```
-
-The verified hall run returned `Dell, Haier, Muji, Nike, Skechers, Under Armour,
-Uniqlo, Xiaomi` and `301` products.
-
-If container-side `pip install` fails because of package download timeouts or hash mismatches, keep PostgreSQL and MinIO in Docker and run the seed script with local Python:
-
-```powershell
-$env:PYTHONPATH = "$PWD\backend"
-$env:DATABASE_URL = "postgresql+asyncpg://shopping_user:shopping_password@localhost:5432/shopping"
-$env:MINIO_ENDPOINT = "localhost:9000"
-$env:MINIO_ACCESS_KEY = "minioadmin"
-$env:MINIO_SECRET_KEY = "minioadmin123"
-$env:MINIO_BUCKET_PRODUCTS = "shopping-products"
-$env:MINIO_BUCKET_DATA = "shopping-data"
-$env:PUBLIC_MINIO_BASE_URL = "http://localhost:9000"
-python import_csv_data.py
-```
-
-Then run the backend locally against the Docker database:
-
-```powershell
-$env:PYTHONPATH = "$PWD\backend"
-$env:DATABASE_URL = "postgresql+asyncpg://shopping_user:shopping_password@localhost:5432/shopping"
-$env:MINIO_ENDPOINT = "localhost:9000"
-$env:MINIO_ACCESS_KEY = "minioadmin"
-$env:MINIO_SECRET_KEY = "minioadmin123"
-$env:MINIO_BUCKET_PRODUCTS = "shopping-products"
-$env:MINIO_BUCKET_DATA = "shopping-data"
-$env:PUBLIC_MINIO_BASE_URL = "http://localhost:9000"
-python -m uvicorn online_shopping.api.app:app --host 0.0.0.0 --port 8001
-```
-
-In another terminal, run the frontend locally:
-
-```powershell
-cd frontend
-$env:NEXT_PUBLIC_BACKEND_URL = "http://localhost:8001"
-$env:NEXT_PUBLIC_BASE_URL = "http://localhost:8000"
-$env:NEXT_PUBLIC_DEFAULT_REGION = "cn"
-corepack enable
-yarn dev --hostname 0.0.0.0
-```
-
-This fallback was verified with Docker PostgreSQL/MinIO plus local backend/frontend:
+The root compose file includes separate compose files:
 
 ```text
-GET http://localhost:8001/products -> 301 products
-GET http://localhost:8001/hall -> 8 shops, 301 products
-GET http://localhost:8001/shop?shop=nike -> 50 Nike products
-GET http://localhost:8000/ -> 200 OK
-GET http://localhost:8000/hall -> 200 OK
-GET http://localhost:8000/shop?shop=nike -> 200 OK
+docker-compose.postgres.yml
+docker-compose.minio.yml
+docker-compose.backend.yml
+docker-compose.frontend.yml
 ```
 
-Stop the stack:
+Run them separately if needed:
 
-```cmd
-docker compose down
-```
-
-## Run with Split Docker Compose Files
-
-Start PostgreSQL first if you want the database container available:
-
-```cmd
+```powershell
 docker compose -f docker-compose.postgres.yml up -d
-```
-
-Start the FastAPI backend:
-
-```cmd
+docker compose -f docker-compose.minio.yml up -d
 docker compose -f docker-compose.backend.yml up -d
-```
-
-Start the Next.js frontend:
-
-```cmd
 docker compose -f docker-compose.frontend.yml up -d
 ```
 
-```cmd
-docker compose -f docker-compose.minio.yml up -d
+The frontend talks to the backend through `NEXT_PUBLIC_BACKEND_URL=http://localhost:8001`.
+
+## Start Hadoop And Spark
+
+Create the shared Hadoop network once:
+
+```powershell
+docker network create hadoop
 ```
 
-Docker URLs:
+If it already exists, Docker will report that; it is safe to continue.
 
-- Frontend: `http://localhost:8000/`
-- Backend docs: `http://localhost:8001/docs`
-- PostgreSQL: `localhost:5432`
+Start Hadoop HDFS/YARN:
 
-Stop containers:
-
-```cmd
-docker compose -f docker-compose.frontend.yml down
-docker compose -f docker-compose.backend.yml down
-docker compose -f docker-compose.postgres.yml down
+```powershell
+docker compose -f docker-compose.hadoop.yml up -d --build
 ```
 
-## Backend-Native API
+Start Spark standalone:
 
-The backend keeps the existing OOP/domain model under `backend/online_shopping/domain`.
-The frontend uses backend-native field names and calls FastAPI routes directly.
+```powershell
+docker compose -f docker-compose.spark.yml up -d
+```
 
-## Frontend Route Map
+Open:
 
-The frontend route structure follows the role-based navigation below:
+- HDFS NameNode: http://localhost:9870
+- YARN ResourceManager: http://localhost:8088
+- Spark Master: http://localhost:8080
+- Spark Worker: http://localhost:8081
+
+Verify distributed storage has two DataNodes:
+
+```powershell
+docker exec master hdfs dfsadmin -report
+```
+
+You should see:
 
 ```text
-/
-├── /hall
-├── /sign-in
-│   ├── /customer
-│   ├── /manager
-│   └── /admin
-├── /customer/:username
-│   ├── /hall
-│   ├── /profile
-│   ├── /cart
-│   ├── /orders
-│   ├── /orders/:orderId
-│   ├── /payment
-│   ├── /wishlist
-│   ├── /reviews
-│   └── /settings
-├── /manager/:username
-│   ├── /dashboard
-│   ├── /shop/apply
-│   ├── /shop
-│   ├── /shop/:shopId
-│   ├── /products
-│   ├── /products/create
-│   ├── /products/:productId/edit
-│   ├── /orders
-│   ├── /orders/:orderId
-│   ├── /analytics
-│   ├── /income
-│   └── /settings
-└── /admin/:username
-    ├── /dashboard
-    ├── /shops
-    ├── /shops/pending
-    ├── /shops/:shopId
-    ├── /products
-    ├── /products/pending
-    ├── /users
-    ├── /users/:userId
-    ├── /categories
-    ├── /reports
-    └── /settings
+Live datanodes (2)
+Hostname: slaver1
+Hostname: slaver2
 ```
 
-Core routes include:
+Allow Spark to write recommendation output into `/data`:
 
-- `GET /regions`
-- `GET /shop`
-- `GET /shop/{product_name_or_slug}`
-- `GET /shop/categories`
-- `GET /cart`
-- `POST /cart/items`
-- `PATCH /cart/items/{product_name}`
-- `DELETE /cart/items/{product_name}`
-- `GET /admin`
-- `GET /manager`
-- `GET /customer`
-- `GET /orders`
-- `POST /orders`
-- `GET /orders/{order_number}`
-- `POST /payments/process`
+```powershell
+docker exec master hdfs dfs -mkdir -p /data
+docker exec master hdfs dfs -chmod -R 777 /data
+```
+
+## Run Hadoop Recommendation Pipeline
+
+Set a date. Use today's date when testing new clicks/reviews:
+
+```powershell
+$DATE = "2026-07-14"
+```
+
+Export recommendation inputs from PostgreSQL and upload them to HDFS:
+
+```powershell
+.\scripts\hdfs_upload.ps1 -Date $DATE
+```
+
+This creates:
+
+```text
+/data/raw/events/dt=YYYY-MM-DD/events.jsonl
+/data/raw/reviews/dt=YYYY-MM-DD/reviews.jsonl
+/data/raw/products/dt=YYYY-MM-DD/products.jsonl
+```
+
+Run the Spark recommendation stage:
+
+```powershell
+docker exec spark-master sh -lc "/opt/spark/bin/spark-submit --master spark://spark-master:7077 /app/spark/jobs/recommendations/build_user_recommendations.py --mode spark --date $DATE --days 1 --top-n 20 --hdfs-input hdfs://master:9000/data/raw --hdfs-output hdfs://master:9000/data"
+```
+
+Verify HDFS output:
+
+```powershell
+docker exec master hdfs dfs -ls /data/recommendations/user_recommendations/dt=$DATE
+docker exec master sh -lc "hdfs dfs -cat /data/recommendations/user_recommendations/dt=$DATE/part-*.json | head -1"
+```
+
+Copy Spark output back to a local import folder:
+
+```powershell
+New-Item -ItemType Directory -Force "tmp/recommendation/recommendations/user_recommendations/dt=$DATE" | Out-Null
+docker exec master sh -lc "hdfs dfs -cat /data/recommendations/user_recommendations/dt=$DATE/part-*.json" | Set-Content -Encoding UTF8 "tmp/recommendation/recommendations/user_recommendations/dt=$DATE/part-00000.jsonl"
+```
+
+Import recommendations into PostgreSQL:
+
+```powershell
+docker run --rm --network shopping-net -v "${PWD}:/workspace" -w /workspace python:3.12-slim sh -lc "pip install --no-cache-dir psycopg2-binary && DATABASE_URL=postgresql://shopping_user:shopping_password@shopping-postgres:5432/shopping python scripts/import_recommendations.py --date $DATE --input-dir /workspace/tmp/recommendation --types user_recs"
+```
+
+Verify the backend is serving Hadoop recommendations:
+
+```powershell
+$r = Invoke-RestMethod "http://localhost:8001/recommendations/users/leamonlee%40mail.com"
+$r.items | Select-Object -First 8 @{n="name";e={$_.product.name}}, algorithm, reason, score | Format-Table -AutoSize
+```
+
+Expected algorithm:
+
+```text
+hadoop_commerce_v1
+```
+
+Open the customer hall:
+
+```text
+http://localhost:8000/customer/leamonlee%40mail.com/hall
+```
+
+After a user clicks product cards, export the same date again, rerun Spark, import again, and refresh the hall. The recommendation rail should shift toward similar categories/products.
+
+## Bash Version Of The Pipeline
+
+On macOS/Linux/WSL:
+
+```bash
+DATE=2026-07-14
+docker compose up -d
+docker compose --profile seed run --rm seed
+docker network create hadoop || true
+docker compose -f docker-compose.hadoop.yml up -d --build
+docker compose -f docker-compose.spark.yml up -d
+docker exec master hdfs dfs -mkdir -p /data
+docker exec master hdfs dfs -chmod -R 777 /data
+bash scripts/hdfs_upload.sh "$DATE"
+docker exec spark-master sh -lc "/opt/spark/bin/spark-submit --master spark://spark-master:7077 /app/spark/jobs/recommendations/build_user_recommendations.py --mode spark --date $DATE --days 1 --top-n 20 --hdfs-input hdfs://master:9000/data/raw --hdfs-output hdfs://master:9000/data"
+mkdir -p "tmp/recommendation/recommendations/user_recommendations/dt=$DATE"
+docker exec master sh -lc "hdfs dfs -cat /data/recommendations/user_recommendations/dt=$DATE/part-*.json" > "tmp/recommendation/recommendations/user_recommendations/dt=$DATE/part-00000.jsonl"
+docker run --rm --network shopping-net -v "$PWD:/workspace" -w /workspace python:3.12-slim sh -lc "pip install --no-cache-dir psycopg2-binary && DATABASE_URL=postgresql://shopping_user:shopping_password@shopping-postgres:5432/shopping python scripts/import_recommendations.py --date $DATE --input-dir /workspace/tmp/recommendation --types user_recs"
+```
+
+## Important URLs
+
+| Page | URL |
+| --- | --- |
+| Shopping hall | http://localhost:8000/customer/leamonlee%40mail.com/hall |
+| Customer panel | http://localhost:8000/customer/leamonlee%40mail.com |
+| Cart | http://localhost:8000/cart |
+| Login | http://localhost:8000/auth/login |
+| Backend docs | http://localhost:8001/docs |
+| HDFS UI | http://localhost:9870 |
+| Spark UI | http://localhost:8080 |
+
+## Data And Volumes
+
+Persistent Docker volumes:
+
+```text
+shopping_postgres_data
+shopping_minio_data
+hadoop_namenode
+hadoop_datanode1
+hadoop_datanode2
+hadoop_history
+frontend_node_modules
+frontend_next_cache
+```
+
+Reset everything:
+
+```powershell
+docker compose down -v
+docker compose -f docker-compose.hadoop.yml down -v
+docker compose -f docker-compose.spark.yml down -v
+```
+
+Then rerun the quick start.
+
+## Troubleshooting
+
+If the frontend is up but product images are missing, rerun:
+
+```powershell
+docker compose --profile seed run --rm seed
+```
+
+If Hadoop starts but Spark cannot write to HDFS:
+
+```powershell
+docker exec master hdfs dfs -chmod -R 777 /data
+```
+
+If the hall does not show personalized recommendations:
+
+```powershell
+docker exec shopping-postgres psql -U shopping_user -d shopping -c "select algorithm, scene, count(*) from recommendation_results group by algorithm, scene order by algorithm, scene;"
+```
+
+You should see `hadoop_commerce_v1` rows for `home`.
+
+If a port is already in use, stop the previous containers:
+
+```powershell
+docker ps
+docker compose down
+```
+
+## Stop
+
+```powershell
+docker compose down
+docker compose -f docker-compose.spark.yml down
+docker compose -f docker-compose.hadoop.yml down
+```

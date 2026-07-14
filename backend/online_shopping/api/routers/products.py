@@ -236,6 +236,8 @@ async def create_product_review(
     db: AsyncSession = Depends(get_db),
 ) -> ReviewOut:
     from online_shopping.models.review import Review
+    from online_shopping.models.shop import Shop, ShopProduct
+    from online_shopping.models.user_behavior_event import UserBehaviorEvent
     repo = CatalogRepository(db)
     product = await repo.find_product(product_identity)
     if product is None:
@@ -245,6 +247,36 @@ async def create_product_review(
         rating=payload.rating, title=payload.title, content=payload.content,
     )
     db.add(review)
+    await db.flush()
+
+    shop_result = await db.execute(
+        select(Shop.id, Shop.name)
+        .join(ShopProduct, ShopProduct.shop_id == Shop.id)
+        .where(ShopProduct.product_id == product.id)
+        .limit(1)
+    )
+    shop_row = shop_result.first()
+    content = payload.content or ""
+    db.add(UserBehaviorEvent(
+        event_type="product_review",
+        account_id=current_user.id,
+        user_email=current_user.email,
+        product_id=product.id,
+        product_name=product.name,
+        product_slug=product.slug,
+        shop_id=shop_row[0] if shop_row else None,
+        shop_name=shop_row[1] if shop_row else None,
+        category_id=product.category_id,
+        category_name=product.category.name if product.category else None,
+        price=float(product.price),
+        source_page=f"/shop/{product.slug}",
+        metadata_json={
+            "rating": payload.rating,
+            "review_id": str(review.id),
+            "has_content": bool(content.strip()),
+            "content_length": len(content.strip()),
+        },
+    ))
     await db.commit()
     await db.refresh(review)
     return _review_to_out(review)

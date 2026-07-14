@@ -282,6 +282,38 @@ export interface PaginatedHallProducts {
   has_more: boolean
 }
 
+export interface RecommendationItem {
+  product: Product
+  score?: number | null
+  reason?: string | null
+  algorithm?: string | null
+}
+
+export interface RecommendationResponse {
+  scene: string
+  count: number
+  items: RecommendationItem[]
+}
+
+export interface PreferenceBucket {
+  label: string
+  score?: number
+  count: number
+  share?: number
+}
+
+export interface PreferenceProfile {
+  user_key: string
+  days: number
+  signal_count: number
+  positive_signal_count: number
+  latest_signal_at: string | null
+  top_categories: PreferenceBucket[]
+  top_shops: PreferenceBucket[]
+  price_bands: PreferenceBucket[]
+  event_mix: PreferenceBucket[]
+}
+
 // ── Region ───────────────────────────────────────────────────────────
 
 export interface RegionCountry {
@@ -314,7 +346,7 @@ export type Unwrapped<T> = T extends { value: infer V } ? V : T
 
 export function unwrapValue<T>(value: T): Unwrapped<T> {
   if (value !== null && typeof value === "object" && "value" in (value as object)) {
-    return (value as { value: unknown }).value as Unwrapped<T>
+    return (value as unknown as { value: unknown }).value as Unwrapped<T>
   }
   return value as Unwrapped<T>
 }

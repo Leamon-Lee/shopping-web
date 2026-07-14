@@ -13,6 +13,17 @@ async function proxyBackendRequest(
 
   const headers = new Headers(request.headers)
   headers.set("host", target.host)
+  ;[
+    "connection",
+    "expect",
+    "keep-alive",
+    "proxy-authenticate",
+    "proxy-authorization",
+    "te",
+    "trailer",
+    "transfer-encoding",
+    "upgrade",
+  ].forEach((header) => headers.delete(header))
   // Convert httpOnly cookie to Authorization header for backend auth
   const tokenCookie = request.cookies.get("shopping_token")
   if (tokenCookie?.value) {
@@ -27,7 +38,6 @@ async function proxyBackendRequest(
       : await request.text()
     // Strip original length/encoding headers so fetch sets correct values for the body
     headers.delete("content-length")
-    headers.delete("transfer-encoding")
   }
 
   const response = await fetch(target, {

@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+from __future__ import annotations
+
 """
 Build popular/hot products based on weighted user behavior events.
 
@@ -52,7 +54,10 @@ def compute_popular_local(events: list[dict], top_n: int, dt: str) -> list[dict]
             }
 
     # Sort and rank
-    ranked = sorted(product_scores.items(), key=lambda x: x[1], reverse=True)[:top_n]
+    ranked = [
+        item for item in sorted(product_scores.items(), key=lambda x: x[1], reverse=True)
+        if item[1] > 0
+    ][:top_n]
     result = []
     for rank, (pid, total_score) in enumerate(ranked, start=1):
         meta = product_meta.get(pid, {})
@@ -77,9 +82,7 @@ def compute_popular_spark(spark, hdfs_input: str, days: int, top_n: int, dt: str
     import datetime as _dt
 
     # This import is conditional — only called in spark mode
-    reference_date = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%d")
-
-    df = load_events_spark(spark, hdfs_input, days, reference_date)
+    df = load_events_spark(spark, hdfs_input, days, dt)
 
     product_col = F.col("product_id")
 
@@ -95,6 +98,7 @@ def compute_popular_spark(spark, hdfs_input: str, days: int, top_n: int, dt: str
             F.first("shop_name", ignorenulls=True).alias("shop_name"),
         )
         .agg(F.sum("_weighted_score").alias("score"))
+        .where(F.col("score") > 0)
         .orderBy(F.desc("score"))
         .limit(top_n)
     )

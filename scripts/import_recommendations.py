@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+from __future__ import annotations
+
 """
 Import Spark recommendation outputs into PostgreSQL.
 
@@ -18,6 +20,7 @@ Usage:
 """
 
 import argparse
+import glob
 import json
 import os
 import re
@@ -49,17 +52,27 @@ def get_connection():
 
 def load_jsonl(path: str) -> list[dict]:
     if not os.path.exists(path):
-        print(f"  [SKIP] File not found: {path}")
-        return []
+        directory = os.path.dirname(path)
+        candidates = sorted(
+            glob.glob(os.path.join(directory, "part-*.json"))
+            + glob.glob(os.path.join(directory, "part-*.jsonl"))
+        )
+        if not candidates:
+            print(f"  [SKIP] File not found: {path}")
+            return []
+        paths = candidates
+    else:
+        paths = [path]
     rows = []
-    with open(path, encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if line:
-                try:
-                    rows.append(json.loads(line))
-                except json.JSONDecodeError:
-                    continue
+    for candidate in paths:
+        with open(candidate, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        rows.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        continue
     return rows
 
 
@@ -79,7 +92,7 @@ def is_uuid(value: object) -> bool:
 def load_product_lookup(conn) -> dict[str, str]:
     """Build a forgiving product lookup for UUID, slug, and display-name inputs."""
     cur = conn.cursor()
-    cur.execute("SELECT id::text, name, slug FROM products WHERE status = 'active'")
+    cur.execute("SELECT id::text, name, slug FROM products WHERE available_item_count > 0")
     lookup: dict[str, str] = {}
     for product_id, name, slug in cur.fetchall():
         for raw in (product_id, name, slug):
@@ -256,8 +269,8 @@ def import_user_recs(conn, rows: list[dict], date_str: str, dry_run: bool, looku
                            (user_key, scene, product_id, score, rank, reason, algorithm, generated_at)
                            VALUES (%s,%s,%s,%s,%s,%s,%s,%s)""",
                         (user_key, scene, pid, prod.get("score", 0), rank,
-                         f"Based on your {row.get('top_categories',[{}])[0].get('name','') if row.get('top_categories') else 'interests'}",
-                         "user_prefs_v1", date_str),
+                         prod.get("reason") or f"Based on your {row.get('top_categories',[{}])[0].get('name','') if row.get('top_categories') else 'interests'}",
+                         prod.get("algorithm") or "hadoop_commerce_v1", date_str),
                     )
                     inserted += 1
                 except Exception as exc:
@@ -295,8 +308,11 @@ def main():
         import_item_sim(conn, rows, args.date, args.dry_run, product_lookup)
 
     if "user_recs" in types:
-        path = os.path.join(base, "features", "user_preferences", f"dt={args.date}", "part-00000.jsonl")
+        path = os.path.join(base, "recommendations", "user_recommendations", f"dt={args.date}", "part-00000.jsonl")
         rows = load_jsonl(path)
+        if not rows:
+            legacy_path = os.path.join(base, "features", "user_preferences", f"dt={args.date}", "part-00000.jsonl")
+            rows = load_jsonl(legacy_path)
         import_user_recs(conn, rows, args.date, args.dry_run, product_lookup)
 
     conn.close()

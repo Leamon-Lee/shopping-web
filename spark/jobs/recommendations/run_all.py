@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+from __future__ import annotations
+
 """
 Orchestrate the full recommendation pipeline.
 
@@ -30,6 +32,7 @@ STAGES = {
     "popular": "build_popular_products.py",
     "preferences": "build_user_preferences.py",
     "similar": "build_item_similarity.py",
+    "user_recs": "build_user_recommendations.py",
 }
 
 
@@ -62,7 +65,7 @@ def run_stage(stage_name: str, script_name: str, args: argparse.Namespace) -> bo
 
 def main():
     parser = argparse.ArgumentParser(description="Run full recommendation pipeline")
-    parser.add_argument("--stages", default="popular,preferences,similar",
+    parser.add_argument("--stages", default="popular,preferences,similar,user_recs",
                         help="Comma-separated stages to run (default: all)")
     parser.add_argument("--mode", choices=["local", "spark"], default="local")
     parser.add_argument("--date", default=datetime.now().strftime("%Y-%m-%d"))

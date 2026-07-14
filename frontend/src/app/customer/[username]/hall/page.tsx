@@ -1,4 +1,8 @@
-import { getHall, getHallProducts } from "../../../../api/backend"
+import {
+  getHall,
+  getHallProducts,
+  getUserRecommendations,
+} from "../../../../api/backend"
 import HallTemplate from "@modules/customer/templates/hall"
 import { Metadata } from "next"
 import { retrieveCustomer } from "@lib/data/customer"
@@ -15,13 +19,15 @@ export const metadata: Metadata = {
 export default async function CustomerHallPage(props: {
   params: Promise<{ username: string }>
 }) {
-  await props.params
+  const { username } = await props.params
+  const userKey = decodeURIComponent(username)
 
   try {
-    const [data, initialFeed, currentUser] = await Promise.all([
+    const [data, initialFeed, currentUser, recommended] = await Promise.all([
       getHall(),
       getHallProducts({ limit: INITIAL_PRODUCT_LIMIT, offset: 0 }),
       retrieveCustomer(),
+      getUserRecommendations(userKey).catch(() => null),
     ])
 
     return (
@@ -30,6 +36,8 @@ export default async function CustomerHallPage(props: {
         initialProducts={initialFeed.products}
         initialHasMore={initialFeed.has_more}
         currentUser={currentUser}
+        likedProducts={recommended?.items?.map((item) => item.product) ?? []}
+        recommendationUserKey={userKey}
       />
     )
   } catch {

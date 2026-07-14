@@ -1,7 +1,8 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 
-import { addCartItem, listProducts } from "../../../../api/backend"
+import { addCartItem, getProduct } from "../../../../api/backend"
+import { retrieveCustomer } from "../../../../lib/data/customer"
 import {
   backendCategoryName,
   backendProductAvailableCount,
@@ -11,8 +12,8 @@ import {
   formatBackendMoney,
   unwrapBackendValue,
 } from "../../../../lib/backend-native"
-import Thumbnail from "@modules/products/components/thumbnail"
 import AddToCartForm from "@modules/products/components/add-to-cart-form"
+import ProductImageCarousel from "@modules/products/components/product-image-carousel"
 import ReviewSection from "@modules/products/components/review-section"
 
 type Props = {
@@ -20,8 +21,11 @@ type Props = {
 }
 
 async function getProductBySlug(handle: string) {
-  const products = await listProducts()
-  return products.find((product) => backendProductSlug(product) === handle)
+  try {
+    return await getProduct(handle)
+  } catch {
+    return null
+  }
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
@@ -41,7 +45,10 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export default async function ProductPage(props: Props) {
   const { handle } = await props.params
-  const product = await getProductBySlug(handle)
+  const [product, customer] = await Promise.all([
+    getProductBySlug(handle),
+    retrieveCustomer().catch(() => null),
+  ])
 
   if (!product) {
     notFound()
@@ -49,6 +56,11 @@ export default async function ProductPage(props: Props) {
 
   async function addProductToCart() {
     "use server"
+    const customer = await retrieveCustomer()
+    if (!customer) {
+      throw new Error("Please sign in before adding items to your cart.")
+    }
+
     const identity = product?.variants?.[0]?.id || backendProductName(product!)
     await addCartItem({
       product_name: identity,
@@ -77,7 +89,10 @@ export default async function ProductPage(props: Props) {
       </div>
       <div className="block w-full relative">
         <div className="grid grid-cols-1 gap-4">
-          <Thumbnail thumbnail={null} images={(product as any).images ?? []} size="full" />
+          <ProductImageCarousel
+            images={(product as any).images ?? []}
+            fallbackAlt={backendProductName(product)}
+          />
         </div>
       </div>
       <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-6">
@@ -90,6 +105,8 @@ export default async function ProductPage(props: Props) {
         <AddToCartForm
           addAction={addProductToCart}
           disabled={backendProductAvailableCount(product) < 1}
+          requiresLogin={!customer}
+          loginHref={`/auth/login?next=${encodeURIComponent(`/shop/${handle}`)}`}
         />
       </div>
     </div>
