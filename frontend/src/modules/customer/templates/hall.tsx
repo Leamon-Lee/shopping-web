@@ -29,6 +29,7 @@ import { signout } from "@lib/data/customer"
 const BATCH_SIZE = 30
 const SEARCH_DEBOUNCE_MS = 300
 const IMAGE_PRELOAD_COUNT = 18
+const EMPTY_PRODUCTS: BackendProduct[] = []
 
 function uniqueProducts(products: BackendProduct[]) {
   const seen = new Set<string>()
@@ -81,7 +82,7 @@ const HallTemplate = ({
   initialProducts: serverInitialProducts,
   initialHasMore,
   currentUser,
-  likedProducts = [],
+  likedProducts = EMPTY_PRODUCTS,
   recommendationUserKey: serverRecommendationUserKey,
 }: {
   data: BackendHallPayload

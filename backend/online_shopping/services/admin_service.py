@@ -2,14 +2,17 @@
 
 from __future__ import annotations
 
-from sqlalchemy import select, func
+from datetime import date
+
+from sqlalchemy import select, func, case, cast, Date
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from online_shopping.models.product import Product
 from online_shopping.models.category import ProductCategory
-from online_shopping.models.order import Order
+from online_shopping.models.order import Order, OrderItem
 from online_shopping.models.account import Account
+from online_shopping.models.shop import Shop, ShopProduct
 
 
 class AdminService:
@@ -138,3 +141,99 @@ class AdminService:
             }
             for o in orders
         ]
+
+    async def category_preferences(
+        self, start_date: date, end_date: date
+    ) -> list[dict]:
+        """Order count by product category for a given date range."""
+        base = (
+            select(
+                ProductCategory.name.label("category_name"),
+                func.count(func.distinct(Order.id)).label("order_count"),
+                func.coalesce(
+                    func.sum(OrderItem.price * OrderItem.quantity), 0
+                ).label("sales_amount"),
+            )
+            .select_from(Order)
+            .join(OrderItem, OrderItem.order_id == Order.id)
+            .join(Product, Product.id == OrderItem.product_id)
+            .join(ProductCategory, ProductCategory.id == Product.category_id)
+            .where(Order.order_date >= start_date)
+            .where(Order.order_date <= end_date)
+            .group_by(ProductCategory.name)
+            .order_by(func.count(func.distinct(Order.id)).desc())
+        )
+        result = await self.db.execute(base)
+        return [
+            {
+                "category_name": row.category_name,
+                "order_count": row.order_count,
+                "sales_amount": float(row.sales_amount),
+            }
+            for row in result
+        ]
+
+    async def daily_rankings(self, query_date: date) -> dict:
+        """Shop and product order rankings for a specific date."""
+        # Shop rankings
+        shop_q = (
+            select(
+                Shop.id.label("shop_id"),
+                Shop.name.label("shop_name"),
+                func.count(func.distinct(Order.id)).label("order_count"),
+                func.coalesce(
+                    func.sum(OrderItem.price * OrderItem.quantity), 0
+                ).label("sales_amount"),
+            )
+            .select_from(Order)
+            .join(OrderItem, OrderItem.order_id == Order.id)
+            .join(ShopProduct, ShopProduct.product_id == OrderItem.product_id)
+            .join(Shop, Shop.id == ShopProduct.shop_id)
+            .where(cast(Order.order_date, Date) == query_date)
+            .group_by(Shop.id, Shop.name)
+            .order_by(func.count(func.distinct(Order.id)).desc())
+            .limit(15)
+        )
+        shop_rows = (await self.db.execute(shop_q)).all()
+
+        # Product rankings
+        prod_q = (
+            select(
+                Product.id.label("product_id"),
+                Product.name.label("product_name"),
+                func.count(func.distinct(Order.id)).label("order_count"),
+                func.coalesce(
+                    func.sum(OrderItem.price * OrderItem.quantity), 0
+                ).label("sales_amount"),
+            )
+            .select_from(Order)
+            .join(OrderItem, OrderItem.order_id == Order.id)
+            .join(Product, Product.id == OrderItem.product_id)
+            .where(cast(Order.order_date, Date) == query_date)
+            .group_by(Product.id, Product.name)
+            .order_by(func.count(func.distinct(Order.id)).desc())
+            .limit(15)
+        )
+        prod_rows = (await self.db.execute(prod_q)).all()
+
+        return {
+            "date": query_date.isoformat(),
+            "shop_rankings": [
+                {
+                    "shop_id": str(r.shop_id),
+                    "shop_name": r.shop_name,
+                    "order_count": r.order_count,
+                    "sales_amount": float(r.sales_amount),
+                }
+                for r in shop_rows
+            ],
+            "product_rankings": [
+                {
+                    "product_id": str(r.product_id),
+                    "product_name": r.product_name,
+                    "order_count": r.order_count,
+                    "sales_amount": float(r.sales_amount),
+                }
+                for r in prod_rows
+            ],
+        }
