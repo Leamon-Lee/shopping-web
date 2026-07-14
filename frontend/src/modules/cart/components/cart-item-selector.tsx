@@ -82,9 +82,18 @@ export default function CartItemSelector({ items, removeAction, checkoutAction }
             <span>Subtotal</span>
             <span>{formatBackendMoney(subtotal)}</span>
           </div>
-          <form action={checkoutAction}>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault()
+              const form = event.currentTarget
+              startTransition(async () => {
+                await checkoutAction(new FormData(form))
+                router.push("/checkout")
+              })
+            }}
+          >
             <input type="hidden" name="selected_items" value={selectedItems.map((i: any) => backendProductName(i.product)).join("|")} />
-            <Button className="w-full h-10" type="submit" disabled={selectedItems.length === 0}>
+            <Button className="w-full h-10" type="submit" disabled={selectedItems.length === 0 || isPending} isLoading={isPending}>
               Complete order ({selectedItems.length})
             </Button>
           </form>

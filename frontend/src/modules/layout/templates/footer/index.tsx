@@ -1,8 +1,27 @@
 import { Text } from "@medusajs/ui"
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { retrieveCustomer } from "@lib/data/customer"
 
 export default async function Footer() {
+  const customer = await retrieveCustomer().catch(() => null)
+  const role = customer?.role
+  const showShoppingLinks = !customer || role === "customer"
+  const accountHref = customer
+    ? role === "manager"
+      ? "/manager"
+      : role === "admin"
+        ? "/admin"
+        : `/customer/${encodeURIComponent(customer.user_name)}`
+    : "/auth/login"
+  const accountLabel = customer
+    ? role === "manager"
+      ? "Manager panel"
+      : role === "admin"
+        ? "Admin panel"
+        : "Account"
+    : "Sign in"
+
   return (
     <footer className="border-t border-ui-border-base w-full">
       <div className="content-container flex flex-col w-full">
@@ -19,34 +38,34 @@ export default async function Footer() {
             <div className="flex flex-col gap-y-2">
               <span className="txt-small-plus txt-ui-fg-base">Store</span>
               <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle txt-small">
-                <li>
-                  <LocalizedClientLink className="hover:text-ui-fg-base" href="/shop">
-                    Products
-                  </LocalizedClientLink>
-                </li>
-                <li>
-                  <LocalizedClientLink className="hover:text-ui-fg-base" href="/cart">
-                    Cart
-                  </LocalizedClientLink>
-                </li>
+                {showShoppingLinks ? (
+                  <>
+                    <li>
+                      <LocalizedClientLink className="hover:text-ui-fg-base" href="/shop">
+                        Products
+                      </LocalizedClientLink>
+                    </li>
+                    <li>
+                      <LocalizedClientLink className="hover:text-ui-fg-base" href="/cart">
+                        Cart
+                      </LocalizedClientLink>
+                    </li>
+                  </>
+                ) : (
+                  <li>
+                    <LocalizedClientLink className="hover:text-ui-fg-base" href={accountHref}>
+                      Workspace
+                    </LocalizedClientLink>
+                  </li>
+                )}
               </ul>
             </div>
             <div className="flex flex-col gap-y-2">
-              <span className="txt-small-plus txt-ui-fg-base">System</span>
+              <span className="txt-small-plus txt-ui-fg-base">Account</span>
               <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle txt-small">
                 <li>
-                  <LocalizedClientLink className="hover:text-ui-fg-base" href="/account">
-                    Account
-                  </LocalizedClientLink>
-                </li>
-                <li>
-                  <LocalizedClientLink className="hover:text-ui-fg-base" href="/sign-in/customer">
-                    Customer
-                  </LocalizedClientLink>
-                </li>
-                <li>
-                  <LocalizedClientLink className="hover:text-ui-fg-base" href="/sign-in/manager">
-                    Manager
+                  <LocalizedClientLink className="hover:text-ui-fg-base" href={accountHref}>
+                    {accountLabel}
                   </LocalizedClientLink>
                 </li>
               </ul>

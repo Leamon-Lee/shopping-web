@@ -3,12 +3,14 @@
 import { Button } from "@medusajs/ui"
 import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
+import { trackEvent } from "../../../api/backend-client"
 
 type AddToCartFormProps = {
   addAction: () => Promise<void>
   disabled?: boolean
   requiresLogin?: boolean
   loginHref?: string
+  favoritePayload?: Record<string, unknown>
 }
 
 export default function AddToCartForm({
@@ -16,9 +18,12 @@ export default function AddToCartForm({
   disabled,
   requiresLogin,
   loginHref = "/auth/login",
+  favoritePayload,
 }: AddToCartFormProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const [isSaving, setIsSaving] = useState(false)
+  const [isSaved, setIsSaved] = useState(false)
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null)
 
   const handleSubmit = () => {
@@ -39,6 +44,36 @@ export default function AddToCartForm({
         setTimeout(() => setToast(null), 3000)
       }
     })
+  }
+
+  const handleFavorite = () => {
+    if (requiresLogin) {
+      router.push(loginHref)
+      return
+    }
+    if (!favoritePayload) return
+
+    setIsSaving(true)
+    setToast(null)
+    void trackEvent({
+      ...favoritePayload,
+      event_type: "favorite_product",
+      metadata: {
+        ...((favoritePayload.metadata as Record<string, unknown> | undefined) ?? {}),
+        source: "product_detail",
+      },
+    })
+      .then(() => {
+        setIsSaved(true)
+        setToast({ message: "Saved for recommendations.", type: "success" })
+      })
+      .catch(() => {
+        setToast({ message: "Failed to save", type: "error" })
+      })
+      .finally(() => {
+        setIsSaving(false)
+        setTimeout(() => setToast(null), 3000)
+      })
   }
 
   return (
@@ -65,6 +100,15 @@ export default function AddToCartForm({
         data-testid="add-product-button"
       >
         {requiresLogin ? "Sign in to add to cart" : "Add to cart"}
+      </Button>
+      <Button
+        onClick={handleFavorite}
+        disabled={disabled || isSaving || isSaved}
+        variant="secondary"
+        className="w-full h-10 mt-2"
+        isLoading={isSaving}
+      >
+        {requiresLogin ? "Sign in to save" : isSaved ? "Saved" : "Save"}
       </Button>
     </>
   )

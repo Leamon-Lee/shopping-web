@@ -236,7 +236,6 @@ const AdminPanel = () => {
             <span className="hidden text-ui-fg-muted small:inline">Platform operations</span>
           </div>
           <div className="flex items-center gap-x-3">
-            <a className="hidden hover:text-ui-fg-base small:block" href="/hall">Hall</a>
             <Button variant="secondary" className="h-9" onClick={() => signout()}>Sign out</Button>
           </div>
         </div>

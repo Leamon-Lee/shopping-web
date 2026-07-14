@@ -81,6 +81,9 @@ export async function login(
       body: JSON.stringify({ email, password }),
     })
     await setTokenCookie(result.access_token)
+    const role = result.user?.role ?? "customer"
+    if (role === "manager") return { redirectTo: "/manager" }
+    if (role === "admin") return { redirectTo: "/admin" }
     return { redirectTo: customerHallPath(result.user.user_name) }
   } catch (e: unknown) {
     return { error: e instanceof Error ? e.message : "Login failed." }

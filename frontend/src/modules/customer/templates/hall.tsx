@@ -159,6 +159,20 @@ const HallTemplate = ({
     return () => clearTimeout(timer)
   }, [query])
 
+  useEffect(() => {
+    if (!debouncedQuery) return
+
+    void trackEvent({
+      event_type: "search",
+      query: debouncedQuery,
+      source_page: "/hall",
+      metadata: {
+        shop: shopSlug !== "all" ? shopSlug : null,
+        category: categorySlug !== "all" ? categorySlug : null,
+      },
+    }).catch(() => {})
+  }, [categorySlug, debouncedQuery, shopSlug])
+
   const refreshLikedProducts = useCallback(async () => {
     if (!recommendationUserKey) return
 

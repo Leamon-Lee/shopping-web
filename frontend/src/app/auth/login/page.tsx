@@ -36,8 +36,9 @@ function LoginForm() {
       setLoading(false)
     } else {
       resetForm()
-      router.push(searchParams.has("redirect") ? redirect : result?.redirectTo ?? redirect)
-      router.refresh()
+      const target = result?.redirectTo ?? redirect
+      const roleLockedTarget = target === "/manager" || target === "/admin"
+      router.replace(searchParams.has("redirect") && !roleLockedTarget ? redirect : target)
     }
   }
 

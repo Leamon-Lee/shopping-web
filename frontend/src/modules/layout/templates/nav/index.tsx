@@ -10,10 +10,22 @@ export default async function Nav() {
     // Backend unreachable — treat as not logged in
   }
 
+  const role = customer?.role
   const accountHref = customer
-    ? `/customer/${encodeURIComponent(customer.user_name)}`
+    ? role === "manager"
+      ? "/manager"
+      : role === "admin"
+        ? "/admin"
+        : `/customer/${encodeURIComponent(customer.user_name)}`
     : "/auth/login"
-  const accountLabel = customer ? "Account" : "Sign in"
+  const accountLabel = customer
+    ? role === "manager"
+      ? "Manager panel"
+      : role === "admin"
+        ? "Admin panel"
+        : "Account"
+    : "Sign in"
+  const showShoppingLinks = !customer || role === "customer"
 
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
@@ -21,7 +33,7 @@ export default async function Nav() {
         <nav className="content-container txt-xsmall-plus text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
           <div className="flex-1 basis-0 h-full flex items-center">
             <div className="h-full">
-              <SideMenu regions={null} locales={null} currentLocale={null} />
+              <SideMenu regions={null} locales={null} currentLocale={null} customer={customer} />
             </div>
           </div>
 
@@ -37,12 +49,16 @@ export default async function Nav() {
 
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
             <div className="hidden small:flex items-center gap-x-6 h-full">
-              <a className="hover:text-ui-fg-base" href="/hall">
-                Hall
-              </a>
-              <a className="hover:text-ui-fg-base" href="/shop">
-                Shop
-              </a>
+              {showShoppingLinks && (
+                <>
+                  <a className="hover:text-ui-fg-base" href="/hall">
+                    Hall
+                  </a>
+                  <a className="hover:text-ui-fg-base" href="/shop">
+                    Shop
+                  </a>
+                </>
+              )}
               <LocalizedClientLink
                 className="hover:text-ui-fg-base"
                 href={accountHref}
@@ -51,13 +67,15 @@ export default async function Nav() {
                 {accountLabel}
               </LocalizedClientLink>
             </div>
-            <LocalizedClientLink
-              className="hover:text-ui-fg-base flex gap-2"
-              href="/cart"
-              data-testid="nav-cart-link"
-            >
-              Cart
-            </LocalizedClientLink>
+            {showShoppingLinks && (
+              <LocalizedClientLink
+                className="hover:text-ui-fg-base flex gap-2"
+                href="/cart"
+                data-testid="nav-cart-link"
+              >
+                Cart
+              </LocalizedClientLink>
+            )}
           </div>
         </nav>
       </header>

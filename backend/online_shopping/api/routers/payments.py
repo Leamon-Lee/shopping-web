@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from online_shopping.api.deps import get_current_user, get_db
+from online_shopping.api.behavior_events import record_behavior_event
 from online_shopping.api.schemas import PaymentCreate, PaymentOut
 from online_shopping.models.account import Account
 from online_shopping.models.order import Order
@@ -38,6 +40,25 @@ async def process_payment(
             payment.order_id = order.id
 
     db.add(payment)
+    if order_id and payment.order_id:
+        order_items_result = await db.execute(
+            select(Order)
+            .options(selectinload(Order.items))
+            .where(Order.id == payment.order_id)
+        )
+        paid_order = order_items_result.scalars().first()
+        if paid_order:
+            for item in paid_order.items:
+                await record_behavior_event(
+                    db,
+                    "order_paid",
+                    current_user,
+                    product_id=item.product_id,
+                    quantity=item.quantity,
+                    price=float(item.price),
+                    source_page="/checkout",
+                    metadata={"order_number": paid_order.order_number, "source": "payment_api"},
+                )
     await db.commit()
     await db.refresh(payment)
 

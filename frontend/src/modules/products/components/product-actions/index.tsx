@@ -1,6 +1,7 @@
 ﻿"use client"
 
 import { addToCart } from "@lib/data/cart"
+import { trackEvent } from "../../../../api/backend-client"
 import { useIntersection } from "@lib/hooks/use-in-view"
 import type {
   BackendAddress,
@@ -58,6 +59,8 @@ export default function ProductActions({
 
   const [options, setOptions] = useState<Record<string, string | undefined>>({})
   const [isAdding, setIsAdding] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
+  const [isSaved, setIsSaved] = useState(false)
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null)
   const countryCode = useParams().countryCode as string
 
@@ -165,6 +168,35 @@ export default function ProductActions({
     }
   }
 
+  const handleFavorite = async () => {
+    if (!product.id) return
+
+    setIsSaving(true)
+    setToast(null)
+
+    try {
+      await trackEvent({
+        event_type: "favorite_product",
+        product_id: product.id,
+        product_name: product.title ?? product.name,
+        product_slug: product.slug ?? product.handle,
+        shop_id: product.shop?.shop_id,
+        shop_name: product.shop?.shop_name,
+        category_name: product.category?.name,
+        price: product.price,
+        source_page: pathname,
+        metadata: { source: "product_detail" },
+      })
+      setIsSaved(true)
+      setToast({ message: "Saved for recommendations.", type: "success" })
+    } catch {
+      setToast({ message: "Failed to save. Please try again.", type: "error" })
+    } finally {
+      setIsSaving(false)
+      setTimeout(() => setToast(null), 3000)
+    }
+  }
+
   return (
     <>
       {toast && (
@@ -224,6 +256,15 @@ export default function ProductActions({
             : !inStock || !isValidVariant
             ? "Out of stock"
             : "Add to cart"}
+        </Button>
+        <Button
+          onClick={handleFavorite}
+          disabled={!!disabled || isSaving || isSaved}
+          variant="secondary"
+          className="w-full h-10"
+          isLoading={isSaving}
+        >
+          {isSaved ? "Saved" : "Save"}
         </Button>
         <MobileActions
           product={product}

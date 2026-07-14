@@ -107,6 +107,16 @@ export default async function ProductPage(props: Props) {
           disabled={backendProductAvailableCount(product) < 1}
           requiresLogin={!customer}
           loginHref={`/auth/login?next=${encodeURIComponent(`/shop/${handle}`)}`}
+          favoritePayload={{
+            product_id: product.id,
+            product_name: backendProductName(product),
+            product_slug: product.slug || backendProductSlug(product),
+            shop_id: product.shop?.shop_id,
+            shop_name: product.shop?.shop_name,
+            category_name: backendCategoryName(product.category),
+            price: backendProductPrice(product),
+            source_page: `/shop/${handle}`,
+          }}
         />
       </div>
     </div>

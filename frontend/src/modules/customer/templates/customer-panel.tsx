@@ -181,6 +181,9 @@ const CustomerPanel = ({
   const [confirmDialog, setConfirmDialog] = useState<{
     open: boolean; title: string; message: string; onConfirm: () => void
   }>({ open: false, title: "", message: "", onConfirm: () => {} })
+  const customerHallPath = customer
+    ? `/customer/${encodeURIComponent(customer.user_name)}/hall`
+    : "/auth/login"
 
   // Sync from server props on navigation
   useEffect(() => {
@@ -330,7 +333,7 @@ const CustomerPanel = ({
             <span className="hidden text-ui-fg-muted small:inline">Shopping account</span>
           </div>
           <div className="flex items-center gap-x-4">
-            <a className="hover:text-ui-fg-base" href="/hall">Hall</a>
+            <a className="hover:text-ui-fg-base" href={customerHallPath}>Hall</a>
             <button
               type="button"
               className="hover:text-ui-fg-base"
@@ -398,7 +401,7 @@ const CustomerPanel = ({
           ) : activeView === "Preferences" ? (
             <PreferencesView profile={preferenceProfile} />
           ) : (
-            <CustomerViewContent activeView={activeView} cartRows={cartRows} orderRows={orderRows} />
+            <CustomerViewContent activeView={activeView} cartRows={cartRows} orderRows={orderRows} hallPath={customerHallPath} />
           )}
         </main>
       </div>
@@ -422,8 +425,8 @@ const ViewHeader = ({ activeView }: {
 
 // ── View Content ─────────────────────────────────────────────────────
 
-const CustomerViewContent = ({ activeView, cartRows, orderRows, metrics }: {
-  activeView: CustomerView; cartRows: Row[]; orderRows: Row[]; metrics?: { label: string; value: string; detail: string }[]
+const CustomerViewContent = ({ activeView, cartRows, orderRows, hallPath, metrics }: {
+  activeView: CustomerView; cartRows: Row[]; orderRows: Row[]; hallPath: string; metrics?: { label: string; value: string; detail: string }[]
 }) => {
   if (activeView === "Cart") {
     return (
@@ -433,7 +436,7 @@ const CustomerViewContent = ({ activeView, cartRows, orderRows, metrics }: {
           <p className="text-small-regular text-ui-fg-muted mt-1">Select items and proceed with payment on the full cart page.</p>
           <div className="flex gap-3 mt-4">
             <a href="/cart"><Button>Go to Cart</Button></a>
-            <a href="/hall"><Button variant="secondary">Continue shopping</Button></a>
+            <a href={hallPath}><Button variant="secondary">Continue shopping</Button></a>
           </div>
         </div>
       </div>

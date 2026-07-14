@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from online_shopping.api.deps import get_current_user, get_db, get_optional_user
+from online_shopping.api.behavior_events import record_behavior_event
 from online_shopping.api.mappers import order_to_out
 from online_shopping.api.schemas import OrderCreate, OrderOut
 from online_shopping.models.account import Account
@@ -34,6 +35,32 @@ async def create_order(
         payload,
         email=current_user.email if current_user else None,
     )
+    for item in order.items:
+        metadata = {
+            "order_number": order.order_number,
+            "source": "checkout",
+        }
+        await record_behavior_event(
+            db,
+            "order_created",
+            current_user,
+            product_id=item.product_id,
+            quantity=item.quantity,
+            price=float(item.price),
+            source_page="/checkout",
+            metadata=metadata,
+        )
+        await record_behavior_event(
+            db,
+            "order_paid",
+            current_user,
+            product_id=item.product_id,
+            quantity=item.quantity,
+            price=float(item.price),
+            source_page="/checkout",
+            metadata=metadata,
+        )
+    await db.commit()
     return order_to_out(order)
 
 

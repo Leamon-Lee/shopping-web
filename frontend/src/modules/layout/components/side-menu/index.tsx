@@ -28,25 +28,32 @@ import type {
   BackendRecord,
   BackendRegion,
   BackendShippingOption,
+  Account,
 } from "types/backend"
 import { Locale } from "@lib/data/locales"
-
-const SideMenuItems = {
-  Home: "/",
-  Shop: "/shop",
-  Account: "/account",
-  Cart: "/cart",
-}
 
 type SideMenuProps = {
   regions: BackendRegion[] | null
   locales: Locale[] | null
   currentLocale: string | null
+  customer?: Account | null
 }
 
-const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
+const SideMenu = ({ regions, locales, currentLocale, customer }: SideMenuProps) => {
   const countryToggleState = useToggleState()
   const languageToggleState = useToggleState()
+  const storefrontMenuItems = {
+    Home: "/",
+    Hall: "/hall",
+    Shop: "/shop",
+    Account: customer ? `/customer/${encodeURIComponent(customer.user_name)}` : "/auth/login",
+    Cart: "/cart",
+  }
+  const menuItems = customer?.role === "manager"
+    ? { Manager: "/manager" }
+    : customer?.role === "admin"
+      ? { Admin: "/admin" }
+      : storefrontMenuItems
 
   return (
     <div className="h-full">
@@ -92,7 +99,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                       </button>
                     </div>
                     <ul className="flex flex-col gap-6 items-start justify-start">
-                      {Object.entries(SideMenuItems).map(([name, href]) => {
+                      {Object.entries(menuItems).map(([name, href]) => {
                         return (
                           <li key={name}>
                             <LocalizedClientLink

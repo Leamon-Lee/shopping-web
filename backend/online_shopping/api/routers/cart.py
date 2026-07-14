@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from online_shopping.api.deps import get_current_user, get_db, get_optional_user
+from online_shopping.api.behavior_events import record_behavior_event
 from online_shopping.api.mappers import cart_to_out
 from online_shopping.api.schemas import CartItemCreate, CartItemUpdate, ShoppingCartOut
 from online_shopping.models.account import Account
@@ -32,6 +33,16 @@ async def add_item(
         payload.quantity,
         email=current_user.email if current_user else None,
     )
+    await record_behavior_event(
+        db,
+        "add_to_cart",
+        current_user,
+        product_identity=payload.product_name,
+        quantity=payload.quantity,
+        source_page="/cart",
+        metadata={"source": "cart_api"},
+    )
+    await db.commit()
     return cart_to_out(cart)
 
 
@@ -58,8 +69,17 @@ async def remove_item(
     db: AsyncSession = Depends(get_db),
 ) -> ShoppingCartOut:
     """Remove an item from the cart."""
+    await record_behavior_event(
+        db,
+        "remove_from_cart",
+        current_user,
+        product_identity=item_identity,
+        source_page="/cart",
+        metadata={"source": "cart_api"},
+    )
     cart = await CartService(db).remove_item(
         item_identity,
         email=current_user.email if current_user else None,
     )
+    await db.commit()
     return cart_to_out(cart)
