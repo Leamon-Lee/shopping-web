@@ -68,6 +68,11 @@ export default async function UsernameProductPage(props: Props) {
 
   async function addProductToCart() {
     "use server"
+    const customer = await retrieveCustomer()
+    if (!customer) {
+      throw new Error("Please sign in before adding items to your cart.")
+    }
+
     const identity = product?.variants?.[0]?.id || backendProductName(product!)
     await addCartItem({
       product_name: identity,
@@ -162,10 +167,12 @@ export default async function UsernameProductPage(props: Props) {
             product={product}
             fallbackSizes={extractSizeChoices(unwrapBackendValue(product.description))}
           />
-          <AddToCartForm
-            addAction={addProductToCart}
-            disabled={backendProductAvailableCount(product) < 1}
-          />
+            <AddToCartForm
+              addAction={addProductToCart}
+              disabled={backendProductAvailableCount(product) < 1}
+              requiresLogin={!currentUser}
+              loginHref={`/auth/login?next=${encodeURIComponent(`/${_countryCode}/${shopName}/${productName}`)}`}
+            />
         </div>
       </section>
       <ReviewSection productIdentity={product.id || backendProductName(product)} />

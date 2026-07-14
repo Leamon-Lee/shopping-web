@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+from __future__ import annotations
+
 """
 Build user preference profiles from weighted event history.
 
@@ -19,7 +21,7 @@ Usage:
 import argparse
 import json
 from collections import defaultdict
-from context import add_common_args, load_events_local
+from context import add_common_args, load_events_local, load_events_spark, write_output_spark
 
 
 def build_user_prefs_local(events: list[dict], dt: str) -> list[dict]:
@@ -71,7 +73,10 @@ def build_user_prefs_local(events: list[dict], dt: str) -> list[dict]:
         # Sort and take top
         top_cats = sorted(prefs["category_scores"].items(), key=lambda x: x[1], reverse=True)[:5]
         top_shops = sorted(prefs["shop_scores"].items(), key=lambda x: x[1], reverse=True)[:5]
-        top_products = sorted(prefs["product_scores"].items(), key=lambda x: x[1], reverse=True)[:10]
+        top_products = [
+            item for item in sorted(prefs["product_scores"].items(), key=lambda x: x[1], reverse=True)
+            if item[1] > 0
+        ][:10]
 
         result.append({
             "user_key": user_key,
@@ -109,12 +114,46 @@ def main():
         from context import write_output_local
         write_output_local(rows, args.output_dir, output_subpath)
     else:
-        print("[user_preferences] Spark mode requires PySpark. Install: pip install pyspark")
-        print("[user_preferences] Falling back to local mode...")
-        events = load_events_local(args.input_dir, args.days, args.date)
-        rows = build_user_prefs_local(events, args.date)
-        from context import write_output_local
-        write_output_local(rows, args.output_dir, output_subpath)
+        from pyspark.sql import SparkSession
+
+        spark = SparkSession.builder \
+            .appName("user_preferences") \
+            .config("spark.hadoop.fs.defaultFS", "hdfs://master:9000") \
+            .getOrCreate()
+        try:
+            events_df = load_events_spark(spark, args.hdfs_input, args.days, args.date)
+            events = [row.asDict(recursive=True) for row in events_df.collect()]
+            print(f"[user_preferences] loaded {len(events)} events from HDFS")
+            rows = build_user_prefs_local(events, args.date)
+            if rows:
+                write_output_spark(spark.createDataFrame(rows), args.hdfs_output, output_subpath)
+            else:
+                from pyspark.sql.types import ArrayType, DoubleType, IntegerType, StringType, StructField, StructType
+                schema = StructType([
+                    StructField("user_key", StringType(), True),
+                    StructField("dt", StringType(), True),
+                    StructField("total_score", DoubleType(), True),
+                    StructField("event_count", IntegerType(), True),
+                    StructField("top_categories", ArrayType(StructType([
+                        StructField("name", StringType(), True),
+                        StructField("score", DoubleType(), True),
+                    ])), True),
+                    StructField("top_shops", ArrayType(StructType([
+                        StructField("name", StringType(), True),
+                        StructField("score", DoubleType(), True),
+                    ])), True),
+                    StructField("top_products", ArrayType(StructType([
+                        StructField("id", StringType(), True),
+                        StructField("score", DoubleType(), True),
+                    ])), True),
+                    StructField("price_range", StructType([
+                        StructField("min", DoubleType(), True),
+                        StructField("max", DoubleType(), True),
+                    ]), True),
+                ])
+                write_output_spark(spark.createDataFrame([], schema), args.hdfs_output, output_subpath)
+        finally:
+            spark.stop()
 
     print(f"\nBuilt preferences for {len(rows)} users")
     if rows:

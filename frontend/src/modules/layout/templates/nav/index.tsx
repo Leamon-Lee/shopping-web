@@ -10,23 +10,10 @@ export default async function Nav() {
     // Backend unreachable — treat as not logged in
   }
 
-  const role = customer?.role ?? "customer"
-  const customerHref = customer
-    ? role === "manager" ? "/manager"
-    : role === "admin" ? "/admin"
-    : `/customer/${encodeURIComponent(customer.user_name)}`
-    : "/auth/login"
-  const customerLabel = customer
-    ? role === "manager" ? "Manager"
-    : role === "admin" ? "Admin"
-    : "Customer"
-    : "Sign in"
-
   const accountHref = customer
-    ? role === "manager" ? "/manager"
-    : role === "admin" ? "/admin"
-    : `/customer/${encodeURIComponent(customer.user_name)}`
+    ? `/customer/${encodeURIComponent(customer.user_name)}`
     : "/auth/login"
+  const accountLabel = customer ? "Account" : "Sign in"
 
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
@@ -58,33 +45,19 @@ export default async function Nav() {
               </a>
               <LocalizedClientLink
                 className="hover:text-ui-fg-base"
-                href={customerHref}
-              >
-                {customerLabel}
-              </LocalizedClientLink>
-              <a className="hover:text-ui-fg-base" href="/sign-in/manager">
-                Manager
-              </a>
-              <a className="hover:text-ui-fg-base" href="/sign-in/admin">
-                Admin
-              </a>
-              <LocalizedClientLink
-                className="hover:text-ui-fg-base"
                 href={accountHref}
                 data-testid="nav-account-link"
               >
-                Account
+                {accountLabel}
               </LocalizedClientLink>
             </div>
-            {role !== "manager" && role !== "admin" && (
-              <LocalizedClientLink
-                className="hover:text-ui-fg-base flex gap-2"
-                href="/cart"
-                data-testid="nav-cart-link"
-              >
-                Cart
-              </LocalizedClientLink>
-            )}
+            <LocalizedClientLink
+              className="hover:text-ui-fg-base flex gap-2"
+              href="/cart"
+              data-testid="nav-cart-link"
+            >
+              Cart
+            </LocalizedClientLink>
           </div>
         </nav>
       </header>

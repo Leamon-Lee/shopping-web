@@ -9,6 +9,8 @@ import type {
   HallPayload,
   Order,
   PaginatedHallProducts,
+  PreferenceProfile,
+  RecommendationResponse,
   Product,
   Category,
   ShoppingCart,
@@ -108,6 +110,25 @@ export async function getHallProducts(params?: {
   sp.set("offset", String(params?.offset ?? 0))
   const qs = sp.toString()
   return clientFetch<PaginatedHallProducts>(`/hall/products${qs ? `?${qs}` : ""}`)
+}
+
+export async function getUserRecommendations(userKey: string): Promise<RecommendationResponse> {
+  return clientFetch<RecommendationResponse>(
+    `/recommendations/users/${encodeURIComponent(userKey)}`
+  )
+}
+
+export async function getUserPreferenceProfile(userKey: string): Promise<PreferenceProfile> {
+  return clientFetch<PreferenceProfile>(
+    `/recommendations/users/${encodeURIComponent(userKey)}/preferences`
+  )
+}
+
+export async function trackEvent(payload: Record<string, unknown>): Promise<void> {
+  await clientFetch("/events", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  })
 }
 
 export async function getProduct(productName: string): Promise<Product> {

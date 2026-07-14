@@ -1,10 +1,15 @@
 from __future__ import annotations
 
 import re
+import hashlib
+from datetime import datetime, timezone
 
 from online_shopping.api.mappers import product_to_out
+from online_shopping.models.recommendation_result import PopularProduct
+from online_shopping.models.review import Review
 from online_shopping.repositories.catalog_repository import CatalogRepository
 from online_shopping.repositories.marketplace_repository import MarketplaceRepository
+from sqlalchemy import func, select
 
 
 def slugify(value: str) -> str:
@@ -107,18 +112,25 @@ class MarketplaceService:
         limit = max(1, min(limit, MAX_PAGE_LIMIT))
         offset = max(0, offset)
 
-        products = await self.catalog_repository.list_products_paginated(
-            shop=shop,
-            q=q,
-            category=category,
-            limit=limit,
-            offset=offset,
-        )
         total = await self.catalog_repository.count_products(
             shop=shop,
             q=q,
             category=category,
         )
+        if q or shop or category:
+            products = await self.catalog_repository.list_products_paginated(
+                shop=shop,
+                q=q,
+                category=category,
+                limit=limit,
+                offset=offset,
+            )
+        else:
+            products = await self._homepage_recommendation_page(
+                limit=limit,
+                offset=offset,
+                total=total,
+            )
 
         product_shops = await self.marketplace_repository.product_shop_map()
 
@@ -136,3 +148,96 @@ class MarketplaceService:
             "offset": offset,
             "has_more": offset + limit < total,
         }
+
+    async def _homepage_recommendation_page(
+        self,
+        *,
+        limit: int,
+        offset: int,
+        total: int,
+    ):
+        """Rank the unfiltered homepage feed with recommendations and rotation."""
+        if total <= 0:
+            return []
+
+        products = await self.catalog_repository.list_products_paginated(
+            limit=total,
+            offset=0,
+        )
+        product_ids = [product.id for product in products]
+        if not product_ids:
+            return []
+
+        db = self.catalog_repository.db
+        popular_rows = await db.execute(
+            select(
+                PopularProduct.product_id,
+                func.max(PopularProduct.score),
+                func.min(PopularProduct.rank),
+            )
+            .where(PopularProduct.product_id.in_(product_ids))
+            .group_by(PopularProduct.product_id)
+        )
+        popular_by_product = {
+            str(product_id): {"score": float(score or 0), "rank": int(rank or 9999)}
+            for product_id, score, rank in popular_rows
+        }
+
+        review_rows = await db.execute(
+            select(
+                Review.product_id,
+                func.avg(Review.rating),
+                func.count(Review.id),
+            )
+            .where(Review.product_id.in_(product_ids))
+            .group_by(Review.product_id)
+        )
+        reviews_by_product = {
+            str(product_id): {"avg": float(avg or 0), "count": int(count or 0)}
+            for product_id, avg, count in review_rows
+        }
+
+        rotation_seed = datetime.now(timezone.utc).strftime("%Y%m%d%H")
+        ranked = sorted(
+            products,
+            key=lambda product: self._homepage_score(
+                product,
+                popular_by_product.get(str(product.id), {}),
+                reviews_by_product.get(str(product.id), {}),
+                rotation_seed,
+            ),
+            reverse=True,
+        )
+        return ranked[offset : offset + limit]
+
+    @staticmethod
+    def _homepage_score(product, popular: dict, reviews: dict, rotation_seed: str) -> float:
+        """Blend recommendation quality with deterministic hourly variety."""
+        popular_score = float(popular.get("score") or 0)
+        rank = int(popular.get("rank") or 9999)
+        rank_boost = max(0.0, 12.0 - min(rank, 12)) / 12.0
+
+        avg_rating = float(reviews.get("avg") or 0)
+        review_count = int(reviews.get("count") or 0)
+        rating_score = 0.0
+        if review_count:
+            rating_score = (avg_rating - 3.0) * min(review_count, 20) / 5.0
+
+        age_score = 0.0
+        if product.created_at:
+            created_at = product.created_at
+            if created_at.tzinfo is None:
+                created_at = created_at.replace(tzinfo=timezone.utc)
+            age_days = max(0.0, (datetime.now(timezone.utc) - created_at).total_seconds() / 86400.0)
+            age_score = max(0.0, 1.0 - min(age_days, 30.0) / 30.0)
+
+        digest = hashlib.sha256(f"{rotation_seed}:{product.id}".encode("utf-8")).hexdigest()
+        rotation = int(digest[:8], 16) / 0xFFFFFFFF
+
+        return (
+            popular_score * 1.0
+            + rank_boost * 2.0
+            + rating_score * 2.0
+            + age_score * 0.5
+            + rotation * 1.25
+        )

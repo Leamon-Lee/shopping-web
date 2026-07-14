@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Shared Spark context and data loading utilities.
 
@@ -24,6 +26,16 @@ EVENT_WEIGHTS = {
     "order_paid": 10,
     "recommendation_click": 3,
     "recommendation_add_to_cart": 4,
+    "product_review": 1,
+    "product_rating": 1,
+}
+
+RATING_WEIGHTS = {
+    5: 8,
+    4: 5,
+    3: 1,
+    2: -4,
+    1: -8,
 }
 
 # ── Time decay ───────────────────────────────────────────────────
@@ -51,6 +63,30 @@ def weighted_score(event_type: str, event_date: Any, reference_date: datetime) -
     return weight
 
 
+def rating_score(rating: Any, has_content: Any = False) -> float:
+    """Map a 1-5 rating into a signed recommendation score."""
+    try:
+        normalized_rating = int(rating)
+    except (TypeError, ValueError):
+        return 0.0
+    score = float(RATING_WEIGHTS.get(normalized_rating, 0))
+    if score > 0 and bool(has_content):
+        score += 1.0
+    return score
+
+
+def event_weighted_score(event: dict, reference_date: datetime) -> float:
+    """Compute local score for normal events and rating/review events."""
+    event_type = event.get("event_type", "")
+    metadata = event.get("metadata_json") or event.get("metadata") or {}
+    if event_type in {"product_review", "product_rating"}:
+        return rating_score(
+            metadata.get("rating") if isinstance(metadata, dict) else event.get("rating"),
+            metadata.get("has_content") if isinstance(metadata, dict) else bool(event.get("content")),
+        ) * time_decay(event.get("created_at") or event.get("updated_at") or reference_date, reference_date)
+    return weighted_score(event_type, event.get("created_at"), reference_date)
+
+
 # ── Data loading ──────────────────────────────────────────────────
 
 def add_common_args(parser: argparse.ArgumentParser):
@@ -75,6 +111,7 @@ def add_common_args(parser: argparse.ArgumentParser):
 def load_events_local(input_dir: str, days: int, reference_date: str) -> list[dict]:
     """Load events from local JSONL files for the given date range."""
     all_events = []
+    seen_review_ids = set()
     ref_dt = datetime.fromisoformat(reference_date)
 
     for i in range(days):
@@ -88,14 +125,54 @@ def load_events_local(input_dir: str, days: int, reference_date: str) -> list[di
                 if line:
                     try:
                         event = json.loads(line)
-                        event["_weighted_score"] = weighted_score(
-                            event.get("event_type", ""),
-                            event.get("created_at"),
-                            ref_dt,
-                        )
+                        event["_weighted_score"] = event_weighted_score(event, ref_dt)
+                        metadata = event.get("metadata_json") or {}
+                        if event.get("event_type") == "product_review" and isinstance(metadata, dict):
+                            review_id = metadata.get("review_id")
+                            if review_id:
+                                seen_review_ids.add(str(review_id))
                         all_events.append(event)
                     except json.JSONDecodeError:
                         continue
+        reviews_path = os.path.join(input_dir, "reviews", f"dt={day}", "reviews.jsonl")
+        if os.path.exists(reviews_path):
+            with open(reviews_path, encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        review = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
+                    content = review.get("content") or ""
+                    review_id = review.get("review_id")
+                    if review_id and str(review_id) in seen_review_ids:
+                        continue
+                    event = {
+                        "id": review_id,
+                        "event_type": "product_rating",
+                        "account_id": review.get("account_id"),
+                        "anonymous_id": None,
+                        "session_id": None,
+                        "product_id": review.get("product_id"),
+                        "product_name": review.get("product_name", ""),
+                        "product_slug": review.get("product_slug", ""),
+                        "category_id": review.get("category_id"),
+                        "category_name": review.get("category_name", ""),
+                        "shop_id": review.get("shop_id"),
+                        "shop_name": review.get("shop_name", ""),
+                        "price": review.get("price"),
+                        "created_at": review.get("created_at") or review.get("updated_at"),
+                        "metadata_json": {
+                            "rating": review.get("rating"),
+                            "review_id": review.get("review_id"),
+                            "has_content": bool(str(content).strip()),
+                            "content_length": len(str(content).strip()),
+                        },
+                    }
+                    event["_weighted_score"] = event_weighted_score(event, ref_dt)
+                    all_events.append(event)
     return all_events
 
 
@@ -104,17 +181,90 @@ def load_events_spark(spark, hdfs_input: str, days: int, reference_date: str):
     from pyspark.sql import functions as F
     from pyspark.sql.types import FloatType
 
-    paths = []
+    event_paths = []
+    review_paths = []
     ref_dt = datetime.fromisoformat(reference_date)
     for i in range(days):
         day = (ref_dt - timedelta(days=i)).strftime("%Y-%m-%d")
-        paths.append(f"{hdfs_input}/events/dt={day}/events.jsonl")
+        event_paths.append(f"{hdfs_input}/events/dt={day}/events.jsonl")
+        review_paths.append(f"{hdfs_input}/reviews/dt={day}/reviews.jsonl")
 
-    df = spark.read.json(paths)
+    df = spark.read.option("mode", "PERMISSIVE").json(event_paths)
+
+    try:
+        reviews = spark.read.option("mode", "PERMISSIVE").json(review_paths)
+        if "review_id" not in reviews.columns or "product_id" not in reviews.columns:
+            raise ValueError("empty or incompatible review partitions")
+        reviews = reviews.select(
+            F.col("review_id").alias("id"),
+            F.lit("product_rating").alias("event_type"),
+            "account_id",
+            F.lit(None).cast("string").alias("user_email"),
+            F.lit(None).cast("string").alias("anonymous_id"),
+            F.lit(None).cast("string").alias("session_id"),
+            "product_id",
+            F.col("product_name") if "product_name" in reviews.columns else F.lit("").alias("product_name"),
+            F.col("product_slug") if "product_slug" in reviews.columns else F.lit("").alias("product_slug"),
+            F.col("shop_id") if "shop_id" in reviews.columns else F.lit(None).cast("string").alias("shop_id"),
+            F.col("shop_name") if "shop_name" in reviews.columns else F.lit("").alias("shop_name"),
+            F.col("category_id") if "category_id" in reviews.columns else F.lit(None).cast("string").alias("category_id"),
+            F.col("category_name") if "category_name" in reviews.columns else F.lit("").alias("category_name"),
+            F.lit(None).cast("string").alias("query"),
+            F.lit(None).cast("int").alias("quantity"),
+            F.col("price") if "price" in reviews.columns else F.lit(None).cast("double").alias("price"),
+            F.lit(None).cast("string").alias("source_page"),
+            F.struct(
+                F.col("rating").alias("rating"),
+                F.col("review_id").alias("review_id"),
+                (F.length(F.coalesce(F.col("content"), F.lit(""))) > 0).alias("has_content"),
+                F.length(F.coalesce(F.col("content"), F.lit(""))).alias("content_length"),
+            ).alias("metadata_json"),
+            F.coalesce(F.col("created_at"), F.col("updated_at")).alias("created_at"),
+        )
+        event_review_ids = (
+            df
+            .filter(F.col("event_type") == F.lit("product_review"))
+            .select(F.col("metadata_json.review_id").cast("string").alias("_review_id"))
+            .where(F.col("_review_id").isNotNull())
+            .distinct()
+        )
+        reviews = (
+            reviews
+            .join(event_review_ids, reviews["id"].cast("string") == event_review_ids["_review_id"], "left_anti")
+        )
+        df = df.unionByName(reviews, allowMissingColumns=True)
+    except Exception as exc:
+        print(f"[load_events_spark] reviews not loaded: {exc}")
 
     # Add weighted score column
     weight_map = F.create_map([F.lit(x) for k, v in EVENT_WEIGHTS.items() for x in (k, float(v))])
     df = df.withColumn("_base_weight", F.coalesce(weight_map[F.col("event_type")], F.lit(0.5)))
+    rating_map = F.create_map([F.lit(x) for k, v in RATING_WEIGHTS.items() for x in (k, float(v))])
+    metadata_fields = []
+    try:
+        metadata_fields = df.schema["metadata_json"].dataType.fieldNames()
+    except Exception:
+        metadata_fields = []
+    rating = (
+        F.col("metadata_json.rating").cast("int")
+        if "rating" in metadata_fields
+        else F.lit(None).cast("int")
+    )
+    has_content = (
+        F.col("metadata_json.has_content")
+        if "has_content" in metadata_fields
+        else F.lit(False)
+    )
+    review_score = F.coalesce(rating_map[rating], F.lit(0.0))
+    review_score = F.when(
+        (review_score > 0) & (has_content == F.lit(True)),
+        review_score + F.lit(1.0),
+    ).otherwise(review_score)
+    df = df.withColumn(
+        "_base_weight",
+        F.when(F.col("event_type").isin("product_review", "product_rating"), review_score)
+        .otherwise(F.col("_base_weight")),
+    )
 
     # Time decay
     days_col = F.datediff(F.lit(reference_date), F.to_date(F.col("created_at")))

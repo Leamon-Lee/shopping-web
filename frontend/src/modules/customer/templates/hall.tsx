@@ -1,12 +1,17 @@
 "use client"
 
-import { Badge, Button, clx } from "@medusajs/ui"
+import { Button, clx } from "@medusajs/ui"
 import Input from "@modules/common/components/input"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { useIntersection } from "@lib/hooks/use-in-view"
 import { useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { getHallProducts } from "../../../api/backend-client"
+import type { WheelEvent } from "react"
+import {
+  getHallProducts,
+  getUserRecommendations,
+  trackEvent,
+} from "../../../api/backend-client"
 import type {
   Account,
   BackendHallPayload,
@@ -76,11 +81,15 @@ const HallTemplate = ({
   initialProducts: serverInitialProducts,
   initialHasMore,
   currentUser,
+  likedProducts = [],
+  recommendationUserKey: serverRecommendationUserKey,
 }: {
   data: BackendHallPayload
   initialProducts?: BackendProduct[]
   initialHasMore?: boolean
   currentUser?: Account | null
+  likedProducts?: BackendProduct[]
+  recommendationUserKey?: string | null
 }) => {
   const searchParams = useSearchParams()
   const shops = Array.isArray(data?.shops) ? data.shops : []
@@ -96,7 +105,7 @@ const HallTemplate = ({
     ? `/customer/${encodeURIComponent(currentUser.user_name)}`
     : null
   const hallPath = customerBasePath ? `${customerBasePath}/hall` : "/hall"
-  const initialProducts = useMemo(
+  const hallInitialProducts = useMemo(
     () => {
       if (Array.isArray(serverInitialProducts) && serverInitialProducts.length) {
         return serverInitialProducts
@@ -108,6 +117,15 @@ const HallTemplate = ({
     },
     [data, serverInitialProducts]
   )
+  const shouldBlendInitialRecommendations =
+    initialShopSlug === "all" && initialCategorySlug === "all"
+  const initialProducts = useMemo(
+    () =>
+      shouldBlendInitialRecommendations
+        ? uniqueProducts([...likedProducts, ...hallInitialProducts])
+        : hallInitialProducts,
+    [hallInitialProducts, likedProducts, shouldBlendInitialRecommendations]
+  )
   const productCount = data?.product_count ?? 0
 
   const [query, setQuery] = useState("")
@@ -115,10 +133,12 @@ const HallTemplate = ({
   const [shopSlug, setShopSlug] = useState(initialShopSlug)
   const [categorySlug, setCategorySlug] = useState(initialCategorySlug)
   const [products, setProducts] = useState<BackendProduct[]>(initialProducts)
-  const [totalCount, setTotalCount] = useState(productCount)
-  const [offset, setOffset] = useState(initialProducts.length)
+  const [likedFeedProducts, setLikedFeedProducts] = useState<BackendProduct[]>(
+    likedProducts
+  )
+  const [offset, setOffset] = useState(hallInitialProducts.length)
   const [hasMore, setHasMore] = useState(
-    initialHasMore ?? initialProducts.length < productCount
+    initialHasMore ?? hallInitialProducts.length < productCount
   )
   const [loading, setLoading] = useState(false)
   const [initialLoad, setInitialLoad] = useState(false)
@@ -127,6 +147,8 @@ const HallTemplate = ({
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const loadingRef = useRef(false)
   const isVisible = useIntersection(sentinelRef, "900px")
+  const recommendationUserKey =
+    serverRecommendationUserKey || currentUser?.email || currentUser?.user_name
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -135,6 +157,53 @@ const HallTemplate = ({
 
     return () => clearTimeout(timer)
   }, [query])
+
+  const refreshLikedProducts = useCallback(async () => {
+    if (!recommendationUserKey) return
+
+    try {
+      const [recommendations] = await Promise.allSettled([
+        getUserRecommendations(recommendationUserKey),
+      ])
+
+      if (recommendations.status === "fulfilled") {
+        const refreshed = uniqueProducts(
+          (recommendations.value.items ?? []).map((item) => item.product)
+        )
+        if (refreshed.length) {
+          setLikedFeedProducts(refreshed)
+          if (!debouncedQuery && shopSlug === "all" && categorySlug === "all") {
+            setProducts((current) => uniqueProducts([...refreshed, ...current]))
+          }
+        }
+      }
+    } catch {
+      // Recommendation refresh is best-effort; the main hall feed should stay usable.
+    }
+  }, [categorySlug, debouncedQuery, recommendationUserKey, shopSlug])
+
+  useEffect(() => {
+    setLikedFeedProducts(likedProducts)
+  }, [likedProducts])
+
+  useEffect(() => {
+    void refreshLikedProducts()
+
+    const handlePageShow = () => {
+      void refreshLikedProducts()
+    }
+    const handleFocus = () => {
+      void refreshLikedProducts()
+    }
+
+    window.addEventListener("pageshow", handlePageShow)
+    window.addEventListener("focus", handleFocus)
+
+    return () => {
+      window.removeEventListener("pageshow", handlePageShow)
+      window.removeEventListener("focus", handleFocus)
+    }
+  }, [refreshLikedProducts])
 
   const fetchPage = useCallback(
     async (nextOffset: number) => {
@@ -158,13 +227,12 @@ const HallTemplate = ({
             ? uniqueProducts(result.products)
             : uniqueProducts([...current, ...result.products])
         )
-        setTotalCount(result.count)
         setOffset(nextOffset + result.products.length)
         setHasMore(result.has_more)
       } catch (err) {
         if (nextOffset === 0) {
           setProducts(initialProducts)
-          setOffset(initialProducts.length)
+          setOffset(hallInitialProducts.length)
           setHasMore(false)
           setError(
             initialProducts.length > 0
@@ -182,15 +250,14 @@ const HallTemplate = ({
         setInitialLoad(false)
       }
     },
-    [categorySlug, debouncedQuery, initialProducts, shopSlug]
+    [categorySlug, debouncedQuery, hallInitialProducts.length, initialProducts, shopSlug]
   )
 
   useEffect(() => {
     if (!debouncedQuery && shopSlug === "all" && categorySlug === "all") {
       setProducts(initialProducts)
-      setTotalCount(productCount)
-      setOffset(initialProducts.length)
-      setHasMore(initialHasMore ?? initialProducts.length < productCount)
+      setOffset(hallInitialProducts.length)
+      setHasMore(initialHasMore ?? hallInitialProducts.length < productCount)
       setInitialLoad(false)
       setError(null)
       return
@@ -205,6 +272,7 @@ const HallTemplate = ({
     categorySlug,
     debouncedQuery,
     fetchPage,
+    hallInitialProducts.length,
     initialHasMore,
     initialProducts,
     productCount,
@@ -329,10 +397,6 @@ const HallTemplate = ({
                 instead of a shop directory.
               </p>
             </div>
-            <div className="flex gap-2">
-              <Badge>{productCount} products</Badge>
-              <Badge>{shops.length} shops</Badge>
-            </div>
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-3 small:grid-cols-[1fr_auto]">
@@ -378,16 +442,20 @@ const HallTemplate = ({
         </section>
 
         <section id="products" className="py-8">
+          {likedFeedProducts.length > 0 && (
+            <LikedProductsRail
+              products={likedFeedProducts}
+              currentUser={currentUser}
+            />
+          )}
+
           <div className="mb-6 flex flex-col gap-2 small:flex-row small:items-end small:justify-between">
             <div>
               <h2 className="text-xl-semi">Today&apos;s product feed</h2>
               <p className="mt-2 text-small-regular text-ui-fg-subtle">
-                {feedSummary(totalCount, activeShopName, activeCategoryName)}
+                {feedSummary(activeShopName, activeCategoryName)}
               </p>
             </div>
-            {!loading && products.length > 0 && (
-              <Badge>{products.length} shown</Badge>
-            )}
           </div>
 
           {products.length > 0 ? (
@@ -431,6 +499,126 @@ const HallTemplate = ({
   )
 }
 
+const LikedProductsRail = ({
+  products,
+  currentUser,
+}: {
+  products: BackendProduct[]
+  currentUser?: Account | null
+}) => {
+  const visibleProducts = uniqueProducts(products).slice(0, 10)
+  const scrollerRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const scroller = scrollerRef.current
+    if (!scroller || visibleProducts.length < 2) return
+
+    const interval = window.setInterval(() => {
+      if (!scroller) return
+      const atEnd =
+        scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 4
+      if (atEnd) {
+        scroller.scrollTo({ left: 0, behavior: "smooth" })
+      } else {
+        scroller.scrollBy({ left: 1, behavior: "auto" })
+      }
+    }, 35)
+
+    return () => window.clearInterval(interval)
+  }, [visibleProducts.length])
+
+  if (!visibleProducts.length) return null
+
+  return (
+    <section className="mb-8 border-b border-ui-border-base pb-8">
+      <div className="mb-4">
+        <div>
+          <h2 className="text-xl-semi">Products you may like</h2>
+          <p className="mt-2 text-small-regular text-ui-fg-subtle">
+            Picked from your reviews, ratings, and shopping activity.
+          </p>
+        </div>
+      </div>
+      <div
+        ref={scrollerRef}
+        className="no-scrollbar flex gap-4 overflow-x-auto pb-1"
+      >
+        {visibleProducts.map((product, index) => (
+          <div
+            key={product.id ?? `${backendProductName(product)}-${index}`}
+            className="w-[360px] shrink-0"
+          >
+            <LikedProductCard
+              product={product}
+              priority={index < 4}
+              currentUser={currentUser}
+            />
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+const LikedProductCard = ({
+  product,
+  priority,
+  currentUser,
+}: {
+  product: BackendProduct
+  priority: boolean
+  currentUser?: Account | null
+}) => {
+  const imageUrl = getProductImageUrl(product)
+  const name = backendProductName(product)
+  const category = backendCategoryName(product.category)
+
+  return (
+    <LocalizedClientLink
+      href={productHref(product, currentUser)}
+      className="group block"
+      onClick={() => trackProductClick(product, "liked_products")}
+    >
+      <article className="flex h-32 overflow-hidden rounded-rounded border border-ui-border-base bg-white shadow-elevation-card-rest transition-shadow duration-150 group-hover:shadow-elevation-card-hover">
+        <div className="h-32 w-32 shrink-0 overflow-hidden bg-ui-bg-subtle">
+          {imageUrl ? (
+            <img
+              src={imageUrl}
+              alt={name}
+              className="h-full w-full object-cover"
+              loading={priority ? "eager" : "lazy"}
+              decoding="async"
+              fetchPriority={priority ? "high" : "auto"}
+            />
+          ) : (
+            <div className="h-full w-full bg-ui-bg-subtle" />
+          )}
+        </div>
+        <div className="flex min-w-0 flex-1 flex-col justify-between p-3">
+          <div>
+            <h3 className="line-clamp-2 text-small-regular text-ui-fg-base">
+              {name}
+            </h3>
+            <p className="mt-2 line-clamp-1 text-small-regular text-ui-fg-muted">
+              {category}
+            </p>
+          </div>
+          <div className="flex items-center justify-between gap-3 text-small-regular">
+            <span className="font-medium text-ui-fg-base">
+              {formatBackendMoney(backendProductPrice(product))}
+            </span>
+            {product.shop?.shop_name && (
+              <span className="line-clamp-1 text-right text-ui-fg-muted">
+                {product.shop.shop_name}
+              </span>
+            )}
+          </div>
+        </div>
+      </article>
+    </LocalizedClientLink>
+  )
+}
+
 const FilterStrip = ({
   label,
   allLabel,
@@ -444,10 +632,25 @@ const FilterStrip = ({
   items: Array<{ label: string; value: string; meta?: number }>
   onChange: (value: string) => void
 }) => {
+  const scrollerRef = useRef<HTMLDivElement | null>(null)
+
+  const handleWheel = (event: WheelEvent<HTMLDivElement>) => {
+    const scroller = scrollerRef.current
+    if (!scroller) return
+    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return
+
+    event.preventDefault()
+    scroller.scrollLeft += event.deltaY
+  }
+
   return (
     <div>
       <p className="mb-2 txt-xsmall-plus uppercase text-ui-fg-muted">{label}</p>
-      <div className="flex gap-2 overflow-x-auto pb-1">
+      <div
+        ref={scrollerRef}
+        className="no-scrollbar flex gap-2 overflow-x-auto pb-1"
+        onWheel={handleWheel}
+      >
         <button
           type="button"
           onClick={() => onChange("all")}
@@ -517,10 +720,12 @@ const HallProductCard = ({
   product,
   priority,
   currentUser,
+  eventSource = "hall_feed",
 }: {
   product: BackendProduct
   priority: boolean
   currentUser?: Account | null
+  eventSource?: string
 }) => {
   const imageUrl = getProductImageUrl(product)
   const name = backendProductName(product)
@@ -531,6 +736,7 @@ const HallProductCard = ({
     <LocalizedClientLink
       href={productHref(product, currentUser)}
       className="group block"
+      onClick={() => trackProductClick(product, eventSource)}
     >
       <article className="overflow-hidden rounded-rounded border border-ui-border-base bg-white shadow-elevation-card-rest transition-shadow duration-150 group-hover:shadow-elevation-card-hover">
         <div
@@ -577,6 +783,32 @@ const HallProductCard = ({
       </article>
     </LocalizedClientLink>
   )
+}
+
+function trackProductClick(product: BackendProduct, source: string) {
+  const payload = {
+    event_type: source === "liked_products" ? "recommendation_click" : "product_view",
+    product_id: product.id,
+    product_name: backendProductName(product),
+    product_slug: product.slug,
+    shop_id: product.shop?.shop_id,
+    shop_name: product.shop?.shop_name,
+    category_name: backendCategoryName(product.category),
+    price: backendProductPrice(product),
+    source_page: "/hall",
+    metadata: { source },
+  }
+
+  if (typeof navigator !== "undefined" && "sendBeacon" in navigator) {
+    const body = new Blob([JSON.stringify(payload)], {
+      type: "application/json",
+    })
+    if (navigator.sendBeacon("/api/backend/events", body)) {
+      return
+    }
+  }
+
+  void trackEvent(payload).catch(() => {})
 }
 
 const MasonrySkeleton = () => {
@@ -638,14 +870,15 @@ function getProductImageUrl(product: BackendProduct): string | null {
 }
 
 function feedSummary(
-  totalCount: number,
   shopName?: string,
   categoryName?: string
 ) {
   const filters = [shopName, categoryName].filter(Boolean)
-  const suffix = filters.length ? ` in ${filters.join(" / ")}` : ""
+  if (filters.length) {
+    return `Filtered by ${filters.join(" / ")}. Keep scrolling to load more.`
+  }
 
-  return `${totalCount} products${suffix}. Keep scrolling to load more.`
+  return "Keep scrolling to load more products."
 }
 
 export default HallTemplate

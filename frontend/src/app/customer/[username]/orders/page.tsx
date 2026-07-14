@@ -37,7 +37,7 @@ export default async function OrdersPage(props: Props) {
             href={`/customer/${encodeURIComponent(username)}/hall`}
             className="text-small-regular text-ui-fg-muted hover:text-ui-fg-base"
           >
-            Back to dashboard
+            Back to Hall
           </LocalizedClientLink>
         </div>
 

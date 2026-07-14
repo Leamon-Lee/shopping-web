@@ -5,6 +5,8 @@ import type {
   HallPayload,
   Order,
   PaginatedHallProducts,
+  PreferenceProfile,
+  RecommendationResponse,
   Product,
   Category,
   ShoppingCart,
@@ -63,7 +65,7 @@ async function backendFetch<T>(path: string, init?: RequestInit): Promise<T> {
     // 详细打印错误信息，包括 cause（底层网络错误）
     console.error('❌ backendFetch failed for URL:', url)
     console.error('Error object:', error)
-    if (error.cause) {
+    if (error instanceof Error && "cause" in error && error.cause) {
       console.error('Error cause:', error.cause)
     }
     // 重新抛出，让上层处理
@@ -118,6 +120,18 @@ export async function getHallProducts(params?: {
   if (params?.offset !== undefined) searchParams.set("offset", String(params.offset))
   const query = searchParams.toString() ? `?${searchParams.toString()}` : ""
   return backendFetch<PaginatedHallProducts>(`/hall/products${query}`)
+}
+
+export async function getUserRecommendations(userKey: string): Promise<RecommendationResponse> {
+  return backendFetch<RecommendationResponse>(
+    `/recommendations/users/${encodeURIComponent(userKey)}`
+  )
+}
+
+export async function getUserPreferenceProfile(userKey: string): Promise<PreferenceProfile> {
+  return backendFetch<PreferenceProfile>(
+    `/recommendations/users/${encodeURIComponent(userKey)}/preferences`
+  )
 }
 
 export async function getProduct(productName: string): Promise<Product> {

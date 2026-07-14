@@ -1,5 +1,5 @@
 import CustomerPanel from "@modules/customer/templates/customer-panel"
-import { getCart, listOrders, listProducts } from "../../api/backend"
+import { getCart, getUserPreferenceProfile, listOrders, listProducts } from "../../api/backend"
 import { retrieveCustomer } from "@lib/data/customer"
 import { cookies } from "next/headers"
 import { Metadata } from "next"
@@ -21,11 +21,13 @@ async function authFetch<T>(path: string, init?: RequestInit): Promise<T> {
 
 export default async function CustomerPage() {
   const customer = await retrieveCustomer()
-  const [cart, orders, products, addresses, paymentMethods, reviewsData] = await Promise.all([
+  const userKey = customer?.email || customer?.user_name || ""
+  const [cart, orders, products, addresses, paymentMethods, reviewsData, preferenceProfile] = await Promise.all([
     getCart().catch(() => null), listOrders().catch(() => []), listProducts().catch(() => []),
     authFetch<any[]>("/accounts/me/addresses").catch(() => []),
     authFetch<any[]>("/accounts/me/payment-methods").catch(() => []),
     authFetch<{ reviews: any[] }>("/accounts/me/reviews").catch(() => ({ reviews: [] })),
+    userKey ? getUserPreferenceProfile(userKey).catch(() => null) : Promise.resolve(null),
   ])
   const reviewCount = reviewsData?.reviews?.length || 0
   const reviews = reviewsData?.reviews || []
@@ -44,5 +46,6 @@ export default async function CustomerPage() {
     completeOrderAction={completeOrderAction} deleteOrderAction={deleteOrderAction}
     addAddressAction={addAddressAction} updateAddressAction={updateAddressAction} deleteAddressAction={deleteAddressAction}
     addPaymentMethodAction={addPaymentMethodAction} deletePaymentMethodAction={deletePaymentMethodAction}
-    reviewsCount={reviewCount} reviews={reviews} deleteReviewAction={deleteReviewAction} />
+    preferenceProfile={preferenceProfile}
+    reviews={reviews} deleteReviewAction={deleteReviewAction} />
 }

@@ -33,6 +33,8 @@ VALID_EVENT_TYPES = frozenset({
     "recommendation_impression",
     "recommendation_click",
     "recommendation_add_to_cart",
+    "product_review",
+    "product_rating",
 })
 
 

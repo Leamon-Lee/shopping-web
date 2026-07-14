@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+from __future__ import annotations
+
 """
 Build item-item similarity based on user co-occurrence.
 
@@ -21,7 +23,20 @@ Usage:
 import argparse
 import math
 from collections import defaultdict
-from context import add_common_args, load_events_local
+from context import add_common_args, load_events_local, load_events_spark, write_output_spark
+
+
+def is_positive_similarity_signal(ev: dict) -> bool:
+    """Use only positive intent signals for item-item co-occurrence."""
+    event_type = ev.get("event_type")
+    if event_type in {"product_review", "product_rating"}:
+        metadata = ev.get("metadata_json") or ev.get("metadata") or {}
+        try:
+            rating = int(metadata.get("rating") if isinstance(metadata, dict) else ev.get("rating"))
+        except (TypeError, ValueError):
+            return False
+        return rating >= 4
+    return ev.get("_weighted_score", 0) > 0
 
 
 def build_item_sim_local(events: list[dict], top_n: int, dt: str) -> list[dict]:
@@ -37,7 +52,7 @@ def build_item_sim_local(events: list[dict], top_n: int, dt: str) -> list[dict]:
         # Item similarity must use stable catalog UUIDs. Name-only events and
         # search terms would produce rows that cannot be imported safely.
         pid = ev.get("product_id")
-        if not user_key or not pid:
+        if not user_key or not pid or not is_positive_similarity_signal(ev):
             continue
         score = ev.get("_weighted_score", 0)
         user_products[user_key][pid] += score
@@ -116,12 +131,34 @@ def main():
         from context import write_output_local
         write_output_local(rows, args.output_dir, output_subpath)
     else:
-        print("[item_similarity] Spark mode requires PySpark. Install: pip install pyspark")
-        print("[item_similarity] Falling back to local mode...")
-        events = load_events_local(args.input_dir, args.days, args.date)
-        rows = build_item_sim_local(events, args.top_n, args.date)
-        from context import write_output_local
-        write_output_local(rows, args.output_dir, output_subpath)
+        from pyspark.sql import SparkSession
+
+        spark = SparkSession.builder \
+            .appName("item_similarity") \
+            .config("spark.hadoop.fs.defaultFS", "hdfs://master:9000") \
+            .getOrCreate()
+        try:
+            events_df = load_events_spark(spark, args.hdfs_input, args.days, args.date)
+            events = [row.asDict(recursive=True) for row in events_df.collect()]
+            print(f"[item_similarity] loaded {len(events)} events from HDFS")
+            rows = build_item_sim_local(events, args.top_n, args.date)
+            if rows:
+                write_output_spark(spark.createDataFrame(rows), args.hdfs_output, output_subpath)
+            else:
+                from pyspark.sql.types import DoubleType, StringType, StructField, StructType
+                schema = StructType([
+                    StructField("product_id", StringType(), True),
+                    StructField("product_name", StringType(), True),
+                    StructField("product_slug", StringType(), True),
+                    StructField("similar_product_id", StringType(), True),
+                    StructField("similar_product_name", StringType(), True),
+                    StructField("score", DoubleType(), True),
+                    StructField("reason", StringType(), True),
+                    StructField("dt", StringType(), True),
+                ])
+                write_output_spark(spark.createDataFrame([], schema), args.hdfs_output, output_subpath)
+        finally:
+            spark.stop()
 
     # Summary
     unique_products = len(set(r["product_id"] for r in rows))

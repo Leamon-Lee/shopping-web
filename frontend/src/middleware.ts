@@ -28,6 +28,23 @@ const PUBLIC_PATTERNS = [
 const CUSTOMER_PATTERNS = [/^\/customer/]
 const MANAGER_PATTERNS = [/^\/manager/]
 const ADMIN_PATTERNS = [/^\/admin/]
+const RESERVED_TOP_LEVEL_SEGMENTS = new Set([
+  "_next",
+  "admin",
+  "api",
+  "auth",
+  "cart",
+  "catalog",
+  "catlog",
+  "customer",
+  "customer-panel",
+  "hall",
+  "manager",
+  "products",
+  "shop",
+  "shops",
+  "sign-in",
+])
 
 // ── Helper ───────────────────────────────────────────────────────────
 
@@ -43,6 +60,22 @@ function matchesAny(pathname: string, patterns: RegExp[]): boolean {
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+  const hallAliasMatch = pathname.match(/^\/([^/]+)\/hall\/?$/)
+
+  if (
+    hallAliasMatch &&
+    !RESERVED_TOP_LEVEL_SEGMENTS.has(hallAliasMatch[1])
+  ) {
+    if (!hasToken(request)) {
+      const loginUrl = new URL("/auth/login", request.url)
+      loginUrl.searchParams.set("redirect", pathname)
+      return NextResponse.redirect(loginUrl)
+    }
+
+    const rewriteUrl = request.nextUrl.clone()
+    rewriteUrl.pathname = `/customer/${hallAliasMatch[1]}/hall`
+    return NextResponse.rewrite(rewriteUrl)
+  }
 
   // Allow public routes without authentication
   if (matchesAny(pathname, PUBLIC_PATTERNS)) {

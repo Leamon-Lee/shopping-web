@@ -7,14 +7,26 @@ import { useState, useTransition } from "react"
 type AddToCartFormProps = {
   addAction: () => Promise<void>
   disabled?: boolean
+  requiresLogin?: boolean
+  loginHref?: string
 }
 
-export default function AddToCartForm({ addAction, disabled }: AddToCartFormProps) {
+export default function AddToCartForm({
+  addAction,
+  disabled,
+  requiresLogin,
+  loginHref = "/auth/login",
+}: AddToCartFormProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null)
 
   const handleSubmit = () => {
+    if (requiresLogin) {
+      router.push(loginHref)
+      return
+    }
+
     setToast(null)
     startTransition(async () => {
       try {
@@ -52,7 +64,7 @@ export default function AddToCartForm({ addAction, disabled }: AddToCartFormProp
         isLoading={isPending}
         data-testid="add-product-button"
       >
-        Add to cart
+        {requiresLogin ? "Sign in to add to cart" : "Add to cart"}
       </Button>
     </>
   )

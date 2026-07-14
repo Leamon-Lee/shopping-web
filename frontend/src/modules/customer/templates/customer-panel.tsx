@@ -4,7 +4,15 @@ import { Badge, Button, Table } from "@medusajs/ui"
 import ConfirmDialog from "@modules/common/components/confirm-dialog"
 import { useEffect, useMemo, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
-import type { Account, Address, Order, Product, ShoppingCart } from "types/backend"
+import type {
+  Account,
+  Address,
+  Order,
+  PreferenceBucket,
+  PreferenceProfile,
+  Product,
+  ShoppingCart,
+} from "types/backend"
 import { signout } from "@lib/data/customer"
 
 type CustomerPanelProps = {
@@ -12,6 +20,7 @@ type CustomerPanelProps = {
   orders: Order[]
   products: Product[]
   addresses: Address[]
+  paymentMethods: any[]
   customer: Account | null
   completeOrderAction?: (orderNumber: string) => Promise<any>
   deleteOrderAction?: (orderNumber: string) => Promise<any>
@@ -20,6 +29,7 @@ type CustomerPanelProps = {
   deleteAddressAction?: (addressId: string) => Promise<any[]>
   addPaymentMethodAction?: (label: string) => Promise<any[]>
   deletePaymentMethodAction?: (pmId: string) => Promise<any[]>
+  preferenceProfile?: PreferenceProfile | null
   reviewsCount?: number
   reviews?: any[]
   deleteReviewAction?: (reviewId: string) => Promise<any>
@@ -28,7 +38,7 @@ type CustomerPanelProps = {
 // ── Types ────────────────────────────────────────────────────────────
 
 type CustomerView =
-  | "Dashboard" | "Cart" | "Orders" | "Order Detail"
+  | "Cart" | "Orders" | "Order Detail"
   | "Wishlist" | "Preferences" | "Reviews"
   | "Addresses" | "Payment Methods"
 
@@ -48,7 +58,7 @@ const formatColumn = (column: string) =>
 
 const getViewTitle = (view: CustomerView) => {
   const titles: Record<CustomerView, string> = {
-    Dashboard: "Customer dashboard", Cart: "Shopping cart",
+    Cart: "Shopping cart",
     Orders: "My orders", "Order Detail": "Order detail",
     Wishlist: "Wishlist", Preferences: "Preference center",
     Reviews: "Product reviews", Addresses: "Saved addresses",
@@ -59,7 +69,6 @@ const getViewTitle = (view: CustomerView) => {
 
 const getViewDescription = (view: CustomerView) => {
   const descriptions: Record<CustomerView, string> = {
-    Dashboard: "View cart, active orders, completed orders, wishlist, reviews, addresses, payment methods, and recommended items.",
     Cart: "Manage cart items before checkout, including quantity, product variants, stock status, and shop grouping.",
     Orders: "Track payment, shipment, order status, refunds, reviews, and order-level actions.",
     "Order Detail": "Review order summary, shop info, items, payment info, shipment info, order log, and customer actions.",
@@ -157,11 +166,11 @@ const CustomerPanel = ({
   cart, orders: initialOrders, products, addresses: initialAddresses, paymentMethods: initialPMs, customer,
   completeOrderAction, deleteOrderAction,
   addAddressAction, updateAddressAction, deleteAddressAction,
-  addPaymentMethodAction, deletePaymentMethodAction, reviewsCount, reviews: initialReviews, deleteReviewAction,
+  addPaymentMethodAction, deletePaymentMethodAction, preferenceProfile, reviewsCount, reviews: initialReviews, deleteReviewAction,
 }: CustomerPanelProps) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
-  const [activeView, setActiveView] = useState<CustomerView>("Dashboard")
+  const [activeView, setActiveView] = useState<CustomerView>("Cart")
   const [orders, setOrders] = useState<Order[]>(initialOrders)
   const [addresses, setAddresses] = useState<Address[]>(initialAddresses)
   const [paymentMethods, setPaymentMethods] = useState<any[]>(initialPMs)
@@ -280,7 +289,7 @@ const CustomerPanel = ({
   }
 
   const navItems: CustomerView[] = [
-    "Dashboard", "Cart", "Orders", "Reviews",
+    "Cart", "Orders", "Reviews", "Preferences",
     "Addresses", "Payment Methods",
   ]
 
@@ -303,17 +312,6 @@ const CustomerPanel = ({
     date: order.order_date?.slice(0, 10) ?? "—",
     status: order.status === "created" ? "active" : order.status,
   }))
-
-  const metrics = [
-    { label: "Cart items", value: String(cart?.total_quantity ?? 0), detail: "From API" },
-    { label: "Orders", value: String(orders.filter(o => o.status !== "completed" && o.status !== "canceled").length), detail: `${orders.filter(o => o.status === "shipped").length} shipments in transit` },
-    { label: "Completed orders", value: String(orders.filter(o => o.status === "completed").length), detail: "Lifetime" },
-    { label: "Reviews", value: String(reviewsCount || 0), detail: "Published reviews" },
-    { label: "Products available", value: String(products.length), detail: "Across all shops" },
-    { label: "Saved addresses", value: String(addresses.length), detail: addresses.length > 0 ? `${addresses.filter(a => a.is_default_shipping).length} default` : "Add one" },
-    { label: "Payment methods", value: String(paymentMethods.length), detail: paymentMethods.length > 0 ? "Available" : "Add one" },
-    { label: "Cart subtotal", value: `CNY ${cart?.subtotal?.toFixed(2) ?? "0.00"}`, detail: `${cart?.items.length ?? 0} items` },
-  ]
 
   return (
     <div className="min-h-screen bg-ui-bg-base text-ui-fg-base">
@@ -397,8 +395,10 @@ const CustomerPanel = ({
               }}
               onCancelEdit={resetAddrForm}
             />
+          ) : activeView === "Preferences" ? (
+            <PreferencesView profile={preferenceProfile} />
           ) : (
-            <CustomerViewContent activeView={activeView} cartRows={cartRows} orderRows={orderRows} metrics={metrics} />
+            <CustomerViewContent activeView={activeView} cartRows={cartRows} orderRows={orderRows} />
           )}
         </main>
       </div>
@@ -417,33 +417,14 @@ const ViewHeader = ({ activeView }: {
       <h1 className="mt-2 text-2xl-semi text-ui-fg-base">{getViewTitle(activeView)}</h1>
       <p className="mt-2 max-w-2xl text-small-regular text-ui-fg-subtle">{getViewDescription(activeView)}</p>
     </div>
-    {activeView === "Dashboard" ? (
-      <a href="/hall"><Button variant="secondary" className="h-10 w-full small:w-auto">Continue shopping</Button></a>
-    ) : null}
   </section>
 )
 
 // ── View Content ─────────────────────────────────────────────────────
 
 const CustomerViewContent = ({ activeView, cartRows, orderRows, metrics }: {
-  activeView: CustomerView; cartRows: Row[]; orderRows: Row[]; metrics: { label: string; value: string; detail: string }[]
+  activeView: CustomerView; cartRows: Row[]; orderRows: Row[]; metrics?: { label: string; value: string; detail: string }[]
 }) => {
-  if (activeView === "Dashboard") {
-    return (
-      <>
-        <section className="grid grid-cols-1 gap-4 small:grid-cols-2 medium:grid-cols-4">
-          {metrics.map((m) => <MetricCard key={m.label} {...m} />)}
-        </section>
-        <section className="grid grid-cols-1 gap-6 medium:grid-cols-[1fr_320px]">
-          <TableView title="Orders" description="Recent customer orders with shipment status." rows={orderRows} compact />
-          <InfoPanel title="Quick actions">
-            <p>Continue shopping</p><p>View cart</p><p>Track orders</p><p>Manage preferences</p><p>Write reviews</p>
-          </InfoPanel>
-        </section>
-      </>
-    )
-  }
-
   if (activeView === "Cart") {
     return (
       <div className="flex flex-col gap-6">
@@ -485,14 +466,116 @@ const CustomerViewContent = ({ activeView, cartRows, orderRows, metrics }: {
 
 // ── Orders View ────────────────────────────────────────────────────
 
+const PreferencesView = ({ profile }: { profile?: PreferenceProfile | null }) => {
+  if (!profile || profile.positive_signal_count === 0) {
+    return (
+      <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-8">
+        <h2 className="text-base-semi">Preference profile</h2>
+        <p className="mt-2 text-small-regular text-ui-fg-subtle">
+          Browse products, add items to cart, or write reviews to build your personalization profile.
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="grid grid-cols-1 gap-4 small:grid-cols-3">
+        <MetricCard
+          label="Positive signals"
+          value={String(profile.positive_signal_count)}
+          detail={`Last ${profile.days} days`}
+        />
+        <MetricCard
+          label="Top category"
+          value={profile.top_categories[0]?.label ?? "Not enough data"}
+          detail={`${profile.top_categories[0]?.count ?? 0} signals`}
+        />
+        <MetricCard
+          label="Top price range"
+          value={profile.price_bands[0]?.label ?? "Not enough data"}
+          detail={`${profile.price_bands[0]?.count ?? 0} signals`}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 medium:grid-cols-3">
+        <PreferencePanel title="Categories" items={profile.top_categories} />
+        <PreferencePanel title="Shops" items={profile.top_shops} />
+        <PreferencePanel title="Price range" items={profile.price_bands} />
+      </div>
+
+      <InfoPanel title="Signal mix">
+        <div className="flex flex-wrap gap-2">
+          {profile.event_mix.slice(0, 8).map((item) => (
+            <span
+              key={item.label}
+              className="rounded-rounded border border-ui-border-base bg-white px-2.5 py-1 text-xsmall-regular text-ui-fg-subtle"
+            >
+              {eventLabel(item.label)} x{item.count}
+            </span>
+          ))}
+        </div>
+      </InfoPanel>
+    </div>
+  )
+}
+
+const PreferencePanel = ({
+  title,
+  items,
+}: {
+  title: string
+  items: PreferenceBucket[]
+}) => (
+  <div className="rounded-rounded border border-ui-border-base bg-white p-5">
+    <h2 className="text-base-semi">{title}</h2>
+    <div className="mt-4 flex flex-col gap-4">
+      {items.length > 0 ? (
+        items.slice(0, 5).map((item) => (
+          <div key={item.label}>
+            <div className="mb-1 flex items-center justify-between gap-3 text-small-regular">
+              <span className="min-w-0 truncate text-ui-fg-base">{item.label}</span>
+              <span className="shrink-0 text-ui-fg-muted">{item.count}</span>
+            </div>
+            <div className="h-2 overflow-hidden rounded-full bg-ui-bg-subtle">
+              <div
+                className="h-full rounded-full bg-ui-fg-base"
+                style={{ width: `${Math.max(8, Math.min(100, item.share ?? 0))}%` }}
+              />
+            </div>
+          </div>
+        ))
+      ) : (
+        <p className="text-small-regular text-ui-fg-muted">No strong signal yet.</p>
+      )}
+    </div>
+  </div>
+)
+
+function eventLabel(eventType: string) {
+  const labels: Record<string, string> = {
+    product_view: "Views",
+    recommendation_click: "Recommendation clicks",
+    add_to_cart: "Cart adds",
+    recommendation_add_to_cart: "Recommended cart adds",
+    favorite_product: "Favorites",
+    product_review: "Reviews",
+    product_rating: "Ratings",
+    order_created: "Orders",
+    order_paid: "Paid orders",
+  }
+
+  return labels[eventType] ?? eventType.replace(/_/g, " ")
+}
+
 const OrdersView = ({
   orders, isPending, onConfirmReceipt, onDeleteOrder,
 }: {
   orders: Order[]; isPending: boolean
   onConfirmReceipt: (orderNumber: string) => void; onDeleteOrder: (orderNumber: string) => void
 }) => {
-  const activeOrders = orders.filter((o) => o.status !== "completed" && o.status !== "canceled")
-  const completedOrders = orders.filter((o) => o.status === "completed")
+  const activeOrders = orders.filter((o) => o.status !== "complete" && o.status !== "canceled")
+  const completedOrders = orders.filter((o) => o.status === "complete")
 
   return (
     <div className="grid grid-cols-1 medium:grid-cols-2 gap-6">
