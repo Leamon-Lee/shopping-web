@@ -4,12 +4,14 @@ import { Badge, Button, Table } from "@medusajs/ui"
 import Spinner from "@modules/common/icons/spinner"
 import Input from "@modules/common/components/input"
 import { useEffect, useMemo, useRef, useState } from "react"
-import { getAdminUsers, getAdminProducts, getAdminOrders, getAdminShops, approveShop } from "api/backend-client"
+import { getAdminUsers, getAdminProducts, getAdminOrders, getAdminShops, approveShop, getAdminCategoryPreferences, getAdminDailyRankings } from "api/backend-client"
 import { signout } from "@lib/data/customer"
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
 
 type AdminView =
   | "Dashboard" | "Users" | "Shops" | "Categories"
   | "Products" | "Orders" | "Reports" | "Settings"
+  | "Customer Preferences" | "Daily Rankings"
 
 type Row = Record<string, string | number>
 
@@ -20,6 +22,8 @@ const getBadgeColor = (status: string) => {
   if (["pending", "pending_deletion", "review", "manager"].includes(s)) return "purple"
   return "orange"
 }
+
+const COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#f59e0b", "#8b5cf6", "#ec4899", "#06b6d4", "#f97316", "#84cc16", "#14b8a6", "#6366f1"]
 
 const formatColumn = (col: string) =>
   col.replace(/([A-Z])/g, " $1").replace(/^./, (l) => l.toUpperCase())
@@ -90,6 +94,13 @@ const AdminPanel = () => {
   const [adminOrders, setAdminOrders] = useState<Row[]>([])
   const [adminShops, setAdminShops] = useState<Row[]>([])
   const rawShopsRef = useRef<Record<string, unknown>[]>([])
+  const [prefStartDate, setPrefStartDate] = useState("")
+  const [prefEndDate, setPrefEndDate] = useState("")
+  const [prefData, setPrefData] = useState<Array<{ category_name: string; order_count: number; sales_amount: number }>>([])
+  const [prefLoading, setPrefLoading] = useState(false)
+  const [rankDate, setRankDate] = useState("")
+  const [rankData, setRankData] = useState<{ date: string; shop_rankings: any[]; product_rankings: any[] } | null>(null)
+  const [rankLoading, setRankLoading] = useState(false)
 
   const fetchData = async () => {
     setLoading(true)
@@ -126,6 +137,40 @@ const AdminPanel = () => {
 
   // Fetch on mount
   useEffect(() => { fetchData() }, [])
+
+  const fetchCategoryPreferences = async () => {
+    if (!prefStartDate || !prefEndDate) return
+    setPrefLoading(true)
+    try {
+      const resp = await getAdminCategoryPreferences({ start_date: prefStartDate, end_date: prefEndDate })
+      setPrefData(resp.data)
+    } catch { /* ignore */ }
+    finally { setPrefLoading(false) }
+  }
+
+  const fetchDailyRankings = async () => {
+    if (!rankDate) return
+    setRankLoading(true)
+    try {
+      const resp = await getAdminDailyRankings({ date: rankDate })
+      setRankData(resp)
+    } catch { /* ignore */ }
+    finally { setRankLoading(false) }
+  }
+
+  // Set default dates
+  useEffect(() => {
+    if (activeView === "Customer Preferences" && !prefStartDate) {
+      const today = new Date()
+      const weekAgo = new Date(today)
+      weekAgo.setDate(weekAgo.getDate() - 7)
+      setPrefStartDate(weekAgo.toISOString().slice(0, 10))
+      setPrefEndDate(today.toISOString().slice(0, 10))
+    }
+    if (activeView === "Daily Rankings" && !rankDate) {
+      setRankDate(new Date().toISOString().slice(0, 10))
+    }
+  }, [activeView])
 
   const fetchAdminShops = async () => {
     try {
@@ -168,7 +213,7 @@ const AdminPanel = () => {
     }
   }, [activeView, adminProducts.length, adminOrders.length])
 
-  const navItems: AdminView[] = ["Dashboard", "Users", "Shops"]
+  const navItems: AdminView[] = ["Dashboard", "Customer Preferences", "Daily Rankings", "Users", "Shops"]
 
   if (error) {
     return (
@@ -348,6 +393,104 @@ const AdminPanel = () => {
                       </div>
                     </div>
                   )}
+                </div>
+              )}
+              {activeView === "Customer Preferences" && (
+                <div className="flex flex-col gap-y-6">
+                  <div className="flex items-end gap-4 flex-wrap">
+                    <div className="flex flex-col gap-1">
+                      <label className="text-small-regular text-ui-fg-subtle">Start date</label>
+                      <input type="date" className="h-10 rounded-rounded border border-ui-border-base bg-ui-bg-field px-3 text-small-regular"
+                        value={prefStartDate} onChange={(e) => setPrefStartDate(e.target.value)} />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <label className="text-small-regular text-ui-fg-subtle">End date</label>
+                      <input type="date" className="h-10 rounded-rounded border border-ui-border-base bg-ui-bg-field px-3 text-small-regular"
+                        value={prefEndDate} onChange={(e) => setPrefEndDate(e.target.value)} />
+                    </div>
+                    <Button variant="secondary" onClick={fetchCategoryPreferences} isLoading={prefLoading}>Query</Button>
+                  </div>
+                  {prefData.length > 0 ? (
+                    <div className="rounded-rounded border border-ui-border-base bg-white p-5">
+                      <h2 className="text-base-semi mb-4">Category Order Distribution</h2>
+                      <div className="grid grid-cols-1 gap-6">
+                        <ResponsiveContainer width="100%" height={400}>
+                          <PieChart>
+                            <Pie data={prefData} dataKey="order_count" nameKey="category_name" cx="50%" cy="50%"
+                              outerRadius={140}>
+                              {prefData.map((_, i) => (
+                                <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                              ))}
+                            </Pie>
+                            <Tooltip formatter={(value, _name, props) => [`${value} orders`, (props?.payload as any)?.category_name]} />
+                            <Legend />
+                          </PieChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </div>
+                  ) : prefStartDate && prefEndDate && !prefLoading ? (
+                    <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-12 text-center">
+                      <p className="text-small-regular text-ui-fg-muted">No order data found for this date range.</p>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+              {activeView === "Daily Rankings" && (
+                <div className="flex flex-col gap-y-6">
+                  <div className="flex items-end gap-4 flex-wrap">
+                    <div className="flex flex-col gap-1">
+                      <label className="text-small-regular text-ui-fg-subtle">Date</label>
+                      <input type="date" className="h-10 rounded-rounded border border-ui-border-base bg-ui-bg-field px-3 text-small-regular"
+                        value={rankDate} onChange={(e) => setRankDate(e.target.value)} />
+                    </div>
+                    <Button variant="secondary" onClick={fetchDailyRankings} isLoading={rankLoading}>Query</Button>
+                  </div>
+                  {rankData ? (
+                    <>
+                      <div className="rounded-rounded border border-ui-border-base bg-white p-5">
+                        <h2 className="text-base-semi mb-4">Shop Order Rankings — {rankData.date}</h2>
+                        {rankData.shop_rankings.length > 0 ? (
+                          <ResponsiveContainer width="100%" height={350}>
+                            <BarChart data={rankData.shop_rankings} layout="vertical" margin={{ top: 5, right: 30, left: 120, bottom: 5 }}>
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <XAxis type="number" />
+                              <YAxis type="category" dataKey="shop_name" hide />
+                              <Tooltip formatter={(_v, _n, props) => {
+                                const p = props?.payload as any
+                                return [`${p?.order_count} orders, CNY ${Number(p?.sales_amount).toFixed(2)}`, p?.shop_name]
+                              }} />
+                              <Bar dataKey="order_count" fill="#3b82f6" name="Orders" />
+                            </BarChart>
+                          </ResponsiveContainer>
+                        ) : (
+                          <p className="text-small-regular text-ui-fg-muted py-8 text-center">No shop orders on this date.</p>
+                        )}
+                      </div>
+                      <div className="rounded-rounded border border-ui-border-base bg-white p-5">
+                        <h2 className="text-base-semi mb-4">Product Order Rankings — {rankData.date}</h2>
+                        {rankData.product_rankings.length > 0 ? (
+                          <ResponsiveContainer width="100%" height={350}>
+                            <BarChart data={rankData.product_rankings} layout="vertical" margin={{ top: 5, right: 30, left: 180, bottom: 5 }}>
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <XAxis type="number" />
+                              <YAxis type="category" dataKey="product_name" hide />
+                              <Tooltip formatter={(_v, _n, props) => {
+                                const p = props?.payload as any
+                                return [`${p?.order_count} orders, CNY ${Number(p?.sales_amount).toFixed(2)}`, p?.product_name]
+                              }} />
+                              <Bar dataKey="order_count" fill="#a855f7" name="Orders" />
+                            </BarChart>
+                          </ResponsiveContainer>
+                        ) : (
+                          <p className="text-small-regular text-ui-fg-muted py-8 text-center">No product orders on this date.</p>
+                        )}
+                      </div>
+                    </>
+                  ) : rankDate && !rankLoading ? (
+                    <div className="rounded-rounded border border-ui-border-base bg-ui-bg-subtle p-12 text-center">
+                      <p className="text-small-regular text-ui-fg-muted">Select a date and click Query to see rankings.</p>
+                    </div>
+                  ) : null}
                 </div>
               )}
               {activeView === "Categories" && (

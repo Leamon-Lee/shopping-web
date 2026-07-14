@@ -4,8 +4,9 @@ import { Badge, Button, Table } from "@medusajs/ui"
 import Spinner from "@modules/common/icons/spinner"
 import Input from "@modules/common/components/input"
 import { useEffect, useMemo, useRef, useState } from "react"
-import { getManagerPanel, getManagerProducts, getManagerOrders, getManagerShops, createManagerShop, createProduct, updateProduct, deleteProduct, requestDeleteShop } from "api/backend-client"
+import { getManagerPanel, getManagerProducts, getManagerOrders, getManagerShops, createManagerShop, createProduct, updateProduct, deleteProduct, requestDeleteShop, getManagerShopAnalytics, getManagerDashboardAnalytics, getManagerAnalyticsCategories } from "api/backend-client"
 import { signout } from "@lib/data/customer"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
 
 type ManagerView =
   | "Dashboard" | "My Shops" | "Products" | "Orders"
@@ -41,8 +42,9 @@ const InfoPanel = ({ title, children }: { title: string; children: React.ReactNo
   </div>
 )
 
-const TableView = ({ title, description, rows, actions, query, compact }: {
+const TableView = ({ title, description, rows, actions, query, compact, rowActions }: {
   title: string; description: string; rows: Row[]; actions?: React.ReactNode; query: string; compact?: boolean
+  rowActions?: (row: Row, index: number) => React.ReactNode
 }) => {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -64,6 +66,7 @@ const TableView = ({ title, description, rows, actions, query, compact }: {
                 {columns.map((col, i) => (
                   <Table.HeaderCell key={col} className={i > 1 && compact ? "hidden small:table-cell" : ""}>{formatColumn(col)}</Table.HeaderCell>
                 ))}
+                {rowActions && <Table.HeaderCell>Actions</Table.HeaderCell>}
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -78,6 +81,7 @@ const TableView = ({ title, description, rows, actions, query, compact }: {
                       </Table.Cell>
                     )
                   })}
+                  {rowActions && <Table.Cell>{rowActions(row, ri)}</Table.Cell>}
                 </Table.Row>
               ))}
             </Table.Body>
@@ -118,6 +122,11 @@ const ManagerPanel = () => {
   const [shopFilter, setShopFilter] = useState("all")
   const [createError, setCreateError] = useState("")
   const [editFileNames, setEditFileNames] = useState<Record<number, string>>({})
+  const [shopAnalytics, setShopAnalytics] = useState<any[]>([])
+  const [analyticsShopFilter, setAnalyticsShopFilter] = useState("all")
+  const [dashboardAnalytics, setDashboardAnalytics] = useState<Record<string, any> | null>(null)
+  const [dashboardCategoryFilter, setDashboardCategoryFilter] = useState("all")
+  const [analyticsCategories, setAnalyticsCategories] = useState<Array<{ id: string; name: string }>>([])
 
   const fetchData = async () => {
     setLoading(true)
@@ -176,6 +185,33 @@ const ManagerPanel = () => {
   }
 
   useEffect(() => { fetchShops() }, [])
+
+  const fetchShopAnalytics = async (shopId?: string) => {
+    try {
+      const resp = await getManagerShopAnalytics({ days: 7, shop_id: shopId || undefined })
+      setShopAnalytics(resp.data)
+    } catch { /* ignore */ }
+  }
+
+  const fetchDashboardAnalytics = async (categoryId?: string) => {
+    try {
+      const resp = await getManagerDashboardAnalytics({ category_id: categoryId || undefined })
+      setDashboardAnalytics(resp)
+    } catch { /* ignore */ }
+  }
+
+  useEffect(() => {
+    getManagerAnalyticsCategories().then(r => setAnalyticsCategories(r.categories)).catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    if (activeView === "My Shops") {
+      fetchShopAnalytics(analyticsShopFilter === "all" ? undefined : analyticsShopFilter)
+    }
+    if (activeView === "Dashboard") {
+      fetchDashboardAnalytics(dashboardCategoryFilter === "all" ? undefined : dashboardCategoryFilter)
+    }
+  }, [activeView, analyticsShopFilter, dashboardCategoryFilter])
 
   const mapProducts = (ps: any[]) => setManagerProducts(ps.map((p: Record<string, unknown>) => ({
     id: p.id as string,
@@ -355,17 +391,60 @@ const ManagerPanel = () => {
                   <section className="grid grid-cols-1 gap-4 small:grid-cols-2 medium:grid-cols-4">
                     {metrics.map((m) => <MetricCard key={m.label} {...m} />)}
                   </section>
-                  <div className="grid grid-cols-1 gap-6 medium:grid-cols-[1fr_320px]">
-                    <TableView title="Recent orders" description="Latest orders." rows={managerOrders.slice(0, 5)} query="" compact />
-                    <div className="flex flex-col gap-4">
-                      <InfoPanel title="Low stock products">
-                        {lowStock.length > 0 ? lowStock.slice(0, 5).map((name) => <p key={name}>{name}</p>) : <p>All products are well-stocked.</p>}
-                      </InfoPanel>
-                      <InfoPanel title="Quick actions">
-                        <p>Create product</p><p>Process orders</p><p>Update inventory</p>
-                      </InfoPanel>
-                    </div>
+
+                  {/* Analytics section */}
+                  <div className="flex items-center gap-3">
+                    <label className="text-small-regular text-ui-fg-subtle">Filter by category:</label>
+                    <select
+                      className="h-10 rounded-rounded border border-ui-border-base bg-ui-bg-field px-3 text-small-regular"
+                      value={dashboardCategoryFilter}
+                      onChange={(e) => setDashboardCategoryFilter(e.target.value)}
+                    >
+                      <option value="all">All categories</option>
+                      {analyticsCategories.map((c) => (
+                        <option key={c.id} value={c.id}>{c.name}</option>
+                      ))}
+                    </select>
                   </div>
+
+                  <section className="grid grid-cols-1 gap-4 small:grid-cols-2 medium:grid-cols-4">
+                    <MetricCard
+                      label="Top shop (last 7 days)"
+                      value={dashboardAnalytics?.top_shop?.shop_name || "—"}
+                      detail={
+                        dashboardAnalytics?.top_shop
+                          ? `${dashboardAnalytics.top_shop.order_count} orders, CNY ${Number(dashboardAnalytics.top_shop.sales_amount).toFixed(2)}`
+                          : "No data"
+                      }
+                    />
+                    <MetricCard
+                      label="Top product (last 7 days)"
+                      value={dashboardAnalytics?.top_product?.product_name || "—"}
+                      detail={
+                        dashboardAnalytics?.top_product
+                          ? `${dashboardAnalytics.top_product.order_count} orders`
+                          : "No data"
+                      }
+                    />
+                    <MetricCard
+                      label="Predicted top shop (next 7 days)"
+                      value={dashboardAnalytics?.predicted_shop?.shop_name || "—"}
+                      detail={
+                        dashboardAnalytics?.predicted_shop
+                          ? `~${dashboardAnalytics.predicted_shop.predicted_daily_orders} orders/day predicted (based on last year same period)`
+                          : "No historical data"
+                      }
+                    />
+                    <MetricCard
+                      label="Predicted top product (next 7 days)"
+                      value={dashboardAnalytics?.predicted_product?.product_name || "—"}
+                      detail={
+                        dashboardAnalytics?.predicted_product
+                          ? `~${dashboardAnalytics.predicted_product.predicted_daily_orders} orders/day predicted (based on last year same period)`
+                          : "No historical data"
+                      }
+                    />
+                  </section>
                 </>
               )}
               {activeView === "Products" && (
@@ -532,22 +611,47 @@ const ManagerPanel = () => {
                         {showCreateShop ? "Cancel" : "Create shop"}
                       </Button>
                     }
+                    rowActions={(row, i) => {
+                      const shop = rawManagerShopsRef.current[i]
+                      if (!shop) return null
+                      return (
+                        <Button variant="secondary" className="h-7 text-xs px-2 text-rose-600" onClick={() => handleDeleteShop(shop.id as string)}>Delete</Button>
+                      )
+                    }}
                   />
-                  {managerShops.length > 0 && (
-                    <div className="rounded-rounded border border-ui-border-base bg-white p-3">
-                      <div className="flex flex-col gap-1 max-h-80 overflow-y-auto">
-                        {rawManagerShopsRef.current.map((s, i) => (
-                          <div key={i} className="flex items-center justify-between border-b border-ui-border-base py-2 last:border-b-0">
-                            <div>
-                              <p className="text-small-regular font-medium">{s.name as string}</p>
-                              <p className="text-xs text-ui-fg-muted">{s.category as string || "—"} | Status: {s.status as string}</p>
-                            </div>
-                            <Button variant="secondary" className="h-7 text-xs px-2 text-rose-600" onClick={() => handleDeleteShop(s.id as string)}>Delete</Button>
-                          </div>
+
+                  {/* Bar chart: order trend */}
+                  <div className="rounded-rounded border border-ui-border-base bg-white p-5">
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="text-base-semi">Order Trend (Last 7 Days)</h2>
+                      <select
+                        className="h-10 rounded-rounded border border-ui-border-base bg-ui-bg-field px-3 text-small-regular"
+                        value={analyticsShopFilter}
+                        onChange={(e) => setAnalyticsShopFilter(e.target.value)}
+                      >
+                        <option value="all">All shops</option>
+                        {rawManagerShopsRef.current.map((s) => (
+                          <option key={s.id as string} value={s.id as string}>{s.name as string}</option>
                         ))}
-                      </div>
+                      </select>
                     </div>
-                  )}
+                    {shopAnalytics.length > 0 ? (
+                      <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={shopAnalytics} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="date" />
+                          <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
+                          <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
+                          <Tooltip />
+                          <Legend />
+                          <Bar yAxisId="left" dataKey="order_count" fill="#8884d8" name="Orders" />
+                          <Bar yAxisId="right" dataKey="sales_amount" fill="#82ca9d" name="Sales (CNY)" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    ) : (
+                      <p className="text-small-regular text-ui-fg-muted py-8 text-center">No order data available for the last 7 days.</p>
+                    )}
+                  </div>
                   {showCreateShop && (
                     <div className="rounded-rounded border border-ui-border-base bg-white p-5 flex flex-col gap-y-3">
                       <h3 className="text-base-semi">New Shop</h3>

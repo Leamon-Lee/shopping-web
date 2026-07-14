@@ -251,6 +251,61 @@ export async function requestDeleteShop(shopId: string): Promise<Record<string, 
   return clientFetch(`/manager/shops/${shopId}`, { method: "DELETE" })
 }
 
+// ── Manager analytics ───────────────────────────────────────────────
+
+export async function getManagerShopAnalytics(params?: {
+  days?: number
+  shop_id?: string
+}): Promise<{ data: Array<{ date: string; shop_id: string; shop_name: string; order_count: number; sales_amount: number }> }> {
+  const sp = new URLSearchParams()
+  if (params?.days !== undefined) sp.set("days", String(params.days))
+  if (params?.shop_id) sp.set("shop_id", params.shop_id)
+  const qs = sp.toString()
+  return clientFetch(`/manager/analytics/shop-orders${qs ? `?${qs}` : ""}`)
+}
+
+export async function getManagerDashboardAnalytics(params?: {
+  category_id?: string
+}): Promise<{
+  top_shop: { shop_name: string; shop_id: string; order_count: number; sales_amount: number } | null
+  top_product: { product_name: string; product_id: string; order_count: number } | null
+  predicted_shop: { shop_name: string; shop_id: string; predicted_daily_orders: number } | null
+  predicted_product: { product_name: string; product_id: string; predicted_daily_orders: number } | null
+  categories: Array<{ id: string; name: string }>
+}> {
+  const sp = new URLSearchParams()
+  if (params?.category_id) sp.set("category_id", params.category_id)
+  const qs = sp.toString()
+  return clientFetch(`/manager/analytics/dashboard${qs ? `?${qs}` : ""}`)
+}
+
+export async function getManagerAnalyticsCategories(): Promise<{
+  categories: Array<{ id: string; name: string }>
+}> {
+  return clientFetch("/manager/analytics/categories")
+}
+
+// ── Admin analytics ────────────────────────────────────────────────
+
+export async function getAdminCategoryPreferences(params: {
+  start_date: string
+  end_date: string
+}): Promise<{ data: Array<{ category_name: string; order_count: number; sales_amount: number }> }> {
+  return clientFetch(
+    `/admin/analytics/category-preferences?start_date=${params.start_date}&end_date=${params.end_date}`
+  )
+}
+
+export async function getAdminDailyRankings(params: {
+  date: string
+}): Promise<{
+  date: string
+  shop_rankings: Array<{ shop_id: string; shop_name: string; order_count: number; sales_amount: number }>
+  product_rankings: Array<{ product_id: string; product_name: string; order_count: number; sales_amount: number }>
+}> {
+  return clientFetch(`/admin/analytics/daily-rankings?date=${params.date}`)
+}
+
 export async function approveShop(shopId: string, status: "active" | "rejected" | "deleted"): Promise<Record<string, unknown>> {
   return clientFetch(`/admin/shops/${shopId}/approval`, {
     method: "PATCH",

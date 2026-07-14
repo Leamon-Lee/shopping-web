@@ -70,6 +70,36 @@ async def admin_orders(
     return {"orders": orders, "total": len(orders)}
 
 
+# ── Admin analytics ───────────────────────────────────────────────
+
+
+@router.get("/admin/analytics/category-preferences")
+async def admin_category_preferences(
+    start_date: str,
+    end_date: str,
+    current_user: Account = Depends(require_admin),
+    db: AsyncSession = Depends(get_db),
+) -> dict:
+    """Order count by product category for a date range (pie chart)."""
+    from datetime import date as _date
+    sd = _date.fromisoformat(start_date)
+    ed = _date.fromisoformat(end_date)
+    data = await AdminService(db).category_preferences(sd, ed)
+    return {"data": data}
+
+
+@router.get("/admin/analytics/daily-rankings")
+async def admin_daily_rankings(
+    date: str,
+    current_user: Account = Depends(require_admin),
+    db: AsyncSession = Depends(get_db),
+) -> dict:
+    """Shop and product order rankings for a specific date (bar charts)."""
+    from datetime import date as _date
+    qd = _date.fromisoformat(date)
+    return await AdminService(db).daily_rankings(qd)
+
+
 # ── Manager endpoints (require manager or admin role) ─────────────
 
 
@@ -258,6 +288,45 @@ async def manager_request_delete_shop(
     await repo.update_status(shop, "pending_deletion")
     await db.commit()
     return {"id": str(shop.id), "name": shop.name, "status": "pending_deletion"}
+
+
+# ── Manager analytics endpoints ───────────────────────────────────
+
+
+@router.get("/manager/analytics/shop-orders")
+async def manager_shop_order_analytics(
+    days: int = 7,
+    shop_id: str | None = None,
+    current_user: Account = Depends(require_manager),
+    db: AsyncSession = Depends(get_db),
+) -> dict:
+    """Daily order count and sales per shop for the bar chart."""
+    data = await ManagerService(db).shop_order_analytics(
+        current_user, days=days, shop_id=shop_id
+    )
+    return {"data": data}
+
+
+@router.get("/manager/analytics/dashboard")
+async def manager_dashboard_analytics(
+    category_id: str | None = None,
+    current_user: Account = Depends(require_manager),
+    db: AsyncSession = Depends(get_db),
+) -> dict:
+    """Analytics cards for the dashboard view."""
+    return await ManagerService(db).dashboard_analytics(
+        current_user, category_id=category_id
+    )
+
+
+@router.get("/manager/analytics/categories")
+async def manager_analytics_categories(
+    current_user: Account = Depends(require_manager),
+    db: AsyncSession = Depends(get_db),
+) -> dict:
+    """Categories available for the manager's shops (filter dropdown)."""
+    cats = await ManagerService(db).list_categories(current_user)
+    return {"categories": [{"id": str(c[0]), "name": c[1]} for c in cats]}
 
 
 # ── Shipment endpoints (manager) ────────────────────────────────────
