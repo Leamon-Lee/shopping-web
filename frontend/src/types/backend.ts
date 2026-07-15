@@ -11,12 +11,11 @@ export type AccountStatus =
 
 export type OrderStatus =
   | "created"
-  | "pending"
-  | "unshipped"
+  | "confirmed"
+  | "processing"
   | "shipped"
-  | "complete"
+  | "completed"
   | "canceled"
-  | "refund_applied"
 
 export type PaymentStatus =
   | "pending"

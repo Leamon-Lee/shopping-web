@@ -577,8 +577,8 @@ const OrdersView = ({
   orders: Order[]; isPending: boolean
   onConfirmReceipt: (orderNumber: string) => void; onDeleteOrder: (orderNumber: string) => void
 }) => {
-  const activeOrders = orders.filter((o) => o.status !== "complete" && o.status !== "canceled")
-  const completedOrders = orders.filter((o) => o.status === "complete")
+  const activeOrders = orders.filter((o) => o.status !== "completed" && o.status !== "canceled")
+  const completedOrders = orders.filter((o) => o.status === "completed")
 
   return (
     <div className="grid grid-cols-1 medium:grid-cols-2 gap-6">

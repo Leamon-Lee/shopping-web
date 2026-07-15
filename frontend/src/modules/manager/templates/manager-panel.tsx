@@ -344,6 +344,7 @@ const ManagerPanel = () => {
             <span className="hidden text-ui-fg-muted small:inline">Shop operations</span>
           </div>
           <div className="flex items-center gap-x-3">
+            <a className="hover:text-ui-fg-base text-small-regular" href="/hall">Hall</a>
             <Button variant="secondary" className="h-9" onClick={() => signout()}>Sign out</Button>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import SideMenu from "@modules/layout/components/side-menu"
+import ShopNavLink from "@modules/layout/components/shop-nav-link"
 import { retrieveCustomer } from "@lib/data/customer"
 
 export default async function Nav() {
@@ -54,9 +55,7 @@ export default async function Nav() {
                   <a className="hover:text-ui-fg-base" href="/hall">
                     Hall
                   </a>
-                  <a className="hover:text-ui-fg-base" href="/shop">
-                    Shop
-                  </a>
+                  <ShopNavLink />
                 </>
               )}
               <LocalizedClientLink

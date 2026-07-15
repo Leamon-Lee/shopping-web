@@ -363,7 +363,7 @@ const HallTemplate = ({
             SHOPPING HALL
           </LocalizedClientLink>
           <div className="flex items-center gap-x-4">
-            {(!currentUser || (currentUser.role !== "manager" && currentUser.role !== "admin")) && (
+            {currentUser && currentUser.role !== "manager" && currentUser.role !== "admin" && (
               <LocalizedClientLink href="/cart" className="hover:text-ui-fg-base">
                 Cart
               </LocalizedClientLink>
