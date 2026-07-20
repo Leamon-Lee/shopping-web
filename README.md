@@ -196,6 +196,18 @@ Import recommendations into PostgreSQL:
 docker run --rm --network shopping-net -v "${PWD}:/workspace" -w /workspace python:3.12-slim sh -lc "pip install --no-cache-dir psycopg2-binary && DATABASE_URL=postgresql://shopping_user:shopping_password@shopping-postgres:5432/shopping python scripts/import_recommendations.py --date $DATE --input-dir /workspace/tmp/recommendation --types user_recs"
 ```
 
+For a live demo loop that repeats upload -> Spark -> import every 5 seconds:
+
+```powershell
+.\scripts\recommendation_loop.ps1 -Date $DATE -IntervalSeconds 5
+```
+
+Run a single full pipeline cycle with the same script:
+
+```powershell
+.\scripts\recommendation_loop.ps1 -Date $DATE -Once
+```
+
 Verify the backend is serving Hadoop recommendations:
 
 ```powershell

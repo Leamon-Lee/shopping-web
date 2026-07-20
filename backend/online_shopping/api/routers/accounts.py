@@ -88,7 +88,7 @@ async def register(payload: RegisterPayload, db: AsyncSession = Depends(get_db))
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin account already exists.")
 
     account = Account(
-        user_name=payload.email,
+        user_name=payload.email[:20],
         password_hash=bcrypt.hashpw(payload.password.encode(), bcrypt.gensalt()).decode(),
         status=AccountStatus.ACTIVE.value,
         role=role,
@@ -133,7 +133,17 @@ async def login(payload: LoginPayload, db: AsyncSession = Depends(get_db)) -> To
         )
     )
     account = result.scalars().first()
-    if account is None or not bcrypt.checkpw(payload.password.encode(), account.password_hash.encode()):
+    password_matches = False
+    if account is not None:
+        try:
+            password_matches = bcrypt.checkpw(
+                payload.password.encode(),
+                account.password_hash.encode(),
+            )
+        except ValueError:
+            password_matches = False
+
+    if account is None or not password_matches:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials.")
 
     # Refresh to ensure relationships are loaded

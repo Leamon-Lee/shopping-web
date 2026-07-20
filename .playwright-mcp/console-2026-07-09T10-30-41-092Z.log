@@ -1,7 +1,0 @@
-[     382ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:8000/_next/static/chunks/node_modules_next_dist_client_8f19e6fb._.js:15027
-[    1194ms] [LOG] [Fast Refresh] done in 926ms @ http://localhost:8000/_next/static/chunks/node_modules_next_dist_client_8f19e6fb._.js:14891
-[    1952ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:8000/_next/static/chunks/node_modules_next_dist_compiled_2ce9398a._.js:16383
-[    6332ms] [WARNING] Image with src "https://static.nike.com/a/images/t_web_pw_592_v2/f_auto/u_9ddf04c7-2a9a-4d76-add1-d15af8f0263d,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/14cbcdef-49ea-4b6e-bfa7-91a011ddecb1/NIKE+ACG+LDV.png" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
-Read more: https://nextjs.org/docs/api-reference/next/image#priority @ http://localhost:8000/_next/static/chunks/node_modules_next_dist_0eb1e458._.js:1073
-[    6332ms] [WARNING] Image with src "https://static.nike.com/a/images/t_web_pw_592_v2/f_auto/u_9ddf04c7-2a9a-4d76-add1-d15af8f0263d,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/3e3165c5-7a30-4324-b9db-d32b525fc2b0/NIKE+ACG+ZEGAMA+TRAIL.png" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
-Read more: https://nextjs.org/docs/api-reference/next/image#priority @ http://localhost:8000/_next/static/chunks/node_modules_next_dist_0eb1e458._.js:1073

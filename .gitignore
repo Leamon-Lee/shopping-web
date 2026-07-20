@@ -2,7 +2,11 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .vscode/
+.idea/
+.claude/
+.playwright-mcp/
 .venv/
+venv/
 dist/
 build/
 *.egg-info/
@@ -10,3 +14,18 @@ backend/logs/
 frontend/logs/
 *-run.log
 *-run.err.log
+
+# Keep the public repository focused on runnable source code.
+docs/
+tmp/
+tools/
+答辩演示脚本.md
+
+# Frontend dependency/build caches
+node_modules/
+.next/
+.turbo/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz

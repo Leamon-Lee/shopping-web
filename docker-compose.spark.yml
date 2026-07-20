@@ -47,4 +47,5 @@ services:
 
 networks:
   hadoop:
+    external: true
     name: hadoop

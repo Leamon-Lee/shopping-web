@@ -1,3 +1,5 @@
+"use client"
+
 import { Badge } from "@medusajs/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import type {
@@ -30,12 +32,8 @@ const ShopsTemplate = ({
     ? `/customer/${encodeURIComponent(currentUser.user_name)}`
     : null
   const hallPath = customerBasePath ? `${customerBasePath}/hall` : "/hall"
-  const shopsPath = currentUser
-    ? `/${encodeURIComponent(currentUser.user_name)}/shops`
-    : "/shops"
-  const catlogPath = currentUser
-    ? `/${encodeURIComponent(currentUser.user_name)}/catlog`
-    : "/catlog"
+  const shopsPath = "/shops"
+  const catlogPath = "/catlog"
   const shopProducts = new Map(
     data.sections.map((section) => [section.shop.slug, section.products])
   )

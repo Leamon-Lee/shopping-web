@@ -20,17 +20,71 @@ Usage:
 """
 
 import argparse
+import asyncio
 import glob
 import json
 import os
 import re
 import sys
-from datetime import datetime
+import uuid
+from datetime import date, datetime
 
 
 UUID_RE = re.compile(
     r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
 )
+
+
+def _convert_placeholders(sql: str) -> str:
+    index = 0
+
+    def repl(_match):
+        nonlocal index
+        index += 1
+        return f"${index}"
+
+    return re.sub(r"%s", repl, sql)
+
+
+class AsyncpgCursor:
+    def __init__(self, conn):
+        self._conn = conn
+        self._rows = []
+
+    def execute(self, sql: str, params: tuple | list | None = None):
+        params = tuple(params or ())
+        sql = _convert_placeholders(sql)
+        if sql.lstrip().lower().startswith("select"):
+            rows = self._conn.run(self._conn.raw.fetch(sql, *params))
+            self._rows = [tuple(row) for row in rows]
+        else:
+            self._conn.run(self._conn.raw.execute(sql, *params))
+            self._rows = []
+
+    def fetchall(self):
+        return self._rows
+
+
+class AsyncpgConnection:
+    def __init__(self, url: str):
+        self._loop = asyncio.new_event_loop()
+        self.raw = self._loop.run_until_complete(asyncpg_connect(url))
+
+    def run(self, coro):
+        return self._loop.run_until_complete(coro)
+
+    def cursor(self):
+        return AsyncpgCursor(self)
+
+    def close(self):
+        self._loop.run_until_complete(self.raw.close())
+        self._loop.close()
+
+
+async def asyncpg_connect(url: str):
+    import asyncpg
+
+    return await asyncpg.connect(url)
 
 
 def get_connection():
@@ -46,7 +100,18 @@ def get_connection():
         conn.autocommit = True
         return conn
     except ImportError:
-        print("ERROR: psycopg2 required. pip install psycopg2-binary")
+        pass
+
+    try:
+        import asyncpg  # noqa: F401
+
+        url = os.getenv(
+            "DATABASE_URL",
+            "postgresql://shopping_user:shopping_password@localhost:5432/shopping",
+        )
+        return AsyncpgConnection(url)
+    except ImportError:
+        print("ERROR: psycopg2 or asyncpg required.")
         sys.exit(1)
 
 
@@ -87,6 +152,28 @@ def normalize_key(value: object) -> str | None:
 
 def is_uuid(value: object) -> bool:
     return bool(value and UUID_RE.match(str(value).strip()))
+
+
+def as_uuid(value: str):
+    return uuid.UUID(str(value))
+
+
+def as_date(value: str):
+    return date.fromisoformat(value)
+
+
+def as_float(value: object, default: float = 0.0) -> float:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def as_int(value: object, default: int = 0) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
 
 
 def load_product_lookup(conn) -> dict[str, str]:
@@ -138,7 +225,7 @@ def import_popular(conn, rows: list[dict], date_str: str, dry_run: bool, lookup:
     # Clear old data for this date (simple replace strategy)
     cur.execute(
         "DELETE FROM popular_products WHERE generated_at::date = %s",
-        (date_str,),
+        (as_date(date_str),),
     )
 
     inserted = 0
@@ -157,7 +244,7 @@ def import_popular(conn, rows: list[dict], date_str: str, dry_run: bool, lookup:
             """INSERT INTO popular_products (product_id, score, rank, scene, generated_at)
                VALUES (%s, %s, %s, %s, %s)
                ON CONFLICT DO NOTHING""",
-            (product_id, row.get("score", 0), row.get("rank", 0), row.get("scene", "home"), date_str),
+            (as_uuid(product_id), as_float(row.get("score", 0)), as_int(row.get("rank", 0)), row.get("scene", "home"), as_date(date_str)),
         )
         inserted += 1
 
@@ -182,7 +269,7 @@ def import_item_sim(conn, rows: list[dict], date_str: str, dry_run: bool, lookup
         return
 
     cur = conn.cursor()
-    cur.execute("DELETE FROM item_similarities WHERE generated_at::date = %s", (date_str,))
+    cur.execute("DELETE FROM item_similarities WHERE generated_at::date = %s", (as_date(date_str),))
 
     inserted = 0
     skipped = 0
@@ -210,7 +297,7 @@ def import_item_sim(conn, rows: list[dict], date_str: str, dry_run: bool, lookup
                 """INSERT INTO item_similarities (product_id, similar_product_id, score, reason, algorithm, generated_at)
                    VALUES (%s, %s, %s, %s, %s, %s)
                    ON CONFLICT DO NOTHING""",
-                (pid, sid, row.get("score", 0), row.get("reason", ""), "itemcf_v1", date_str),
+                (as_uuid(pid), as_uuid(sid), as_float(row.get("score", 0)), row.get("reason", ""), "itemcf_v1", as_date(date_str)),
             )
             inserted += 1
         except Exception as exc:
@@ -240,7 +327,7 @@ def import_user_recs(conn, rows: list[dict], date_str: str, dry_run: bool, looku
     cur = conn.cursor()
     cur.execute(
         "DELETE FROM recommendation_results WHERE generated_at::date = %s",
-        (date_str,),
+        (as_date(date_str),),
     )
 
     inserted = 0
@@ -268,9 +355,9 @@ def import_user_recs(conn, rows: list[dict], date_str: str, dry_run: bool, looku
                         """INSERT INTO recommendation_results
                            (user_key, scene, product_id, score, rank, reason, algorithm, generated_at)
                            VALUES (%s,%s,%s,%s,%s,%s,%s,%s)""",
-                        (user_key, scene, pid, prod.get("score", 0), rank,
+                        (user_key, scene, as_uuid(pid), as_float(prod.get("score", 0)), as_int(rank),
                          prod.get("reason") or f"Based on your {row.get('top_categories',[{}])[0].get('name','') if row.get('top_categories') else 'interests'}",
-                         prod.get("algorithm") or "hadoop_commerce_v1", date_str),
+                         prod.get("algorithm") or "hadoop_commerce_v1", as_date(date_str)),
                     )
                     inserted += 1
                 except Exception as exc:

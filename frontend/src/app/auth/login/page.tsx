@@ -1,16 +1,46 @@
 "use client"
 
-import { Suspense, useId, useRef } from "react"
+import { FormEvent, Suspense, useId, useRef, useState } from "react"
 import { Button } from "@medusajs/ui"
 import Input from "@modules/common/components/input"
 import { login } from "@lib/data/customer"
 import { useRouter, useSearchParams } from "next/navigation"
-import { FormEvent, useState } from "react"
+
+type LoginRole = "customer" | "manager" | "admin"
+
+const ROLE_OPTIONS: Array<{
+  value: LoginRole
+  label: string
+  description: string
+}> = [
+  {
+    value: "customer",
+    label: "Customer",
+    description: "Shop, cart, orders",
+  },
+  {
+    value: "manager",
+    label: "Manager",
+    description: "Shops, products, sales",
+  },
+  {
+    value: "admin",
+    label: "Admin",
+    description: "Users, shops, platform",
+  },
+]
+
+function getInitialRole(role: string | null): LoginRole {
+  return role === "manager" || role === "admin" ? role : "customer"
+}
 
 function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get("redirect") || "/hall"
+  const [selectedRole, setSelectedRole] = useState<LoginRole>(() =>
+    getInitialRole(searchParams.get("role"))
+  )
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
@@ -50,7 +80,7 @@ function LoginForm() {
             <p className="txt-xsmall-plus uppercase text-ui-fg-muted">Shopping Web</p>
             <h1 className="mt-2 text-xl-semi text-ui-fg-base">Sign in to your account</h1>
             <p className="mt-2 text-small-regular text-ui-fg-subtle">
-              Enter your email and password to continue.
+              Choose how you want to sign in, then enter your credentials.
             </p>
           </div>
           <form
@@ -75,6 +105,35 @@ function LoginForm() {
               tabIndex={-1}
               readOnly
             />
+            <input type="hidden" name="role" value={selectedRole} />
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+              {ROLE_OPTIONS.map((option) => {
+                const isSelected = option.value === selectedRole
+
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() => {
+                      setSelectedRole(option.value)
+                      setError("")
+                    }}
+                    className={[
+                      "flex min-h-20 flex-col justify-center border px-3 py-3 text-left transition-colors",
+                      isSelected
+                        ? "border-ui-border-interactive bg-ui-bg-subtle text-ui-fg-base"
+                        : "border-ui-border-base bg-ui-bg-base text-ui-fg-subtle hover:border-ui-border-strong hover:text-ui-fg-base",
+                    ].join(" ")}
+                  >
+                    <span className="text-small-semi">{option.label}</span>
+                    <span className="mt-1 text-xsmall-regular">
+                      {option.description}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
             <Input
               label="Email"
               name="email"

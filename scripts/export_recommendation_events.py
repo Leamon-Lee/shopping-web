@@ -17,6 +17,8 @@ import argparse
 import json
 import os
 import sys
+import uuid
+from decimal import Decimal
 from datetime import date, datetime, timedelta
 from typing import Any
 
@@ -209,6 +211,14 @@ def fetch_products(conn, driver: str, _date_str: str, limit: int) -> list[dict[s
 def serialize_value(value: Any) -> Any:
     if value is None:
         return None
+    if isinstance(value, dict):
+        return {str(key): serialize_value(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [serialize_value(item) for item in value]
+    if isinstance(value, uuid.UUID):
+        return str(value)
+    if isinstance(value, Decimal):
+        return float(value)
     if isinstance(value, datetime):
         return value.isoformat()
     if hasattr(value, "isoformat"):

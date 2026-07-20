@@ -74,14 +74,23 @@ export async function login(
 ): Promise<AuthActionResult | null> {
   const email = formData.get("email")?.toString() ?? ""
   const password = formData.get("password")?.toString() ?? ""
+  const expectedRole = formData.get("role")?.toString()
 
   try {
     const result = await backendFetch<TokenResponse>("/accounts/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     })
-    await setTokenCookie(result.access_token)
     const role = result.user?.role ?? "customer"
+    if (
+      expectedRole &&
+      ["customer", "manager", "admin"].includes(expectedRole) &&
+      role !== expectedRole
+    ) {
+      return { error: `This account is registered as ${role}, not ${expectedRole}.` }
+    }
+
+    await setTokenCookie(result.access_token)
     if (role === "manager") return { redirectTo: "/manager" }
     if (role === "admin") return { redirectTo: "/admin" }
     return { redirectTo: customerHallPath(result.user.user_name) }
