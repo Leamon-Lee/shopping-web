@@ -2,6 +2,20 @@
 
 Docker-first ecommerce demo with a separated FastAPI backend, Next.js frontend, PostgreSQL, MinIO object storage, and a Hadoop/Spark recommendation pipeline.
 
+## Screenshots
+
+| Home recommendations | Product catalog |
+| --- | --- |
+| ![Home recommendations](assets/screenshots/home-recommendations.png) | ![Product catalog](assets/screenshots/catalog.png) |
+
+| Shop detail | Cart |
+| --- | --- |
+| ![Shop detail](assets/screenshots/shop-detail.png) | ![Cart](assets/screenshots/cart.png) |
+
+| Admin dashboard | Manager dashboard |
+| --- | --- |
+| ![Admin dashboard](assets/screenshots/admin-dashboard.png) | ![Manager dashboard](assets/screenshots/manager-dashboard.png) |
+
 The current recommendation flow is:
 
 ```text
