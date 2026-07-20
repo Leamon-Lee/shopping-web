@@ -12,9 +12,13 @@ Docker-first ecommerce demo with a separated FastAPI backend, Next.js frontend, 
 | --- | --- |
 | ![Shop detail](assets/screenshots/shop-detail.png) | ![Cart](assets/screenshots/cart.png) |
 
-| Admin dashboard | Manager dashboard |
+| Customer account | Manager dashboard |
 | --- | --- |
-| ![Admin dashboard](assets/screenshots/admin-dashboard.png) | ![Manager dashboard](assets/screenshots/manager-dashboard.png) |
+| ![Customer account](assets/screenshots/customer-account.png) | ![Manager dashboard](assets/screenshots/manager-dashboard.png) |
+
+| Login | Register |
+| --- | --- |
+| ![Login](assets/screenshots/login.png) | ![Register](assets/screenshots/register.png) |
 
 The current recommendation flow is:
 
